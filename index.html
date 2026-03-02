@@ -8,9 +8,9 @@
 <style>
 body {
     margin: 0;
-    background-color: #000000;
-    color: #FFD700;
+    background-color: #000;
     font-family: Arial, sans-serif;
+    color: #FFD700;
     text-align: center;
 }
 
@@ -19,50 +19,55 @@ header {
 }
 
 .logo {
-    max-width: 400px;
+    max-width: 350px;
     width: 80%;
 }
 
 h1 {
-    font-size: 3em;
-    margin-top: 20px;
+    font-size: 2.5em;
+    margin: 20px 0;
 }
 
-p {
-    color: #ffffff;
-    max-width: 600px;
-    margin: 20px auto;
-    line-height: 1.6;
+h2 {
+    margin-top: 60px;
+    font-size: 2em;
 }
 
-.btn {
-    display: inline-block;
-    background-color: #FFD700;
-    color: #000000;
-    padding: 15px 30px;
-    margin: 20px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+}
+
+.card {
+    width: 220px;
+    background: #111;
+    border: 1px solid #FFD700;
+    border-radius: 10px;
+    overflow: hidden;
     transition: 0.3s;
 }
 
-.btn:hover {
-    background-color: #ffcc00;
+.card:hover {
+    transform: scale(1.05);
 }
 
-.crypto-box {
-    border: 2px solid #FFD700;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 600px;
-    border-radius: 10px;
+.card img {
+    width: 100%;
+    display: block;
+}
+
+.card h3 {
+    padding: 15px;
+    font-size: 1em;
+    color: white;
 }
 
 footer {
-    padding: 30px;
-    color: #888;
-    font-size: 0.9em;
+    padding: 40px;
+    color: #777;
 }
 </style>
 </head>
@@ -70,21 +75,105 @@ footer {
 <body>
 
 <header>
-    <img src="logo.png" alt="Reflexión Musical MX" class="logo">
-    <h1>Reflexión Musical MX</h1>
-    <p>Música que despierta conciencia y transforma el pensamiento.</p>
-    <a class="btn" href="https://youtube.com" target="_blank">Escuchar Ahora</a>
+<img src="images/logo1.png" class="logo">
+<h1>Reflexión Musical MX</h1>
+<p style="color:white;">Música que despierta conciencia y transforma pensamiento.</p>
 </header>
 
-<section>
-    <h2>Apoya el Proyecto</h2>
+<h2>Álbumes</h2>
+<div class="grid">
 
-    <div class="crypto-box">
-        <h3>Bitcoin (BTC)</h3>
-        <p>TU_DIRECCION_AQUI</p>
-    </div>
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ" target="_blank" class="card">
+<img src="images/voces1.jpg">
+<h3>Voces de Cambio 1</h3>
+</a>
 
-</section>
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE" target="_blank" class="card">
+<img src="images/voces2.jpg">
+<h3>Voces de Cambio 2</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow" target="_blank" class="card">
+<img src="images/estado.jpg">
+<h3>Estado contra Estado</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4" target="_blank" class="card">
+<img src="images/luz.jpg">
+<h3>Luz entre las Sombras</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE" target="_blank" class="card">
+<img src="images/tiempoyvida.jpg">
+<h3>Tiempo y Vida</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A" target="_blank" class="card">
+<img src="images/chacales.jpg">
+<h3>Chacales Oportunistas</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs" target="_blank" class="card">
+<img src="images/tejidovital.jpg">
+<h3>Tejido Vital</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU" target="_blank" class="card">
+<img src="images/revolucion.jpg">
+<h3>Revolución Mental</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I" target="_blank" class="card">
+<img src="images/eres.jpg">
+<h3>Eres lo que escuchas</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA" target="_blank" class="card">
+<img src="images/amor.jpg">
+<h3>Amor en tiempos de ideologías cancerígenas</h3>
+</a>
+
+</div>
+
+<h2>Sencillos</h2>
+<div class="grid">
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs" target="_blank" class="card">
+<img src="images/werise.jpg">
+<h3>We Rise As One</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk" target="_blank" class="card">
+<img src="images/gracias2025.jpg">
+<h3>Gracias 2025</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM" target="_blank" class="card">
+<img src="images/adultos.jpg">
+<h3>Adultos Trastornados</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0" target="_blank" class="card">
+<img src="images/codigorojo.jpg">
+<h3>Código Rojo</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro" target="_blank" class="card">
+<img src="images/lafuerza.jpg">
+<h3>La Fuerza de Todos</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE" target="_blank" class="card">
+<img src="images/regresar.jpg">
+<h3>Regresar a Casa</h3>
+</a>
+
+<a href="https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM" target="_blank" class="card">
+<img src="images/trescolores.jpg">
+<h3>Tres Colores, Un Compromiso</h3>
+</a>
+
+</div>
 
 <footer>
 © 2026 Reflexión Musical MX
