@@ -1,128 +1,160 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reflexión Musical MX</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #111;
-      color: #fff;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reflexión Musical MX</title>
 
-    header {
-      padding: 40px 20px;
-      background: #000;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0d0d0d;
+  color:white;
+  text-align:center;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
+header{
+  padding:40px 20px;
+}
 
-    section {
-      padding: 40px 20px;
-    }
+header img{
+  max-width:250px;
+  margin-bottom:15px;
+}
 
-    h2 {
-      margin-bottom: 30px;
-      font-size: 1.8rem;
-      border-bottom: 2px solid #444;
-      display: inline-block;
-      padding-bottom: 5px;
-    }
+h2{
+  margin-top:50px;
+  margin-bottom:25px;
+  font-size:1.8rem;
+  border-bottom:1px solid #333;
+  display:inline-block;
+  padding-bottom:5px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  max-width:1200px;
+  margin:auto;
+  padding:0 20px;
+}
 
-    .card {
-      background: #1a1a1a;
-      padding: 15px;
-      border-radius: 10px;
-      transition: transform 0.3s ease;
-    }
+.card{
+  transition:transform .3s ease;
+}
 
-    .card:hover {
-      transform: scale(1.05);
-    }
+.card:hover{
+  transform:scale(1.05);
+}
 
-    img {
-      width: 100%;
-      border-radius: 8px;
-    }
+.card img{
+  width:100%;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    a {
-      text-decoration: none;
-      color: white;
-    }
-
-    footer {
-      padding: 20px;
-      background: #000;
-      font-size: 0.9rem;
-      color: #aaa;
-    }
-  </style>
+footer{
+  margin-top:60px;
+  padding:20px;
+  font-size:.9rem;
+  color:#888;
+}
+</style>
 </head>
+
 <body>
 
 <header>
+  <img src="images/reflex-musical-mx-1.webp" alt="Reflexión Musical MX Logo">
   <h1>Reflexión Musical MX</h1>
-  <p>Nuevo comienzo • Redefiniendo el futuro</p>
 </header>
 
-<section>
-  <h2>Álbumes</h2>
-  <div class="grid">
+<!-- ================= ALBUMS ================= -->
 
-    <div class="card">
-      <a href="https://music.youtube.com/tu-link-album-1" target="_blank">
-        <img src="images/album-2026.webp" alt="Álbum 2026">
-        <p>Álbum Nuevo Comienzo 2026</p>
-      </a>
-    </div>
+<h2>Álbumes</h2>
+<div class="grid">
 
-  </div>
-</section>
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ" target="_blank">
+<img src="images/voces-de-cambio-1.webp" alt="Voces de Cambio 1">
+</a>
 
-<section>
-  <h2>Sencillos</h2>
-  <div class="grid">
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE" target="_blank">
+<img src="images/voces-de-cambio-2.webp" alt="Voces de Cambio 2">
+</a>
 
-    <div class="card">
-      <a href="https://music.youtube.com/tu-link-single-1" target="_blank">
-        <img src="images/el-cambio.webp" alt="El Cambio">
-        <p>El Cambio</p>
-      </a>
-    </div>
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow" target="_blank">
+<img src="images/estado-contra-estado.webp" alt="Estado contra estado">
+</a>
 
-  </div>
-</section>
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4" target="_blank">
+<img src="images/luz-entre-las-sombras.webp" alt="Luz entre las Sombras">
+</a>
 
-<section>
-  <h2>Videos</h2>
-  <div class="grid">
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE" target="_blank">
+<img src="images/tiempo-y-vida.webp" alt="Tiempo y vida">
+</a>
 
-    <div class="card">
-      <a href="https://youtube.com/tu-video-1" target="_blank">
-        <img src="images/video-el-cambio.webp" alt="Video El Cambio">
-        <p>El Cambio (Video Oficial)</p>
-      </a>
-    </div>
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A" target="_blank">
+<img src="images/chacales-oportunistas.webp" alt="Chacales Oportunistas">
+</a>
 
-  </div>
-</section>
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs" target="_blank">
+<img src="images/tejido-vital.webp" alt="Tejido vital">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU" target="_blank">
+<img src="images/revolucion-mental.webp" alt="Revolución mental">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I" target="_blank">
+<img src="images/eres-lo-que-escuchas.webp" alt="Eres lo que escuchas">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA" target="_blank">
+<img src="images/amor-en-tiempos-de-ideologias-cancerigenas.webp" alt="Amor en tiempos de ideologías cancerígenas">
+</a>
+
+</div>
+
+<!-- ================= SENCILLOS ================= -->
+
+<h2>Sencillos</h2>
+<div class="grid">
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs" target="_blank">
+<img src="images/we-rise-as-one.webp" alt="We rise as one">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk" target="_blank">
+<img src="images/gracias-2025.webp" alt="Gracias 2025">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM" target="_blank">
+<img src="images/adultos-trastornados.webp" alt="Adultos Trastornados">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0" target="_blank">
+<img src="images/codigo-rojo.webp" alt="Código rojo">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro" target="_blank">
+<img src="images/la-fuerza-de-todos.webp" alt="La fuerza de todos">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE" target="_blank">
+<img src="images/regresar-a-casa.webp" alt="Regresar a casa">
+</a>
+
+<a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM" target="_blank">
+<img src="images/tres-colores-un-compromiso.webp" alt="Tres Colores, Un Compromiso">
+</a>
+
+</div>
 
 <footer>
-  © 2026 Reflexión Musical MX • Todos los derechos reservados
+© 2026 Reflexión Musical MX
 </footer>
 
 </body>
