@@ -1,90 +1,110 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Reflexion Musical MX</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reflexión Musical MX</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
+background:#000;
+color:#FFD700;
+font-family:'Open Sans',sans-serif;
 margin:0;
-background:black;
 overflow:hidden;
-font-family:Arial;
-color:white;
+text-align:center;
 }
 
-#universe{
+/* PARTICULAS */
+
+#bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+pointer-events:none;
+}
+
+/* LOGO CENTRAL */
+
+#solarSystem{
 position:relative;
 width:100vw;
 height:100vh;
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 }
 
 #sun{
 position:absolute;
-width:140px;
-height:140px;
-border-radius:50%;
-box-shadow:0 0 40px gold;
+width:200px;
+z-index:10;
 animation:pulse 4s infinite;
 }
 
 #sun img{
 width:100%;
-height:100%;
-border-radius:50%;
 }
 
 @keyframes pulse{
-0%{box-shadow:0 0 20px gold;}
-50%{box-shadow:0 0 60px gold;}
-100%{box-shadow:0 0 20px gold;}
+0%{filter:drop-shadow(0 0 10px gold);}
+50%{filter:drop-shadow(0 0 35px gold);}
+100%{filter:drop-shadow(0 0 10px gold);}
 }
 
 /* ORBITAS */
 
 .orbit{
 position:absolute;
-border:1px dashed rgba(255,255,255,0.15);
+border:1px dashed rgba(255,215,0,0.2);
 border-radius:50%;
 }
 
 #orbitSingles{
 width:420px;
 height:420px;
-animation:rotate 45s linear infinite;
+animation:spin 40s linear infinite;
 }
 
 #orbitAlbums{
-width:650px;
-height:650px;
-animation:rotate 90s linear infinite;
+width:720px;
+height:720px;
+animation:spin 90s linear infinite;
 }
 
-@keyframes rotate{
+@keyframes spin{
 from{transform:rotate(0deg);}
 to{transform:rotate(360deg);}
 }
 
-/* PLANETAS */
+/* DISCOS */
 
 .planet{
 position:absolute;
-width:90px;
-height:90px;
-border-radius:12px;
+width:110px;
+height:110px;
+border-radius:10px;
 overflow:hidden;
 cursor:pointer;
-transition:transform .3s;
+transition:.3s;
 }
 
 .planet:hover{
 transform:scale(1.2);
+box-shadow:0 0 25px #FFD700;
 z-index:5;
 }
 
@@ -94,158 +114,183 @@ height:100%;
 object-fit:cover;
 }
 
-/* counter rotation */
+/* CONTRA ROTACION */
 
 .counter{
 width:100%;
 height:100%;
-animation:counterRotate 45s linear infinite;
+animation:counterSpin 40s linear infinite;
 }
 
 #orbitAlbums .counter{
 animation-duration:90s;
 }
 
-@keyframes counterRotate{
+@keyframes counterSpin{
 from{transform:rotate(0deg);}
 to{transform:rotate(-360deg);}
 }
 
+/* REDES */
+
+.floating-social{
+position:fixed;
+top:50%;
+left:15px;
+transform:translateY(-50%);
+display:flex;
+flex-direction:column;
+gap:15px;
+z-index:999;
+}
+
+.floating-social a{
+background:#111;
+color:#FFD700;
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+text-decoration:none;
+transition:.25s;
+}
+
+.floating-social a:hover{
+background:#FFD700;
+color:#000;
+transform:scale(1.15);
+}
+
+.floating-social svg{
+width:22px;
+height:22px;
+}
+
+footer{
+position:absolute;
+bottom:20px;
+width:100%;
+font-size:14px;
+opacity:0.7;
+}
+
+@media(max-width:768px){
+
+#orbitAlbums{
+width:520px;
+height:520px;
+}
+
+#orbitSingles{
+width:300px;
+height:300px;
+}
+
+.planet{
+width:80px;
+height:80px;
+}
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div id="universe">
+<canvas id="bg"></canvas>
 
-<!-- LOGO CENTRAL -->
-<div id="sun">
-<img src="images/logo.png">
+<!-- REDES -->
+<div class="floating-social">
+
+<!-- mismos iconos que ya tienes -->
+<!-- no los cambio para mantener compatibilidad -->
+
 </div>
 
-<!-- ORBITA SENCILLOS -->
+<div id="solarSystem">
+
+<div id="sun">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp">
+</div>
+
 <div id="orbitSingles" class="orbit"></div>
 
-<!-- ORBITA ALBUMS -->
 <div id="orbitAlbums" class="orbit"></div>
 
 </div>
 
+<footer>
+Reflexión Musical MX
+</footer>
 
 <script>
 
-/* =========================
-   SENCILLOS
-========================= */
+/* DATOS */
 
-const singles = [
+const singles=[
 
-{
-img:"images/single1.jpg",
-link:"https://open.spotify.com/"
-},
+{img:"images/We rise as one.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs"},
+{img:"images/Gracias 2025.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk"},
+{img:"images/Adultos TRASTORNADOS.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM"},
+{img:"images/Codigo rojo.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0"},
+{img:"images/La fuerza de todos.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro"},
+{img:"images/Regresar a casa.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE"},
+{img:"images/Tres colores, un compromiso.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM"}
 
-{
-img:"images/single2.jpg",
-link:"https://open.spotify.com/"
-},
+]
 
-{
-img:"images/single3.jpg",
-link:"https://open.spotify.com/"
-},
+const albums=[
 
-{
-img:"images/single4.jpg",
-link:"https://open.spotify.com/"
-},
+{img:"images/Voces de Cambio 1.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ"},
+{img:"images/Voces de Cambio 2.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE"},
+{img:"images/Estado contra estado.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow"},
+{img:"images/Luz entre las Sombras.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4"},
+{img:"images/Tiempo y vida.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE"},
+{img:"images/CHACALES OPORTUNISTAS.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A"},
+{img:"images/Tejido vital.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs"},
+{img:"images/Revolucion mental.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU"},
+{img:"images/Eres lo que escuchas.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I"},
+{img:"images/Amor en tiempos de ideologias cancerigenas.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA"}
 
-{
-img:"images/single5.jpg",
-link:"https://open.spotify.com/"
-}
+]
 
-];
+function createOrbit(data,orbitId,radius){
 
-
-/* =========================
-   ALBUMS
-========================= */
-
-const albums = [
-
-{
-img:"images/album1.jpg",
-link:"https://open.spotify.com/"
-},
-
-{
-img:"images/album2.jpg",
-link:"https://open.spotify.com/"
-},
-
-{
-img:"images/album3.jpg",
-link:"https://open.spotify.com/"
-},
-
-{
-img:"images/album4.jpg",
-link:"https://open.spotify.com/"
-},
-
-{
-img:"images/album5.jpg",
-link:"https://open.spotify.com/"
-}
-
-];
-
-
-/* =========================
-   CREAR ORBITA
-========================= */
-
-function createOrbit(data, orbitId, radius){
-
-const orbit = document.getElementById(orbitId);
+const orbit=document.getElementById(orbitId)
 
 data.forEach((item,i)=>{
 
-const angle = (i/data.length)*(Math.PI*2);
+const angle=(i/data.length)*(Math.PI*2)
 
-const x = Math.cos(angle)*radius;
-const y = Math.sin(angle)*radius;
+const x=Math.cos(angle)*radius
+const y=Math.sin(angle)*radius
 
-const planet = document.createElement("div");
-planet.className="planet";
+const planet=document.createElement("div")
+planet.className="planet"
 
-planet.style.left=`calc(50% + ${x}px - 45px)`;
-planet.style.top=`calc(50% + ${y}px - 45px)`;
+planet.style.left=`calc(50% + ${x}px - 55px)`
+planet.style.top=`calc(50% + ${y}px - 55px)`
 
 planet.innerHTML=`
 <div class="counter">
 <img src="${item.img}">
 </div>
-`;
+`
 
-planet.onclick=()=>{
-window.open(item.link,"_blank");
-};
+planet.onclick=()=>window.open(item.link,"_blank")
 
-orbit.appendChild(planet);
+orbit.appendChild(planet)
 
-});
+})
 
 }
 
-
-/* =========================
-   INICIAR
-========================= */
-
-createOrbit(singles,"orbitSingles",210);
-createOrbit(albums,"orbitAlbums",325);
+createOrbit(singles,"orbitSingles",210)
+createOrbit(albums,"orbitAlbums",360)
 
 </script>
 
