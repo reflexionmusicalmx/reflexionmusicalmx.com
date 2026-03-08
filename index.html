@@ -5,6 +5,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
 
 <title>Reflexión Musical MX</title>
 
@@ -46,6 +47,8 @@ height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
+/* Transición suave por si cambia el tamaño de la ventana */
+transition: transform 0.3s ease; 
 }
 
 /* LOGO */
@@ -87,6 +90,12 @@ height:720px;
 animation:spin 95s linear infinite;
 }
 
+/* Mejora UX: Pausar órbitas al pasar el cursor */
+#orbitSingles:hover, #orbitSingles:hover .counter,
+#orbitAlbums:hover, #orbitAlbums:hover .counter {
+animation-play-state: paused;
+}
+
 @keyframes spin{
 from{transform:rotate(0deg);}
 to{transform:rotate(360deg);}
@@ -124,6 +133,7 @@ transform:scale(1.3);
 box-shadow:
 0 0 25px gold,
 0 0 60px rgba(255,215,0,.8);
+z-index: 100; /* Asegura que el disco resaltado quede por encima */
 }
 
 /* CONTRA ROTACION */
@@ -206,6 +216,20 @@ filter:blur(2px);
 opacity:.8;
 }
 
+/* RESPONSIVIDAD: Adaptación a Celulares */
+@media (max-width: 768px) {
+    #solarSystem {
+        transform: scale(0.45); /* Escala el sistema solar para que quepa en la pantalla */
+    }
+    .floating-social {
+        transform: scale(0.8) translateY(-60%);
+        left: 5px;
+    }
+    #sun {
+        width: 250px; /* Hace el logo un poco más visible en móviles en proporción al resto */
+    }
+}
+
 </style>
 
 </head>
@@ -215,21 +239,20 @@ opacity:.8;
 <canvas id="bg"></canvas>
 
 <div class="floating-social">
-
-<a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank">▶</a>
-<a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank">♫</a>
-<a href="https://www.facebook.com/reflexionmusicalmx" target="_blank">f</a>
-<a href="https://www.instagram.com/reflexionmusicalmx" target="_blank">◎</a>
-<a href="https://x.com/RMusicalMX" target="_blank">X</a>
-<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank">@</a>
-<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank">☁</a>
+<a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="YouTube">▶</a>
+<a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="TikTok">♫</a>
+<a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Facebook">f</a>
+<a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Instagram">◎</a>
+<a href="https://x.com/RMusicalMX" target="_blank" aria-label="X (Twitter)">X</a>
+<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Threads">@</a>
+<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="SoundCloud">☁</a>
 
 </div>
 
 <div id="solarSystem">
 
 <div id="sun">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
 </div>
 
 <div id="orbitSingles" class="orbit"></div>
@@ -246,6 +269,11 @@ const ctx=canvas.getContext("2d");
 
 canvas.width=innerWidth;
 canvas.height=innerHeight;
+
+window.addEventListener('resize', () => {
+    canvas.width=innerWidth;
+    canvas.height=innerHeight;
+});
 
 let stars=[];
 
@@ -306,9 +334,12 @@ planet.style.top=`calc(50% + ${y}px - 55px)`
 
 planet.onclick=()=>window.open(item.link,"_blank")
 
+// Mejora SEO/Accesibilidad: Extrayendo el nombre de la imagen para el texto alt
+const albumName = item.img.split('/').pop().replace('.webp', '');
+
 planet.innerHTML=`
 <div class="counter">
-<img src="${item.img}">
+<img src="${item.img}" alt="Portada de ${albumName}">
 </div>
 `
 
@@ -350,17 +381,17 @@ const albums=[
 createOrbit(singles,"orbitSingles",210)
 createOrbit(albums,"orbitAlbums",360)
 
-/* ESTRELLAS FUGACES CINEMATOGRAFICAS */
+/* ESTRELLAS FUGACES CINEMATOGRAFICAS CON ÍCONOS REALES */
 
 const platforms=[
 
-{svg:`<svg class="starIcon" viewBox="0 0 168 168"><circle cx="84" cy="84" r="80"/></svg>`,link:"https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c"},
+{svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`,link:"https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c"},
 
-{svg:`<svg class="starIcon" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/></svg>`,link:"https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478"},
+{svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 2.04C12 2.04 11.46 2 11.16 2 6.66 2 3 5.64 3 10.14c0 1.26.24 2.46.66 3.54 1.14 2.94 3.78 6.42 7.08 8.16.36.18.84.18 1.2 0 3.3-1.74 5.94-5.22 7.08-8.16.42-1.08.66-2.28.66-3.54C19.68 5.64 16.02 2 11.52 2h-.36zm.36 10.68c-1.38 0-2.52-1.14-2.52-2.52s1.14-2.52 2.52-2.52 2.52 1.14 2.52 2.52-1.14 2.52-2.52 2.52zm0-3.6c-.6 0-1.08.48-1.08 1.08s.48 1.08 1.08 1.08 1.08-.48 1.08-1.08-.48-1.08-1.08-1.08z"/></svg>`,link:"https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478"},
 
-{svg:`<svg class="starIcon" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60"/></svg>`,link:"https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx"},
+{svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`,link:"https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx"},
 
-{svg:`<svg class="starIcon" viewBox="0 0 100 100"><polygon points="30,20 80,50 30,80"/></svg>`,link:"https://www.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw"}
+{svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M21.582 6.186a2.506 2.506 0 00-1.762-1.766C18.265 4 12 4 12 4s-6.264 0-7.82.42a2.505 2.505 0 00-1.762 1.766C2 7.74 2 12 2 12s0 4.262.418 5.814a2.506 2.506 0 001.762 1.766C5.736 20 12 20 12 20s6.265 0 7.82-.42a2.506 2.506 0 001.762-1.766C22 16.262 22 12 22 12s0-4.26-.418-5.814zM9.996 15.005l.005-6 5.207 3.005-5.212 2.995z"/></svg>`,link:"https://www.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw"}
 
 ]
 
