@@ -4,28 +4,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+  
 <title>Reflex Musical MX</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
-
-body{
-background:#000;
-color:#FFD700;
-font-family:'Open Sans', sans-serif;
-margin:0;
-text-align:center;
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+  .then(() => console.log("Service Worker registrado"));
 }
-
-header{
-padding:40px 20px;
-}
-
-.logo{
-width:260px;
-margin-bottom:10px;
+</script>
 }
 
 h1{
@@ -167,5 +158,12 @@ Reflex Musical MX
 
 </footer>
 
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+  .then(() => console.log("Service Worker registrado"));
+}
+</script>
+  
 </body>
 </html>
