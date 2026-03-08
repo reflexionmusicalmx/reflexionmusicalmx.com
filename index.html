@@ -25,7 +25,7 @@ overflow:hidden;
 text-align:center;
 }
 
-/* PARTICULAS */
+/* CANVAS FONDO */
 
 #bg{
 position:fixed;
@@ -37,7 +37,7 @@ z-index:-1;
 pointer-events:none;
 }
 
-/* LOGO CENTRAL */
+/* SISTEMA SOLAR */
 
 #solarSystem{
 position:relative;
@@ -47,6 +47,8 @@ display:flex;
 align-items:center;
 justify-content:center;
 }
+
+/* LOGO */
 
 #sun{
 position:absolute;
@@ -61,7 +63,7 @@ width:100%;
 
 @keyframes pulse{
 0%{filter:drop-shadow(0 0 10px gold);}
-50%{filter:drop-shadow(0 0 35px gold);}
+50%{filter:drop-shadow(0 0 40px gold);}
 100%{filter:drop-shadow(0 0 10px gold);}
 }
 
@@ -69,8 +71,11 @@ width:100%;
 
 .orbit{
 position:absolute;
-border:1px dashed rgba(255,215,0,0.2);
 border-radius:50%;
+border:1px solid rgba(255,215,0,.15);
+box-shadow:
+0 0 15px rgba(255,215,0,.2) inset,
+0 0 20px rgba(255,215,0,.15);
 }
 
 #orbitSingles{
@@ -99,17 +104,14 @@ height:110px;
 border-radius:50%;
 overflow:hidden;
 cursor:pointer;
-transition:.3s;
+transition:.35s;
 display:flex;
 align-items:center;
 justify-content:center;
 background:#000;
-}
-
-.planet:hover{
-transform:scale(1.2);
-box-shadow:0 0 25px #FFD700;
-z-index:5;
+box-shadow:
+0 0 8px rgba(255,215,0,.6),
+0 0 20px rgba(255,215,0,.3);
 }
 
 .planet img{
@@ -117,6 +119,14 @@ width:100%;
 height:100%;
 object-fit:cover;
 border-radius:50%;
+}
+
+.planet:hover{
+transform:scale(1.25);
+box-shadow:
+0 0 20px #FFD700,
+0 0 50px rgba(255,215,0,.7);
+z-index:10;
 }
 
 /* CONTRA ROTACION */
@@ -136,7 +146,7 @@ from{transform:rotate(0deg);}
 to{transform:rotate(-360deg);}
 }
 
-/* REDES */
+/* REDES SOCIALES */
 
 .floating-social{
 position:fixed;
@@ -173,6 +183,8 @@ width:22px;
 height:22px;
 }
 
+/* FOOTER */
+
 footer{
 position:absolute;
 bottom:20px;
@@ -180,6 +192,8 @@ width:100%;
 font-size:14px;
 opacity:0.7;
 }
+
+/* MOVIL */
 
 @media(max-width:768px){
 
@@ -198,6 +212,10 @@ width:80px;
 height:80px;
 }
 
+#sun{
+width:150px;
+}
+
 }
 
 </style>
@@ -209,21 +227,36 @@ height:80px;
 <canvas id="bg"></canvas>
 
 <!-- REDES -->
+
 <div class="floating-social">
 
-<a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank"> ... </a>
+<a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank">
+<svg viewBox="0 0 24 24"><path fill="currentColor" d="M23.5 6.2s-.2-1.7-.9-2.4c-.9-.9-1.9-.9-2.3-1C16.9 2.5 12 2.5 12 2.5s-4.9 0-8.3.3c-.5.1-1.5.1-2.3 1C.7 4.5.5 6.2.5 6.2S.2 8.1.2 10v2c0 1.9.3 3.8.3 3.8s.2 1.7.9 2.4c.9.9 2 .9 2.5 1C5.7 19.5 12 19.5 12 19.5s4.9 0 8.3-.3c.5-.1 1.5-.1 2.3-1 .7-.7.9-2.4.9-2.4s.3-1.9.3-3.8v-2c0-1.9-.3-3.8-.3-3.8zM9.8 14.6V7.9l6.4 3.3-6.4 3.4z"/></svg>
+</a>
 
-<a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank"> ... </a>
+<a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank">
+<svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 2h3c.3 1.8 1.3 3.3 3 4v3c-1.6 0-3.1-.5-4-1.3V15a7 7 0 1 1-7-7c.4 0 .7 0 1 .1v3.1a4 4 0 1 0 4 3.8V2z"/></svg>
+</a>
 
-<a href="https://www.facebook.com/reflexionmusicalmx" target="_blank"> ... </a>
+<a href="https://www.facebook.com/reflexionmusicalmx" target="_blank">
+<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 22v-8h3l1-4h-4V7c0-1.2.3-2 2-2h2V1.5C16.6 1.2 15.3 1 14 1c-3 0-5 1.8-5 5v3H6v4h3v8h4z"/></svg>
+</a>
 
-<a href="https://www.instagram.com/reflexionmusicalmx" target="_blank"> ... </a>
+<a href="https://www.instagram.com/reflexionmusicalmx" target="_blank">
+<svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm6.5-.8a1.3 1.3 0 1 1-2.6 0 1.3 1.3 0 0 1 2.6 0z"/></svg>
+</a>
 
-<a href="https://x.com/RMusicalMX" target="_blank"> ... </a>
+<a href="https://x.com/RMusicalMX" target="_blank">
+<svg viewBox="0 0 24 24"><path fill="currentColor" d="M18 2h3l-7 8 8 12h-6l-5-7-6 7H2l8-9-8-11h6l4 6 6-6z"/></svg>
+</a>
 
-<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank"> ... </a>
+<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank">
+<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.5 0 9 2.6 9 7 0 4.1-3.1 6.8-8.1 7-1.4.1-2.3-.3-2.3-1.1 0-.7.6-1.1 1.5-1.1 3.7-.2 5.9-1.7 5.9-4.5 0-2.5-2.2-4.1-5.8-4.1-3.7 0-6 1.7-6 4.5 0 2 1.2 3.4 3.2 4 .8.2 1.1.6 1.1 1.1 0 .8-.8 1.2-1.8.9C4.7 15.6 2 12.9 2 9c0-4.3 3.6-7 10-7z"/></svg>
+</a>
 
-<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank"> ... </a>
+<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank">
+<svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 18h15a4 4 0 0 0 0-8 6 6 0 0 0-11-2A3.5 3.5 0 0 0 4 18z"/></svg>
+</a>
 
 </div>
 
@@ -234,21 +267,62 @@ height:80px;
 </div>
 
 <div id="orbitSingles" class="orbit"></div>
-
 <div id="orbitAlbums" class="orbit"></div>
 
 </div>
 
-<footer>
-Reflexión Musical MX
-</footer>
+<footer>Reflexión Musical MX</footer>
 
 <script>
 
-/* DATOS */
+/* ESTRELLAS */
+
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<120;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5,
+speed:Math.random()*0.2
+})
+}
+
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+ctx.fillStyle="rgba(255,215,0,0.8)"
+
+stars.forEach(s=>{
+
+ctx.beginPath()
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2)
+ctx.fill()
+
+s.y+=s.speed
+
+if(s.y>canvas.height){
+s.y=0
+s.x=Math.random()*canvas.width
+}
+
+})
+
+requestAnimationFrame(drawStars)
+
+}
+
+drawStars()
+
+/* MUSICA */
 
 const singles=[
-
 {img:"images/We rise as one.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs"},
 {img:"images/Gracias 2025.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk"},
 {img:"images/Adultos TRASTORNADOS.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM"},
@@ -256,11 +330,9 @@ const singles=[
 {img:"images/La fuerza de todos.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro"},
 {img:"images/Regresar a casa.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE"},
 {img:"images/Tres colores, un compromiso.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM"}
-
 ]
 
 const albums=[
-
 {img:"images/Voces de Cambio 1.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ"},
 {img:"images/Voces de Cambio 2.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE"},
 {img:"images/Estado contra estado.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow"},
@@ -271,7 +343,6 @@ const albums=[
 {img:"images/Revolucion mental.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU"},
 {img:"images/Eres lo que escuchas.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I"},
 {img:"images/Amor en tiempos de ideologias cancerigenas.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA"}
-
 ]
 
 function createOrbit(data,orbitId,radius){
@@ -291,11 +362,7 @@ planet.className="planet"
 planet.style.left=`calc(50% + ${x}px - 55px)`
 planet.style.top=`calc(50% + ${y}px - 55px)`
 
-planet.innerHTML=`
-<div class="counter">
-<img src="${item.img}">
-</div>
-`
+planet.innerHTML=`<div class="counter"><img src="${item.img}"></div>`
 
 planet.onclick=()=>window.open(item.link,"_blank")
 
