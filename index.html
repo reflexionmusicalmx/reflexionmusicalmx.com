@@ -1,119 +1,73 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Reflexión Musical MX</title>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFD700">
-<link rel="apple-touch-icon" href="images/icon-192.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-background:#000;
-color:#FFD700;
-font-family:'Open Sans',sans-serif;
 margin:0;
+background:black;
 overflow:hidden;
-text-align:center;
+font-family:sans-serif;
+color:white;
 }
 
-/* FONDO */
+/* CENTRO */
 
-#bg{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-1;
-pointer-events:none;
-}
-
-/* SISTEMA SOLAR */
-
-#solarSystem{
-position:relative;
-width:100vw;
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-/* LOGO */
-
-#sun{
+.center{
 position:absolute;
-width:200px;
-z-index:10;
-animation:pulse 4s infinite;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+z-index:5;
 }
 
-#sun img{
-width:100%;
+.center img{
+width:180px;
+animation:sunGlow 4s infinite alternate;
 }
 
-@keyframes pulse{
-0%{filter:drop-shadow(0 0 10px gold);}
-50%{filter:drop-shadow(0 0 40px gold);}
-100%{filter:drop-shadow(0 0 10px gold);}
+@keyframes sunGlow{
+from{filter:drop-shadow(0 0 20px gold);}
+to{filter:drop-shadow(0 0 60px gold);}
 }
 
 /* ORBITAS */
 
 .orbit{
 position:absolute;
+top:50%;
+left:50%;
+border:1px dashed rgba(255,255,255,0.1);
 border-radius:50%;
-border:1px solid rgba(255,215,0,.15);
-box-shadow:0 0 15px rgba(255,215,0,.2) inset;
+transform:translate(-50%,-50%);
 }
 
-#orbitSingles{
-width:420px;
-height:420px;
-animation:spin 40s linear infinite;
+.counter{
+width:100%;
+height:100%;
+animation:counterSpin linear infinite;
+pointer-events:none;
 }
 
-#orbitAlbums{
-width:720px;
-height:720px;
-animation:spin 90s linear infinite;
+@keyframes counterSpin{
+from{transform:rotate(360deg);}
+to{transform:rotate(0deg);}
 }
-
-@keyframes spin{
-from{transform:rotate(0deg);}
-to{transform:rotate(360deg);}
-}
-
-/* DISCOS */
 
 .planet{
 position:absolute;
-width:110px;
-height:110px;
+top:-30px;
+left:50%;
+transform:translateX(-50%);
+width:60px;
+height:60px;
 border-radius:50%;
 overflow:hidden;
 cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#000;
-box-shadow:0 0 10px rgba(255,215,0,.5);
-transition:.3s;
-}
-
-.planet:hover{
-transform:scale(1.25);
-box-shadow:0 0 25px #FFD700;
-z-index:10;
+pointer-events:auto;
 }
 
 .planet img{
@@ -123,257 +77,262 @@ object-fit:cover;
 border-radius:50%;
 }
 
-/* CONTRA ROTACION */
+/* ORBITAS ESPECIFICAS */
 
-.counter{
-width:100%;
-height:100%;
-animation:counterSpin 40s linear infinite;
-pointer-events:none;
+.orbit.albums{
+width:500px;
+height:500px;
+animation:spin 80s linear infinite;
 }
 
-#orbitAlbums .counter{
-animation-duration:90s;
+.orbit.singles{
+width:320px;
+height:320px;
+animation:spin 40s linear infinite;
 }
 
-@keyframes counterSpin{
-from{transform:rotate(0deg);}
-to{transform:rotate(-360deg);}
+@keyframes spin{
+from{transform:translate(-50%,-50%) rotate(0deg);}
+to{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
-/* REDES SOCIALES */
+/* BARRA REDES */
 
-.floating-social{
+.social{
 position:fixed;
+left:10px;
 top:50%;
-left:15px;
 transform:translateY(-50%);
 display:flex;
 flex-direction:column;
 gap:15px;
-z-index:999;
+z-index:1000;
 }
 
-.floating-social a{
-background:#111;
-color:#FFD700;
-width:45px;
-height:45px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
+.social a{
+font-size:26px;
 text-decoration:none;
-transition:.25s;
-}
-
-.floating-social a:hover{
-background:#FFD700;
-color:#000;
-transform:scale(1.15);
-}
-
-.floating-social svg{
-width:22px;
-height:22px;
 }
 
 /* ESTRELLAS FUGACES */
 
 .shooting-star{
 position:fixed;
-top:-80px;
-left:-80px;
-width:50px;
-height:50px;
-z-index:999;
+width:70px;
+height:70px;
 cursor:pointer;
+z-index:999;
 animation:shoot linear forwards;
 }
 
 .shooting-star img{
 width:100%;
-filter:drop-shadow(0 0 8px gold);
+filter:drop-shadow(0 0 10px white);
 }
 
 @keyframes shoot{
-
-0%{
-transform:translate(0,0);
-opacity:0;
-}
-
-10%{
-opacity:1;
-}
-
-100%{
-transform:translate(120vw,120vh);
-opacity:0;
-}
-
-}
-
-/* FOOTER */
-
-footer{
-position:absolute;
-bottom:20px;
-width:100%;
-font-size:14px;
-opacity:0.7;
-}
-
-/* MOVIL */
-
-@media(max-width:768px){
-
-#orbitAlbums{
-width:520px;
-height:520px;
-}
-
-#orbitSingles{
-width:300px;
-height:300px;
-}
-
-.planet{
-width:80px;
-height:80px;
-}
-
-#sun{
-width:150px;
-}
-
+0%{opacity:0;}
+10%{opacity:1;}
+100%{opacity:0;}
 }
 
 </style>
-
 </head>
 
 <body>
 
-<canvas id="bg"></canvas>
+<!-- LOGO CENTRAL -->
+
+<div class="center">
+<img src="images/logo.png">
+</div>
+
+<!-- ORBITA SENCILLOS -->
+
+<div class="orbit singles">
+<div class="counter" id="singlesOrbit"></div>
+</div>
+
+<!-- ORBITA ALBUMS -->
+
+<div class="orbit albums">
+<div class="counter" id="albumsOrbit"></div>
+</div>
 
 <!-- REDES -->
 
-<div class="floating-social">
+<div class="social">
 
-<a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank">
-<svg viewBox="0 0 24 24"><path fill="currentColor" d="M23.5 6.2s-.2-1.7-.9-2.4c-.9-.9-1.9-.9-2.3-1C16.9 2.5 12 2.5 12 2.5s-4.9 0-8.3.3c-.5.1-1.5.1-2.3 1C.7 4.5.5 6.2.5 6.2S.2 8.1.2 10v2c0 1.9.3 3.8.3 3.8s.2 1.7.9 2.4c.9.9 2 .9 2.5 1C5.7 19.5 12 19.5 12 19.5s4.9 0 8.3-.3c.5-.1 1.5-.1 2.3-1 .7-.7.9-2.4.9-2.4s.3-1.9.3-3.8v-2c0-1.9-.3-3.8-.3-3.8zM9.8 14.6V7.9l6.4 3.3-6.4 3.4z"/></svg>
-</a>
+<a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN" target="_blank">🟢</a>
 
-<a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank">
-<svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 2h3c.3 1.8 1.3 3.3 3 4v3c-1.6 0-3.1-.5-4-1.3V15a7 7 0 1 1-7-7c.4 0 .7 0 1 .1v3.1a4 4 0 1 0 4 3.8V2z"/></svg>
-</a>
+<a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank">🍎</a>
 
-<a href="https://www.facebook.com/reflexionmusicalmx" target="_blank">
-<svg viewBox="0 0 24 24"><path fill="currentColor" d="M13 22v-8h3l1-4h-4V7c0-1.2.3-2 2-2h2V1.5C16.6 1.2 15.3 1 14 1c-3 0-5 1.8-5 5v3H6v4h3v8h4z"/></svg>
-</a>
+<a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank">🟡</a>
 
-<a href="https://www.instagram.com/reflexionmusicalmx" target="_blank">
-<svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm6.5-.8a1.3 1.3 0 1 1-2.6 0 1.3 1.3 0 0 1 2.6 0z"/></svg>
-</a>
+<a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw?si=ohwohGPX0bFDOOSV" target="_blank">🎵</a>
+
+<a href="https://www.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank">📺</a>
 
 </div>
-
-<div id="solarSystem">
-
-<div id="sun">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp">
-</div>
-
-<div id="orbitSingles" class="orbit"></div>
-<div id="orbitAlbums" class="orbit"></div>
-
-</div>
-
-<footer>Reflexión Musical MX</footer>
 
 <script>
 
-/* ESTRELLAS FONDO */
+/* =========================
+   SENCILLOS
+========================= */
 
-const canvas=document.getElementById("bg");
-const ctx=canvas.getContext("2d");
+const singles=[
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+{img:"images/sencillos/s1.jpg",link:"#"},
+{img:"images/sencillos/s2.jpg",link:"#"},
+{img:"images/sencillos/s3.jpg",link:"#"},
+{img:"images/sencillos/s4.jpg",link:"#"},
+{img:"images/sencillos/s5.jpg",link:"#"},
+{img:"images/sencillos/s6.jpg",link:"#"},
+{img:"images/sencillos/s7.jpg",link:"#"},
+{img:"images/sencillos/s8.jpg",link:"#"},
+{img:"images/sencillos/s9.jpg",link:"#"},
+{img:"images/sencillos/s10.jpg",link:"#"},
+{img:"images/sencillos/s11.jpg",link:"#"},
+{img:"images/sencillos/s12.jpg",link:"#"},
+{img:"images/sencillos/s13.jpg",link:"#"},
+{img:"images/sencillos/s14.jpg",link:"#"},
+{img:"images/sencillos/s15.jpg",link:"#"},
+{img:"images/sencillos/s16.jpg",link:"#"},
+{img:"images/sencillos/s17.jpg",link:"#"},
+{img:"images/sencillos/s18.jpg",link:"#"},
+{img:"images/sencillos/s19.jpg",link:"#"},
+{img:"images/sencillos/s20.jpg",link:"#"},
+{img:"images/sencillos/s21.jpg",link:"#"},
+{img:"images/sencillos/s22.jpg",link:"#"},
+{img:"images/sencillos/s23.jpg",link:"#"},
+{img:"images/sencillos/s24.jpg",link:"#"},
+{img:"images/sencillos/s25.jpg",link:"#"},
+{img:"images/sencillos/s26.jpg",link:"#"},
+{img:"images/sencillos/s27.jpg",link:"#"},
+{img:"images/sencillos/s28.jpg",link:"#"},
+{img:"images/sencillos/s29.jpg",link:"#"},
+{img:"images/sencillos/s30.jpg",link:"#"}
 
-let stars=[];
-
-for(let i=0;i<120;i++){
-
-stars.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*1.5,
-speed:Math.random()*0.2
-
-})
-
-}
-
-function drawStars(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-ctx.fillStyle="rgba(255,215,0,0.8)"
-
-stars.forEach(s=>{
-
-ctx.beginPath()
-ctx.arc(s.x,s.y,s.r,0,Math.PI*2)
-ctx.fill()
-
-s.y+=s.speed
-
-if(s.y>canvas.height){
-
-s.y=0
-s.x=Math.random()*canvas.width
-
-}
-
-})
-
-requestAnimationFrame(drawStars)
-
-}
-
-drawStars()
-
-/* ESTRELLAS FUGACES PLATAFORMAS */
-
-const platforms=[
-{
-icon:"https://cdn-icons-png.flaticon.com/512/174/174872.png",
-link:"https://open.spotify.com"
-},
-{
-icon:"https://cdn-icons-png.flaticon.com/512/732/732245.png",
-link:"https://music.apple.com"
-},
-{
-icon:"https://cdn-icons-png.flaticon.com/512/5968/5968906.png",
-link:"https://music.amazon.com"
-},
-{
-icon:"https://cdn-icons-png.flaticon.com/512/733/733635.png",
-link:"https://soundcloud.com/reflexionmusicalmx"
-}
 ]
 
-function createShootingStar(){
+/* =========================
+   ALBUMS
+========================= */
+
+const albums=[
+
+{img:"images/albums/a1.jpg",link:"#"},
+{img:"images/albums/a2.jpg",link:"#"},
+{img:"images/albums/a3.jpg",link:"#"},
+{img:"images/albums/a4.jpg",link:"#"},
+{img:"images/albums/a5.jpg",link:"#"},
+{img:"images/albums/a6.jpg",link:"#"},
+{img:"images/albums/a7.jpg",link:"#"},
+{img:"images/albums/a8.jpg",link:"#"},
+{img:"images/albums/a9.jpg",link:"#"},
+{img:"images/albums/a10.jpg",link:"#"},
+{img:"images/albums/a11.jpg",link:"#"},
+{img:"images/albums/a12.jpg",link:"#"},
+{img:"images/albums/a13.jpg",link:"#"},
+{img:"images/albums/a14.jpg",link:"#"},
+{img:"images/albums/a15.jpg",link:"#"},
+{img:"images/albums/a16.jpg",link:"#"},
+{img:"images/albums/a17.jpg",link:"#"},
+{img:"images/albums/a18.jpg",link:"#"},
+{img:"images/albums/a19.jpg",link:"#"},
+{img:"images/albums/a20.jpg",link:"#"},
+{img:"images/albums/a21.jpg",link:"#"},
+{img:"images/albums/a22.jpg",link:"#"},
+{img:"images/albums/a23.jpg",link:"#"},
+{img:"images/albums/a24.jpg",link:"#"},
+{img:"images/albums/a25.jpg",link:"#"},
+{img:"images/albums/a26.jpg",link:"#"},
+{img:"images/albums/a27.jpg",link:"#"},
+{img:"images/albums/a28.jpg",link:"#"},
+{img:"images/albums/a29.jpg",link:"#"},
+{img:"images/albums/a30.jpg",link:"#"}
+
+]
+
+function createOrbit(items,container){
+
+const orbit=document.getElementById(container)
+
+const total=items.length
+const step=360/total
+
+items.forEach((item,i)=>{
+
+const angle=i*step
+
+const planet=document.createElement("div")
+planet.className="planet"
+planet.style.transform=`rotate(${angle}deg) translateX(160px) rotate(-${angle}deg)`
+
+planet.innerHTML=`<img src="${item.img}">`
+
+planet.onclick=()=>window.open(item.link,"_blank")
+
+orbit.appendChild(planet)
+
+})
+
+}
+
+createOrbit(singles,"singlesOrbit")
+createOrbit(albums,"albumsOrbit")
+
+/* =========================
+   ESTRELLAS FUGACES
+========================= */
+
+const platforms=[
+
+{
+icon:"images/spotify.png",
+link:"https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN"
+},
+
+{
+icon:"images/apple.png",
+link:"https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478"
+},
+
+{
+icon:"images/amazon.png",
+link:"https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx"
+},
+
+{
+icon:"images/ytmusic.png",
+link:"https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw?si=ohwohGPX0bFDOOSV"
+},
+
+{
+icon:"images/youtube.png",
+link:"https://www.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw"
+}
+
+]
+
+function createStar(){
 
 const p=platforms[Math.floor(Math.random()*platforms.length)]
 
 const star=document.createElement("div")
-
 star.className="shooting-star"
-star.style.animationDuration=(5+Math.random()*4)+"s"
+
+const startX=Math.random()*window.innerWidth
+const startY=-100
+
+const endX=Math.random()*window.innerWidth
+const endY=window.innerHeight+100
+
+star.style.left=startX+"px"
+star.style.top=startY+"px"
+
+star.style.animationDuration=(4+Math.random()*4)+"s"
 
 star.innerHTML=`<img src="${p.icon}">`
 
@@ -381,15 +340,17 @@ star.onclick=()=>window.open(p.link,"_blank")
 
 document.body.appendChild(star)
 
-setTimeout(()=>{
+star.animate([
+{transform:`translate(0,0)`},
+{transform:`translate(${endX-startX}px,${endY-startY}px)`}
+],
+{duration:7000,easing:"linear"})
 
-star.remove()
-
-},9000)
+setTimeout(()=>{star.remove()},7000)
 
 }
 
-setInterval(createShootingStar,7000)
+setInterval(createStar,5000)
 
 </script>
 
