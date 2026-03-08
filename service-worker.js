@@ -1,4 +1,4 @@
-const CACHE_NAME = "reflex-musical-cache-v1";
+const CACHE_NAME = "reflexión-musical-cache-v1";
 
 const urlsToCache = [
   "/",
