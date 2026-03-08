@@ -110,9 +110,133 @@ width:22px;
 height:22px;
 }
 
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:all .8s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+  
 </style>
 
 </head>
+
+  <script>
+
+const reveals = document.querySelectorAll(".card");
+
+function revealOnScroll(){
+const windowHeight = window.innerHeight;
+
+reveals.forEach(el => {
+
+const top = el.getBoundingClientRect().top;
+
+if(top < windowHeight - 100){
+el.classList.add("reveal","active");
+}
+
+});
+
+}
+
+window.addEventListener("scroll", revealOnScroll);
+
+</script>
+
+<script>
+
+const cards = document.querySelectorAll(".card");
+
+cards.forEach(card => {
+
+card.addEventListener("mousemove", e => {
+
+const rect = card.getBoundingClientRect();
+
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+
+card.style.transform =
+`rotateX(${-(y-rect.height/2)/18}deg)
+ rotateY(${(x-rect.width/2)/18}deg)`;
+
+});
+
+card.addEventListener("mouseleave", () => {
+
+card.style.transform = "rotateX(0) rotateY(0)";
+
+});
+
+});
+
+</script>
+
+<canvas id="bg"></canvas>
+
+#bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+<script>
+
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<60;i++){
+
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2+1,
+d:Math.random()*0.5
+});
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="rgba(255,215,0,0.3)";
+
+particles.forEach(p=>{
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+
+p.y+=p.d;
+
+if(p.y>canvas.height){
+p.y=0;
+p.x=Math.random()*canvas.width;
+}
+
+});
+
+requestAnimationFrame(draw);
+
+}
+
+draw();
+
+</script>
 
 <body>
 
@@ -163,43 +287,43 @@ height:22px;
 <div class="grid">
 
   <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ" target="_blank">
-<img src="images/Voces de Cambio 1.webp">
+<img src="images/Voces de Cambio 1.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE" target="_blank">
-<img src="images/Voces de Cambio 2.webp">
+<img src="images/Voces de Cambio 2.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow" target="_blank">
-<img src="images/Estado contra estado.webp">
+<img src="images/Estado contra estado.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4" target="_blank">
-<img src="images/Luz entre las Sombras.webp">
+<img src="images/Luz entre las Sombras.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE" target="_blank">
-<img src="images/Tiempo y vida.webp">
+<img src="images/Tiempo y vida.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A" target="_blank">
-<img src="images/CHACALES OPORTUNISTAS.webp">
+<img src="images/CHACALES OPORTUNISTAS.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs" target="_blank">
-<img src="images/Tejido vital.webp">
+<img src="images/Tejido vital.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU" target="_blank">
-<img src="images/Revolucion mental.webp">
+<img src="images/Revolucion mental.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I" target="_blank">
-<img src="images/Eres lo que escuchas.webp">
+<img src="images/Eres lo que escuchas.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA" target="_blank">
-<img src="images/Amor en tiempos de ideologias cancerigenas.webp">
+<img src="images/Amor en tiempos de ideologias cancerigenas.webp" loading="lazy">
 </a>
 
 </div>
@@ -209,31 +333,31 @@ height:22px;
 <div class="grid">
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs" target="_blank">
-<img src="images/We rise as one.webp">
+<img src="images/We rise as one.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk" target="_blank">
-<img src="images/Gracias 2025.webp">
+<img src="images/Gracias 2025.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM" target="_blank">
-<img src="images/Adultos TRASTORNADOS.webp">
+<img src="images/Adultos TRASTORNADOS.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0" target="_blank">
-<img src="images/Codigo rojo.webp">
+<img src="images/Codigo rojo.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro" target="_blank">
-<img src="images/La fuerza de todos.webp">
+<img src="images/La fuerza de todos.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE" target="_blank">
-<img src="images/Regresar a casa.webp">
+<img src="images/Regresar a casa.webp" loading="lazy">
 </a>
 
 <a class="card" href="https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM" target="_blank">
-<img src="images/Tres colores, un compromiso.webp">
+<img src="images/Tres colores, un compromiso.webp" loading="lazy">
 </a>
 
 </div>
