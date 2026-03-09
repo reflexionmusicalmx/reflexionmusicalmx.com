@@ -187,15 +187,19 @@ pointer-events: auto;
 .starIconWrapper {
 position: absolute;
 top: 50%; left: 50%;
-width: 35px; height: 35px; /* Ligeramente más pequeños para encajar mejor */
+height: 35px; /* Altura fija, anchura automática para que los textos quepan */
+width: auto;
 transform: translate(-50%, -50%);
 z-index: 2;
 filter: drop-shadow(0 0 10px gold);
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
 .starIcon {
-width: 100%;
 height: 100%;
+width: auto;
 fill: #FFD700;
 pointer-events: none;
 }
@@ -210,6 +214,37 @@ transform-origin: left center;
 filter: blur(1px);
 opacity: 0.8;
 pointer-events: none;
+}
+
+/* NUEVO: DESTELLOS DE ESTRELLAS (SUPERNOVAS) */
+.supernova {
+position: fixed;
+width: 3px;
+height: 3px;
+background: #fff;
+border-radius: 50%;
+box-shadow: 0 0 15px 5px gold, 0 0 30px 10px rgba(255, 215, 0, 0.5);
+animation: burst 2s ease-in-out forwards;
+z-index: 5;
+pointer-events: none;
+}
+
+.supernova::before, .supernova::after {
+content: '';
+position: absolute;
+background: gold;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+border-radius: 50%;
+}
+
+.supernova::before { width: 45px; height: 1px; }
+.supernova::after { width: 1px; height: 45px; }
+
+@keyframes burst {
+0% { transform: scale(0); opacity: 0; }
+50% { transform: scale(1.5); opacity: 1; }
+100% { transform: scale(0); opacity: 0; }
 }
 
 /* RESPONSIVIDAD */
@@ -264,11 +299,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let galaxies = [];
     function generateGalaxies() {
         galaxies = [];
-        for(let i=0; i<4; i++){
+        // Se generarán de 4 a 6 nebulosas para llenar mejor el espacio
+        const count = Math.floor(Math.random() * 3) + 4;
+        for(let i=0; i<count; i++){
             galaxies.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                r: Math.random() * 300 + 150
+                // Radios mucho más grandes
+                r: Math.random() * 400 + 200 
             });
         }
     }
@@ -291,9 +329,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function drawStars(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
+        // Dibujar Galaxias (ahora con mayor visibilidad)
         galaxies.forEach(g => {
             let grad = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, g.r);
-            grad.addColorStop(0, "rgba(255, 215, 0, 0.04)"); 
+            // Opacidad aumentada a 0.20 para que sean notorias y un toque naranja para dar profundidad
+            grad.addColorStop(0, "rgba(255, 215, 0, 0.20)"); 
+            grad.addColorStop(0.5, "rgba(255, 165, 0, 0.05)"); 
             grad.addColorStop(1, "rgba(0, 0, 0, 0)"); 
             ctx.fillStyle = grad;
             ctx.beginPath();
@@ -301,6 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.fill();
         });
 
+        // Dibujar Estrellas normales
         stars.forEach(st => {
             st.opacity += st.fadeStep;
             if(st.opacity >= 1 || st.opacity <= 0.1) {
@@ -321,6 +363,23 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(drawStars);
     }
     drawStars();
+
+    /* NUEVO: DESTELLOS DE ESTRELLAS (SUPERNOVAS) DE UNO POR UNO */
+    function spawnSupernova() {
+        const flash = document.createElement("div");
+        flash.className = "supernova";
+        flash.style.left = (Math.random() * window.innerWidth) + "px";
+        flash.style.top = (Math.random() * window.innerHeight) + "px";
+        document.body.appendChild(flash);
+        
+        // El destello dura 2 segundos, luego se elimina
+        setTimeout(() => flash.remove(), 2000);
+        
+        // Programa el siguiente destello en un tiempo aleatorio entre 3 y 8 segundos
+        setTimeout(spawnSupernova, 3000 + Math.random() * 5000);
+    }
+    // Iniciar el primer destello después de 2 segundos
+    setTimeout(spawnSupernova, 2000);
 
     /* ORBITAS */
     function createOrbit(data,id,radius){
@@ -371,14 +430,14 @@ document.addEventListener("DOMContentLoaded", () => {
     createOrbit(singles,"orbitSingles",210)
     createOrbit(albums,"orbitAlbums",360)
 
-    /* ESTRELLAS FUGACES CON ÍCONOS OFICIALES Y MEJORADOS */
+    /* ESTRELLAS FUGACES */
     const platforms=[
         // Spotify
         {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`,link:"https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c"},
-        // Apple Music (Logo Oficial de Apple)
+        // Apple Music
         {svg:`<svg class="starIcon" viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`,link:"https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478"},
-        // Amazon Music (Logo Oficial 'a' de Amazon)
-        {svg:`<svg class="starIcon" viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`,link:"https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx"},
+        // NUEVO: Amazon Music Text Logo (Súper reconocible y legible)
+        {svg:`<svg class="starIcon" viewBox="0 0 120 50"><text x="60" y="26" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="28" fill="#FFD700">amazon</text><path d="M 12 34 Q 60 52 105 34" fill="none" stroke="#FFD700" stroke-width="4" stroke-linecap="round"/><path d="M 92 31 L 107 33 L 99 44" fill="none" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/></svg>`,link:"https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx"},
         // YouTube
         {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M21.582 6.186a2.506 2.506 0 00-1.762-1.766C18.265 4 12 4 12 4s-6.264 0-7.82.42a2.505 2.505 0 00-1.762 1.766C2 7.74 2 12 2 12s0 4.262.418 5.814a2.506 2.506 0 001.762 1.766C5.736 20 12 20 12 20s6.265 0 7.82-.42a2.506 2.506 0 001.762-1.766C22 16.262 22 12 22 12s0-4.26-.418-5.814zM9.996 15.005l.005-6 5.207 3.005-5.212 2.995z"/></svg>`,link:"https://www.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw"}
     ]
