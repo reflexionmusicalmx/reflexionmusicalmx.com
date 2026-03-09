@@ -485,6 +485,15 @@ window.addEventListener('load', () => {
     }, 500); 
 });
 
+// Salvavidas por si falla la carga inicial
+setTimeout(() => {
+    const loader = document.getElementById('loader');
+    if(loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 800);
+    }
+}, 4000);
+
 document.addEventListener("DOMContentLoaded", () => {
 
     /* LÓGICA DEL MODAL DE BIOGRAFÍA Y AUDIO */
