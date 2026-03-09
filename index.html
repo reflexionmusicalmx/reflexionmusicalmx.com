@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
 
 <title>Reflexión Musical MX</title>
@@ -16,25 +16,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* BLOQUEO ESTRUCTURAL PARA MÓVILES */
+/* BLOQUEO TOTAL PARA MÓVILES */
 html, body {
 background:#000;
 color:#FFD700;
 font-family:'Open Sans',sans-serif;
 margin:0;
 padding:0;
-width: 100%;
-height: 100%;
-overflow:hidden;
-text-align:center;
+width: 100vw;
+height: 100dvh; /* Usa la altura dinámica del celular */
+overflow: hidden;
+position: fixed; /* Congela la pantalla por completo */
+top: 0; left: 0;
 overscroll-behavior: none;
+}
+
+/* CAJA DE CRISTAL PARA ESTRELLAS (Evita que el celular tiemble) */
+#starContainer {
+position: absolute;
+top: 0; left: 0;
+width: 100vw;
+height: 100dvh;
+overflow: hidden; /* Corta cualquier estrella que se salga */
+pointer-events: none; /* Deja pasar los clics hacia el fondo */
+z-index: 1000;
 }
 
 /* PANTALLA DE CARGA */
 #loader {
 position: fixed;
 top: 0; left: 0;
-width: 100%; height: 100%;
+width: 100vw; height: 100dvh;
 background: #000;
 z-index: 99999;
 display: flex;
@@ -60,10 +72,8 @@ font-size: 14px;
 /* FONDO */
 #bg{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+top:0; left:0;
+width:100%; height:100%;
 z-index:-1;
 pointer-events:none;
 }
@@ -72,8 +82,7 @@ pointer-events:none;
 #solarSystem{
 position:absolute;
 top:0; left:0;
-width:100%;
-height:100%;
+width:100%; height:100%;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -90,13 +99,8 @@ cursor: pointer;
 transition: transform 0.3s ease;
 }
 
-#sun:hover {
-transform: scale(1.1);
-}
-
-#sun img{
-width:100%;
-}
+#sun:hover { transform: scale(1.1); }
+#sun img{ width:100%; }
 
 @keyframes pulse{
 0%{filter:drop-shadow(0 0 15px gold);}
@@ -121,10 +125,7 @@ justify-content: center;
 transform: translateZ(0);
 }
 
-.modal.show {
-display: flex; 
-opacity: 1;
-}
+.modal.show { display: flex; opacity: 1; }
 
 .modal-content {
 background: #0a0a0a; 
@@ -133,7 +134,7 @@ padding: 40px;
 border-radius: 15px;
 max-width: 650px; 
 width: 85%;
-max-height: 85vh;
+max-height: 80dvh;
 overflow-y: auto;
 overscroll-behavior: contain;
 -webkit-overflow-scrolling: touch;
@@ -164,62 +165,27 @@ margin-bottom: 25px;
 
 .close-modal {
 position: absolute; 
-right: 25px; 
-top: 20px;
-color: #FFD700; 
-font-size: 32px; 
-font-weight: bold; 
-cursor: pointer;
-transition: 0.2s;
-z-index: 10;
+right: 25px; top: 20px;
+color: #FFD700; font-size: 32px; font-weight: bold; 
+cursor: pointer; transition: 0.2s; z-index: 10;
 }
-
 .close-modal:hover { color: #fff; transform: scale(1.1); }
 
-/* CONTROLES DE AUDIO (¡NUEVO DISEÑO INFALIBLE!) */
+/* CONTROLES DE AUDIO */
 .audio-controls {
-background: #111;
-border: 1px solid #FFD700;
-border-radius: 10px;
-padding: 12px 20px;
-margin-top: 25px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 15px;
-box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+background: #111; border: 1px solid #FFD700; border-radius: 10px;
+padding: 12px 20px; margin-top: 25px; display: flex; align-items: center;
+justify-content: space-between; gap: 15px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
 }
-
-.audio-controls span {
-font-size: 22px;
-cursor: pointer;
-user-select: none;
-}
-
-.audio-controls .vol-label {
-font-size: 13px;
-font-weight: bold;
-color: #FFD700;
-letter-spacing: 1px;
-cursor: default;
-}
-
-#volumeSlider {
-flex-grow: 1;
-accent-color: #FFD700; /* Obliga a los celulares a pintarlo de dorado */
-height: 6px;
-background: #333;
-border-radius: 5px;
-outline: none;
-cursor: pointer;
-}
+.audio-controls span { font-size: 22px; cursor: pointer; user-select: none; }
+.audio-controls .vol-label { font-size: 13px; font-weight: bold; color: #FFD700; letter-spacing: 1px; cursor: default; }
+#volumeSlider { flex-grow: 1; accent-color: #FFD700; height: 6px; background: #333; border-radius: 5px; outline: none; cursor: pointer; }
 
 /* ORBITAS */
 .orbit{ position:absolute; border-radius:50%; border:1px solid rgba(255,215,0,.15); pointer-events:none; }
 #orbitSingles{ width:420px; height:420px; animation:spin 45s linear infinite; }
 #orbitAlbums{ width:720px; height:720px; animation:spin 95s linear infinite; }
 #orbitSingles:hover, #orbitSingles:hover .counter, #orbitAlbums:hover, #orbitAlbums:hover .counter { animation-play-state: paused; }
-
 @keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
 /* DISCOS */
@@ -245,20 +211,20 @@ transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0
 .planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
 
 /* REDES LATERALES */
-.floating-social{ position:fixed; top:50%; left:15px; transform:translateY(-50%); display:flex; flex-direction:column; gap:15px; z-index:999; }
+.floating-social{ position:absolute; top:50%; left:15px; transform:translateY(-50%); display:flex; flex-direction:column; gap:15px; z-index:999; }
 .floating-social a{ background:#111; color:#FFD700; width:45px; height:45px; display:flex; align-items:center; justify-content:center; border-radius:10px; text-decoration:none; transition:.25s; padding: 10px; box-sizing: border-box; }
 .floating-social svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
 .floating-social a:hover{ background:#FFD700; color:#000; transform:scale(1.2); }
 .floating-social a:hover svg { fill: #000; }
 
 /* ESTRELLAS FUGACES */
-.shootingStar { position: fixed; width: 70px; height: 70px; z-index: 1000; cursor: pointer; pointer-events: auto; }
+.shootingStar { position: absolute; width: 70px; height: 70px; cursor: pointer; pointer-events: auto; }
 .starIconWrapper { position: absolute; top: 50%; left: 50%; width: 35px; height: 35px; transform: translate(-50%, -50%); z-index: 2; filter: drop-shadow(0 0 10px gold); display: flex; align-items: center; justify-content: center; }
 .starIcon { width: 100%; height: 100%; fill: #FFD700; pointer-events: none; }
 .tail { position: absolute; top: 50%; left: 50%; height: 3px; background: linear-gradient(90deg, gold, transparent); transform-origin: left center; filter: blur(1px); opacity: 0.8; pointer-events: none; }
 
 /* DESTELLOS DE ESTRELLAS */
-.supernova { position: fixed; width: 4px; height: 4px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8); animation: burst 2.5s ease-in-out forwards; z-index: 5; pointer-events: none; }
+.supernova { position: absolute; width: 4px; height: 4px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8); animation: burst 2.5s ease-in-out forwards; z-index: 5; pointer-events: none; }
 .supernova::before, .supernova::after { content: ''; position: absolute; background: radial-gradient(circle, gold 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
 .supernova::before { width: 60px; height: 2px; } .supernova::after { width: 2px; height: 60px; }
 .ray-x { position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
@@ -269,7 +235,7 @@ transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0
 @media (max-width: 768px) {
     #solarSystem { transform: scale(0.45); }
     .floating-social { transform: scale(0.8) translateY(-60%); left: 5px; }
-    .modal-content { padding: 25px; width: 90%; max-height: 75vh; }
+    .modal-content { padding: 25px; width: 90%; max-height: 75dvh; }
     .close-modal { right: 15px; top: 10px; }
 }
 </style>
@@ -310,6 +276,8 @@ transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0
 
 <canvas id="bg"></canvas>
 
+<div id="starContainer"></div>
+
 <div class="floating-social">
 <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="YouTube">
 <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
@@ -332,6 +300,14 @@ transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0
 <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="SoundCloud">
 <span style="font-size: 26px; line-height: 1; padding-bottom: 2px;">☁</span>
 </a>
+</div>
+
+<div id="solarSystem">
+<div id="sun" aria-label="Abrir biografía">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
+</div>
+<div id="orbitSingles" class="orbit"></div>
+<div id="orbitAlbums" class="orbit"></div>
 </div>
 
 <script>
@@ -357,14 +333,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const sun = document.getElementById("sun");
     const closeModal = document.querySelector(".close-modal");
     const bioAudio = document.getElementById("bioAudio"); 
-    
     const volumeSlider = document.getElementById("volumeSlider");
     const muteBtn = document.getElementById("muteBtn");
+    const starContainer = document.getElementById("starContainer"); // Contenedor de las estrellas
     
-    // Validar que los elementos existan antes de asignar valores
     if(volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
-
         volumeSlider.addEventListener("input", (e) => {
             bioAudio.volume = e.target.value;
             muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
@@ -399,7 +373,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.classList.add("show"); 
         if(bioAudio) {
             bioAudio.play().catch(error => {
-                console.log("El navegador bloqueó el autoplay del audio:", error);
+                console.log("El navegador bloqueó el autoplay:", error);
             });
         }
     };
@@ -464,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flash.innerHTML = '<div class="ray-x"></div>'; 
         flash.style.left = (Math.random() * window.innerWidth) + "px";
         flash.style.top = (Math.random() * window.innerHeight) + "px";
-        document.body.appendChild(flash);
+        starContainer.appendChild(flash); // Añadido a la caja de cristal
         
         setTimeout(() => flash.remove(), 2500);
         setTimeout(spawnSupernova, 3000 + Math.random() * 5000);
@@ -551,7 +525,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="tail"></div>
                 <div class="starIconWrapper">${p.svg}</div>
             `;
-            document.body.appendChild(star);
+            starContainer.appendChild(star); // Añadido a la caja de cristal
 
             let startX, startY, endX, endY;
             const edge = Math.floor(Math.random() * 4); 
