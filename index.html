@@ -27,7 +27,7 @@ width: 100%;
 height: 100%;
 overflow:hidden;
 text-align:center;
-overscroll-behavior: none; /* Evita el rebote elástico en móviles */
+overscroll-behavior: none;
 }
 
 /* PANTALLA DE CARGA */
@@ -70,7 +70,7 @@ pointer-events:none;
 
 /* SISTEMA SOLAR */
 #solarSystem{
-position:absolute; /* Cambiado a absoluto para mayor estabilidad en móvil */
+position:absolute;
 top:0; left:0;
 width:100%;
 height:100%;
@@ -104,7 +104,7 @@ width:100%;
 100%{filter:drop-shadow(0 0 15px gold);}
 }
 
-/* MODAL DE BIOGRAFÍA (Sólido y Acelerado por Hardware) */
+/* MODAL DE BIOGRAFÍA */
 .modal {
 display: none; 
 position: fixed; 
@@ -117,7 +117,6 @@ opacity: 0;
 transition: opacity 0.4s ease;
 align-items: center; 
 justify-content: center;
-/* ACELERACIÓN POR HARDWARE: Evita que el fondo mueva esta ventana */
 -webkit-transform: translateZ(0);
 transform: translateZ(0);
 }
@@ -134,9 +133,9 @@ padding: 40px;
 border-radius: 15px;
 max-width: 650px; 
 width: 85%;
-max-height: 85vh; /* Límite de altura para móviles */
-overflow-y: auto; /* Si el texto no cabe, se puede hacer scroll interior */
-overscroll-behavior: contain; /* Bloquea el scroll del fondo */
+max-height: 85vh;
+overflow-y: auto;
+overscroll-behavior: contain;
 -webkit-overflow-scrolling: touch;
 text-align: left; 
 position: relative;
@@ -148,14 +147,8 @@ line-height: 1.7;
 transform: translateZ(0);
 }
 
-/* Scrollbar personalizada para la biografía */
-.modal-content::-webkit-scrollbar {
-width: 6px;
-}
-.modal-content::-webkit-scrollbar-thumb {
-background: rgba(255, 215, 0, 0.5);
-border-radius: 10px;
-}
+.modal-content::-webkit-scrollbar { width: 6px; }
+.modal-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
 
 .modal-content h2 { 
 color: #FFD700; 
@@ -167,10 +160,7 @@ padding-bottom: 15px;
 margin-bottom: 25px;
 }
 
-.modal-content p {
-margin-bottom: 15px;
-font-size: 15px;
-}
+.modal-content p { margin-bottom: 15px; font-size: 15px; }
 
 .close-modal {
 position: absolute; 
@@ -184,310 +174,103 @@ transition: 0.2s;
 z-index: 10;
 }
 
-.close-modal:hover {
-color: #fff;
-transform: scale(1.1);
-}
+.close-modal:hover { color: #fff; transform: scale(1.1); }
 
-/* CONTROLES DE AUDIO */
+/* CONTROLES DE AUDIO (¡NUEVO DISEÑO INFALIBLE!) */
 .audio-controls {
+background: #111;
+border: 1px solid #FFD700;
+border-radius: 10px;
+padding: 12px 20px;
+margin-top: 25px;
 display: flex;
 align-items: center;
-justify-content: center;
+justify-content: space-between;
 gap: 15px;
-margin-top: 25px;
-padding: 10px;
-background: rgba(255, 215, 0, 0.05);
-border-radius: 8px;
-border: 1px solid rgba(255, 215, 0, 0.1);
+box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
 }
 
 .audio-controls span {
-font-size: 20px;
+font-size: 22px;
 cursor: pointer;
 user-select: none;
 }
 
+.audio-controls .vol-label {
+font-size: 13px;
+font-weight: bold;
+color: #FFD700;
+letter-spacing: 1px;
+cursor: default;
+}
+
 #volumeSlider {
--webkit-appearance: none;
-width: 120px;
-height: 4px;
-background: rgba(255, 215, 0, 0.3);
+flex-grow: 1;
+accent-color: #FFD700; /* Obliga a los celulares a pintarlo de dorado */
+height: 6px;
+background: #333;
 border-radius: 5px;
 outline: none;
-}
-
-#volumeSlider::-webkit-slider-thumb {
--webkit-appearance: none;
-appearance: none;
-width: 16px;
-height: 16px;
-border-radius: 50%;
-background: #FFD700;
 cursor: pointer;
-box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
-}
-
-#volumeSlider::-moz-range-thumb {
-width: 16px;
-height: 16px;
-border-radius: 50%;
-background: #FFD700;
-cursor: pointer;
-box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
 }
 
 /* ORBITAS */
-.orbit{
-position:absolute;
-border-radius:50%;
-border:1px solid rgba(255,215,0,.15);
-pointer-events:none; 
-}
+.orbit{ position:absolute; border-radius:50%; border:1px solid rgba(255,215,0,.15); pointer-events:none; }
+#orbitSingles{ width:420px; height:420px; animation:spin 45s linear infinite; }
+#orbitAlbums{ width:720px; height:720px; animation:spin 95s linear infinite; }
+#orbitSingles:hover, #orbitSingles:hover .counter, #orbitAlbums:hover, #orbitAlbums:hover .counter { animation-play-state: paused; }
 
-#orbitSingles{
-width:420px;
-height:420px;
-animation:spin 45s linear infinite;
-}
-
-#orbitAlbums{
-width:720px;
-height:720px;
-animation:spin 95s linear infinite;
-}
-
-#orbitSingles:hover, #orbitSingles:hover .counter,
-#orbitAlbums:hover, #orbitAlbums:hover .counter {
-animation-play-state: paused;
-}
-
-@keyframes spin{
-from{transform:rotate(0deg);}
-to{transform:rotate(360deg);}
-}
+@keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
 /* DISCOS */
 .planet{
-position:absolute;
-width:110px;
-height:110px;
-border-radius:50%;
-cursor:pointer;
-transition:.3s;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#000;
-box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4);
-pointer-events:auto; 
+position:absolute; width:110px; height:110px; border-radius:50%; cursor:pointer; transition:.3s;
+display:flex; align-items:center; justify-content:center; background:#000;
+box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4); pointer-events:auto; 
 }
-
-.planet:hover{
-transform:scale(1.3);
-box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
-z-index: 100;
-}
+.planet:hover{ transform:scale(1.3); box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8); z-index: 100; }
 
 /* CONTRA ROTACION Y TOOLTIPS */
-.counter{
-width:100%;
-height:100%;
-animation:counterSpin 45s linear infinite;
-position: relative; 
-border-radius: 50%;
-}
+.counter{ width:100%; height:100%; animation:counterSpin 45s linear infinite; position: relative; border-radius: 50%; }
+.counter img{ width:100%; height:100%; object-fit:cover; border-radius:50%; pointer-events:none; }
+#orbitAlbums .counter{ animation-duration:95s; }
+@keyframes counterSpin{ from{transform:rotate(0deg);} to{transform:rotate(-360deg);} }
 
-.counter img{
-width:100%;
-height:100%;
-object-fit:cover;
-border-radius:50%;
-pointer-events:none;
-}
-
-#orbitAlbums .counter{
-animation-duration:95s;
-}
-
-@keyframes counterSpin{
-from{transform:rotate(0deg);}
-to{transform:rotate(-360deg);}
-}
-
-/* TOOLTIPS */
 .tooltip {
-position: absolute;
-bottom: -15px;
-left: 50%;
-transform: translateX(-50%);
-background: rgba(0, 0, 0, 0.9);
-color: #FFD700;
-padding: 5px 12px;
-border-radius: 6px;
-font-size: 11px;
-font-weight: 600;
-white-space: nowrap;
-border: 1px solid rgba(255,215,0,0.5);
-opacity: 0;
-visibility: hidden;
-transition: all 0.3s ease;
-pointer-events: none;
-box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9);
+color: #FFD700; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
+white-space: nowrap; border: 1px solid rgba(255,215,0,0.5); opacity: 0; visibility: hidden;
+transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
-
-.planet:hover .tooltip {
-opacity: 1;
-visibility: visible;
-bottom: -35px; 
-}
+.planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
 
 /* REDES LATERALES */
-.floating-social{
-position:fixed;
-top:50%;
-left:15px;
-transform:translateY(-50%);
-display:flex;
-flex-direction:column;
-gap:15px;
-z-index:999;
-}
-
-.floating-social a{
-background:#111;
-color:#FFD700;
-width:45px;
-height:45px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-text-decoration:none;
-transition:.25s;
-padding: 10px; 
-box-sizing: border-box;
-}
-
-.floating-social svg {
-fill: #FFD700;
-width: 100%;
-height: 100%;
-transition: .25s;
-}
-
-.floating-social a:hover{
-background:#FFD700;
-color:#000; 
-transform:scale(1.2);
-}
-
-.floating-social a:hover svg {
-fill: #000; 
-}
+.floating-social{ position:fixed; top:50%; left:15px; transform:translateY(-50%); display:flex; flex-direction:column; gap:15px; z-index:999; }
+.floating-social a{ background:#111; color:#FFD700; width:45px; height:45px; display:flex; align-items:center; justify-content:center; border-radius:10px; text-decoration:none; transition:.25s; padding: 10px; box-sizing: border-box; }
+.floating-social svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
+.floating-social a:hover{ background:#FFD700; color:#000; transform:scale(1.2); }
+.floating-social a:hover svg { fill: #000; }
 
 /* ESTRELLAS FUGACES */
-.shootingStar {
-position: fixed;
-width: 70px; 
-height: 70px;
-z-index: 1000;
-cursor: pointer;
-pointer-events: auto;
-}
-
-.starIconWrapper {
-position: absolute;
-top: 50%; left: 50%;
-width: 35px; height: 35px;
-transform: translate(-50%, -50%);
-z-index: 2;
-filter: drop-shadow(0 0 10px gold);
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-.starIcon {
-width: 100%; height: 100%;
-fill: #FFD700;
-pointer-events: none;
-}
-
-.tail {
-position: absolute;
-top: 50%; left: 50%; 
-height: 3px;
-background: linear-gradient(90deg, gold, transparent);
-transform-origin: left center;
-filter: blur(1px);
-opacity: 0.8;
-pointer-events: none;
-}
+.shootingStar { position: fixed; width: 70px; height: 70px; z-index: 1000; cursor: pointer; pointer-events: auto; }
+.starIconWrapper { position: absolute; top: 50%; left: 50%; width: 35px; height: 35px; transform: translate(-50%, -50%); z-index: 2; filter: drop-shadow(0 0 10px gold); display: flex; align-items: center; justify-content: center; }
+.starIcon { width: 100%; height: 100%; fill: #FFD700; pointer-events: none; }
+.tail { position: absolute; top: 50%; left: 50%; height: 3px; background: linear-gradient(90deg, gold, transparent); transform-origin: left center; filter: blur(1px); opacity: 0.8; pointer-events: none; }
 
 /* DESTELLOS DE ESTRELLAS */
-.supernova {
-position: fixed;
-width: 4px;
-height: 4px;
-background: #fff;
-border-radius: 50%;
-box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8);
-animation: burst 2.5s ease-in-out forwards;
-z-index: 5;
-pointer-events: none;
-}
-
-.supernova::before, .supernova::after {
-content: '';
-position: absolute;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 50%; left: 50%;
-transform: translate(-50%, -50%);
-}
-.supernova::before { width: 60px; height: 2px; }
-.supernova::after { width: 2px; height: 60px; }
-
-.ray-x {
-position: absolute;
-width: 30px; height: 2px;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 50%; left: 50%;
-transform: translate(-50%, -50%) rotate(45deg);
-}
-.ray-x::after {
-content: '';
-position: absolute;
-width: 30px; height: 2px;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 0; left: 0;
-transform: rotate(90deg);
-}
-
-@keyframes burst {
-0% { transform: scale(0); opacity: 0; }
-40% { transform: scale(1.2); opacity: 1; }
-100% { transform: scale(0); opacity: 0; }
-}
+.supernova { position: fixed; width: 4px; height: 4px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8); animation: burst 2.5s ease-in-out forwards; z-index: 5; pointer-events: none; }
+.supernova::before, .supernova::after { content: ''; position: absolute; background: radial-gradient(circle, gold 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.supernova::before { width: 60px; height: 2px; } .supernova::after { width: 2px; height: 60px; }
+.ray-x { position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
+.ray-x::after { content: ''; position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%); top: 0; left: 0; transform: rotate(90deg); }
+@keyframes burst { 0% { transform: scale(0); opacity: 0; } 40% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
 
 /* RESPONSIVIDAD MÓVIL */
 @media (max-width: 768px) {
-    #solarSystem {
-        transform: scale(0.45);
-    }
-    .floating-social {
-        transform: scale(0.8) translateY(-60%);
-        left: 5px;
-    }
-    .modal-content {
-        padding: 25px;
-        width: 90%;
-        max-height: 75vh;
-    }
-    .close-modal {
-        right: 15px;
-        top: 10px;
-    }
+    #solarSystem { transform: scale(0.45); }
+    .floating-social { transform: scale(0.8) translateY(-60%); left: 5px; }
+    .modal-content { padding: 25px; width: 90%; max-height: 75vh; }
+    .close-modal { right: 15px; top: 10px; }
 }
 </style>
 
@@ -515,6 +298,7 @@ transform: rotate(90deg);
         <div class="audio-controls">
             <span id="muteBtn" aria-label="Silenciar">🔊</span>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
+            <span class="vol-label">VOL</span>
         </div>
 
         <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
@@ -550,16 +334,7 @@ transform: rotate(90deg);
 </a>
 </div>
 
-<div id="solarSystem">
-<div id="sun" aria-label="Abrir biografía">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
-</div>
-<div id="orbitSingles" class="orbit"></div>
-<div id="orbitAlbums" class="orbit"></div>
-</div>
-
 <script>
-// QUITAR PANTALLA DE CARGA
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     setTimeout(() => {
@@ -568,7 +343,6 @@ window.addEventListener('load', () => {
     }, 500); 
 });
 
-// Salvavidas de carga
 setTimeout(() => {
     const loader = document.getElementById('loader');
     if(loader) {
@@ -579,7 +353,6 @@ setTimeout(() => {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* LÓGICA DEL MODAL Y CONTROL DE AUDIO */
     const modal = document.getElementById("bioModal");
     const sun = document.getElementById("sun");
     const closeModal = document.querySelector(".close-modal");
@@ -588,38 +361,47 @@ document.addEventListener("DOMContentLoaded", () => {
     const volumeSlider = document.getElementById("volumeSlider");
     const muteBtn = document.getElementById("muteBtn");
     
-    bioAudio.volume = volumeSlider.value;
+    // Validar que los elementos existan antes de asignar valores
+    if(volumeSlider && bioAudio) {
+        bioAudio.volume = volumeSlider.value;
 
-    volumeSlider.addEventListener("input", (e) => {
-        bioAudio.volume = e.target.value;
-        muteBtn.textContent = bioAudio.volume === 0 ? "🔇" : "🔊";
-    });
+        volumeSlider.addEventListener("input", (e) => {
+            bioAudio.volume = e.target.value;
+            muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
+        });
+    }
 
-    muteBtn.addEventListener("click", () => {
-        if (bioAudio.volume > 0) {
-            bioAudio.dataset.lastVol = bioAudio.volume; 
-            bioAudio.volume = 0;
-            volumeSlider.value = 0;
-            muteBtn.textContent = "🔇";
-        } else {
-            const lastVol = bioAudio.dataset.lastVol || 0.4;
-            bioAudio.volume = lastVol;
-            volumeSlider.value = lastVol;
-            muteBtn.textContent = "🔊";
-        }
-    });
+    if(muteBtn && bioAudio) {
+        muteBtn.addEventListener("click", () => {
+            if (bioAudio.volume > 0) {
+                bioAudio.dataset.lastVol = bioAudio.volume; 
+                bioAudio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.textContent = "🔇";
+            } else {
+                const lastVol = bioAudio.dataset.lastVol || 0.4;
+                bioAudio.volume = lastVol;
+                volumeSlider.value = lastVol;
+                muteBtn.textContent = "🔊";
+            }
+        });
+    }
 
     function closeAndStopAudio() {
         modal.classList.remove("show");
-        bioAudio.pause();          
-        bioAudio.currentTime = 0;  
+        if(bioAudio) {
+            bioAudio.pause();          
+            bioAudio.currentTime = 0;  
+        }
     }
 
     sun.onclick = () => { 
         modal.classList.add("show"); 
-        bioAudio.play().catch(error => {
-            console.log("El navegador bloqueó el autoplay del audio:", error);
-        });
+        if(bioAudio) {
+            bioAudio.play().catch(error => {
+                console.log("El navegador bloqueó el autoplay del audio:", error);
+            });
+        }
     };
 
     closeModal.onclick = closeAndStopAudio;
@@ -629,7 +411,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    /* ESTRELLAS DE FONDO */
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
 
@@ -677,7 +458,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     drawStars();
 
-    /* DESTELLOS DE ESTRELLAS */
     function spawnSupernova() {
         const flash = document.createElement("div");
         flash.className = "supernova";
@@ -691,7 +471,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setTimeout(spawnSupernova, 2000);
 
-    /* ORBITAS Y TOOLTIPS */
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
         data.forEach((item,i)=>{
@@ -718,7 +497,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    /* MUSICA */
     const singles=[
         {img:"images/We rise as one.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs"},
         {img:"images/Gracias 2025.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk"},
@@ -745,7 +523,6 @@ document.addEventListener("DOMContentLoaded", () => {
     createOrbit(singles,"orbitSingles",210)
     createOrbit(albums,"orbitAlbums",360)
 
-    /* ESTRELLAS FUGACES */
     const platforms=[
         {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`,link:"https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN"},
         {svg:`<svg class="starIcon" viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`,link:"https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx"},
