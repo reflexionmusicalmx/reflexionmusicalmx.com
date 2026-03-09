@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Reflexión Musical MX</title>
+    <title>Reflexión Musical MX - Universo Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        /* ESTILOS BASE */
         html, body { background:#000; color:#FFD700; font-family: 'Merriweather', serif; margin:0; padding:0; width: 100%; height: 100%; overflow: hidden; position: fixed; touch-action: none; }
         
         #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s; }
@@ -24,104 +25,125 @@
         #orbitAlbums { width: 720px; height: 720px; animation: spin 95s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* DISCOS */
+        /* DISCOS (PLANETAS) */
         .planet { position: absolute; width: 110px; height: 110px; border-radius: 50%; cursor: pointer; transition: 0.3s; background: #000; box-shadow: 0 0 15px rgba(255,215,0,0.5); pointer-events: auto; }
         .planet:hover { transform: scale(1.3); z-index: 100; box-shadow: 0 0 30px gold; }
         
-        /* CONTRA-ROTACIÓN PARA QUE LA IMAGEN Y LA FAMILIA NO SE VOLTEEN */
+        /* CONTRA-ROTACIÓN (Mantiene todo derecho) */
         .counter { width: 100%; height: 100%; animation: counterSpin 45s linear infinite; position: relative; border-radius: 50%; }
         #orbitAlbums .counter { animation-duration: 95s; }
         @keyframes counterSpin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
         .counter img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-        /* EFECTO FAMILIA - CORREGIDO (Siempre parados de pie) */
-        .family-box { position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 6px; opacity: 0; transition: 0.4s; padding: 10px; background: rgba(0,0,0,0.7); border-radius: 10px; border: 1px solid gold; pointer-events: none; }
-        .planet:hover .family-box { opacity: 1; bottom: 125%; }
+        /* EFECTO FAMILIA (SÍMBOLO UNIVERSAL) */
+        .family-box { position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 6px; opacity: 0; transition: 0.4s; padding: 10px; background: rgba(0,0,0,0.8); border-radius: 12px; border: 1px solid gold; pointer-events: none; }
+        .planet:hover .family-box { opacity: 1; bottom: 130%; }
         
         .fig { display: flex; flex-direction: column; align-items: center; }
-        .head { width: 10px; height: 10px; background: gold; border-radius: 50%; margin-bottom: 2px; box-shadow: 0 0 5px gold; }
-        .body-m { width: 16px; height: 25px; background: gold; border-radius: 4px 4px 0 0; } /* Hombre */
-        .body-f { width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 25px solid gold; } /* Mujer/Triángulo */
-        .child { transform: scale(0.6); transform-origin: bottom; }
+        .head { width: 12px; height: 12px; background: gold; border-radius: 50%; margin-bottom: 2px; box-shadow: 0 0 5px gold; }
+        .body-m { width: 18px; height: 28px; background: gold; border-radius: 4px 4px 0 0; }
+        .body-f { width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-bottom: 28px solid gold; }
+        .child { transform: scale(0.65); transform-origin: bottom; }
 
-        /* CORAZONES */
-        .heart-bubble { position: fixed; color: gold; font-size: 24px; pointer-events: none; z-index: 1001; filter: drop-shadow(0 0 5px gold); }
+        /* CORAZONES HACIA EL SOL */
+        .heart-bubble { position: fixed; color: gold; font-size: 26px; pointer-events: none; z-index: 1001; filter: drop-shadow(0 0 8px gold); }
 
-        /* ESTRELLAS FUGACES */
-        .shootingStar { position: absolute; width: 40px; height: 40px; cursor: pointer; z-index: 1002; filter: drop-shadow(0 0 8px gold); }
-        .supernova { position: absolute; width: 2px; height: 2px; background: white; box-shadow: 0 0 10px white; border-radius: 50%; animation: burst 2s forwards; }
-        @keyframes burst { 0% { transform: scale(0); opacity:0; } 50% { transform: scale(1.5) rotate(45deg); opacity:1; } 100% { transform: scale(0); opacity:0; } }
+        /* ESTRELLAS FUGACES Y SUPERNOVAS */
+        .shootingStar { position: absolute; width: 45px; height: 45px; cursor: pointer; z-index: 1002; filter: drop-shadow(0 0 10px gold); }
+        .supernova { position: absolute; width: 2px; height: 2px; background: white; box-shadow: 0 0 15px white; border-radius: 50%; animation: burst 2.5s forwards; }
+        @keyframes burst { 
+            0% { transform: scale(0) rotate(0); opacity:0; } 
+            20% { transform: scale(1.2) rotate(45deg); opacity:1; }
+            100% { transform: scale(0) rotate(90deg); opacity:0; } 
+        }
 
         /* REDES SOCIALES */
         .floating-social { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 2000; }
-        .floating-social a { width: 40px; height: 40px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid gold; transition: 0.3s; }
-        .floating-social a svg { width: 20px; fill: gold; }
-        .floating-social a:hover { background: gold; transform: scale(1.1); }
+        .floating-social a { width: 42px; height: 42px; background: #111; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid gold; transition: 0.3s; }
+        .floating-social a svg { width: 22px; fill: gold; }
+        .floating-social a:hover { background: gold; transform: scale(1.15); }
         .floating-social a:hover svg { fill: black; }
 
-        .tooltip { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); background: black; color: gold; padding: 4px 8px; font-size: 10px; border: 1px solid gold; opacity: 0; white-space: nowrap; }
+        /* TOOLTIP */
+        .tooltip { position: absolute; bottom: -35px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: gold; padding: 5px 10px; font-size: 11px; border: 1px solid gold; opacity: 0; white-space: nowrap; border-radius: 4px; pointer-events: none; }
         .planet:hover .tooltip { opacity: 1; }
 
-        @media (max-width: 768px) { #solarSystem { transform: scale(0.45); } }
+        @media (max-width: 768px) { #solarSystem { transform: scale(0.42); } }
     </style>
 </head>
 <body>
 
     <div id="loader">
         <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo">
-        <p>REORDENANDO EL COSMOS...</p>
+        <p style="letter-spacing: 5px; font-weight: bold;">CONSTRUYENDO UNIVERSO...</p>
     </div>
 
     <div id="starContainer"></div>
 
     <div class="floating-social">
         <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank"><svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg></a>
-        <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank"><svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
         <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank"><svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg></a>
+        <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank"><svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
+        <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank"><svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8z"/></svg></a>
     </div>
 
     <div id="solarSystem">
-        <div id="sun" onclick="location.reload()"><img src="images/REFLEXIÓN MUSICAL MX 1.webp"></div>
+        <div id="sun" title="Reiniciar Universo" onclick="location.reload()">
+            <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Sol">
+        </div>
         <div id="orbitSingles" class="orbit"></div>
         <div id="orbitAlbums" class="orbit"></div>
     </div>
 
     <script>
-        // Loader
-        window.onload = () => setTimeout(() => {
-            document.getElementById('loader').style.opacity = '0';
-            setTimeout(() => document.getElementById('loader').remove(), 800);
-        }, 1000);
+        // MANEJO DEL LOADER
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 800);
+            }, 1200);
+        });
 
-        // Supernovas (Efecto X)
-        function spawnSN() {
+        // EFECTO SUPERNOVA (CRUZ/X)
+        function createSupernova() {
             const sn = document.createElement('div');
             sn.className = 'supernova';
             sn.style.left = Math.random() * 100 + '%';
             sn.style.top = Math.random() * 100 + '%';
             document.getElementById('starContainer').appendChild(sn);
-            setTimeout(() => sn.remove(), 2000);
+            setTimeout(() => sn.remove(), 2500);
         }
-        setInterval(spawnSN, 1200);
+        setInterval(createSupernova, 1500);
 
+        // --- DATOS COMPLETOS (17 LANZAMIENTOS) ---
         const singles = [
             {n:"WE RISE AS ONE", i:"images/We rise as one.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs"},
             {n:"GRACIAS 2025", i:"images/Gracias 2025.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk"},
             {n:"ADULTOS TRASTORNADOS", i:"images/Adultos TRASTORNADOS.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM"},
-            {n:"CODIGO ROJO", i:"images/Codigo rojo.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0"}
+            {n:"CODIGO ROJO", i:"images/Codigo rojo.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0"},
+            {n:"LA FUERZA DE TODOS", i:"images/La fuerza de todos.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro"},
+            {n:"REGRESAR A CASA", i:"images/Regresar a casa.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE"},
+            {n:"TRES COLORES", i:"images/Tres colores, un compromiso.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM"}
         ];
 
         const albums = [
-            {n:"VOCES DE CAMBIO", i:"images/Voces de Cambio 1.webp", l:"#"},
-            {n:"ESTADO CONTRA ESTADO", i:"images/Estado contra estado.webp", l:"#"},
-            {n:"TEJIDO VITAL", i:"images/Tejido vital.webp", l:"#"},
-            {n:"AMOR EN TIEMPOS", i:"images/Amor en tiempos de ideologias cancerigenas.webp", l:"#"}
+            {n:"VOCES DE CAMBIO 1", i:"images/Voces de Cambio 1.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ"},
+            {n:"VOCES DE CAMBIO 2", i:"images/Voces de Cambio 2.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE"},
+            {n:"ESTADO CONTRA ESTADO", i:"images/Estado contra estado.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow"},
+            {n:"LUZ ENTRE SOMBRAS", i:"images/Luz entre las Sombras.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4"},
+            {n:"TIEMPO Y VIDA", i:"images/Tiempo y vida.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE"},
+            {n:"CHACALES OPORTUNISTAS", i:"images/CHACALES OPORTUNISTAS.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A"},
+            {n:"TEJIDO VITAL", i:"images/Tejido vital.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs"},
+            {n:"REVOLUCION MENTAL", i:"images/Revolucion mental.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU"},
+            {n:"ERES LO QUE ESCUCHAS", i:"images/Eres lo que escuchas.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I"},
+            {n:"AMOR EN TIEMPOS", i:"images/Amor en tiempos de ideologias cancerigenas.webp", l:"https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA"}
         ];
 
-        function build(items, id, radius) {
-            const container = document.getElementById(id);
-            items.forEach((item, i) => {
-                const angle = (i / items.length) * Math.PI * 2;
+        function buildOrbit(data, containerId, radius) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const angle = (i / data.length) * Math.PI * 2;
                 const x = Math.cos(angle) * radius;
                 const y = Math.sin(angle) * radius;
 
@@ -131,7 +153,7 @@
                 p.style.top = `calc(50% + ${y}px - 55px)`;
                 
                 let extra = "";
-                // FAMILIA (Dentro de counter para que la rotación la mantenga derecha)
+                // FAMILIA (Papá-Hijo-Hija-Mamá) - Dentro del counter para estabilidad
                 if(item.n === "TEJIDO VITAL") {
                     extra = `<div class="family-box">
                         <div class="fig"><div class="head"></div><div class="body-m"></div></div>
@@ -142,28 +164,31 @@
                 }
 
                 p.innerHTML = `<div class="counter">
-                    <img src="${item.i}" onerror="this.src='https://via.placeholder.com/110/000?text=RM'">
+                    <img src="${item.i}" alt="${item.n}" onerror="this.src='https://via.placeholder.com/110/000?text=RM'">
                     <div class="tooltip">${item.n}</div>
                     ${extra}
                 </div>`;
 
-                // CORAZONES
+                // CORAZONES HACIA EL SOL (Trayecto completo)
                 if(item.n === "AMOR EN TIEMPOS") {
                     p.onmouseenter = () => {
-                        p.hInt = setInterval(() => {
+                        p.hInterval = setInterval(() => {
                             const h = document.createElement('div');
                             h.className = 'heart-bubble'; h.innerHTML = '❤';
-                            const r = p.getBoundingClientRect();
-                            h.style.left = (r.left + 55) + 'px'; h.style.top = (r.top + 55) + 'px';
+                            const rect = p.getBoundingClientRect();
+                            h.style.left = (rect.left + 55) + 'px';
+                            h.style.top = (rect.top + 55) + 'px';
                             document.body.appendChild(h);
+                            
                             h.animate([
                                 { transform: 'scale(1)', opacity: 1 },
-                                { transform: `translate(${window.innerWidth/2 - r.left - 55}px, ${window.innerHeight/2 - r.top - 55}px) scale(0.5)`, opacity: 1 }
-                            ], { duration: 2000 });
-                            setTimeout(() => h.remove(), 2000);
+                                { transform: `translate(${window.innerWidth/2 - rect.left - 55}px, ${window.innerHeight/2 - rect.top - 55}px) scale(0.6)`, opacity: 1 }
+                            ], { duration: 2500, easing: 'ease-out' });
+                            
+                            setTimeout(() => h.remove(), 2500);
                         }, 400);
                     };
-                    p.onmouseleave = () => clearInterval(p.hInt);
+                    p.onmouseleave = () => clearInterval(p.hInterval);
                 }
 
                 p.onclick = () => window.open(item.l, "_blank");
@@ -171,32 +196,32 @@
             });
         }
 
-        build(singles, "orbitSingles", 210);
-        build(albums, "orbitAlbums", 360);
+        buildOrbit(singles, "orbitSingles", 210);
+        buildOrbit(albums, "orbitAlbums", 360);
 
-        // PLATAFORMAS (Estrellas Fugaces)
+        // ESTRELLAS FUGACES (Plataformas Musicales)
         const platforms = [
-            {s:'<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>', l:'#'}, // Spotify
-            {s:'<svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>', l:'#'}, // YouTube
-            {s:'<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>', l:'#'} // SoundCloud
+            {s:'<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>', l:'https://spotify.com'},
+            {s:'<svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>', l:'https://youtube.com'},
+            {s:'<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>', l:'https://soundcloud.com'}
         ];
 
-        function createStar() {
-            const p = platforms[Math.floor(Math.random()*platforms.length)];
-            const s = document.createElement('div');
-            s.className = 'shootingStar';
-            s.innerHTML = `<div style="fill:gold">${p.s}</div>`;
-            const startX = Math.random() * window.innerWidth;
-            s.style.left = startX + 'px'; s.style.top = '-50px';
-            document.getElementById('starContainer').appendChild(s);
-            s.animate([
+        function spawnStar() {
+            const p = platforms[Math.floor(Math.random() * platforms.length)];
+            const star = document.createElement('div');
+            star.className = 'shootingStar';
+            star.innerHTML = `<div style="fill:gold">${p.s}</div>`;
+            const x = Math.random() * window.innerWidth;
+            star.style.left = x + 'px'; star.style.top = '-50px';
+            document.getElementById('starContainer').appendChild(star);
+            star.animate([
                 { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
-                { transform: `translate(${(Math.random()-0.5)*500}px, ${window.innerHeight + 100}px) rotate(360deg)`, opacity: 0 }
-            ], { duration: 8000 });
-            s.onclick = () => window.open(p.l, "_blank");
-            setTimeout(() => s.remove(), 8000);
+                { transform: `translate(${(Math.random()-0.5)*600}px, ${window.innerHeight + 100}px) rotate(720deg)`, opacity: 0 }
+            ], { duration: 9000 });
+            star.onclick = () => window.open(p.l, "_blank");
+            setTimeout(() => star.remove(), 9000);
         }
-        setInterval(createStar, 3000);
+        setInterval(spawnStar, 4000);
     </script>
 </body>
 </html>
