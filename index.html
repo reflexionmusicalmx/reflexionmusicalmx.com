@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
 
 <title>Reflexión Musical MX</title>
@@ -16,20 +16,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-body{
+/* BLOQUEO ESTRUCTURAL PARA MÓVILES */
+html, body {
 background:#000;
 color:#FFD700;
 font-family:'Open Sans',sans-serif;
 margin:0;
+padding:0;
+width: 100%;
+height: 100%;
 overflow:hidden;
 text-align:center;
+overscroll-behavior: none; /* Evita el rebote elástico en móviles */
 }
 
 /* PANTALLA DE CARGA */
 #loader {
 position: fixed;
 top: 0; left: 0;
-width: 100vw; height: 100vh;
+width: 100%; height: 100%;
 background: #000;
 z-index: 99999;
 display: flex;
@@ -65,9 +70,10 @@ pointer-events:none;
 
 /* SISTEMA SOLAR */
 #solarSystem{
-position:relative;
-width:100vw;
-height:100vh;
+position:absolute; /* Cambiado a absoluto para mayor estabilidad en móvil */
+top:0; left:0;
+width:100%;
+height:100%;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -98,7 +104,7 @@ width:100%;
 100%{filter:drop-shadow(0 0 15px gold);}
 }
 
-/* MODAL DE BIOGRAFÍA */
+/* MODAL DE BIOGRAFÍA (Sólido y Acelerado por Hardware) */
 .modal {
 display: none; 
 position: fixed; 
@@ -111,6 +117,9 @@ opacity: 0;
 transition: opacity 0.4s ease;
 align-items: center; 
 justify-content: center;
+/* ACELERACIÓN POR HARDWARE: Evita que el fondo mueva esta ventana */
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
 }
 
 .modal.show {
@@ -125,12 +134,27 @@ padding: 40px;
 border-radius: 15px;
 max-width: 650px; 
 width: 85%;
+max-height: 85vh; /* Límite de altura para móviles */
+overflow-y: auto; /* Si el texto no cabe, se puede hacer scroll interior */
+overscroll-behavior: contain; /* Bloquea el scroll del fondo */
+-webkit-overflow-scrolling: touch;
 text-align: left; 
 position: relative;
 box-shadow: 0 0 40px rgba(255,215,0,0.2);
 color: #ddd;
 font-family: 'Open Sans', sans-serif;
 line-height: 1.7;
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
+}
+
+/* Scrollbar personalizada para la biografía */
+.modal-content::-webkit-scrollbar {
+width: 6px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+background: rgba(255, 215, 0, 0.5);
+border-radius: 10px;
 }
 
 .modal-content h2 { 
@@ -157,6 +181,7 @@ font-size: 32px;
 font-weight: bold; 
 cursor: pointer;
 transition: 0.2s;
+z-index: 10;
 }
 
 .close-modal:hover {
@@ -445,7 +470,7 @@ transform: rotate(90deg);
 100% { transform: scale(0); opacity: 0; }
 }
 
-/* RESPONSIVIDAD */
+/* RESPONSIVIDAD MÓVIL */
 @media (max-width: 768px) {
     #solarSystem {
         transform: scale(0.45);
@@ -457,6 +482,11 @@ transform: rotate(90deg);
     .modal-content {
         padding: 25px;
         width: 90%;
+        max-height: 75vh;
+    }
+    .close-modal {
+        right: 15px;
+        top: 10px;
     }
 }
 </style>
@@ -520,6 +550,14 @@ transform: rotate(90deg);
 </a>
 </div>
 
+<div id="solarSystem">
+<div id="sun" aria-label="Abrir biografía">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
+</div>
+<div id="orbitSingles" class="orbit"></div>
+<div id="orbitAlbums" class="orbit"></div>
+</div>
+
 <script>
 // QUITAR PANTALLA DE CARGA
 window.addEventListener('load', () => {
@@ -547,23 +585,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModal = document.querySelector(".close-modal");
     const bioAudio = document.getElementById("bioAudio"); 
     
-    // Controles
     const volumeSlider = document.getElementById("volumeSlider");
     const muteBtn = document.getElementById("muteBtn");
     
-    // Volumen inicial (40% para no asustar)
     bioAudio.volume = volumeSlider.value;
 
-    // Actualizar volumen al deslizar
     volumeSlider.addEventListener("input", (e) => {
         bioAudio.volume = e.target.value;
         muteBtn.textContent = bioAudio.volume === 0 ? "🔇" : "🔊";
     });
 
-    // Botón de silenciar/desilenciar
     muteBtn.addEventListener("click", () => {
         if (bioAudio.volume > 0) {
-            bioAudio.dataset.lastVol = bioAudio.volume; // Guarda el volumen actual
+            bioAudio.dataset.lastVol = bioAudio.volume; 
             bioAudio.volume = 0;
             volumeSlider.value = 0;
             muteBtn.textContent = "🔇";
