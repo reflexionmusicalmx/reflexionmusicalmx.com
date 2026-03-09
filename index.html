@@ -515,6 +515,14 @@ transform: rotate(90deg);
 </a>
 </div>
 
+<div id="solarSystem">
+<div id="sun" aria-label="Abrir biografía">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
+</div>
+<div id="orbitSingles" class="orbit"></div>
+<div id="orbitAlbums" class="orbit"></div>
+</div>
+
 <script>
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
@@ -574,16 +582,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    sun.onclick = () => { 
-        modal.classList.add("show"); 
-        if(bioAudio) {
-            bioAudio.play().catch(error => {
-                console.log("Autoplay bloqueado:", error);
-            });
-        }
-    };
+    if(sun) {
+        sun.onclick = () => { 
+            modal.classList.add("show"); 
+            if(bioAudio) {
+                bioAudio.play().catch(error => {
+                    console.log("Autoplay bloqueado:", error);
+                });
+            }
+        };
+    }
 
-    closeModal.onclick = closeAndStopAudio;
+    if(closeModal) {
+        closeModal.onclick = closeAndStopAudio;
+    }
+    
     window.onclick = (event) => {
         if (event.target === modal) {
             closeAndStopAudio();
@@ -608,15 +621,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ESTRELLAS ESTÁTICAS CORREGIDAS
     let stars = [];
     for(let i=0; i<200; i++){
         stars.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             r: Math.random() * 1.5 + 0.5,
-            opacity: (Math.random() * 0.8) + 0.2, // Empiezan encendidas
-            fadeStep: (Math.random() * 0.005) + 0.002 // Velocidad segura
+            opacity: (Math.random() * 0.8) + 0.2, 
+            fadeStep: (Math.random() * 0.005) + 0.002 
         });
     }
 
@@ -626,8 +638,6 @@ document.addEventListener("DOMContentLoaded", () => {
         stars.forEach(st => {
             st.opacity += st.fadeStep;
             
-            // LA SOLUCIÓN A LA TRAMPA MATEMÁTICA: 
-            // Obligamos a que el paso sea negativo si llega a 1, y positivo si llega a 0.1
             if(st.opacity >= 1) {
                 st.fadeStep = -Math.abs(st.fadeStep); 
             } else if(st.opacity <= 0.1) {
@@ -643,7 +653,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     drawStars();
 
-    // DESTELLOS CRUCES (Más frecuentes para que se vean)
     function spawnSupernova() {
         const flash = document.createElement("div");
         flash.className = "supernova";
@@ -653,7 +662,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(starContainer) starContainer.appendChild(flash); 
         
         setTimeout(() => flash.remove(), 2500);
-        setTimeout(spawnSupernova, 2500 + Math.random() * 3000); // Salen cada 2 a 5 segundos
+        setTimeout(spawnSupernova, 2500 + Math.random() * 3000); 
     }
     setTimeout(spawnSupernova, 1500);
 
