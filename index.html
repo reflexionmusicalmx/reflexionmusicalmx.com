@@ -298,7 +298,7 @@ visibility: hidden;
 transition: all 0.3s ease;
 pointer-events: none;
 box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-text-transform: uppercase; /* MAYUSCULAS AUTOMATICAS */
+text-transform: uppercase; 
 letter-spacing: 1px;
 }
 
@@ -515,14 +515,6 @@ transform: rotate(90deg);
 </a>
 </div>
 
-<div id="solarSystem">
-<div id="sun" aria-label="Abrir biografía">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
-</div>
-<div id="orbitSingles" class="orbit"></div>
-<div id="orbitAlbums" class="orbit"></div>
-</div>
-
 <script>
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
@@ -616,15 +608,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ESTRELLAS 100% ESTÁTICAS Y SIN GRAVEDAD
+    // ESTRELLAS ESTÁTICAS CORREGIDAS
     let stars = [];
     for(let i=0; i<200; i++){
         stars.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             r: Math.random() * 1.5 + 0.5,
-            opacity: Math.random(),
-            fadeStep: (Math.random() * 0.003) + 0.001 
+            opacity: (Math.random() * 0.8) + 0.2, // Empiezan encendidas
+            fadeStep: (Math.random() * 0.005) + 0.002 // Velocidad segura
         });
     }
 
@@ -633,8 +625,13 @@ document.addEventListener("DOMContentLoaded", () => {
         
         stars.forEach(st => {
             st.opacity += st.fadeStep;
-            if(st.opacity >= 1 || st.opacity <= 0.1) {
-                st.fadeStep *= -1; 
+            
+            // LA SOLUCIÓN A LA TRAMPA MATEMÁTICA: 
+            // Obligamos a que el paso sea negativo si llega a 1, y positivo si llega a 0.1
+            if(st.opacity >= 1) {
+                st.fadeStep = -Math.abs(st.fadeStep); 
+            } else if(st.opacity <= 0.1) {
+                st.fadeStep = Math.abs(st.fadeStep); 
             }
 
             ctx.fillStyle = `rgba(255, 215, 0, ${st.opacity})`;
@@ -646,6 +643,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     drawStars();
 
+    // DESTELLOS CRUCES (Más frecuentes para que se vean)
     function spawnSupernova() {
         const flash = document.createElement("div");
         flash.className = "supernova";
@@ -655,9 +653,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if(starContainer) starContainer.appendChild(flash); 
         
         setTimeout(() => flash.remove(), 2500);
-        setTimeout(spawnSupernova, 5000 + Math.random() * 7000); 
+        setTimeout(spawnSupernova, 2500 + Math.random() * 3000); // Salen cada 2 a 5 segundos
     }
-    setTimeout(spawnSupernova, 2000);
+    setTimeout(spawnSupernova, 1500);
 
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
@@ -674,7 +672,6 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.onclick=()=>window.open(item.link,"_blank")
             
             const safeImgPath = encodeURI(item.img);
-            // CONVERSIÓN A MAYÚSCULAS SEGURA
             let albumName = item.img.split('/').pop().replace('.webp', '');
             
             planet.innerHTML=`
@@ -784,7 +781,7 @@ document.addEventListener("DOMContentLoaded", () => {
             star.onclick = () => window.open(p.link, "_blank");
             setTimeout(() => star.remove(), 19000);
         } catch (error) {
-            console.error("Error al crear la estrella:", error);
+            console.error("Error al crear la estrella fugaz:", error);
         }
     }
 
