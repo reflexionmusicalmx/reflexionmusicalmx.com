@@ -70,6 +70,8 @@ width:100%;
 position:absolute;
 border-radius:50%;
 border:1px solid rgba(255,215,0,.15);
+/* SOLUCIÓN: Permite que los clics traspasen el área vacía de la órbita mayor */
+pointer-events:none; 
 }
 
 #orbitSingles{
@@ -108,6 +110,8 @@ align-items:center;
 justify-content:center;
 background:#000;
 box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4);
+/* SOLUCIÓN: Reactiva los clics solo en los discos */
+pointer-events:auto; 
 }
 
 .planet img{
@@ -172,19 +176,22 @@ color:#000;
 transform:scale(1.2);
 }
 
-/* ESTRELLAS FUGACES - Rediseño a prueba de fallos */
+/* ESTRELLAS FUGACES */
 .shootingStar {
 position: fixed;
-width: 40px;
-height: 40px;
+/* SOLUCIÓN: Área de clic mucho más grande (70x70) para facilitar la captura */
+width: 70px; 
+height: 70px;
 z-index: 1000;
 cursor: pointer;
+pointer-events: auto;
 }
 
 .starIconWrapper {
 position: absolute;
-top: 0; left: 0;
-width: 100%; height: 100%;
+top: 50%; left: 50%;
+width: 40px; height: 40px;
+transform: translate(-50%, -50%);
 z-index: 2;
 filter: drop-shadow(0 0 10px gold);
 }
@@ -193,12 +200,13 @@ filter: drop-shadow(0 0 10px gold);
 width: 100%;
 height: 100%;
 fill: #FFD700;
+pointer-events: none;
 }
 
 .tail {
 position: absolute;
-top: 50%; /* Centrado verticalmente */
-left: 50%; /* Nace del centro del ícono */
+top: 50%; 
+left: 50%; 
 height: 3px;
 background: linear-gradient(90deg, gold, transparent);
 transform-origin: left center;
@@ -246,42 +254,81 @@ pointer-events: none;
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ESTRELLAS DE FONDO */
-    const canvas=document.getElementById("bg");
-    const ctx=canvas.getContext("2d");
+    /* ESTRELLAS DE FONDO Y GALAXIAS */
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
 
     function setCanvasSize() {
-        canvas.width=innerWidth;
-        canvas.height=innerHeight;
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+        generateGalaxies(); // Regenerar galaxias si cambia el tamaño
     }
+    
+    let galaxies = [];
+    function generateGalaxies() {
+        galaxies = [];
+        // Crea 4 nebulosas/galaxias sutiles de fondo
+        for(let i=0; i<4; i++){
+            galaxies.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 300 + 150
+            });
+        }
+    }
+
     setCanvasSize();
     window.addEventListener('resize', setCanvasSize);
 
-    let stars=[];
-    for(let i=0;i<150;i++){
+    let stars = [];
+    for(let i=0; i<200; i++){
         stars.push({
-            x:Math.random()*canvas.width,
-            y:Math.random()*canvas.height,
-            r:Math.random()*1.5,
-            s:Math.random()*0.3
-        })
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.5 + 0.5,
+            s: Math.random() * 0.15, // Estrellas caen más lento
+            opacity: Math.random(),
+            fadeStep: (Math.random() * 0.02) + 0.005 // Velocidad de parpadeo
+        });
     }
 
     function drawStars(){
-        ctx.clearRect(0,0,canvas.width,canvas.height)
-        ctx.fillStyle="rgba(255,215,0,.9)"
-        stars.forEach(st=>{
-            ctx.beginPath()
-            ctx.arc(st.x,st.y,st.r,0,Math.PI*2)
-            ctx.fill()
-            st.y+=st.s
-            if(st.y>canvas.height){
-                st.y=0; st.x=Math.random()*canvas.width;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Dibujar Galaxias
+        galaxies.forEach(g => {
+            let grad = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, g.r);
+            grad.addColorStop(0, "rgba(255, 215, 0, 0.04)"); // Brillo central muy suave
+            grad.addColorStop(1, "rgba(0, 0, 0, 0)"); // Se desvanece a negro
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(g.x, g.y, g.r, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // Dibujar Estrellas con destellos (twinkle)
+        stars.forEach(st => {
+            st.opacity += st.fadeStep;
+            // Invertir el efecto si llega a los límites de opacidad
+            if(st.opacity >= 1 || st.opacity <= 0.1) {
+                st.fadeStep *= -1; 
             }
-        })
-        requestAnimationFrame(drawStars)
+
+            ctx.fillStyle = `rgba(255, 215, 0, ${st.opacity})`;
+            ctx.beginPath();
+            ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Movimiento vertical
+            st.y += st.s;
+            if(st.y > canvas.height){
+                st.y = 0; 
+                st.x = Math.random() * canvas.width;
+            }
+        });
+        requestAnimationFrame(drawStars);
     }
-    drawStars()
+    drawStars();
 
     /* ORBITAS */
     function createOrbit(data,id,radius){
@@ -297,7 +344,6 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.style.top=`calc(50% + ${y}px - 55px)`
             planet.onclick=()=>window.open(item.link,"_blank")
             
-            // Reparación para GitHub Pages: encodeURI asegura que los espacios en el nombre del archivo no rompan la imagen
             const safeImgPath = encodeURI(item.img);
             const albumName = item.img.split('/').pop().replace('.webp', '');
             
@@ -333,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
     createOrbit(singles,"orbitSingles",210)
     createOrbit(albums,"orbitAlbums",360)
 
-    /* ESTRELLAS FUGACES */
+    /* ESTRELLAS FUGACES MULTIDIRECCIONALES Y LENTAS */
     const platforms=[
         {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`,link:"https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c"},
         {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 2.04C12 2.04 11.46 2 11.16 2 6.66 2 3 5.64 3 10.14c0 1.26.24 2.46.66 3.54 1.14 2.94 3.78 6.42 7.08 8.16.36.18.84.18 1.2 0 3.3-1.74 5.94-5.22 7.08-8.16.42-1.08.66-2.28.66-3.54C19.68 5.64 16.02 2 11.52 2h-.36zm.36 10.68c-1.38 0-2.52-1.14-2.52-2.52s1.14-2.52 2.52-2.52 2.52 1.14 2.52 2.52-1.14 2.52-2.52 2.52zm0-3.6c-.6 0-1.08.48-1.08 1.08s.48 1.08 1.08 1.08 1.08-.48 1.08-1.08-.48-1.08-1.08-1.08z"/></svg>`,link:"https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478"},
@@ -353,41 +399,53 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             document.body.appendChild(star);
 
-            const startX = Math.random() * window.innerWidth;
-            const startY = -100;
+            let startX, startY, endX, endY;
+            const edge = Math.floor(Math.random() * 4); // 0: Top, 1: Right, 2: Bottom, 3: Left
+            const offset = 100;
+
+            if (edge === 0) {
+                startX = Math.random() * window.innerWidth; startY = -offset;
+                endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset;
+            } else if (edge === 1) {
+                startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight;
+                endX = -offset; endY = Math.random() * window.innerHeight;
+            } else if (edge === 2) {
+                startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset;
+                endX = Math.random() * window.innerWidth; endY = -offset;
+            } else {
+                startX = -offset; startY = Math.random() * window.innerHeight;
+                endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight;
+            }
             
             star.style.left = startX + "px";
             star.style.top = startY + "px";
 
-            const endX = startX + (Math.random() * 600 - 300);
-            const endY = window.innerHeight + 100;
-
-            // Cálculo preciso para que la cola apunte hacia atrás
             const dx = endX - startX;
             const dy = endY - startY;
             const angleRad = Math.atan2(dy, dx);
-            const angleDeg = angleRad * (180 / Math.PI) + 180; // Sumamos 180 para invertir la dirección
+            const angleDeg = angleRad * (180 / Math.PI) + 180; 
 
             const tail = star.querySelector('.tail');
             tail.style.width = (100 + Math.random() * 100) + "px";
             tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
 
+            // SOLUCIÓN: Duración mucho más larga (entre 12 y 18 segundos)
             star.animate([
                 { transform: "translate(0, 0)", opacity: 1 },
                 { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }
             ], {
-                duration: 6000 + Math.random() * 3000,
+                duration: 12000 + Math.random() * 6000, 
                 easing: "linear"
             });
 
             star.onclick = () => window.open(p.link, "_blank");
-            setTimeout(() => star.remove(), 9000);
+            setTimeout(() => star.remove(), 19000);
         } catch (error) {
             console.error("Error al crear la estrella:", error);
         }
     }
 
-    setInterval(createStar, 3500);
+    setInterval(createStar, 4000);
 
 });
 </script>
