@@ -164,6 +164,54 @@ color: #fff;
 transform: scale(1.1);
 }
 
+/* CONTROLES DE AUDIO */
+.audio-controls {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 15px;
+margin-top: 25px;
+padding: 10px;
+background: rgba(255, 215, 0, 0.05);
+border-radius: 8px;
+border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.audio-controls span {
+font-size: 20px;
+cursor: pointer;
+user-select: none;
+}
+
+#volumeSlider {
+-webkit-appearance: none;
+width: 120px;
+height: 4px;
+background: rgba(255, 215, 0, 0.3);
+border-radius: 5px;
+outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background: #FFD700;
+cursor: pointer;
+box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
+#volumeSlider::-moz-range-thumb {
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background: #FFD700;
+cursor: pointer;
+box-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
 /* ORBITAS */
 .orbit{
 position:absolute;
@@ -200,7 +248,6 @@ position:absolute;
 width:110px;
 height:110px;
 border-radius:50%;
-/* overflow: hidden eliminado para permitir que el tooltip sobresalga */
 cursor:pointer;
 transition:.3s;
 display:flex;
@@ -222,7 +269,7 @@ z-index: 100;
 width:100%;
 height:100%;
 animation:counterSpin 45s linear infinite;
-position: relative; /* Necesario para el tooltip flotante */
+position: relative; 
 border-radius: 50%;
 }
 
@@ -243,7 +290,7 @@ from{transform:rotate(0deg);}
 to{transform:rotate(-360deg);}
 }
 
-/* TOOLTIPS (Nombres flotantes de los discos) */
+/* TOOLTIPS */
 .tooltip {
 position: absolute;
 bottom: -15px;
@@ -267,7 +314,7 @@ box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 .planet:hover .tooltip {
 opacity: 1;
 visibility: visible;
-bottom: -35px; /* Baja un poco al aparecer */
+bottom: -35px; 
 }
 
 /* REDES LATERALES */
@@ -423,15 +470,23 @@ transform: rotate(90deg);
     <p>INICIANDO UNIVERSO...</p>
 </div>
 
+<audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
+
 <div id="bioModal" class="modal">
     <div class="modal-content">
-        <span class="close-modal">&times;</span>
+        <span class="close-modal">×</span>
         <h2>Reflexión Musical MX</h2>
         <p>Reflexión Musical MX nace de una idea simple pero poderosa: la música también puede hacer pensar.</p>
         <p>En un mundo lleno de ruido, este proyecto utiliza canciones para hablar de lo que muchas veces se evita: la pérdida de valores, los conflictos sociales, la violencia, la desigualdad y las decisiones que están moldeando el futuro de la humanidad.</p>
         <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
-        <p style="color: #FFD700; font-weight: 600; font-style: italic;">Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
+        <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
+        <p style="color: #FFD700; font-weight: 600; font-size: 19px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
         
+        <div class="audio-controls">
+            <span id="muteBtn" aria-label="Silenciar">🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
+        </div>
+
         <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
         <p style="font-size: 13px; opacity: 0.7; margin: 0; text-align: center;">
             <em>Próximamente: "Algo está mal" (Libro)</em>
@@ -465,36 +520,78 @@ transform: rotate(90deg);
 </a>
 </div>
 
-<div id="solarSystem">
-<div id="sun" aria-label="Abrir biografía">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
-</div>
-<div id="orbitSingles" class="orbit"></div>
-<div id="orbitAlbums" class="orbit"></div>
-</div>
-
 <script>
-// QUITAR PANTALLA DE CARGA CUANDO LA PÁGINA ESTÉ LISTA
+// QUITAR PANTALLA DE CARGA
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     setTimeout(() => {
         loader.style.opacity = '0';
         setTimeout(() => loader.remove(), 800);
-    }, 500); // Pequeño retraso extra para apreciar la animación
+    }, 500); 
 });
+
+// Salvavidas de carga
+setTimeout(() => {
+    const loader = document.getElementById('loader');
+    if(loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 800);
+    }
+}, 4000);
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* LÓGICA DEL MODAL DE BIOGRAFÍA */
+    /* LÓGICA DEL MODAL Y CONTROL DE AUDIO */
     const modal = document.getElementById("bioModal");
     const sun = document.getElementById("sun");
     const closeModal = document.querySelector(".close-modal");
+    const bioAudio = document.getElementById("bioAudio"); 
+    
+    // Controles
+    const volumeSlider = document.getElementById("volumeSlider");
+    const muteBtn = document.getElementById("muteBtn");
+    
+    // Volumen inicial (40% para no asustar)
+    bioAudio.volume = volumeSlider.value;
 
-    sun.onclick = () => { modal.classList.add("show"); };
-    closeModal.onclick = () => { modal.classList.remove("show"); };
+    // Actualizar volumen al deslizar
+    volumeSlider.addEventListener("input", (e) => {
+        bioAudio.volume = e.target.value;
+        muteBtn.textContent = bioAudio.volume === 0 ? "🔇" : "🔊";
+    });
+
+    // Botón de silenciar/desilenciar
+    muteBtn.addEventListener("click", () => {
+        if (bioAudio.volume > 0) {
+            bioAudio.dataset.lastVol = bioAudio.volume; // Guarda el volumen actual
+            bioAudio.volume = 0;
+            volumeSlider.value = 0;
+            muteBtn.textContent = "🔇";
+        } else {
+            const lastVol = bioAudio.dataset.lastVol || 0.4;
+            bioAudio.volume = lastVol;
+            volumeSlider.value = lastVol;
+            muteBtn.textContent = "🔊";
+        }
+    });
+
+    function closeAndStopAudio() {
+        modal.classList.remove("show");
+        bioAudio.pause();          
+        bioAudio.currentTime = 0;  
+    }
+
+    sun.onclick = () => { 
+        modal.classList.add("show"); 
+        bioAudio.play().catch(error => {
+            console.log("El navegador bloqueó el autoplay del audio:", error);
+        });
+    };
+
+    closeModal.onclick = closeAndStopAudio;
     window.onclick = (event) => {
         if (event.target === modal) {
-            modal.classList.remove("show");
+            closeAndStopAudio();
         }
     };
 
@@ -546,7 +643,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     drawStars();
 
-    /* DESTELLOS DE ESTRELLAS (SUPERNOVAS OPTICAS) */
+    /* DESTELLOS DE ESTRELLAS */
     function spawnSupernova() {
         const flash = document.createElement("div");
         flash.className = "supernova";
@@ -575,10 +672,8 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.onclick=()=>window.open(item.link,"_blank")
             
             const safeImgPath = encodeURI(item.img);
-            // El nombre exacto que tienes en el archivo webp
             const albumName = item.img.split('/').pop().replace('.webp', '');
             
-            // Se inyecta el tooltip dentro del "counter" para que no gire de cabeza
             planet.innerHTML=`
                 <div class="counter">
                     <img src="${safeImgPath}" alt="${albumName}" onerror="this.style.opacity=0;">
