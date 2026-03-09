@@ -33,7 +33,7 @@ overscroll-behavior: none;
 touch-action: none;
 }
 
-/* CAJA DE CRISTAL PARA ESTRELLAS */
+/* CAJA DE CRISTAL PARA ESTRELLAS FUGACES */
 #starContainer {
 position: absolute;
 top: 0; left: 0;
@@ -71,7 +71,7 @@ letter-spacing: 3px;
 font-size: 14px;
 }
 
-/* FONDO */
+/* FONDO ESTÁTICO */
 #bg{
 position:fixed;
 top:0; left:0;
@@ -621,13 +621,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // MAGIA DE ESTRELLAS: Creadas sobre un lienzo gigante de 3000x3000 para que nunca se escondan
     let stars = [];
-    for(let i=0; i<200; i++){
+    const mapSize = 3000; 
+    for(let i=0; i<350; i++){
         stars.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
+            x: Math.random() * mapSize,
+            y: Math.random() * mapSize,
             r: Math.random() * 1.5 + 0.5,
-            opacity: (Math.random() * 0.8) + 0.2, 
+            opacity: Math.random(),
             fadeStep: (Math.random() * 0.005) + 0.002 
         });
     }
@@ -636,18 +638,21 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         stars.forEach(st => {
-            st.opacity += st.fadeStep;
-            
-            if(st.opacity >= 1) {
-                st.fadeStep = -Math.abs(st.fadeStep); 
-            } else if(st.opacity <= 0.1) {
-                st.fadeStep = Math.abs(st.fadeStep); 
-            }
+            // Solo dibujamos las estrellas que caben en la pantalla actual para ahorrar memoria
+            if(st.x < canvas.width && st.y < canvas.height) {
+                st.opacity += st.fadeStep;
+                
+                if(st.opacity >= 1) {
+                    st.fadeStep = -Math.abs(st.fadeStep); 
+                } else if(st.opacity <= 0.1) {
+                    st.fadeStep = Math.abs(st.fadeStep); 
+                }
 
-            ctx.fillStyle = `rgba(255, 215, 0, ${st.opacity})`;
-            ctx.beginPath();
-            ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
-            ctx.fill();
+                ctx.fillStyle = `rgba(255, 215, 0, ${st.opacity})`;
+                ctx.beginPath();
+                ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
         });
         requestAnimationFrame(drawStars);
     }
