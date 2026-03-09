@@ -1,627 +1,741 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Reflexión Musical MX - Universo Premium v3.0</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        /* =========================================
-           CONFIGURACIÓN BASE Y RESET
-           ========================================= */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        html, body { 
-            background: #000; 
-            color: #FFD700; 
-            font-family: 'Merriweather', serif; 
-            margin: 0; 
-            padding: 0; 
-            width: 100%; 
-            height: 100%; 
-            overflow: hidden; 
-            position: fixed; 
-            touch-action: none; 
-        }
 
-        /* =========================================
-           PANTALLA DE CARGA (LOADER)
-           ========================================= */
-        #loader { 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            background: radial-gradient(circle, #1a1a1a 0%, #000 100%); 
-            z-index: 100000; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
 
-        #loader img { 
-            width: 220px; 
-            filter: drop-shadow(0 0 10px gold);
-            animation: pulseLoader 2.5s infinite ease-in-out; 
-        }
+<title>Reflexión Musical MX</title>
 
-        #loader p {
-            margin-top: 25px;
-            letter-spacing: 3px;
-            font-size: 14px;
-            text-transform: uppercase;
-            animation: blinkText 1.5s infinite;
-        }
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<link rel="apple-touch-icon" href="images/icon-192.png">
 
-        @keyframes pulseLoader {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px gold); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 30px gold); }
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-        @keyframes blinkText {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
+<style>
+/* BLOQUEO PARA MÓVILES */
+html, body {
+background:#000;
+color:#FFD700;
+font-family: 'Merriweather', serif;
+margin:0;
+padding:0;
+width: 100%;
+height: 100%;
+overflow:hidden;
+text-align:center;
+overscroll-behavior: none;
+touch-action: none;
+}
 
-        /* =========================================
-           FONDO: SUPERNOVAS Y ESTRELLAS FUGACES
-           ========================================= */
-        #starContainer { 
-            position: absolute; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            pointer-events: none; 
-            z-index: 5; 
-        }
+/* CAJA DE CRISTAL PARA ESTRELLAS FUGACES */
+#starContainer {
+position: absolute;
+top: 0; left: 0;
+width: 100%;
+height: 100%;
+overflow: hidden; 
+pointer-events: none; 
+z-index: 1000;
+}
 
-        /* Destello Real de Supernova */
-        .supernova {
-            position: absolute;
-            width: 2px; height: 2px;
-            background: #fff;
-            border-radius: 50%;
-            pointer-events: none;
-        }
+/* PANTALLA DE CARGA */
+#loader {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+background: #000;
+z-index: 99999;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+transition: opacity 0.8s ease;
+}
 
-        .supernova-glow {
-            animation: supernovaExplosion 3s forwards ease-out;
-        }
+#loader img {
+width: 180px;
+animation: pulse 2s infinite;
+}
 
-        @keyframes supernovaExplosion {
-            0% { transform: scale(0); opacity: 0; box-shadow: 0 0 0 white; }
-            20% { opacity: 1; box-shadow: 0 0 20px 10px #fff, 0 0 40px 20px gold; }
-            100% { transform: scale(15); opacity: 0; box-shadow: 0 0 100px 50px transparent; }
-        }
+#loader p {
+color: #FFD700;
+margin-top: 25px;
+font-weight: 700;
+letter-spacing: 3px;
+font-size: 14px;
+}
 
-        /* Estrellas Fugaces con COLA LARGA */
-        .shooting-star {
-            position: absolute;
-            pointer-events: auto;
-            cursor: pointer;
-            z-index: 1000;
-            white-space: nowrap;
-        }
+/* FONDO ESTÁTICO */
+#bg{
+position:fixed;
+top:0; left:0;
+width:100%; height:100%;
+z-index:-1;
+pointer-events:none;
+}
 
-        .star-body {
-            display: flex;
-            align-items: center;
-        }
+/* SISTEMA SOLAR */
+#solarSystem{
+position:absolute;
+top:0; left:0;
+width:100%; height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+transition: transform 0.3s ease; 
+}
 
-        .star-tail {
-            width: 120px;
-            height: 2px;
-            background: linear-gradient(to left, gold, transparent);
-            filter: blur(1px);
-        }
+/* LOGO CENTRAL (EL SOL) */
+#sun{
+position:absolute;
+width:200px;
+z-index:10;
+animation:pulse 5s infinite;
+cursor: pointer;
+transition: transform 0.3s ease;
+}
 
-        .star-head {
-            width: 35px;
-            height: 35px;
-            background: #000;
-            border: 1px solid gold;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-            box-shadow: 0 0 15px gold;
-        }
+#sun:hover {
+transform: scale(1.1);
+}
 
-        .star-head svg {
-            width: 100%;
-            fill: gold;
-        }
+#sun img{
+width:100%;
+}
 
-        /* =========================================
-           SISTEMA SOLAR (SOL Y ÓRBITAS)
-           ========================================= */
-        #universe {
-            position: absolute;
-            width: 100%; height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px;
-        }
+@keyframes pulse{
+0%{filter:drop-shadow(0 0 15px gold);}
+50%{filter:drop-shadow(0 0 60px gold);}
+100%{filter:drop-shadow(0 0 15px gold);}
+}
 
-        #sun {
-            width: 220px;
-            height: 220px;
-            z-index: 100;
-            cursor: pointer;
-            position: relative;
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+/* MODAL DE BIOGRAFÍA */
+.modal {
+display: none; 
+position: fixed; 
+z-index: 100000;
+left: 0; top: 0; 
+width: 100%; height: 100%;
+background-color: rgba(0,0,0,0.85);
+backdrop-filter: blur(5px);
+opacity: 0; 
+transition: opacity 0.4s ease;
+align-items: center; 
+justify-content: center;
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
+touch-action: auto;
+}
 
-        #sun:hover { transform: scale(1.15); }
+.modal.show {
+display: flex; 
+opacity: 1;
+}
 
-        #sun img {
-            width: 100%;
-            border-radius: 50%;
-            filter: drop-shadow(0 0 25px gold);
-            animation: sunRadiance 6s infinite;
-        }
+.modal-content {
+background: #0a0a0a; 
+border: 1px solid #FFD700;
+padding: 40px; 
+border-radius: 15px;
+max-width: 650px; 
+width: 85%;
+max-height: 80vh;
+overflow-y: auto;
+overscroll-behavior: contain;
+-webkit-overflow-scrolling: touch;
+text-align: left; 
+position: relative;
+box-shadow: 0 0 40px rgba(255,215,0,0.2);
+color: #ddd;
+line-height: 1.8;
+-webkit-transform: translateZ(0);
+transform: translateZ(0);
+touch-action: pan-y;
+}
 
-        @keyframes sunRadiance {
-            0%, 100% { filter: drop-shadow(0 0 20px gold) brightness(1); }
-            50% { filter: drop-shadow(0 0 60px orange) brightness(1.2); }
-        }
+.modal-content::-webkit-scrollbar { width: 6px; }
+.modal-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
 
-        /* Órbitas */
-        .orbit {
-            position: absolute;
-            border: 1.5px solid rgba(255, 215, 0, 0.12);
-            border-radius: 50%;
-            pointer-events: none;
-        }
+.modal-content h2 { 
+color: #FFD700; 
+margin-top: 0; 
+font-weight: 700;
+font-size: 26px;
+border-bottom: 1px solid rgba(255,215,0,0.3);
+padding-bottom: 15px;
+margin-bottom: 25px;
+}
 
-        #orbit-singles { 
-            width: 480px; height: 480px; 
-            animation: rotateOrbit 60s linear infinite; 
-        }
+.modal-content p {
+margin-bottom: 15px;
+font-size: 15px;
+}
 
-        #orbit-albums { 
-            width: 820px; height: 820px; 
-            animation: rotateOrbit 120s linear infinite; 
-        }
+.close-modal {
+position: absolute; 
+right: 25px; top: 20px;
+color: #FFD700; font-size: 32px; font-weight: bold; 
+cursor: pointer; transition: 0.2s; z-index: 10;
+font-family: sans-serif;
+}
 
-        @keyframes rotateOrbit {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+.close-modal:hover {
+color: #fff;
+transform: scale(1.1);
+}
 
-        /* =========================================
-           DISCOS (PLANETAS)
-           ========================================= */
-        .planet {
-            position: absolute;
-            width: 105px;
-            height: 105px;
-            pointer-events: auto;
-            z-index: 200;
-        }
+/* CONTROLES DE AUDIO */
+.audio-controls {
+background: #111; border: 1px solid #FFD700; border-radius: 10px;
+padding: 12px 20px; margin-top: 25px; display: flex; align-items: center;
+justify-content: space-between; gap: 15px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+}
 
-        /* Contra-rotación para que el disco y la familia no se giren */
-        .stabilizer {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: counterRotate 60s linear infinite;
-            position: relative;
-        }
+.audio-controls span { font-size: 22px; cursor: pointer; user-select: none; font-family: sans-serif; }
+.audio-controls .vol-label { font-size: 13px; font-weight: 700; color: #FFD700; letter-spacing: 1px; cursor: default; }
+#volumeSlider { flex-grow: 1; accent-color: #FFD700; height: 6px; background: #333; border-radius: 5px; outline: none; cursor: pointer; }
 
-        #orbit-albums .stabilizer { animation-duration: 120s; }
+/* ORBITAS */
+.orbit{
+position:absolute;
+border-radius:50%;
+border:1px solid rgba(255,215,0,.15);
+pointer-events:none; 
+}
 
-        @keyframes counterRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
-        }
+#orbitSingles{
+width:420px;
+height:420px;
+animation:spin 45s linear infinite;
+}
 
-        .album-art {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid gold;
-            object-fit: cover;
-            transition: 0.4s;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            cursor: pointer;
-        }
+#orbitAlbums{
+width:720px;
+height:720px;
+animation:spin 95s linear infinite;
+}
 
-        .planet:hover .album-art {
-            transform: scale(1.4) translateY(-10px);
-            box-shadow: 0 0 40px gold;
-            z-index: 1000;
-        }
+#orbitSingles:hover, #orbitSingles:hover .counter,
+#orbitAlbums:hover, #orbitAlbums:hover .counter {
+animation-play-state: paused;
+}
 
-        /* Tooltip Nombre Album */
-        .album-label {
-            position: absolute;
-            bottom: -45px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.9);
-            color: gold;
-            padding: 5px 12px;
-            border: 1px solid gold;
-            border-radius: 4px;
-            font-size: 11px;
-            white-space: nowrap;
-            opacity: 0;
-            transition: 0.3s;
-            pointer-events: none;
-        }
+@keyframes spin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
 
-        .planet:hover .album-label { opacity: 1; bottom: -55px; }
+/* DISCOS */
+.planet{
+position:absolute;
+width:110px;
+height:110px;
+border-radius:50%;
+cursor:pointer;
+transition:.3s;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#000;
+box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4);
+pointer-events:auto; 
+}
 
-        /* =========================================
-           FAMILIA (TEJIDO VITAL) - SIEMPRE DE PIE
-           ========================================= */
-        .family-container {
-            position: absolute;
-            bottom: 115%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: flex-end;
-            gap: 6px;
-            opacity: 0;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            padding: 12px;
-            background: rgba(0,0,0,0.85);
-            border: 1px solid gold;
-            border-radius: 12px;
-            filter: drop-shadow(0 0 10px gold);
-        }
+.planet:hover{
+transform:scale(1.3);
+box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
+z-index: 100;
+}
 
-        .planet:hover .family-container { opacity: 1; bottom: 130%; }
+/* CONTRA ROTACION Y TOOLTIPS */
+.counter{
+width:100%;
+height:100%;
+animation:counterSpin 45s linear infinite;
+position: relative; 
+border-radius: 50%;
+}
 
-        .person { display: flex; flex-direction: column; align-items: center; }
-        .p-head { width: 10px; height: 10px; background: gold; border-radius: 50%; margin-bottom: 2px; }
-        .p-body-m { width: 18px; height: 26px; background: gold; border-radius: 4px 4px 0 0; }
-        .p-body-f { width: 0; height: 0; border-left: 13px solid transparent; border-right: 13px solid transparent; border-bottom: 26px solid gold; }
-        .p-child { transform: scale(0.65); transform-origin: bottom; }
+.counter img{
+width:100%;
+height:100%;
+object-fit:cover;
+border-radius:50%;
+pointer-events:none;
+}
 
-        /* =========================================
-           EFECTO CORAZONES (AMOR EN TIEMPOS)
-           ========================================= */
-        .heart-particle {
-            position: fixed;
-            color: #ff0000;
-            font-size: 24px;
-            pointer-events: none;
-            z-index: 3000;
-            filter: drop-shadow(0 0 8px gold);
-            user-select: none;
-        }
+#orbitAlbums .counter{
+animation-duration:95s;
+}
 
-        /* =========================================
-           MODAL DE BIOGRAFÍA (SOL)
-           ========================================= */
-        #bio-modal {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
-            width: 85%;
-            max-width: 650px;
-            background: linear-gradient(135deg, #111 0%, #000 100%);
-            border: 2px solid gold;
-            border-radius: 25px;
-            padding: 40px;
-            z-index: 200000;
-            color: gold;
-            display: none;
-            opacity: 0;
-            transition: all 0.5s;
-            box-shadow: 0 0 100px rgba(255, 215, 0, 0.2);
-            text-align: center;
-        }
+@keyframes counterSpin{
+from{transform:rotate(0deg);}
+to{transform:rotate(-360deg);}
+}
 
-        #bio-modal.active {
-            display: block;
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
+/* TOOLTIPS CON MAYUSCULAS */
+.tooltip {
+position: absolute;
+bottom: -15px;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(0, 0, 0, 0.9);
+color: #FFD700;
+padding: 6px 14px;
+border-radius: 6px;
+font-size: 11px;
+font-weight: 700;
+white-space: nowrap;
+border: 1px solid rgba(255,215,0,0.5);
+opacity: 0;
+visibility: hidden;
+transition: all 0.3s ease;
+pointer-events: none;
+box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+text-transform: uppercase; 
+letter-spacing: 1px;
+}
 
-        .close-btn {
-            position: absolute;
-            top: 20px; right: 25px;
-            font-size: 35px;
-            cursor: pointer;
-            color: gold;
-        }
+.planet:hover .tooltip {
+opacity: 1;
+visibility: visible;
+bottom: -35px; 
+}
 
-        /* =========================================
-           REDES SOCIALES LATERALES
-           ========================================= */
-        .social-dock {
-            position: fixed;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 15000;
-        }
+/* REDES LATERALES */
+.floating-social{
+position:absolute;
+top:50%;
+left:15px;
+transform:translateY(-50%);
+display:flex;
+flex-direction:column;
+gap:15px;
+z-index:999;
+}
 
-        .social-dock a {
-            width: 50px; height: 50px;
-            background: rgba(0,0,0,0.8);
-            border: 1px solid gold;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.3s ease;
-            text-decoration: none;
-        }
+.floating-social a{
+background:#111;
+color:#FFD700;
+width:45px;
+height:45px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+text-decoration:none;
+transition:.25s;
+padding: 10px; 
+box-sizing: border-box;
+}
 
-        .social-dock a svg { width: 25px; fill: gold; transition: 0.3s; }
+.floating-social svg {
+fill: #FFD700;
+width: 100%;
+height: 100%;
+transition: .25s;
+}
 
-        .social-dock a:hover {
-            background: gold;
-            transform: scale(1.15) translateX(10px);
-            box-shadow: 0 0 20px gold;
-        }
+.floating-social a:hover{
+background:#FFD700;
+color:#000; 
+transform:scale(1.2);
+}
 
-        .social-dock a:hover svg { fill: #000; }
 
-        /* Adaptabilidad Móvil */
-        @media (max-width: 768px) {
-            #universe { transform: scale(0.45); }
-            .social-dock { left: 10px; transform: translateY(-50%) scale(0.8); }
-        }
-    </style>
+.floating-social a:hover svg {
+fill: #000; 
+}
+
+/* ESTRELLAS FUGACES */
+.shootingStar {
+position: absolute;
+width: 70px; 
+height: 70px;
+cursor: pointer;
+pointer-events: auto;
+}
+
+.starIconWrapper {
+position: absolute;
+top: 50%; left: 50%;
+width: 35px; height: 35px;
+transform: translate(-50%, -50%);
+z-index: 2;
+filter: drop-shadow(0 0 10px gold);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.starIcon {
+width: 100%; height: 100%;
+fill: #FFD700;
+pointer-events: none;
+}
+
+.tail {
+position: absolute;
+top: 50%; left: 50%; 
+height: 3px;
+background: linear-gradient(90deg, gold, transparent);
+transform-origin: left center;
+filter: blur(1px);
+opacity: 0.8;
+pointer-events: none;
+}
+
+/* DESTELLOS DE ESTRELLAS (SUPERNOVAS) */
+.supernova {
+position: absolute;
+width: 4px;
+height: 4px;
+background: #fff;
+border-radius: 50%;
+box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8);
+animation: burst 2.5s ease-in-out forwards;
+z-index: 5;
+pointer-events: none;
+}
+
+.supernova::before, .supernova::after {
+content: '';
+position: absolute;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+}
+.supernova::before { width: 60px; height: 2px; }
+.supernova::after { width: 2px; height: 60px; }
+
+.ray-x {
+position: absolute;
+width: 30px; height: 2px;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+top: 50%; left: 50%;
+transform: translate(-50%, -50%) rotate(45deg);
+}
+.ray-x::after {
+content: '';
+position: absolute;
+width: 30px; height: 2px;
+background: radial-gradient(circle, gold 0%, transparent 70%);
+top: 0; left: 0;
+transform: rotate(90deg);
+}
+
+@keyframes burst {
+0% { transform: scale(0); opacity: 0; }
+40% { transform: scale(1.2); opacity: 1; }
+100% { transform: scale(0); opacity: 0; }
+}
+
+/* RESPONSIVIDAD */
+@media (max-width: 768px) {
+    #solarSystem {
+        transform: scale(0.45);
+    }
+    .floating-social {
+        transform: scale(0.8) translateY(-60%);
+        left: 5px;
+    }
+    .modal-content {
+        padding: 25px;
+        width: 90%;
+        max-height: 75vh;
+    }
+    .close-modal { right: 15px; top: 10px; }
+}
+</style>
+
 </head>
+
 <body>
 
-    <div id="loader">
-        <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Reflexión Musical Logo">
-        <p>Sincronizando Galaxia Musical...</p>
-    </div>
+<div id="loader">
+    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX">
+    <p>INICIANDO UNIVERSO...</p>
+</div>
 
-    <div id="starContainer"></div>
+<audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
 
-    <div class="social-dock">
-        <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" title="YouTube">
-            <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
-        </a>
-        <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" title="TikTok">
-            <svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
-        </a>
-        <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" title="Facebook">
-            <svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" title="Instagram">
-            <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8z"/></svg>
-        </a>
-    </div>
-
-    <div id="bio-modal">
-        <span class="close-btn" onclick="toggleBio()">&times;</span>
-        <img src="images/REFLEXIÓN MUSICAL MX 1.webp" style="width: 100px; margin-bottom: 20px;">
-        <h2 style="font-size: 28px; margin-bottom: 15px;">REFLEXIÓN MUSICAL MX</h2>
-        <hr style="border: 0; border-top: 1px solid gold; margin-bottom: 20px;">
-        <p style="line-height: 1.8; text-align: justify;">
-            Bienvenidos a un viaje sonoro diseñado para despertar la consciencia. Este proyecto nace de la necesidad de cuestionar, sanar y evolucionar a través de la música. Cada álbum en esta galaxia representa una etapa de introspección y compromiso social.
-        </p>
-        <p style="margin-top: 20px; font-style: italic; color: #fff;">"La música no solo se escucha, se vive."</p>
-    </div>
-
-    <main id="universe">
-        <div id="sun" onclick="handleSunClick()">
-            <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Sol Central">
+<div id="bioModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">×</span>
+        <h2>Reflexión Musical MX</h2>
+        <p>Reflexión Musical MX nace de una idea simple pero poderosa: la música también puede hacer pensar.</p>
+        <p>En un mundo lleno de ruido, este proyecto utiliza canciones para hablar de lo que muchas veces se evita: la pérdida de valores, los conflictos sociales, la violencia, la desigualdad y las decisiones que están moldeando el futuro de la humanidad.</p>
+        <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
+        <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
+        <p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
+        
+        <div class="audio-controls">
+            <span id="muteBtn" aria-label="Silenciar">🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
+            <span class="vol-label">VOL</span>
         </div>
 
-        <div id="orbit-singles" class="orbit"></div>
+        <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
+        <p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
+            Próximamente: "Algo está mal" (Libro)
+        </p>
+    </div>
+</div>
 
-        <div id="orbit-albums" class="orbit"></div>
-    </main>
+<canvas id="bg"></canvas>
 
-    <audio id="audio-click" src="https://www.soundjay.com/buttons/sounds/button-30.mp3"></audio>
+<div id="starContainer"></div>
 
-    <script>
-        /* =========================================
-           BASES DE DATOS DE LANZAMIENTOS (17 EN TOTAL)
-           ========================================= */
+<div class="floating-social">
+<a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="YouTube">
+<svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
+</a>
+<a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="TikTok">
+<svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
+</a>
+<a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Facebook">
+<svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg>
+</a>
+<a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Instagram">
+<svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+</a>
+<a href="https://x.com/RMusicalMX" target="_blank" aria-label="X (Twitter)">
+<svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+</a>
+<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Threads">
+<svg viewBox="0 0 448 512"><path d="M331.5 235.7c2.2 .9 4.2 1.9 6.3 2.8c29.2 14.1 50.6 35.2 61.8 61.4c15.7 36.5 17.2 95.8-30.3 143.2c-36.2 36.2-86.6 54.3-146.4 54.3c-108.5 0-188-75.8-188-182.2c0-109.9 85.3-189.5 197.8-189.5c88.8 0 148 48.7 175.7 99.1c7.8 14.1 1.7 33-14 38.6c-13.3 4.8-29.2-.8-36.8-12.7c-17.7-28-54.8-63.4-119.5-63.4c-78.5 0-136.2 55.4-136.2 131.6c0 80 54 125.7 127 125.7c33.5 0 68-12.9 89.2-34.1c17-17 21.7-44.1 11.2-68.5c-7.2-16.7-22.3-30.9-46.7-39.6c-13.6-4.9-28-7.7-42.5-8.5c-44-2.5-87.3 10.9-115.3 35.8c-26.6 23.6-41.6 56.4-41.6 89.7c0 38.7 21.4 75.8 57.7 99.7c33 21.7 75.5 32.7 118.8 32.7c39.6 0 76.5-10.4 105.7-30.1c-13.1 7.1-28.7 11.2-45.3 11.2c-56 0-101.3-45.3-101.3-101.3c0-42.2 25.8-78.3 63.4-93.5c-9.6-1.5-19.5-2.2-29.7-2.2c-67.4 0-120.9 40.5-120.9 98c0 40 27.5 73.6 67.5 89.6c32.7 13.1 71.9 14.6 110.1 4c31.1-8.6 57.6-26.9 76.2-51.5c-15.3 22.6-38.6 39.7-65.7 46.5c-18.7 4.6-38.4 4.7-57.1 .2c-35-8.2-64.6-30.9-82.4-62.8c-18-32.3-21.7-69.8-10.3-104.6c11.4-34.8 38.3-63.1 73.1-77.8c34.8-14.7 73.4-14.8 108.3-.3z"/></svg>
+</a>
+<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="SoundCloud">
+<span style="font-size: 26px; line-height: 1; padding-bottom: 2px;">☁</span>
+</a>
+</div>
 
-        const SENCILLOS_DATA = [
-            { id: 1, nombre: "WE RISE AS ONE", img: "images/We rise as one.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs" },
-            { id: 2, nombre: "GRACIAS 2025", img: "images/Gracias 2025.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk" },
-            { id: 3, nombre: "ADULTOS TRASTORNADOS", img: "images/Adultos TRASTORNADOS.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM" },
-            { id: 4, nombre: "CODIGO ROJO", img: "images/Codigo rojo.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0" },
-            { id: 5, nombre: "LA FUERZA DE TODOS", img: "images/La fuerza de todos.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro" },
-            { id: 6, nombre: "REGRESAR A CASA", img: "images/Regresar a casa.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE" },
-            { id: 7, nombre: "TRES COLORES", img: "images/Tres colores, un compromiso.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM" }
-        ];
+<div id="solarSystem">
+<div id="sun" aria-label="Abrir biografía">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX">
+</div>
+<div id="orbitSingles" class="orbit"></div>
+<div id="orbitAlbums" class="orbit"></div>
+</div>
 
-        const ALBUMES_DATA = [
-            { id: 8, nombre: "VOCES DE CAMBIO 1", img: "images/Voces de Cambio 1.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ" },
-            { id: 9, nombre: "VOCES DE CAMBIO 2", img: "images/Voces de Cambio 2.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE" },
-            { id: 10, nombre: "ESTADO CONTRA ESTADO", img: "images/Estado contra estado.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow" },
-            { id: 11, nombre: "LUZ ENTRE SOMBRAS", img: "images/Luz entre las Sombras.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4" },
-            { id: 12, nombre: "TIEMPO Y VIDA", img: "images/Tiempo y vida.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE" },
-            { id: 13, nombre: "CHACALES OPORTUNISTAS", img: "images/CHACALES OPORTUNISTAS.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A" },
-            { id: 14, nombre: "TEJIDO VITAL", img: "images/Tejido vital.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs", especial: "familia" },
-            { id: 15, nombre: "REVOLUCION MENTAL", img: "images/Revolucion mental.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU" },
-            { id: 16, nombre: "ERES LO QUE ESCUCHAS", img: "images/Eres lo que escuchas.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I" },
-            { id: 17, nombre: "AMOR EN TIEMPOS", img: "images/Amor en tiempos de ideologias cancerigenas.webp", link: "https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA", especial: "corazones" }
-        ];
+<script>
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 800);
+    }, 500); 
+});
 
-        /* =========================================
-           LÓGICA DE CONSTRUCCIÓN DEL UNIVERSO
-           ========================================= */
+document.addEventListener("DOMContentLoaded", () => {
 
-        function initUniverse() {
-            createPlanets(SENCILLOS_DATA, 'orbit-singles', 240);
-            createPlanets(ALBUMES_DATA, 'orbit-albums', 410);
-            
-            // Iniciar ciclos de efectos
-            setInterval(spawnSupernova, 3000);
-            setInterval(spawnShootingStar, 7000);
-            
-            // Remover Loader
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.remove(), 1000);
-            }, 2000);
+    const modal = document.getElementById("bioModal");
+    const sun = document.getElementById("sun");
+    const closeModal = document.querySelector(".close-modal");
+    const bioAudio = document.getElementById("bioAudio"); 
+    const volumeSlider = document.getElementById("volumeSlider");
+    const muteBtn = document.getElementById("muteBtn");
+    const starContainer = document.getElementById("starContainer"); 
+    
+    if(volumeSlider && bioAudio) {
+        bioAudio.volume = volumeSlider.value;
+        volumeSlider.addEventListener("input", (e) => {
+            bioAudio.volume = e.target.value;
+            muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
+        });
+    }
+
+    if(muteBtn && bioAudio) {
+        muteBtn.addEventListener("click", () => {
+            if (bioAudio.volume > 0) {
+                bioAudio.dataset.lastVol = bioAudio.volume; 
+                bioAudio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.textContent = "🔇";
+            } else {
+                const lastVol = bioAudio.dataset.lastVol || 0.4;
+                bioAudio.volume = lastVol;
+                volumeSlider.value = lastVol;
+                muteBtn.textContent = "🔊";
+            }
+        });
+    }
+
+    function closeAndStopAudio() {
+        modal.classList.remove("show");
+        if(bioAudio) {
+            bioAudio.pause();          
+            bioAudio.currentTime = 0;  
         }
+    }
 
-        function createPlanets(data, orbitId, radius) {
-            const orbit = document.getElementById(orbitId);
-            const total = data.length;
+    if(sun) {
+        sun.onclick = () => { 
+            modal.classList.add("show"); 
+            if(bioAudio) {
+                bioAudio.play().catch(error => { console.log("Bloqueado:", error); });
+            }
+        };
+    }
 
-            data.forEach((item, index) => {
-                const angle = (index / total) * (Math.PI * 2);
-                const x = Math.cos(angle) * radius;
-                const y = Math.sin(angle) * radius;
+    if(closeModal) closeModal.onclick = closeAndStopAudio;
+    
+    window.onclick = (event) => {
+        if (event.target === modal) closeAndStopAudio();
+    };
 
-                const planet = document.createElement('div');
-                planet.className = 'planet';
-                planet.style.left = `calc(50% + ${x}px - 52px)`;
-                planet.style.top = `calc(50% + ${y}px - 52px)`;
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
 
-                // Contenedor estabilizador (Contra-rotación)
-                const stabilizer = document.createElement('div');
-                stabilizer.className = 'stabilizer';
-
-                // Imagen del álbum
-                const img = document.createElement('img');
-                img.src = item.img;
-                img.className = 'album-art';
-                img.alt = item.nombre;
-                img.onclick = () => window.open(item.link, '_blank');
-                img.onerror = function() { this.src = 'https://via.placeholder.com/150/000000/FFD700?text=RM+MX'; };
-
-                // Etiqueta (Tooltip)
-                const label = document.createElement('div');
-                label.className = 'album-label';
-                label.innerText = item.nombre;
-
-                stabilizer.appendChild(img);
-                stabilizer.appendChild(label);
-
-                // Lógica especial para "TEJIDO VITAL" (Familia siempre derecha)
-                if (item.especial === "familia") {
-                    const family = document.createElement('div');
-                    family.className = 'family-container';
-                    family.innerHTML = `
-                        <div class="person"><div class="p-head"></div><div class="p-body-m"></div></div>
-                        <div class="person p-child"><div class="p-head"></div><div class="p-body-m"></div></div>
-                        <div class="person p-child"><div class="p-head"></div><div class="p-body-f"></div></div>
-                        <div class="person"><div class="p-head"></div><div class="p-body-f"></div></div>
-                    `;
-                    stabilizer.appendChild(family);
-                }
-
-                // Lógica especial para "AMOR EN TIEMPOS" (Corazones)
-                if (item.especial === "corazones") {
-                    planet.onmouseenter = () => startHearts(planet);
-                    planet.onmouseleave = () => stopHearts();
-                }
-
-                planet.appendChild(stabilizer);
-                orbit.appendChild(planet);
+    let stars = [];
+    function setCanvasSize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars(); // Re-iniciamos estrellas al cambiar tamaño para que siempre llenen la pantalla
+    }
+    
+    // FUNCIÓN PARA CREAR ESTRELLAS ESTÁTICAS QUE PARPADEAN
+    function initStars() {
+        stars = [];
+        const numStars = 350; 
+        for(let i=0; i<numStars; i++){
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 1.5 + 0.5,
+                opacity: Math.random(),
+                fadeStep: (Math.random() * 0.005) + 0.003 
             });
         }
+    }
 
-        /* =========================================
-           EFECTOS VISUALES AVANZADOS
-           ========================================= */
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
 
-        function spawnSupernova() {
-            const container = document.getElementById('starContainer');
-            const sn = document.createElement('div');
-            sn.className = 'supernova supernova-glow';
-            sn.style.left = Math.random() * 100 + '%';
-            sn.style.top = Math.random() * 100 + '%';
-            container.appendChild(sn);
-            setTimeout(() => sn.remove(), 3000);
-        }
+    function drawStars(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(st => {
+            st.opacity += st.fadeStep;
+            if(st.opacity >= 1 || st.opacity <= 0.2) st.fadeStep *= -1;
 
-        const PLATFORMS = [
-            { icon: '<svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>', url: 'https://youtube.com' },
-            { icon: '<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>', url: 'https://soundcloud.com' }
-        ];
+            ctx.fillStyle = `rgba(255, 215, 0, ${st.opacity})`;
+            ctx.beginPath();
+            ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(drawStars);
+    }
+    drawStars();
 
-        function spawnShootingStar() {
-            const container = document.getElementById('starContainer');
-            const data = PLATFORMS[Math.floor(Math.random() * PLATFORMS.length)];
-            
-            const star = document.createElement('div');
-            star.className = 'shooting-star';
-            star.innerHTML = `
-                <div class="star-body">
-                    <div class="star-tail"></div>
-                    <div class="star-head">${data.icon}</div>
-                </div>
-            `;
+    // SUPERNOVAS (LAS DE LOS DESTELLOS DE CRUZ Y X)
+    function spawnSupernova() {
+        const flash = document.createElement("div");
+        flash.className = "supernova";
+        flash.innerHTML = '<div class="ray-x"></div>'; 
+        flash.style.left = (Math.random() * window.innerWidth) + "px";
+        flash.style.top = (Math.random() * window.innerHeight) + "px";
+        if(starContainer) starContainer.appendChild(flash); 
+        setTimeout(() => flash.remove(), 2500);
+        setTimeout(spawnSupernova, 2000 + Math.random() * 3000); 
+    }
+    spawnSupernova();
 
-            const startY = Math.random() * window.innerHeight;
-            star.style.top = startY + 'px';
-            star.style.left = '-150px';
-            star.onclick = () => window.open(data.url, '_blank');
+    function createOrbit(data,id,radius){
+        const orbit=document.getElementById(id)
+        if(!orbit) return;
+        data.forEach((item,i)=>{
+            const angle=(i/data.length)*Math.PI*2
+            const x=Math.cos(angle)*radius
+            const y=Math.sin(angle)*radius
+            const planet=document.createElement("div")
+            planet.className="planet"
+            planet.style.left=`calc(50% + ${x}px - 55px)`
+            planet.style.top=`calc(50% + ${y}px - 55px)`
+            planet.onclick=()=>window.open(item.link,"_blank")
+            const safeImgPath = encodeURI(item.img);
+            let albumName = item.img.split('/').pop().replace('.webp', '');
+            planet.innerHTML=`<div class="counter"><img src="${safeImgPath}" alt="${albumName}" onerror="this.style.opacity=0;"><div class="tooltip">${albumName}</div></div>`;
+            orbit.appendChild(planet)
+        })
+    }
 
-            container.appendChild(star);
+    const singles=[
+        {img:"images/We rise as one.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs"},
+        {img:"images/Gracias 2025.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk"},
+        {img:"images/Adultos TRASTORNADOS.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM"},
+        {img:"images/Codigo rojo.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0"},
+        {img:"images/La fuerza de todos.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro"},
+        {img:"images/Regresar a casa.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE"},
+        {img:"images/Tres colores, un compromiso.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM"}
+    ]
 
-            const travel = star.animate([
-                { transform: 'translateX(0) rotate(-15deg)', opacity: 0 },
-                { opacity: 1, offset: 0.1 },
-                { transform: `translateX(${window.innerWidth + 300}px) rotate(-15deg)`, opacity: 0 }
-            ], {
-                duration: 5000,
-                easing: 'linear'
-            });
+    const albums=[
+        {img:"images/Voces de Cambio 1.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ"},
+        {img:"images/Voces de Cambio 2.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE"},
+        {img:"images/Estado contra estado.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow"},
+        {img:"images/Luz entre las Sombras.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4"},
+        {img:"images/Tiempo y vida.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE"},
+        {img:"images/CHACALES OPORTUNISTAS.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A"},
+        {img:"images/Tejido vital.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs"},
+        {img:"images/Revolucion mental.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU"},
+        {img:"images/Eres lo que escuchas.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I"},
+        {img:"images/Amor en tiempos de ideologias cancerigenas.webp",link:"https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA"}
+    ]
 
-            travel.onfinish = () => star.remove();
-        }
+    createOrbit(singles,"orbitSingles",210)
+    createOrbit(albums,"orbitAlbums",360)
 
-        // Lógica de Corazones
-        let heartTimer;
-        function startHearts(element) {
-            heartTimer = setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'heart-particle';
-                heart.innerHTML = '❤';
-                
-                const rect = element.getBoundingClientRect();
-                heart.style.left = (rect.left + 50) + 'px';
-                heart.style.top = (rect.top + 50) + 'px';
-                
-                document.body.appendChild(heart);
+    const platforms=[
+        {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`,link:"https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN"},
+        {svg:`<svg class="starIcon" viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`,link:"https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx"},
+        {svg:`<svg class="starIcon" viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`,link:"https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478"},
+        {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`,link:"https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw?si=ohwohGPX0bFDOOSV"},
+        {svg:`<svg class="starIcon" viewBox="0 0 24 24"><path d="M21.582 6.186a2.506 2.506 0 00-1.762-1.766C18.265 4 12 4 12 4s-6.264 0-7.82.42a2.505 2.505 0 00-1.762 1.766C2 7.74 2 12 2 12s0 4.262.418 5.814a2.506 2.506 0 001.762 1.766C5.736 20 12 20 12 20s6.265 0 7.82-.42a2.506 2.506 0 001.762-1.766C22 16.262 22 12 22 12s0-4.26-.418-5.814zM9.996 15.005l.005-6 5.207 3.005-5.212 2.995z"/></svg>`,link:"https://www.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw"},
+        {svg:`<svg class="starIcon" viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`,link:"https://soundcloud.com/reflexionmusicalmx-music"}
+    ]
 
-                heart.animate([
-                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                    { transform: `translate(${window.innerWidth/2 - rect.left - 50}px, ${window.innerHeight/2 - rect.top - 50}px) scale(0.5)`, opacity: 0 }
-                ], { duration: 2500, easing: 'ease-in' }).onfinish = () => heart.remove();
-            }, 400);
-        }
+    let availablePlatforms = [];
+    function getNextPlatform() {
+        if (availablePlatforms.length === 0) availablePlatforms = [...platforms].sort(() => Math.random() - 0.5);
+        return availablePlatforms.pop();
+    }
 
-        function stopHearts() { clearInterval(heartTimer); }
+    function createStar(){
+        try {
+            const p = getNextPlatform(); 
+            const star = document.createElement("div");
+            star.className = "shootingStar";
+            star.innerHTML = `<div class="tail"></div><div class="starIconWrapper">${p.svg}</div>`;
+            if(starContainer) starContainer.appendChild(star); 
+            let startX, startY, endX, endY;
+            const edge = Math.floor(Math.random() * 4); 
+            const offset = 100;
+            if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
+            else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
+            else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
+            else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
+            star.style.left = startX + "px";
+            star.style.top = startY + "px";
+            const dx = endX - startX; const dy = endY - startY;
+            const angleRad = Math.atan2(dy, dx);
+            const angleDeg = angleRad * (180 / Math.PI) + 180; 
+            const tail = star.querySelector('.tail');
+            tail.style.width = (100 + Math.random() * 100) + "px";
+            tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
+            star.animate([{ transform: "translate(0, 0)", opacity: 1 }, { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }], { duration: 12000 + Math.random() * 6000, easing: "linear" });
+            star.onclick = () => window.open(p.link, "_blank");
+            setTimeout(() => star.remove(), 19000);
+        } catch (e) { console.error(e); }
+    }
+    setInterval(createStar, 4000);
+});
+</script>
 
-        /* =========================================
-           INTERACCIÓN DEL SOL Y MODAL
-           ========================================= */
-
-        function handleSunClick() {
-            document.getElementById('audio-click').play();
-            toggleBio();
-        }
-
-        function toggleBio() {
-            const modal = document.getElementById('bio-modal');
-            modal.style.display = 'block';
-            setTimeout(() => modal.classList.toggle('active'), 10);
-        }
-
-        // Iniciar todo al cargar
-        window.onload = initUniverse;
-
-    </script>
 </body>
 </html>
