@@ -210,7 +210,7 @@ box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4); pointer-ev
 
 .tooltip {
 position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9);
-color: #FFD700; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 700;
+color: #FFD700; padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 700;
 white-space: nowrap; border: 1px solid rgba(255,215,0,0.5); opacity: 0; visibility: hidden;
 transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 text-transform: uppercase; 
@@ -318,6 +318,7 @@ window.addEventListener('load', () => {
     }, 500); 
 });
 
+// Salvavidas robusto para asegurar que la pantalla de carga se vaya
 setTimeout(() => {
     const loader = document.getElementById('loader');
     if(loader) {
@@ -402,6 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // ESTRELLAS 100% ESTÁTICAS Y SIN GRAVEDAD
     let stars = [];
     for(let i=0; i<200; i++){
         stars.push({
@@ -458,7 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.onclick=()=>window.open(item.link,"_blank")
             
             const safeImgPath = encodeURI(item.img);
-            // AQUÍ CONVERTIMOS EL TEXTO A MAYÚSCULAS USANDO JAVASCRIPT
+            // CONVERSIÓN A MAYÚSCULAS
             const albumName = item.img.split('/').pop().replace('.webp', '').toUpperCase();
             
             planet.innerHTML=`
