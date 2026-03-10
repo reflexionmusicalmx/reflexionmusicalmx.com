@@ -308,7 +308,7 @@ visibility: visible;
 bottom: -35px; 
 }
 
-/* EFECTO FAMILIA */
+/* EFECTO FAMILIA (CSS Inyectado) */
 .family-symbol-container {
 position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
 display: flex; align-items: flex-end; justify-content: center; gap: 5px;
@@ -322,7 +322,7 @@ opacity: 0; transition: 0.3s; pointer-events: none;
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
 
-/* EFECTO CORAZONES */
+/* EFECTO CORAZONES (CSS Inyectado) */
 .heart-bubble { position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); }
 
 /* REDES LATERALES */
@@ -364,6 +364,7 @@ background:#FFD700;
 color:#000; 
 transform:scale(1.2);
 }
+
 
 .floating-social a:hover svg {
 fill: #000; 
@@ -586,9 +587,6 @@ bottom: -35px !important;
 <a href="https://x.com/RMusicalMX" target="_blank" aria-label="X (Twitter)">
 <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
 </a>
-<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Threads">
-<svg viewBox="0 0 448 512"><path d="M331.5 235.7c2.2 .9 4.2 1.9 6.3 2.8c29.2 14.1 50.6 35.2 61.8 61.4c15.7 36.5 17.2 95.8-30.3 143.2c-36.2 36.2-86.6 54.3-146.4 54.3c-108.5 0-188-75.8-188-182.2c0-109.9 85.3-189.5 197.8-189.5c88.8 0 148 48.7 175.7 99.1c7.8 14.1 1.7 33-14 38.6c-13.3 4.8-29.2-.8-36.8-12.7c-17.7-28-54.8-63.4-119.5-63.4c-78.5 0-136.2 55.4-136.2 131.6c0 80 54 125.7 127 125.7c33.5 0 68-12.9 89.2-34.1c17-17 21.7-44.1 11.2-68.5c-7.2-16.7-22.3-30.9-46.7-39.6c-13.6-4.9-28-7.7-42.5-8.5c-44-2.5-87.3 10.9-115.3 35.8c-26.6 23.6-41.6 56.4-41.6 89.7c0 38.7 21.4 75.8 57.7 99.7c33 21.7 75.5 32.7 118.8 32.7c39.6 0 76.5-10.4 105.7-30.1c-13.1 7.1-28.7 11.2-45.3 11.2c-56 0-101.3-45.3-101.3-101.3c0-42.2 25.8-78.3 63.4-93.5c-9.6-1.5-19.5-2.2-29.7-2.2c-67.4 0-120.9 40.5-120.9 98c0 40 27.5 73.6 67.5 89.6c32.7 13.1 71.9 14.6 110.1 4c31.1-8.6 57.6-26.9 76.2-51.5c-15.3 22.6-38.6 39.7-65.7 46.5c-18.7 4.6-38.4 4.7-57.1 .2c-35-8.2-64.6-30.9-82.4-62.8c-18-32.3-21.7-69.8-10.3-104.6c11.4-34.8 38.3-63.1 73.1-77.8c34.8-14.7 73.4-14.8 108.3-.3z"/></svg>
-</a>
 <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="SoundCloud">
 <span style="font-size: 26px; line-height: 1; padding-bottom: 2px;">☁</span>
 </a>
@@ -603,8 +601,9 @@ bottom: -35px !important;
 </div>
 
 <script>
-// BASE DE DATOS DE FRASES (SÓLO TÍTULO DE CANCIÓN ABAJO)
+// BASE DE DATOS DE FRASES CON CANCIÓN Y ÁLBUM (Voces de Cambio 1 & Tiempo y vida)
 const quotesData = [
+    // VOCES DE CAMBIO 1
     { text: "El silencio pesa más que las balas.", song: "CIUDAD EN SILENCIO", album: "Voces de Cambio 1" },
     { text: "La mente dormida se vende por todo.", song: "CIUDAD EN SILENCIO", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "CIUDAD EN SILENCIO", album: "Voces de Cambio 1" },
@@ -666,7 +665,71 @@ const quotesData = [
     { text: "El poder se tambalea cuando el pueblo ya no huye.", song: "NO HAY TIRANO ETERNO", album: "Voces de Cambio 1" },
     { text: "El odio se hereda si nadie lo explica.", song: "HIJOS DEL OLVIDO", album: "Voces de Cambio 1" },
     { text: "Son huérfanos vivos de esta patria vacía.", song: "HIJOS DEL OLVIDO", album: "Voces de Cambio 1" },
-    { text: "Si hoy los negamos, mañana regresan; serán tempestades.", song: "HIJOS DEL OLVIDO", album: "Voces de Cambio 1" }
+    { text: "Si hoy los negamos, mañana regresan; serán tempestades.", song: "HIJOS DEL OLVIDO", album: "Voces de Cambio 1" },
+    
+    // TIEMPO Y VIDA (NUEVAS FRASES)
+    { text: "La vida no se repite, se renueva.", song: "ALTAR DE VIDA", album: "Tiempo y vida" },
+    { text: "Porque la vida también merece su altar.", song: "ALTAR DE VIDA", album: "Tiempo y vida" },
+    { text: "Agradecer no es poco, es la oración más pura.", song: "ALTAR DE VIDA", album: "Tiempo y vida" },
+    { text: "No esperemos la ausencia para honrar la presencia.", song: "ALTAR DE VIDA", album: "Tiempo y vida" },
+    { text: "El amor no solo sobrevive a la muerte, también florece en medio de la vida.", song: "ALTAR DE VIDA", album: "Tiempo y vida" },
+    { text: "Fuiste quien se quedó cuando todos se iban.", song: "QUÉDATE", album: "Tiempo y vida" },
+    { text: "Tú nunca me juzgas, solo me entiendes.", song: "QUÉDATE", album: "Tiempo y vida" },
+    { text: "Amar no requiere promesas, solo estar ahí cuando el alma tiembla.", song: "QUÉDATE", album: "Tiempo y vida" },
+    { text: "Si un día te vas, no diré adiós, porque en mi pecho siempre estarás vos.", song: "QUÉDATE", album: "Tiempo y vida" },
+    { text: "Seré el viento que acaricie tu pelo, seré tu sombra, tu guardián eterno.", song: "QUÉDATE", album: "Tiempo y vida" },
+    { text: "Hay cicatrices que no duelen más porque aprendieron también a sanar.", song: "RENACER", album: "Tiempo y vida" },
+    { text: "El dolor no me quita el amor, me enseña el valor de seguir.", song: "RENACER", album: "Tiempo y vida" },
+    { text: "Porque vivir… también es resistir.", song: "RENACER", album: "Tiempo y vida" },
+    { text: "Lágrimas riegan lo que vendrá y en cada caída germina la paz.", song: "RENACER", album: "Tiempo y vida" },
+    { text: "Vivir después del dolor es la forma más pura… de amar.", song: "RENACER", album: "Tiempo y vida" },
+    { text: "Tus ojos aún no saben mirar, pero ya enseñan lo que es amar.", song: "CITLALLI", album: "Tiempo y vida" },
+    { text: "El milagro está en ver un alma comenzar.", song: "CITLALLI", album: "Tiempo y vida" },
+    { text: "Eres el puente entre el cielo y mi ser.", song: "CITLALLI", album: "Tiempo y vida" },
+    { text: "Mientras haya amor, la vida sabrá continuar.", song: "CITLALLI", album: "Tiempo y vida" },
+    { text: "Tu risa es mi mañana y tu abrazo, mi primavera.", song: "ALIZÉE", album: "Tiempo y vida" },
+    { text: "El amor que te nombra nunca olvida ni se va.", song: "ALIZÉE", album: "Tiempo y vida" },
+    { text: "Amar es estar despierto en el sueño de los dos.", song: "ALIZÉE", album: "Tiempo y vida" },
+    { text: "La vida vale tanto… porque tú estás en ella.", song: "ALIZÉE", album: "Tiempo y vida" },
+    { text: "Dos caminos, misma tierra, mis raíces y tu ser.", song: "MIENTRAS COMPARTAMOS EL SOL", album: "Tiempo y vida" },
+    { text: "El cariño sabe esperar.", song: "MIENTRAS COMPARTAMOS EL SOL", album: "Tiempo y vida" },
+    { text: "Vale más un abrazo que mil razones sin perdón.", song: "MIENTRAS COMPARTAMOS EL SOL", album: "Tiempo y vida" },
+    { text: "Ser tu hermano es mi eterno honor.", song: "MIENTRAS COMPARTAMOS EL SOL", album: "Tiempo y vida" },
+    { text: "Mi vida es más rica porque tú la habitas.", song: "AMIGOS DEL ALMA", album: "Tiempo y vida" },
+    { text: "Los amigos son tesoros, pero tú eres más, un abrazo vivo.", song: "AMIGOS DEL ALMA", album: "Tiempo y vida" },
+    { text: "Lo que se vive y se agradece nunca se pierde, siempre renace.", song: "AMIGOS DEL ALMA", album: "Tiempo y vida" },
+    { text: "El tiempo pasa y todo cambia, pero tú sigues siendo mi hogar.", song: "AÚN DESPIERTO CONTIGO", album: "Tiempo y vida" },
+    { text: "El amor madura cuando aprende a perdonar.", song: "AÚN DESPIERTO CONTIGO", album: "Tiempo y vida" },
+    { text: "Amar no es prometer, es quedarse y volver a intentar.", song: "AÚN DESPIERTO CONTIGO", album: "Tiempo y vida" },
+    { text: "Si el amor es un viaje sin fin, quiero perderme… junto a ti.", song: "AÚN DESPIERTO CONTIGO", album: "Tiempo y vida" },
+    { text: "Tus manos tejen el tiempo y el cansancio se vuelve flor.", song: "A TU LADO, MAMÁ", album: "Tiempo y vida" },
+    { text: "Eres fuerza vestida de calma.", song: "A TU LADO, MAMÁ", album: "Tiempo y vida" },
+    { text: "Mientras respires, mientras me abraces, mi mundo tiene raíz.", song: "A TU LADO, MAMÁ", album: "Tiempo y vida" },
+    { text: "Tu voz no promete, enseña en silencio.", song: "PADRE, MI RAÍZ", album: "Tiempo y vida" },
+    { text: "No hablas de amor, lo muestras al actuar.", song: "PADRE, MI RAÍZ", album: "Tiempo y vida" },
+    { text: "De ti aprendí que el valor no grita, camina firme y nunca se quita.", song: "PADRE, MI RAÍZ", album: "Tiempo y vida" },
+    { text: "Mi fe nació al verte creer.", song: "PADRE, MI RAÍZ", album: "Tiempo y vida" },
+    { text: "Tu voz tiene aroma a hierbabuena.", song: "ABUELA DE LUZ", album: "Tiempo y vida" },
+    { text: "En tu risa florece la calma del más allá.", song: "ABUELA DE LUZ", album: "Tiempo y vida" },
+    { text: "Tu abrazo es tiempo que no se va.", song: "ABUELA DE LUZ", album: "Tiempo y vida" },
+    { text: "Tus manos siembran paciencia, tu risa sabe esperar.", song: "ABUELO, MI CAMINO", album: "Tiempo y vida" },
+    { text: "En tus ojos hay estrellas que alumbran sin presumir.", song: "ABUELO, MI CAMINO", album: "Tiempo y vida" },
+    { text: "La vida vale más cuando se da sin medir.", song: "ABUELO, MI CAMINO", album: "Tiempo y vida" },
+    { text: "Cuando el mundo calla, ellos hablan.", song: "VOCES QUE SIGUEN LUCHANDO", album: "Tiempo y vida" },
+    { text: "No hay muro que encierre el viento ni cadena que ate el pensamiento.", song: "VOCES QUE SIGUEN LUCHANDO", album: "Tiempo y vida" },
+    { text: "Amar es el consuelo.", song: "VOCES QUE SIGUEN LUCHANDO", album: "Tiempo y vida" },
+    { text: "La esperanza vuelve a brotar bajo el sol y bajo el polvo.", song: "HASTA ENCONTRARLOS", album: "Tiempo y vida" },
+    { text: "Ellas siembran esperanza donde el Estado solo deja olvido.", song: "HASTA ENCONTRARLOS", album: "Tiempo y vida" },
+    { text: "No hay muerte que venza a una madre con su fe.", song: "HASTA ENCONTRARLOS", album: "Tiempo y vida" },
+    { text: "Buscar no es locura… es un grito de amor.", song: "HASTA ENCONTRARLOS", album: "Tiempo y vida" },
+    { text: "El amor no se acaba, solo aprende a esperar.", song: "AÚN HAY LUGAR", album: "Tiempo y vida" },
+    { text: "El perdón florece cuando se deja de juzgar.", song: "AÚN HAY LUGAR", album: "Tiempo y vida" },
+    { text: "Aunque partas… nunca dejamos de amar.", song: "AÚN HAY LUGAR", album: "Tiempo y vida" },
+    { text: "El amor se aprende cuando se atreve a perdonar.", song: "PERDÓN Y GRACIAS", album: "Tiempo y vida" },
+    { text: "No hay arrepentimientos, solo aprendizaje.", song: "PERDÓN Y GRACIAS", album: "Tiempo y vida" },
+    { text: "El tiempo no espera, y la vida no vuelve atrás.", song: "TIEMPO Y VIDA", album: "Tiempo y vida" },
+    { text: "La vida se mide en lo que siembras hoy.", song: "TIEMPO Y VIDA", album: "Tiempo y vida" },
+    { text: "Que tu historia inspire, que tu amor transforme.", song: "TIEMPO Y VIDA", album: "Tiempo y vida" }
 ];
 
 window.addEventListener('load', () => {
@@ -750,7 +813,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const quoteEl = document.createElement("div");
         quoteEl.className = "floating-quote";
         
-        // MODIFICACIÓN: SOLO MUESTRA LA FRASE Y EL TÍTULO DE LA CANCIÓN
+        // MUESTRA LA FRASE Y EL TÍTULO DE LA CANCIÓN
         quoteEl.innerHTML = `"${q.text}"<br><span>${q.song}</span>`;
         
         let safeX = x;
