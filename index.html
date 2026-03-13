@@ -308,7 +308,7 @@ visibility: visible;
 bottom: -35px; 
 }
 
-/* EFECTO FAMILIA (CSS Inyectado) */
+/* EFECTO FAMILIA */
 .family-symbol-container {
 position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
 display: flex; align-items: flex-end; justify-content: center; gap: 5px;
@@ -322,7 +322,7 @@ opacity: 0; transition: 0.3s; pointer-events: none;
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
 
-/* EFECTO CORAZONES (CSS Inyectado) */
+/* EFECTO CORAZONES */
 .heart-bubble { position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); }
 
 /* REDES LATERALES */
@@ -364,7 +364,6 @@ background:#FFD700;
 color:#000; 
 transform:scale(1.2);
 }
-
 
 .floating-social a:hover svg {
 fill: #000; 
@@ -467,23 +466,25 @@ transform: rotate(90deg);
 100% { transform: scale(0); opacity: 0; }
 }
 
-/* FRASES FLOTANTES */
+/* FRASES FLOTANTES (MODIFICADAS PARA APARECER EN EL CENTRO) */
 .floating-quote {
 position: fixed;
-background: rgba(0, 0, 0, 0.85);
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: rgba(0, 0, 0, 0.9);
 color: #fff;
 border: 1px solid #FFD700;
-padding: 20px 30px;
+padding: 25px 35px;
 border-radius: 15px;
 font-size: 16px;
 font-weight: bold;
 font-style: italic;
 text-align: center;
-box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
 pointer-events: none;
 z-index: 100000;
 max-width: 80%;
-transform: translateX(-50%);
 line-height: 1.5;
 }
 
@@ -529,7 +530,7 @@ bottom: -35px !important;
         max-height: 75vh;
     }
     .close-modal { right: 15px; top: 10px; }
-    .floating-quote { font-size: 14px; width: 90%; }
+    .floating-quote { font-size: 15px; width: 90%; padding: 20px; }
 }
 </style>
 
@@ -587,9 +588,6 @@ bottom: -35px !important;
 <a href="https://x.com/RMusicalMX" target="_blank" aria-label="X (Twitter)">
 <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
 </a>
-<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Threads">
-<svg viewBox="0 0 448 512"><path d="M331.5 235.7c2.2 .9 4.2 1.9 6.3 2.8c29.2 14.1 50.6 35.2 61.8 61.4c15.7 36.5 17.2 95.8-30.3 143.2c-36.2 36.2-86.6 54.3-146.4 54.3c-108.5 0-188-75.8-188-182.2c0-109.9 85.3-189.5 197.8-189.5c88.8 0 148 48.7 175.7 99.1c7.8 14.1 1.7 33-14 38.6c-13.3 4.8-29.2-.8-36.8-12.7c-17.7-28-54.8-63.4-119.5-63.4c-78.5 0-136.2 55.4-136.2 131.6c0 80 54 125.7 127 125.7c33.5 0 68-12.9 89.2-34.1c17-17 21.7-44.1 11.2-68.5c-7.2-16.7-22.3-30.9-46.7-39.6c-13.6-4.9-28-7.7-42.5-8.5c-44-2.5-87.3 10.9-115.3 35.8c-26.6 23.6-41.6 56.4-41.6 89.7c0 38.7 21.4 75.8 57.7 99.7c33 21.7 75.5 32.7 118.8 32.7c39.6 0 76.5-10.4 105.7-30.1c-13.1 7.1-28.7 11.2-45.3 11.2c-56 0-101.3-45.3-101.3-101.3c0-42.2 25.8-78.3 63.4-93.5c-9.6-1.5-19.5-2.2-29.7-2.2c-67.4 0-120.9 40.5-120.9 98c0 40 27.5 73.6 67.5 89.6c32.7 13.1 71.9 14.6 110.1 4c31.1-8.6 57.6-26.9 76.2-51.5c-15.3 22.6-38.6 39.7-65.7 46.5c-18.7 4.6-38.4 4.7-57.1 .2c-35-8.2-64.6-30.9-82.4-62.8c-18-32.3-21.7-69.8-10.3-104.6c11.4-34.8 38.3-63.1 73.1-77.8c34.8-14.7 73.4-14.8 108.3-.3z"/></svg>
-</a>
 <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="SoundCloud">
 <span style="font-size: 26px; line-height: 1; padding-bottom: 2px;">☁</span>
 </a>
@@ -604,7 +602,7 @@ bottom: -35px !important;
 </div>
 
 <script>
-// BASE DE DATOS DE FRASES ACTUALIZADA
+// BASE DE DATOS DE FRASES CON CANCIÓN Y ÁLBUM
 const quotesData = [
     // VOCES DE CAMBIO 1
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -700,100 +698,7 @@ const quotesData = [
     { text: "Fuiste tú quien abrió la puerta.", song: "No todos son iguales", album: "Eres lo que escuchas" },
     { text: "El paraíso del narco es sólo un infierno con perfume caro.", song: "Paraíso de sangre", album: "Eres lo que escuchas" },
     { text: "Una lucha que busca venganza no es justicia.", song: "Del dolor al odio", album: "Eres lo que escuchas" },
-    { text: "El pueblo sin agua mientras tú brindas por ella.", song: "A qué costo", album: "Eres lo que escuchas" },
-
-    // TEJIDO VITAL
-    { text: "La verdad no negocia, solo cobra al caer.", song: "El precio de la mentira", album: "Tejido vital" },
-    { text: "Ese silencio no es neutral, es complicidad.", song: "Cobardes", album: "Tejido vital" },
-    { text: "No es valentía hablar cuando es seguro… Es amor decir la verdad… aunque el mundo te odie por hacerlo.", song: "Cobardes", album: "Tejido vital" },
-    { text: "La primera trinchera no está en la calle, está en tu interior.", song: "En la trinchera", album: "Tejido vital" },
-    { text: "La primera bala nunca es de plomo, es una idea que se mete en el lodo.", song: "La primera trinchera", album: "Tejido vital" },
-    { text: "No somos rivales, somos la fuerza que construye el mundo cuando se respeta.", song: "Ni Ella sin Él ni Él sin Ella", album: "Tejido vital" },
-    { text: "Venganza no es lo mismo que ser triunfante.", song: "Empoderar no es guerra", album: "Tejido vital" },
-    { text: "El verdadero poder no destruye, construye.", song: "Empoderar no es guerra", album: "Tejido vital" },
-    { text: "Amar hoy es rebeldía, porque el odio está de moda.", song: "Amor en tiempos de ideologías cancerígenas", album: "Tejido vital" },
-    { text: "Si en tu casa hay guerra, no hables de paz afuera.", song: "Honra a tu pareja", album: "Tejido vital" },
-    { text: "El enemigo más sutil y letal es la costumbre fría que mata lo especial.", song: "Honra a tu pareja", album: "Tejido vital" },
-    { text: "Me enseñaste que el amor no solo besa… también enfrenta.", song: "Juramento de dos", album: "Tejido vital" },
-    { text: "No fue suerte, fue decisión y fue guerra; dos soldados caminando la misma tierra.", song: "Complemento eterno", album: "Tejido vital" },
-    { text: "Si no lo haces tú, lo hará la calle.", song: "Cuida y educa", album: "Tejido vital" },
-    { text: "La lealtad no se vende y la dignidad no se alquila.", song: "Cuida y educa", album: "Tejido vital" },
-    { text: "El éxito no es lujo, es dormir sin cadenas.", song: "Herencia que no se rompe", album: "Tejido vital" },
-    { text: "Tus hijos no necesitan los lujos que no tuviste… Necesitan la paz… que tampoco te dieron.", song: "Enséñales", album: "Tejido vital" },
-    { text: "Enséñales que caerse… también es parte de avanzar.", song: "Enséñales", album: "Tejido vital" },
-    { text: "No hay herencia más valiosa que una vida recta.", song: "Ciudadanos del mundo", album: "Tejido vital" },
-
-    // REVOLUCIÓN MENTAL
-    { text: "Cambiar de líder sin cambiar de mentalidad es como cambiar de jaula, pero seguir siendo pájaro.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
-    { text: "Tu mente es tu mayor territorio ocupado y liberarla es tu deber más urgente.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
-    { text: "Nos vendieron el silencio como paz y el confort como evolución.", song: "Manual para un pueblo dormido", album: "Revolucion mental" },
-    { text: "Dormimos en cadenas doradas creyendo que son pulseras sagradas.", song: "Neuronas en huelga", album: "Revolucion mental" },
-    { text: "La caja idiota no me enseña a sentir, me vende verdades listas pa’ consumir.", song: "La Caja idiota", album: "Revolucion mental" },
-    { text: "Soy mi propio enemigo, el miedo que me encierra, el fuego que apago, la voz que me entierra.", song: "Mi enemigo", album: "Revolucion mental" },
-    { text: "No hay enemigo más peligroso que el que vive bajo tu cara.", song: "Mi enemigo", album: "Revolucion mental" },
-    { text: "Idolatramos al que roba mejor y al que es honesto lo llaman traidor.", song: "Mexico bipolar", album: "Revolucion mental" },
-    { text: "Gritamos justicia, pero calla el vecino cuando el crimen es su destino.", song: "Mexico bipolar", album: "Revolucion mental" },
-    { text: "Confundimos esperanza con fe y la fe con el miedo a perder.", song: "Sin mesías", album: "Revolucion mental" },
-    { text: "El silencio del pueblo es el arma del tirano.", song: "Despierta cabrón", album: "Revolucion mental" },
-    { text: "No le pidas al cielo lo que tú no haces.", song: "Despierta cabrón", album: "Revolucion mental" },
-    { text: "No somos lo que el sistema hace de nosotros, somos lo que decidimos ser después de saberlo.", song: "Reinicio", album: "Revolucion mental" },
-    { text: "Me creí sabio porque dudaba, pero dudaba por miedo.", song: "Espejo", album: "Revolucion mental" },
-    { text: "El cambio empieza cuando te sostienes la mirada sin mentirte.", song: "Espejo", album: "Revolucion mental" },
-    { text: "Uno no despierta solo. Despierta el que aprende a mirar al otro.", song: "Conciencia colectiva", album: "Revolucion mental" },
-    { text: "Cambiamos rezos por acciones, likes por revoluciones.", song: "Nuevo código", album: "Revolucion mental" },
-    { text: "Quejarse no es contribuir, criticar no es cambiar.", song: "Epílogo", album: "Revolucion mental" },
-
-    // CHACALES OPORTUNISTAS
-    { text: "Huelen la tragedia como si fuera oportunidad.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
-    { text: "Miran la tragedia, pero nunca la causa. Miran al pueblo… y lo ven como cifra.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
-    { text: "Aquí el sol madura la fruta… pero la muerte la corta primero.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
-    { text: "El que cultiva muere… el que negocia con armas vive y vuelve a crecer.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
-    { text: "El bosque llora suave, pero su memoria nunca se gasta. Guardias de la vida que el país dejó sin guardia.", song: "Los que cuidaban la tierra", album: "CHACALES OPORTUNISTAS" },
-    { text: "El desastre llegó con viento… pero el saqueo llegó con credencial.", song: "Huracanes con uniforme", album: "CHACALES OPORTUNISTAS" },
-    { text: "¿De qué sirve un estado que no llega? ¿De qué sirve un líder que no mira?", song: "Lodo y promesas", album: "CHACALES OPORTUNISTAS" },
-    { text: "Las leyes no nacen por justicia… nacen por fracaso.", song: "La ley del fracaso", album: "CHACALES OPORTUNISTAS" },
-    { text: "Si la ley lleva tu nombre, no fue un triunfo. Fue un país que no te cuidó.", song: "La ley del fracaso", album: "CHACALES OPORTUNISTAS" },
-    { text: "Firman reformas con tinta ajena, el muerto siempre firma con sangre.", song: "Firma y olvida", album: "CHACALES OPORTUNISTAS" },
-    { text: "No buscamos tumbas… buscamos señales de vida.", song: "Las madres no duermen", album: "CHACALES OPORTUNISTAS" },
-    { text: "Si ellas siguen de pie, el país no puede seguir arrodillado.", song: "Las madres no duermen", album: "CHACALES OPORTUNISTAS" },
-    { text: "Porque un desaparecido es un país incompleto.", song: "Sin huella ni tumba II", album: "CHACALES OPORTUNISTAS" },
-    { text: "La memoria aquí no es un archivo, es un machete.", song: "Epílogo (México no olvida)", album: "CHACALES OPORTUNISTAS" },
-    { text: "Cobardes que tiemblan ante el criminal, valientes pa’ callar al que quiere cambiar.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
-    { text: "No mataron al hombre… despertaron al pueblo.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
-
-    // LUZ ENTRE LAS SOMBRAS
-    { text: "La muerte no cierra, transforma. Abre la puerta de la memoria y nos enseña a mirar distinto.", song: "Introducción / 28 de octubre", album: "Luz entre las Sombras" },
-    { text: "Corre libre donde no hay dolor, donde el cielo es verde y el alma es amor.", song: "Hasta que volvamos a correr", album: "Luz entre las Sombras" },
-    { text: "Pequeña luz, que no se apagó, solo subiste antes que yo.", song: "Pequeña luz", album: "Luz entre las Sombras" },
-    { text: "Donde habita el amor… no existe el 'nunca más'.", song: "Hermano del alma", album: "Luz entre las Sombras" },
-    { text: "Hay heridas que no duelen, solo aprenden a respirar.", song: "Silencio en la cama", album: "Luz entre las Sombras" },
-    { text: "Lo que me enseñaste vive en mí, no hay distancia que lo pueda borrar.", song: "Lo que me enseñaste", album: "Luz entre las Sombras" },
-    { text: "Tus manos eran mapas de historias que contar.", song: "Los que abrieron camino", album: "Luz entre las Sombras" },
-    { text: "Sabían que el silencio era traición al corazón.", song: "Voces que no callaron", album: "Luz entre las Sombras" },
-    { text: "Perdóname por no decir 'te amo' a tiempo, por no estar allí cuando el cielo abrió tu aliento.", song: "Perdóname", album: "Luz entre las Sombras" },
-    { text: "Me escondí tras mi cobarde corazón con miedo de entender.", song: "Perdóname", album: "Luz entre las Sombras" },
-    { text: "Ni vivos ni muertos, solo sombras y eco.", song: "Sin huella ni tumba", album: "Luz entre las Sombras" },
-    { text: "Cada paso que das hacia el perdón es un paso hacia ti mismo.", song: "Los que no regresan", album: "Luz entre las Sombras" },
-    { text: "Hoy soltamos el dolor, no para olvidar, sino para caminar más ligeros.", song: "Después del silencio", album: "Luz entre las Sombras" },
-
-    // VOCES DE CAMBIO 2
-    { text: "México despierta cuando tú sabes crecer.", song: "Mexico despierta", album: "Voces de Cambio 2" },
-    { text: "Del pasado aprendemos, no para sufrir sino para actuar.", song: "Reflexión Musical MX", album: "Voces de Cambio 2" },
-    { text: "El dolor se transforma en luz que nos guía.", song: "Memoria viva", album: "Voces de Cambio 2" },
-    { text: "El mundo no cambia solo con quejas o palabras, se transforma quien actúa.", song: "Sombras y luz", album: "Voces de Cambio 2" },
-    { text: "El futuro no nace en decretos ni en balas, se gesta en los gestos pequeños que no se embalsaman.", song: "Semillas para mañana", album: "Voces de Cambio 2" },
-    { text: "Lo que te espera no viene del cielo... es tu reflejo, la consecuencia que te mira a los ojos.", song: "Lo que te espera", album: "Voces de Cambio 2" },
-    { text: "No elegimos lo heredado, pero sí qué dejamos: romper cadenas viejas o seguirlas entregando.", song: "El eco de los ancestros", album: "Voces de Cambio 2" },
-    { text: "Mexicano, soy de esta tierra bella, más que mariachi, más que tequila o mezcal... haciendo lo que es justo aquí.", song: "Orgullo mexicano", album: "Voces de Cambio 2" },
-    { text: "Defienden partidos como si fueran religión... pero cuando el temblor llega, todos corren a ayudar, y nadie pregunta de qué partido eres.", song: "En la union esta la fuerza", album: "Voces de Cambio 2" },
-    { text: "No hay mesías, no hay milagro ni salvación... el país no cambia con discursos bonitos, cambia cuando dejamos de ser unos ingenuos.", song: "No más excusas", album: "Voces de Cambio 2" },
-    { text: "Sé chingón, sin chingarte a los demás, no hace falta tumbar pa' llegar a más.", song: "Se chingon", album: "Voces de Cambio 2" },
-    { text: "La victoria más pura es la que compartes más.", song: "Se chingon", album: "Voces de Cambio 2" },
-    { text: "El México que críticas, lo construyes Tú.", song: "Mexico eres tu / Mexico lindo", album: "Voces de Cambio 2" },
-    { text: "Te quejas de la impunidad, pero sobornas al tránsito para evitar la multa.", song: "Mexico eres tu / Mexico lindo", album: "Voces de Cambio 2" },
-    { text: "No busques culpables afuera… mírate al espejo.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
-    { text: "No hay revolución sin transformación, primero en tu mente, después en acción.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
-    { text: "¡La nación no se vende jamás!", song: "Himno a México", album: "Voces de Cambio 2" }
+    { text: "El pueblo sin agua mientras tú brindas por ella.", song: "A qué costo", album: "Eres lo que escuchas" }
 ];
 
 window.addEventListener('load', () => {
@@ -870,8 +775,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setCanvasSize();
     window.addEventListener('resize', setCanvasSize);
 
-    // FUNCIÓN PARA DISPARAR FRASES Y GIRAR ÁLBUM LENTO (8 SEGUNDOS)
-    function showQuoteAndSpin(x, y) {
+    // FUNCIÓN PARA DISPARAR FRASES EN EL CENTRO EXACTO (SOBRE EL SOL)
+    function showQuoteAndSpin() {
         const q = quotesData[Math.floor(Math.random() * quotesData.length)];
         
         const quoteEl = document.createElement("div");
@@ -880,19 +785,15 @@ document.addEventListener("DOMContentLoaded", () => {
         // MUESTRA LA FRASE Y EL TÍTULO DE LA CANCIÓN
         quoteEl.innerHTML = `"${q.text}"<br><span>${q.song}</span>`;
         
-        let safeX = x;
-        if(x < window.innerWidth * 0.2) safeX = window.innerWidth * 0.2;
-        if(x > window.innerWidth * 0.8) safeX = window.innerWidth * 0.8;
-        
-        quoteEl.style.left = safeX + "px";
-        quoteEl.style.top = y + "px";
         document.body.appendChild(quoteEl);
 
+        // ANIMACIÓN DESDE EL CENTRO DE LA PANTALLA
         quoteEl.animate([
-            { opacity: 0, transform: 'translate(-50%, 0) scale(0.8)' },
-            { opacity: 1, transform: 'translate(-50%, -20px) scale(1)', offset: 0.05 },
-            { opacity: 1, transform: 'translate(-50%, -60px) scale(1)', offset: 0.85 },
-            { opacity: 0, transform: 'translate(-50%, -90px) scale(0.8)' }
+            { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' },
+            { opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)', offset: 0.05 },
+            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.1 },
+            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.9 },
+            { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' }
         ], { duration: 8000, easing: 'ease-out' }).onfinish = () => quoteEl.remove();
 
         const planetImg = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter img`);
@@ -922,8 +823,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
         hitbox.appendChild(flash);
         
-        hitbox.onclick = (e) => {
-            showQuoteAndSpin(e.clientX, e.clientY);
+        hitbox.onclick = () => {
+            showQuoteAndSpin(); // Llama a la función sin enviar coordenadas, para que aparezca al centro
             hitbox.remove();
         };
 
