@@ -9,6 +9,8 @@
 
 <title>Reflexión Musical MX</title>
 
+<link rel="preload" as="image" href="images/REFLEXIÓN MUSICAL MX 1.webp">
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
 <link rel="apple-touch-icon" href="images/icon-192.png">
@@ -492,7 +494,7 @@ transform: rotate(90deg);
 100% { transform: scale(0); opacity: 0; }
 }
 
-/* FRASES FLOTANTES */
+/* FRASES FLOTANTES EN EL CENTRO */
 .floating-quote {
 position: fixed;
 top: 50%;
@@ -523,7 +525,7 @@ text-transform: uppercase;
 letter-spacing: 2px;
 }
 
-/* GIRO DEL ÁLBUM */
+/* GIRO LENTO DEL ÁLBUM (2 SEGUNDOS) AL TOCAR FRASE */
 .spin-active {
 animation: fastSpin 2s linear infinite !important;
 box-shadow: 0 0 40px #FFD700 !important;
@@ -637,7 +639,7 @@ bottom: -35px !important;
 </div>
 
 <script>
-// BASE DE DATOS DE FRASES
+// BASE DE DATOS DE FRASES ACTUALIZADA
 const quotesData = [
     // VOCES DE CAMBIO 1
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -750,7 +752,7 @@ const quotesData = [
     { text: "Me enseñaste que el amor no solo besa… también enfrenta.", song: "Juramento de dos", album: "Tejido vital" },
     { text: "No fue suerte, fue decisión y fue guerra; dos soldados caminando la misma tierra.", song: "Complemento eterno", album: "Tejido vital" },
     { text: "Si no lo haces tú, lo hará la calle.", song: "Cuida y educa", album: "Tejido vital" },
-    { text: "La lealtal no se vende y la dignidad no se alquila.", song: "Cuida y educa", album: "Tejido vital" },
+    { text: "La lealtad no se vende y la dignidad no se alquila.", song: "Cuida y educa", album: "Tejido vital" },
     { text: "El éxito no es lujo, es dormir sin cadenas.", song: "Herencia que no se rompe", album: "Tejido vital" },
     { text: "Tus hijos no necesitan los lujos que no tuviste… Necesitan la paz… que tampoco te dieron.", song: "Enséñales", album: "Tejido vital" },
     { text: "Enséñales que caerse… también es parte de avanzar.", song: "Enséñales", album: "Tejido vital" },
@@ -903,19 +905,16 @@ document.addEventListener("DOMContentLoaded", () => {
     setCanvasSize();
     window.addEventListener('resize', setCanvasSize);
 
-    // FUNCIÓN PARA DISPARAR FRASES EN EL CENTRO EXACTO (SOBRE EL SOL)
     function showQuoteAndSpin() {
         const q = quotesData[Math.floor(Math.random() * quotesData.length)];
         
         const quoteEl = document.createElement("div");
         quoteEl.className = "floating-quote";
         
-        // MUESTRA LA FRASE Y EL TÍTULO DE LA CANCIÓN
         quoteEl.innerHTML = `"${q.text}"<br><span>${q.song}</span>`;
         
         document.body.appendChild(quoteEl);
 
-        // ANIMACIÓN DESDE EL CENTRO DE LA PANTALLA
         quoteEl.animate([
             { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' },
             { opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)', offset: 0.05 },
@@ -938,7 +937,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // LÓGICA DE LOTES DE SUPERNOVAS Y BLOQUEO DE FRASE ÚNICA
     let isQuoteActive = false;
     let currentSpawnTimeout = null;
 
@@ -955,7 +953,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         removeAllSupernovas();
 
-        // Crear lote de 3 supernovas
         for (let i = 0; i < 3; i++) {
             const hitbox = document.createElement("div");
             hitbox.className = "supernova-hitbox";
@@ -1026,7 +1023,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>`;
             }
 
-            planet.innerHTML=`<div class="counter"><img src="${safeImgPath}" alt="${albumName}" onerror="this.style.opacity=0;"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
+            // OPTIMIZACIÓN LAZY LOAD IMPLEMENTADA AQUÍ
+            planet.innerHTML=`<div class="counter"><img src="${safeImgPath}" alt="${albumName}" loading="lazy" onerror="this.style.opacity=0;"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
             
             if(albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
                 let hTimer;
@@ -1083,7 +1081,6 @@ document.addEventListener("DOMContentLoaded", () => {
     createOrbit(singles,"orbitSingles",210)
     createOrbit(albums,"orbitAlbums",360)
 
-    // PRÓXIMOS LANZAMIENTOS (ESTRELLAS FUGACES)
     const upcomingReleases = [
         { text: "🎵 PRÓXIMO SENCILLO", link: "#" },
         { text: "💿 NUEVO ÁLBUM", link: "#" },
