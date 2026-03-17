@@ -529,12 +529,12 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 
 <div id="albumModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content album-modal-content">
-        <span class="close-modal close-album" aria-label="Cerrar álbum" role="button" tabindex="0">×</span>
+        <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
         <img id="modalAlbumCover" src="" alt="Portada del Álbum">
         <h2 id="modalAlbumTitle">Título del Álbum</h2>
         <div class="tracklist-container" id="modalTracklist">
             </div>
-        <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo ahora en:</p>
+        <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
         <div class="album-platforms" id="modalPlatforms">
             </div>
     </div>
@@ -582,9 +582,8 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 </div>
 
 <script>
-// BASE DE DATOS DE FRASES ACTUALIZADA
+// FRASES (MEMORIA DIARIA CON LOCALSTORAGE)
 const quotesData = [
-    // VOCES DE CAMBIO 1
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Rompe las cadenas… pero primero rompe las tuyas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -616,7 +615,6 @@ const quotesData = [
     { text: "El odio se hereda si nadie lo explica.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
     { text: "Si hoy los negamos, mañana regresan; serán tempestades que el pueblo cosecha.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
 
-    // TIEMPO Y VIDA
     { text: "La vida no se repite, se renueva.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "No esperemos la ausencia para honrar la presencia.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "Tú nunca me juzgas, solo me entiendes.", song: "Quédate", album: "Tiempo y vida" },
@@ -642,7 +640,6 @@ const quotesData = [
     { text: "El amor se aprende cuando se atreve a perdonar.", song: "Perdón y gracias", album: "Tiempo y vida" },
     { text: "La vida se mide en lo que siembras hoy.", song: "Tiempo y vida", album: "Tiempo y vida" },
 
-    // ERES LO QUE ESCUCHAS
     { text: "Cada canción que eliges es un reflejo de lo que callas.", song: "Prólogo - Antes de darle play", album: "Eres lo que escuchas" },
     { text: "Si comes veneno, ¿qué esperas por dentro?", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
     { text: "Te hablas como te hablan, te tratas como te tratan.", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
@@ -680,7 +677,6 @@ const quotesData = [
     { text: "Una lucha que busca venganza no es justicia.", song: "Del dolor al odio", album: "Eres lo que escuchas" },
     { text: "El pueblo sin agua mientras tú brindas por ella.", song: "A qué costo", album: "Eres lo que escuchas" },
 
-    // TEJIDO VITAL
     { text: "La verdad no negocia, solo cobra al caer.", song: "El precio de la mentira", album: "Tejido vital" },
     { text: "Ese silencio no es neutral, es complicidad.", song: "Cobardes", album: "Tejido vital" },
     { text: "No es valentía hablar cuando es seguro… Es amor decir la verdad… aunque el mundo te odie por hacerlo.", song: "Cobardes", album: "Tejido vital" },
@@ -701,7 +697,6 @@ const quotesData = [
     { text: "Enséñales que caerse… también es parte de avanzar.", song: "Enséñales", album: "Tejido vital" },
     { text: "No hay herencia más valiosa que una vida recta.", song: "Ciudadanos del mundo", album: "Tejido vital" },
 
-    // REVOLUCIÓN MENTAL
     { text: "Cambiar de líder sin cambiar de mentalidad es como cambiar de jaula, pero seguir siendo pájaro.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Tu mente es tu mayor territorio ocupado y liberarla es tu deber más urgente.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Nos vendieron el silencio como paz y el confort como evolución.", song: "Manual para un pueblo dormido", album: "Revolucion mental" },
@@ -721,7 +716,6 @@ const quotesData = [
     { text: "Cambiamos rezos por acciones, likes por revoluciones.", song: "Nuevo código", album: "Revolucion mental" },
     { text: "Quejarse no es contribuir, criticar no es cambiar.", song: "Epílogo", album: "Revolucion mental" },
 
-    // CHACALES OPORTUNISTAS
     { text: "Huelen la tragedia como si fuera oportunidad.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Miran la tragedia, pero nunca la causa. Miran al pueblo… y lo ven como cifra.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Aquí el sol madura la fruta… pero la muerte la corta primero.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
@@ -739,7 +733,6 @@ const quotesData = [
     { text: "Cobardes que tiemblan ante el criminal, valientes pa’ callar al que quiere cambiar.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
     { text: "No mataron al hombre… despertaron al pueblo.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
 
-    // LUZ ENTRE LAS SOMBRAS
     { text: "La muerte no cierra, transforma. Abre la puerta de la memoria y nos enseña a mirar distinto.", song: "Introducción / 28 de octubre", album: "Luz entre las Sombras" },
     { text: "Corre libre donde no hay dolor, donde el cielo es verde y el alma es amor.", song: "Hasta que volvamos a correr", album: "Luz entre las Sombras" },
     { text: "Pequeña luz, que no se apagó, solo subiste antes que yo.", song: "Pequeña luz", album: "Luz entre las Sombras" },
@@ -754,7 +747,6 @@ const quotesData = [
     { text: "Cada paso que das hacia el perdón es un paso hacia ti mismo.", song: "Los que no regresan", album: "Luz entre las Sombras" },
     { text: "Hoy soltamos el dolor, no para olvidar, sino para caminar más ligeros.", song: "Después del silencio", album: "Luz entre las Sombras" },
 
-    // VOCES DE CAMBIO 2
     { text: "México despierta cuando tú sabes crecer.", song: "Mexico despierta", album: "Voces de Cambio 2" },
     { text: "Del pasado aprendemos, no para sufrir sino para actuar.", song: "Reflexión Musical MX", album: "Voces de Cambio 2" },
     { text: "El dolor se transforma en luz que nos guía.", song: "Memoria viva", album: "Voces de Cambio 2" },
@@ -774,7 +766,6 @@ const quotesData = [
     { text: "¡La nación no se vende jamás!", song: "Himno a México", album: "Voces de Cambio 2" }
 ];
 
-// --- LÓGICA DE MEMORIA DIARIA (LOCALSTORAGE) ---
 let quoteOrder = [];
 let quoteIndex = 0;
 
@@ -822,7 +813,6 @@ function getNextQuote() {
     try { localStorage.setItem('rmmx_quoteIndex', quoteIndex); } catch(e) {}
     return q;
 }
-// ------------------------------------------------
 
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
@@ -852,104 +842,255 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // PLATAFORMAS GLOBALES PARA EL MODAL DE ÁLBUMES
     const globalPlatformsForModal = [
-        { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, link: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN" },
-        { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, link: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" },
-        { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, link: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" },
-        { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, link: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" },
-        { name: "SoundCloud", svg: `<span style="font-size: 26px; line-height: 1; padding-bottom: 2px; font-family: sans-serif;">☁</span>`, link: "https://soundcloud.com/reflexionmusicalmx" }
+        { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
+        { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
+        { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
+        { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
+        { name: "SoundCloud", svg: `<span style="font-size: 26px; line-height: 1; padding-bottom: 2px; font-family: sans-serif;">☁</span>`, id: 'soundcloud' }
     ];
 
-    if(volumeSlider && bioAudio) {
-        bioAudio.volume = volumeSlider.value;
-        volumeSlider.addEventListener("input", (e) => {
-            bioAudio.volume = e.target.value;
-            muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
-        });
-    }
-
-    if(muteBtn && bioAudio) {
-        muteBtn.addEventListener("click", () => {
-            if (bioAudio.volume > 0) {
-                bioAudio.dataset.lastVol = bioAudio.volume; 
-                bioAudio.volume = 0;
-                volumeSlider.value = 0;
-                muteBtn.textContent = "🔇";
-            } else {
-                const lastVol = bioAudio.dataset.lastVol || 0.4;
-                bioAudio.volume = lastVol;
-                volumeSlider.value = lastVol;
-                muteBtn.textContent = "🔊";
+    // DEFINICIÓN DE LOS ÁLBUMES CON TODA LA DATA (INCLUYENDO ENLACES INDIVIDUALES)
+    const discography = [
+        {
+            type: "single",
+            img: "images/We rise as one.webp",
+            title: "We rise as one",
+            tracks: ["We rise as one"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs&si=6Nc2mOTytxGm18Nx",
+                spotify: "https://open.spotify.com/album/2UAHh2wV6ntXOvb4F4VVhg?si=Ec-XVA8XTCqihw-9HEHMlg",
+                amazon: "https://music.amazon.com.mx/albums/B0FZXWR7N7?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_qiLHczCqxtq1xpgstB8YpYTCh",
+                apple: "https://music.apple.com/es/album/we-rise-as-one-single/1851049433",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/we-rise-as-one?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
             }
-        });
-    }
+        },
+        {
+            type: "single",
+            img: "images/Gracias 2025.webp",
+            title: "Gracias 2025",
+            tracks: ["Gracias 2025"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk&si=ElSlDGU7aDAoq09_",
+                spotify: "https://open.spotify.com/album/20FVaU0J8cPCszEj1tgsr6?si=S9WmVWrtTtGCwSAgsyzrDg",
+                amazon: "https://music.amazon.com.mx/albums/B0GGXJ3XG3?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_yQLFbeyqWtlvskw61AH8RszkF",
+                apple: "https://music.apple.com/es/album/gracias-2025-single/1869178508",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/gracias-2025?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "single",
+            img: "images/Adultos TRASTORNADOS.webp",
+            title: "Adultos TRASTORNADOS",
+            tracks: ["Adultos TRASTORNADOS"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM&si=lC3CzdQTOHkxfKva",
+                spotify: "https://open.spotify.com/album/3L2ZAYytRTzDIChcwRkLdY?si=uGLv11StT1ykGm-CJ9-_Jw",
+                amazon: "https://music.amazon.com.mx/albums/B0GNPGPNWP?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_xpBok7lRXPv4CiSXtHCUEfbpG",
+                apple: "https://music.apple.com/es/album/adultos-trastornados-single/1877753106",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/adultos-trastornados?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "single",
+            img: "images/Codigo rojo.webp",
+            title: "Codigo rojo",
+            tracks: ["Codigo rojo"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0&si=gS8ZkpysgtpLzzLB",
+                spotify: "https://open.spotify.com/album/62pJjPSFwZf4MuHT45izrV?si=0DRH5AomRryVSIeNBzyQ0g",
+                amazon: "https://music.amazon.com.mx/albums/B0GQD9LB1H?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_leF6qYyPLTsaMB61BEx18vC7I",
+                apple: "#", // No proveído en la lista, usamos fallback
+                soundcloud: "#"
+            }
+        },
+        {
+            type: "single",
+            img: "images/La fuerza de todos.webp",
+            title: "La fuerza de todos",
+            tracks: ["La fuerza de todos"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro",
+                spotify: "https://open.spotify.com/album/4OyMdNR6Ff9PX5KXJDs36E?si=OOhJll_gSo2UtOyU_6Pe3A",
+                amazon: "https://music.amazon.com.mx/albums/B0GQ588HLX?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_X9sGoUzyw3KHEhm3BhxhgGT6S",
+                apple: "https://music.apple.com/es/album/la-fuerza-de-todos-single/1880182072",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/la-fuerza-de-todos-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "single",
+            img: "images/Regresar a casa.webp",
+            title: "Regresar a casa",
+            tracks: ["Regresar a casa"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE&si=fTPomu5xyEVts_dA",
+                spotify: "https://open.spotify.com/album/5XWwchDBL4G0kACbGBebet?si=zD2zM6GtTcC1vJ7Z04T0sw",
+                amazon: "https://music.amazon.com.mx/albums/B0GQ5YYPTY?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_iB1j6UnS1eApXAyQjfCsITEyf",
+                apple: "https://music.apple.com/es/album/regresar-a-casa-single/1880183940",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/regresar-a-casa-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "single",
+            img: "images/Tres colores, un compromiso.webp",
+            title: "Tres colores, un compromiso",
+            tracks: ["Tres colores, un compromiso"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM",
+                spotify: "https://open.spotify.com/album/2gSDQitygEjoVweX6PnqpK?si=0C-q47pmRJuUSIZ4OS2kQw",
+                amazon: "https://music.amazon.com.mx/albums/B0GQ6SGM4C?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_o13lb3XMsoQlhsyLEzMls5m92",
+                apple: "https://music.apple.com/es/album/tres-colores-un-compromiso-single/1880483551",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/tres-colores-un-compromiso?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        // AÑADIDO: "Esto no empezó hoy"
+        {
+            type: "single",
+            img: "images/Esto no empezó hoy.webp",
+            title: "Esto no empezó hoy",
+            tracks: ["Esto no empezó hoy"],
+            links: {
+                youtube: "#", 
+                spotify: "#",
+                amazon: "#",
+                apple: "https://music.apple.com/es/album/esto-no-empez%C3%B3-hoy-single/1880118370",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/esto-no-empezo-hoy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
 
-    // Funciones de cierre de Modales
-    function closeAndStopAudio() {
-        modal.classList.remove("show");
-        if(bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
-    }
-    
-    function closeAlbumPanel() {
-        albumModal.classList.remove("show");
-    }
-
-    if(sun) {
-        sun.onclick = () => { 
-            modal.classList.add("show"); 
-            if(bioAudio) { bioAudio.play().catch(error => { console.log("Bloqueado:", error); }); }
-        };
-    }
-
-    if(closeBioModal) closeBioModal.onclick = closeAndStopAudio;
-    if(closeAlbumModal) closeAlbumModal.onclick = closeAlbumPanel;
-    
-    window.onclick = (event) => {
-        if (event.target === modal) closeAndStopAudio();
-        if (event.target === albumModal) closeAlbumPanel();
-    };
-
-    const canvas = document.getElementById("bg");
-    const ctx = canvas.getContext("2d");
-    
-    const numStars = window.innerWidth < 768 ? 80 : 300; 
-    let backgroundStars = [];
-
-    function setCanvasSize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initStars();
-    }
-    
-    function initStars() {
-        backgroundStars = [];
-        for (let i = 0; i < numStars; i++) {
-            backgroundStars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.5,
-                opacity: Math.random(),
-                speed: 0.005 + Math.random() * 0.01
-            });
+        // ALBUMES
+        {
+            type: "album",
+            img: "images/Voces de Cambio 1.webp",
+            title: "Voces de Cambio 1",
+            tracks: ["Ciudad en silencio", "Raíces de fuego", "Sabes lo que haces", "Ecos del olvido", "Sociedad cómplice", "Normal es veneno", "El engaño del bien", "¿Injusticia o consecuencia?", "Ciclos y deudas", "Veneno en la sangre", "Herencia de hierro", "Resistencia pequeña", "El cambio está en ti", "No hay tirano eterno", "Hijos del olvido"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ&si=V9AU17wGT6ErrJtY",
+                spotify: "https://open.spotify.com/album/5ZiW2nNJnJX9ZeuBpZW6DS?si=bHkMqhAGShSYicHuKgnFQg",
+                amazon: "https://music.amazon.com.mx/albums/B0FS3YS4NX?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_DwtYRuWH9A1rjZEvEyW5aZoIB",
+                apple: "https://music.apple.com/es/album/voces-de-cambio/1841491477",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/voces-de-cambio?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Voces de Cambio 2.webp",
+            title: "Voces de Cambio 2",
+            tracks: ["Mexico despierta", "Reflexión Musical MX", "Memoria viva", "Sombras y luz", "Semillas para mañana", "Lo que te espera", "El eco de los ancestros", "Orgullo mexicano", "En la union esta la fuerza", "No más excusas", "Se chingon", "Mexico eres tu / Mexico lindo", "El cambio está en ti V2", "Himno a México"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE&si=HitHQ9h5vU6iSTv8",
+                spotify: "https://open.spotify.com/album/20FnT6FbnltmFm9PiRSSkt?si=OD37ewXkRzyxJLLibBXmvQ",
+                amazon: "https://music.amazon.com.mx/albums/B0FT7PQGKF?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_E0CCAEmpHKYAjyX4YbrBIIKWC",
+                apple: "#", // No provisto
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/voces-de-cambio-v2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Estado contra estado.webp",
+            title: "Estado contra estado",
+            tracks: ["El enemigo de mi enemigo", "Sangre en la frontera", "Vigilantes del norte", "La mordida del sur"], // Tracks de ejemplo si no los tenemos
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow&si=OySd6YX-U8uHXnOV",
+                spotify: "https://open.spotify.com/album/5bouzliTlE1sm3qaIyEO8E?si=cs4bQlYESxiFc4mzFpsX6A",
+                amazon: "https://music.amazon.com.mx/albums/B0FVJB8H74?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_yYclccmQj3BzSNhOzxh6dLXGm",
+                apple: "#", // No provisto
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/estado-contra-estado?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Luz entre las Sombras.webp",
+            title: "Luz entre las Sombras",
+            tracks: ["Introducción / 28 de octubre", "Hasta que volvamos a correr", "Pequeña luz", "Hermano del alma", "Silencio en la cama", "Lo que me enseñaste", "Los que abrieron camino", "Voces que no callaron", "Perdóname", "Sin huella ni tumba", "Los que no regresan", "Después del silencio"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4&si=iXoy5FUZtsS5REQ6",
+                spotify: "https://open.spotify.com/album/1hx8kcmgYi0CMT25xiNyUz?si=l1oh9MgqTRqvVBETnPfLAw",
+                amazon: "https://music.amazon.com.mx/albums/B0FX1YYCBH?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_uW6qlIS9NuPZNvqC6D1ms2g3g",
+                apple: "https://music.apple.com/es/album/luz-entre-las-sombras/1847216698",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/luz-entre-las-sombras?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Tiempo y vida.webp",
+            title: "Tiempo y vida",
+            tracks: ["Altar de vida", "Quédate", "Renacer", "Citlalli", "Alizée", "Mientras compartamos el sol", "Amigos del alma", "Aún despierto contigo", "A tu lado, mamá", "Padre, mi raíz", "Abuela de luz", "Abuelo, mi camino", "Voces que siguen luchando", "Hasta encontrarlos", "Aún hay lugar", "Perdón y gracias", "Tiempo y vida"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE&si=t6K1eboh-VHYlpm7",
+                spotify: "https://open.spotify.com/album/3UUtgG1Lvn1zmTpY94PCmN?si=xylJPSN9QBywlTXl5wAfxg",
+                amazon: "https://music.amazon.com.mx/albums/B0FX1YYCBH?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_tpw1idzZvEvyQu9XHPEnHZf0q",
+                apple: "https://music.apple.com/es/album/tiempo-y-vida/1851277742",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/tiempo-y-vida-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/CHACALES OPORTUNISTAS.webp",
+            title: "CHACALES OPORTUNISTAS",
+            tracks: ["Introducción / Chacales oportunistas", "El oro verde", "Los que cuidaban la tierra", "Huracanes con uniforme", "Lodo y promesas", "La ley del fracaso", "Firma y olvida", "Las madres no duermen", "Sin huella ni tumba II", "Epílogo (México no olvida)", "Carlos Manzo, Luz en Uruapan"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A&si=GKFSqmdUdijNoyWs",
+                spotify: "https://open.spotify.com/album/64O12821a5VeL4CDsvFkhq?si=N_vPDU_9T1-girApegfDAg",
+                amazon: "https://music.amazon.com.mx/albums/B0G16FLG5T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_Nuv8VIAIwYcvRKyiTa9eyJ6jU",
+                apple: "https://music.apple.com/es/album/chacales-oportunistas/1854564785",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/chacales-oportunistas?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Tejido vital.webp",
+            title: "Tejido vital",
+            tracks: ["El precio de la mentira", "Cobardes", "En la trinchera", "La primera trinchera", "Ni Ella sin Él ni Él sin Ella", "Empoderar no es guerra", "Amor en tiempos de ideologías cancerígenas", "Honra a tu pareja", "Juramento de dos", "Complemento eterno", "Cuida y educa", "Herencia que no se rompe", "Enséñales", "Ciudadanos del mundo"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs&si=IENzoXH5D1xv_xOn",
+                spotify: "https://open.spotify.com/album/0x1QYc6n54qlEAdsjo6sFu?si=Rrb6qFW4Tu-liIfSVU8Iig",
+                amazon: "https://music.amazon.com.mx/albums/B0G36KTQDS?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_QgideEz7WEj2CyrR3I9TKaWcz",
+                apple: "https://music.apple.com/es/album/tejido-vital/1854794772",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/tejido-vital?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Revolucion mental.webp",
+            title: "Revolucion mental",
+            tracks: ["Prólogo a Revolución Mental", "Manual para un pueblo dormido", "Neuronas en huelga", "La Caja idiota", "Mi enemigo", "Mexico bipolar", "Sin mesías", "Despierta cabrón", "Reinicio", "Espejo", "Conciencia colectiva", "Nuevo código", "Epílogo"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU&si=nt9eLCqBjl8_kKqz",
+                spotify: "https://open.spotify.com/album/5alJBFihx9EwKaQpX8cKPa?si=HpwcBOIYRHiM4Wwc1Lt0LA",
+                amazon: "https://music.amazon.com.mx/albums/B0G3BCX2MK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_8PoFV2wJH1CpoUgsasZSYCMSp",
+                apple: "https://music.apple.com/es/album/revoluci%C3%B3n-mental/1857713061",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/revolucion-mental-4?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Eres lo que escuchas.webp",
+            title: "Eres lo que escuchas",
+            tracks: ["Prólogo - Antes de darle play", "Eres lo que escuchas", "Empieza mal", "Solo sigue", "Dejalos ganar", "Espejo", "Cráter", "Luz que no se apaga", "Lo que soy", "Mierdaton", "Anestesia barata", "Hombre que despierta", "¿Qué es la moda?", "Payasos con corona de humo", "El peso del silencio", "Camino sobre el agua", "Simple", "Mente corazón", "Combate interior", "Bucle / Mundo imperfecto", "Las venas abiertas", "No todos son iguales", "Paraíso de sangre", "Del dolor al odio", "A qué costo"],
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I&si=exhKQkfdndW8x4yK",
+                spotify: "https://open.spotify.com/album/1Z3BWmi0DGxjMgslqZqokZ?si=BRAQZ80KT7OluuE7NI36SQ",
+                amazon: "https://music.amazon.com.mx/albums/B0G4NF14XV?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_tHRSr7GPhu3F2TDPXFoDIksNI",
+                apple: "https://music.apple.com/es/album/eres-lo-que-escuchas/1865017257",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
+        },
+        {
+            type: "album",
+            img: "images/Amor en tiempos de ideologias cancerigenas.webp",
+            title: "Amor en tiempos de ideologias cancerigenas",
+            tracks: ["La trampa rosa", "Despertar del guerrero", "Construir ruinas"], // Tracks no provistos, agregué placeholder
+            links: {
+                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA&si=ZB2a4jnRIkEyiJgK",
+                spotify: "https://open.spotify.com/album/1MJdvRWqcBXJrADcCuD4Ia?si=gV2aTyeCTW61CGityRKZLA",
+                amazon: "https://music.amazon.com.mx/albums/B0GD2PZZ1T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_lJnpI5wT7XpTL7loch8uzHBkp",
+                apple: "https://music.apple.com/es/album/amor-en-tiempos-de-ideolog%C3%ADas-cancer%C3%ADgenas/1875409405",
+                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         }
-    }
+    ];
 
-    function drawCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        backgroundStars.forEach(s => {
-            s.opacity += s.speed;
-            if (s.opacity >= 1 || s.opacity <= 0.1) s.speed *= -1;
-            ctx.fillStyle = `rgba(255, 215, 0, ${s.opacity})`;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fill();
-        });
-        requestAnimationFrame(drawCanvas);
-    }
-
-    setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
-    drawCanvas();
-
+    // FUNCIÓN PARA DISPARAR FRASES Y GIRAR ÁLBUM
     function showQuoteAndSpin() {
         const q = getNextQuote(); 
         
@@ -1057,8 +1198,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // NUEVO EVENTO: ABRIR MODAL EN LUGAR DE ENLACE DIRECTO
             planet.onclick = () => {
                 modalAlbumCover.src = encodeURI(item.img);
-                let albumName = item.img.split('/').pop().replace('.webp', '');
-                modalAlbumTitle.innerText = albumName;
+                modalAlbumTitle.innerText = item.title;
                 
                 modalTracklist.innerHTML = "";
                 if(item.tracks && item.tracks.length > 0) {
@@ -1074,20 +1214,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 modalPlatforms.innerHTML = "";
                 globalPlatformsForModal.forEach(p => {
-                    let platLink = p.name === "YouTube Music" ? item.link : p.link;
-                    let a = document.createElement("a");
-                    a.href = platLink;
-                    a.target = "_blank";
-                    a.innerHTML = p.svg;
-                    a.setAttribute('aria-label', `Escuchar en ${p.name}`);
-                    modalPlatforms.appendChild(a);
+                    // Buscar si hay un link válido para esa plataforma en este disco
+                    let platLink = item.links && item.links[p.id] ? item.links[p.id] : "#";
+                    
+                    if (platLink && platLink !== "#") {
+                        let a = document.createElement("a");
+                        a.href = platLink;
+                        a.target = "_blank";
+                        a.innerHTML = p.svg;
+                        a.setAttribute('aria-label', `Escuchar en ${p.name}`);
+                        modalPlatforms.appendChild(a);
+                    }
                 });
 
                 albumModal.classList.add("show");
             };
             
             const safeImgPath = encodeURI(item.img);
-            let albumName = item.img.split('/').pop().replace('.webp', '');
+            let albumName = item.title;
             
             planet.setAttribute('data-album', albumName.toUpperCase());
             
@@ -1103,6 +1247,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>`;
             }
 
+            // OPTIMIZACIÓN LAZY LOAD PARA MÓVILES
             planet.innerHTML=`<div class="counter"><img src="${safeImgPath}" alt="${albumName}" loading="lazy" onerror="this.style.opacity=0;"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
             
             if(albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
@@ -1136,31 +1281,12 @@ document.addEventListener("DOMContentLoaded", () => {
         orbit.appendChild(fragment);
     }
 
-    const singles=[
-        { img:"images/We rise as one.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs", tracks: ["We rise as one"] },
-        { img:"images/Gracias 2025.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk", tracks: ["Gracias 2025"] },
-        { img:"images/Adultos TRASTORNADOS.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM", tracks: ["Adultos TRASTORNADOS"] },
-        { img:"images/Codigo rojo.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0", tracks: ["Codigo rojo"] },
-        { img:"images/La fuerza de todos.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro", tracks: ["La fuerza de todos"] },
-        { img:"images/Regresar a casa.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE", tracks: ["Regresar a casa"] },
-        { img:"images/Tres colores, un compromiso.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM", tracks: ["Tres colores, un compromiso"] }
-    ]
+    // Filtrar los datos en base a las variables discography creadas
+    const singlesData = discography.filter(d => d.type === "single");
+    const albumsData = discography.filter(d => d.type === "album");
 
-    const albums=[
-        { img:"images/Voces de Cambio 1.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ", tracks: ["Ciudad en silencio", "Raíces de fuego", "Sabes lo que haces", "Ecos del olvido", "Sociedad cómplice", "Normal es veneno", "El engaño del bien", "¿Injusticia o consecuencia?", "Ciclos y deudas", "Veneno en la sangre", "Herencia de hierro", "Resistencia pequeña", "El cambio está en ti", "No hay tirano eterno", "Hijos del olvido"] },
-        { img:"images/Voces de Cambio 2.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE", tracks: ["Mexico despierta", "Reflexión Musical MX", "Memoria viva", "Sombras y luz", "Semillas para mañana", "Lo que te espera", "El eco de los ancestros", "Orgullo mexicano", "En la union esta la fuerza", "No más excusas", "Se chingon", "Mexico eres tu / Mexico lindo", "El cambio está en ti V2", "Himno a México"] },
-        { img:"images/Estado contra estado.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow", tracks: [] },
-        { img:"images/Luz entre las Sombras.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4", tracks: ["Introducción / 28 de octubre", "Hasta que volvamos a correr", "Pequeña luz", "Hermano del alma", "Silencio en la cama", "Lo que me enseñaste", "Los que abrieron camino", "Voces que no callaron", "Perdóname", "Sin huella ni tumba", "Los que no regresan", "Después del silencio"] },
-        { img:"images/Tiempo y vida.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE", tracks: ["Altar de vida", "Quédate", "Renacer", "Citlalli", "Alizée", "Mientras compartamos el sol", "Amigos del alma", "Aún despierto contigo", "A tu lado, mamá", "Padre, mi raíz", "Abuela de luz", "Abuelo, mi camino", "Voces que siguen luchando", "Hasta encontrarlos", "Aún hay lugar", "Perdón y gracias", "Tiempo y vida"] },
-        { img:"images/CHACALES OPORTUNISTAS.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A", tracks: ["Introducción / Chacales oportunistas", "El oro verde", "Los que cuidaban la tierra", "Huracanes con uniforme", "Lodo y promesas", "La ley del fracaso", "Firma y olvida", "Las madres no duermen", "Sin huella ni tumba II", "Epílogo (México no olvida)", "Carlos Manzo, Luz en Uruapan"] },
-        { img:"images/Tejido vital.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs", tracks: ["El precio de la mentira", "Cobardes", "En la trinchera", "La primera trinchera", "Ni Ella sin Él ni Él sin Ella", "Empoderar no es guerra", "Amor en tiempos de ideologías cancerígenas", "Honra a tu pareja", "Juramento de dos", "Complemento eterno", "Cuida y educa", "Herencia que no se rompe", "Enséñales", "Ciudadanos del mundo"] },
-        { img:"images/Revolucion mental.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU", tracks: ["Prólogo a Revolución Mental", "Manual para un pueblo dormido", "Neuronas en huelga", "La Caja idiota", "Mi enemigo", "Mexico bipolar", "Sin mesías", "Despierta cabrón", "Reinicio", "Espejo", "Conciencia colectiva", "Nuevo código", "Epílogo"] },
-        { img:"images/Eres lo que escuchas.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I", tracks: ["Prólogo - Antes de darle play", "Eres lo que escuchas", "Empieza mal", "Solo sigue", "Dejalos ganar", "Espejo", "Cráter", "Luz que no se apaga", "Lo que soy", "Mierdaton", "Anestesia barata", "Hombre que despierta", "¿Qué es la moda?", "Payasos con corona de humo", "El peso del silencio", "Camino sobre el agua", "Simple", "Mente corazón", "Combate interior", "Bucle / Mundo imperfecto", "Las venas abiertas", "No todos son iguales", "Paraíso de sangre", "Del dolor al odio", "A qué costo"] },
-        { img:"images/Amor en tiempos de ideologias cancerigenas.webp", link:"https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA", tracks: [] }
-    ]
-
-    createOrbit(singles,"orbitSingles",210)
-    createOrbit(albums,"orbitAlbums",360)
+    createOrbit(singlesData,"orbitSingles",210)
+    createOrbit(albumsData,"orbitAlbums",360)
 
     const upcomingReleases = [
         { text: "🎵 PRÓXIMO SENCILLO", link: "#" },
