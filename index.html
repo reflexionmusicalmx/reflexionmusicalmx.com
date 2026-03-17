@@ -195,7 +195,7 @@ color: #fff;
 transform: scale(1.1);
 }
 
-/* NUEVO: ESTILOS PARA EL MODAL DE ÁLBUMES */
+/* MODAL DE ÁLBUMES ESPECÍFICO */
 .album-modal-content {
 text-align: center;
 max-width: 500px;
@@ -265,6 +265,7 @@ background: gold; transform: scale(1.15);
 .album-platforms svg { fill: gold; width: 22px; transition: 0.25s; }
 .album-platforms a:hover svg { fill: #000; }
 
+/* BOTÓN VOLVER */
 .btn-volver {
 background: transparent;
 border: 1px solid #FFD700;
@@ -306,22 +307,11 @@ will-change: transform;
 transform: translateZ(0);
 }
 
-#orbitSingles{
-width:420px;
-height:420px;
-animation:spin 45s linear infinite;
-}
-
-#orbitAlbums{
-width:720px;
-height:720px;
-animation:spin 95s linear infinite;
-}
+#orbitSingles{ width:420px; height:420px; animation:spin 45s linear infinite; }
+#orbitAlbums{ width:720px; height:720px; animation:spin 95s linear infinite; }
 
 #orbitSingles:hover, #orbitSingles:hover .counter,
-#orbitAlbums:hover, #orbitAlbums:hover .counter {
-animation-play-state: paused;
-}
+#orbitAlbums:hover, #orbitAlbums:hover .counter { animation-play-state: paused; }
 
 @keyframes spin{
 from{transform:rotate(0deg) translateZ(0);}
@@ -331,14 +321,11 @@ to{transform:rotate(360deg) translateZ(0);}
 /* DISCOS */
 .planet{
 position:absolute;
-width:110px;
-height:110px;
+width:110px; height:110px;
 border-radius:50%;
 cursor:pointer;
 transition:.3s;
-display:flex;
-align-items:center;
-justify-content:center;
+display:flex; align-items:center; justify-content:center;
 background:#000;
 box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4);
 pointer-events:auto; 
@@ -353,8 +340,7 @@ z-index: 100;
 
 /* CONTRA ROTACION Y TOOLTIPS */
 .counter{
-width:100%;
-height:100%;
+width:100%; height:100%;
 animation:counterSpin 45s linear infinite;
 position: relative; 
 border-radius: 50%;
@@ -362,16 +348,13 @@ will-change: transform;
 }
 
 .counter img{
-width:100%;
-height:100%;
+width:100%; height:100%;
 object-fit:cover;
 border-radius:50%;
 pointer-events:none;
 }
 
-#orbitAlbums .counter{
-animation-duration:95s;
-}
+#orbitAlbums .counter{ animation-duration:95s; }
 
 @keyframes counterSpin{
 from{transform:rotate(0deg) translateZ(0);}
@@ -380,32 +363,15 @@ to{transform:rotate(-360deg) translateZ(0);}
 
 /* TOOLTIPS CON MAYUSCULAS */
 .tooltip {
-position: absolute;
-bottom: -15px;
-left: 50%;
-transform: translateX(-50%);
-background: rgba(0, 0, 0, 0.9);
-color: #FFD700;
-padding: 6px 14px;
-border-radius: 6px;
-font-size: 11px;
-font-weight: 700;
-white-space: nowrap;
-border: 1px solid rgba(255,215,0,0.5);
-opacity: 0;
-visibility: hidden;
-transition: all 0.3s ease;
-pointer-events: none;
-box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-text-transform: uppercase; 
-letter-spacing: 1px;
+position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
+background: rgba(0, 0, 0, 0.9); color: #FFD700;
+padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 700;
+white-space: nowrap; border: 1px solid rgba(255,215,0,0.5); opacity: 0;
+visibility: hidden; transition: all 0.3s ease; pointer-events: none;
+box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 1px;
 }
 
-.planet:hover .tooltip {
-opacity: 1;
-visibility: visible;
-bottom: -35px; 
-}
+.planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
 
 /* EFECTO FAMILIA */
 .family-symbol-container {
@@ -426,62 +392,32 @@ opacity: 0; transition: 0.3s; pointer-events: none;
 
 /* REDES LATERALES (IZQUIERDA) */
 .floating-social{
-position:absolute;
-top:50%;
-left:15px;
-transform:translateY(-50%);
-display:flex;
-flex-direction:column;
-gap:15px;
-z-index:999;
+position:absolute; top:50%; left:15px; transform:translateY(-50%);
+display:flex; flex-direction:column; gap:15px; z-index:999;
 }
 
 .floating-social a{
-background:#111;
-color:#FFD700;
-width:45px;
-height:45px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-text-decoration:none;
-transition:.25s;
-padding: 10px; 
-box-sizing: border-box;
-border: 1px solid gold;
+background:#111; color:#FFD700; width:45px; height:45px;
+display:flex; align-items:center; justify-content:center;
+border-radius:10px; text-decoration:none; transition:.25s;
+padding: 10px; box-sizing: border-box; border: 1px solid gold;
 }
 
 .floating-social svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
 .floating-social a:hover{ background:#FFD700; transform:scale(1.2); }
 .floating-social a:hover svg { fill: #000; }
 
-/* PLATAFORMAS DIGITALES (DERECHA) */
+/* PLATAFORMAS DIGITALES GLOBALES (DERECHA) */
 .floating-platforms{
-position:absolute;
-top:50%;
-right:15px;
-transform:translateY(-50%);
-display:flex;
-flex-direction:column;
-gap:15px;
-z-index:999;
+position:absolute; top:50%; right:15px; transform:translateY(-50%);
+display:flex; flex-direction:column; gap:15px; z-index:999;
 }
 
 .floating-platforms a{
-background:#111;
-color:#FFD700;
-width:45px;
-height:45px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-text-decoration:none;
-transition:.25s;
-padding: 10px; 
-box-sizing: border-box;
-border: 1px solid gold;
+background:#111; color:#FFD700; width:45px; height:45px;
+display:flex; align-items:center; justify-content:center;
+border-radius:10px; text-decoration:none; transition:.25s;
+padding: 10px; box-sizing: border-box; border: 1px solid gold;
 }
 
 .floating-platforms svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
@@ -490,155 +426,82 @@ border: 1px solid gold;
 
 /* ESTRELLAS FUGACES (PRÓXIMOS LANZAMIENTOS) */
 .shootingStar {
-position: absolute;
-cursor: pointer;
-pointer-events: auto;
-display: flex;
-align-items: center;
-z-index: 1001;
-will-change: transform;
+position: absolute; cursor: pointer; pointer-events: auto;
+display: flex; align-items: center; z-index: 1001; will-change: transform;
 }
 
 .starIconWrapper {
-background: #000;
-border: 1px solid gold;
-border-radius: 20px;
-padding: 6px 15px;
-filter: drop-shadow(0 0 10px gold);
-display: flex;
-align-items: center;
-justify-content: center;
-position: relative;
-z-index: 2;
+background: #000; border: 1px solid gold; border-radius: 20px;
+padding: 6px 15px; filter: drop-shadow(0 0 10px gold);
+display: flex; align-items: center; justify-content: center;
+position: relative; z-index: 2;
 }
 
 .starIconText {
-color: #FFD700;
-font-size: 10px;
-font-weight: bold;
-white-space: nowrap;
-font-family: sans-serif;
-letter-spacing: 1px;
+color: #FFD700; font-size: 10px; font-weight: bold;
+white-space: nowrap; font-family: sans-serif; letter-spacing: 1px;
 }
 
 .tail {
-position: absolute;
-top: 50%; left: 50%; 
-height: 3px;
+position: absolute; top: 50%; left: 50%; height: 3px;
 background: linear-gradient(to right, rgba(255,215,0,0.9), transparent);
-transform-origin: left center;
-filter: blur(1px);
-pointer-events: none;
-z-index: 1;
+transform-origin: left center; filter: blur(1px); pointer-events: none; z-index: 1;
 }
 
 /* DESTELLOS DE ESTRELLAS (SUPERNOVAS) TÁCTILES */
 .supernova-hitbox {
-position: absolute;
-width: 50px;
-height: 50px;
-background: transparent;
-border-radius: 50%;
-z-index: 5000;
-pointer-events: auto;
-cursor: pointer;
-transform: translate(-50%, -50%);
-display: flex;
-align-items: center;
-justify-content: center;
+position: absolute; width: 50px; height: 50px; background: transparent;
+border-radius: 50%; z-index: 5000; pointer-events: auto; cursor: pointer;
+transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center;
 }
 
 .supernova {
-position: relative;
-width: 4px;
-height: 4px;
-background: #fff;
-border-radius: 50%;
-box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8);
-animation: burst 2.5s ease-in-out forwards;
-pointer-events: none;
+position: relative; width: 4px; height: 4px; background: #fff;
+border-radius: 50%; box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8);
+animation: burst 2.5s ease-in-out forwards; pointer-events: none;
 }
 
 .supernova::before, .supernova::after {
-content: '';
-position: absolute;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 50%; left: 50%;
-transform: translate(-50%, -50%);
+content: ''; position: absolute; background: radial-gradient(circle, gold 0%, transparent 70%);
+top: 50%; left: 50%; transform: translate(-50%, -50%);
 }
 .supernova::before { width: 60px; height: 2px; }
 .supernova::after { width: 2px; height: 60px; }
 
 .ray-x {
-position: absolute;
-width: 30px; height: 2px;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 50%; left: 50%;
-transform: translate(-50%, -50%) rotate(45deg);
+position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%);
+top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg);
 }
 .ray-x::after {
-content: '';
-position: absolute;
-width: 30px; height: 2px;
-background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 0; left: 0;
-transform: rotate(90deg);
+content: ''; position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%);
+top: 0; left: 0; transform: rotate(90deg);
 }
 
-@keyframes burst {
-0% { transform: scale(0); opacity: 0; }
-40% { transform: scale(1.2); opacity: 1; }
-100% { transform: scale(0); opacity: 0; }
-}
+@keyframes burst { 0% { transform: scale(0); opacity: 0; } 40% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
 
 /* FRASES FLOTANTES EN EL CENTRO */
 .floating-quote {
-position: fixed;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-background: rgba(0, 0, 0, 0.9);
-color: #fff;
-border: 1px solid #FFD700;
-padding: 25px 35px;
-border-radius: 15px;
-font-size: 16px;
-font-weight: bold;
-font-style: italic;
-text-align: center;
-box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
-pointer-events: none;
-z-index: 100000;
-max-width: 80%;
-line-height: 1.5;
+position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+background: rgba(0, 0, 0, 0.9); color: #fff; border: 1px solid #FFD700;
+padding: 25px 35px; border-radius: 15px; font-size: 16px; font-weight: bold;
+font-style: italic; text-align: center; box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
+pointer-events: none; z-index: 100000; max-width: 80%; line-height: 1.5;
 will-change: transform, opacity;
 }
 
 .floating-quote span {
-font-size: 12px;
-color: #FFD700;
-margin-top: 10px;
-display: block;
-text-transform: uppercase;
-letter-spacing: 2px;
+font-size: 12px; color: #FFD700; margin-top: 10px; display: block;
+text-transform: uppercase; letter-spacing: 2px;
 }
 
 /* GIRO LENTO DEL ÁLBUM */
 .spin-active {
 animation: fastSpin 2s linear infinite !important;
-box-shadow: 0 0 40px #FFD700 !important;
-border: 2px solid #fff !important;
-z-index: 5000 !important;
+box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-index: 5000 !important;
 }
-@keyframes fastSpin {
-100% { transform: rotate(360deg) translateZ(0); }
-}
+@keyframes fastSpin { 100% { transform: rotate(360deg) translateZ(0); } }
 
-.force-tooltip {
-opacity: 1 !important;
-visibility: visible !important;
-bottom: -35px !important;
-}
+.force-tooltip { opacity: 1 !important; visibility: visible !important; bottom: -35px !important; }
 
 /* RESPONSIVIDAD */
 @media (max-width: 768px) {
@@ -701,46 +564,34 @@ bottom: -35px !important;
 </div>
 
 <canvas id="bg" aria-hidden="true"></canvas>
-
 <div id="starContainer" aria-hidden="true"></div>
 
 <div class="floating-social">
 <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
-<svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
-</a>
+<svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg></a>
 <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar TikTok">
-<svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
-</a>
+<svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg></a>
 <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Facebook">
-<svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg>
-</a>
+<svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
 <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Instagram">
-<svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
-</a>
+<svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
 <a href="https://x.com/RMusicalMX" target="_blank" aria-label="Visitar X (Twitter)">
-<svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-</a>
+<svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
 <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
-<svg viewBox="0 0 448 512"><path d="M331.5 235.7c2.2 .9 4.2 1.9 6.3 2.8c29.2 14.1 50.6 35.2 61.8 61.4c15.7 36.5 17.2 95.8-30.3 143.2c-36.2 36.2-86.6 54.3-146.4 54.3c-108.5 0-188-75.8-188-182.2c0-109.9 85.3-189.5 197.8-189.5c88.8 0 148 48.7 175.7 99.1c7.8 14.1 1.7 33-14 38.6c-13.3 4.8-29.2-.8-36.8-12.7c-17.7-28-54.8-63.4-119.5-63.4c-78.5 0-136.2 55.4-136.2 131.6c0 80 54 125.7 127 125.7c33.5 0 68-12.9 89.2-34.1c17-17 21.7-44.1 11.2-68.5c-7.2-16.7-22.3-30.9-46.7-39.6c-13.6-4.9-28-7.7-42.5-8.5c-44-2.5-87.3 10.9-115.3 35.8c-26.6 23.6-41.6 56.4-41.6 89.7c0 38.7 21.4 75.8 57.7 99.7c33 21.7 75.5 32.7 118.8 32.7c39.6 0 76.5-10.4 105.7-30.1c-13.1 7.1-28.7 11.2-45.3 11.2c-56 0-101.3-45.3-101.3-101.3c0-42.2 25.8-78.3 63.4-93.5c-9.6-1.5-19.5-2.2-29.7-2.2c-67.4 0-120.9 40.5-120.9 98c0 40 27.5 73.6 67.5 89.6c32.7 13.1 71.9 14.6 110.1 4c31.1-8.6 57.6-26.9 76.2-51.5c-15.3 22.6-38.6 39.7-65.7 46.5c-18.7 4.6-38.4 4.7-57.1 .2c-35-8.2-64.6-30.9-82.4-62.8c-18-32.3-21.7-69.8-10.3-104.6c11.4-34.8 38.3-63.1 73.1-77.8c34.8-14.7 73.4-14.8 108.3-.3z"/></svg>
-</a>
+<svg viewBox="0 0 448 512"><path d="M331.5 235.7c2.2 .9 4.2 1.9 6.3 2.8c29.2 14.1 50.6 35.2 61.8 61.4c15.7 36.5 17.2 95.8-30.3 143.2c-36.2 36.2-86.6 54.3-146.4 54.3c-108.5 0-188-75.8-188-182.2c0-109.9 85.3-189.5 197.8-189.5c88.8 0 148 48.7 175.7 99.1c7.8 14.1 1.7 33-14 38.6c-13.3 4.8-29.2-.8-36.8-12.7c-17.7-28-54.8-63.4-119.5-63.4c-78.5 0-136.2 55.4-136.2 131.6c0 80 54 125.7 127 125.7c33.5 0 68-12.9 89.2-34.1c17-17 21.7-44.1 11.2-68.5c-7.2-16.7-22.3-30.9-46.7-39.6c-13.6-4.9-28-7.7-42.5-8.5c-44-2.5-87.3 10.9-115.3 35.8c-26.6 23.6-41.6 56.4-41.6 89.7c0 38.7 21.4 75.8 57.7 99.7c33 21.7 75.5 32.7 118.8 32.7c39.6 0 76.5-10.4 105.7-30.1c-13.1 7.1-28.7 11.2-45.3 11.2c-56 0-101.3-45.3-101.3-101.3c0-42.2 25.8-78.3 63.4-93.5c-9.6-1.5-19.5-2.2-29.7-2.2c-67.4 0-120.9 40.5-120.9 98c0 40 27.5 73.6 67.5 89.6c32.7 13.1 71.9 14.6 110.1 4c31.1-8.6 57.6-26.9 76.2-51.5c-15.3 22.6-38.6 39.7-65.7 46.5c-18.7 4.6-38.4 4.7-57.1 .2c-35-8.2-64.6-30.9-82.4-62.8c-18-32.3-21.7-69.8-10.3-104.6c11.4-34.8 38.3-63.1 73.1-77.8c34.8-14.7 73.4-14.8 108.3-.3z"/></svg></a>
 </div>
 
 <div class="floating-platforms">
 <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN" target="_blank" aria-label="Escuchar en Spotify">
-<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>
-</a>
+<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg></a>
 <a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" aria-label="Escuchar en Amazon Music">
-<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>
-</a>
+<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg></a>
 <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Escuchar en Apple Music">
-<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-</a>
+<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></a>
 <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="Escuchar en YouTube Music">
-<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-</a>
+<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
 <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Escuchar en SoundCloud">
-<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>
-</a>
+<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg></a>
 </div>
 
 <div id="solarSystem">
@@ -752,22 +603,8 @@ bottom: -35px !important;
 </div>
 
 <script>
-// ----------------------------------------------------------------------
-// 1. CONSTANTES (PLATAFORMAS Y MODALES)
-// ----------------------------------------------------------------------
-const globalPlatformsForModal = [
-    { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
-    { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
-    { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
-    { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-    { name: "SoundCloud", svg: `<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`, id: 'soundcloud' }
-];
-
-// ----------------------------------------------------------------------
-// 2. BASE DE DATOS DE FRASES Y ALGORITMO DIARIO (LOCALSTORAGE)
-// ----------------------------------------------------------------------
+// FRASES (MEMORIA DIARIA CON LOCALSTORAGE)
 const quotesData = [
-    // VOCES DE CAMBIO 1
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Rompe las cadenas… pero primero rompe las tuyas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -799,7 +636,6 @@ const quotesData = [
     { text: "El odio se hereda si nadie lo explica.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
     { text: "Si hoy los negamos, mañana regresan; serán tempestades que el pueblo cosecha.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
 
-    // TIEMPO Y VIDA
     { text: "La vida no se repite, se renueva.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "No esperemos la ausencia para honrar la presencia.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "Tú nunca me juzgas, solo me entiendes.", song: "Quédate", album: "Tiempo y vida" },
@@ -825,7 +661,6 @@ const quotesData = [
     { text: "El amor se aprende cuando se atreve a perdonar.", song: "Perdón y gracias", album: "Tiempo y vida" },
     { text: "La vida se mide en lo que siembras hoy.", song: "Tiempo y vida", album: "Tiempo y vida" },
 
-    // ERES LO QUE ESCUCHAS
     { text: "Cada canción que eliges es un reflejo de lo que callas.", song: "Prólogo - Antes de darle play", album: "Eres lo que escuchas" },
     { text: "Si comes veneno, ¿qué esperas por dentro?", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
     { text: "Te hablas como te hablan, te tratas como te tratan.", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
@@ -863,7 +698,6 @@ const quotesData = [
     { text: "Una lucha que busca venganza no es justicia.", song: "Del dolor al odio", album: "Eres lo que escuchas" },
     { text: "El pueblo sin agua mientras tú brindas por ella.", song: "A qué costo", album: "Eres lo que escuchas" },
 
-    // TEJIDO VITAL
     { text: "La verdad no negocia, solo cobra al caer.", song: "El precio de la mentira", album: "Tejido vital" },
     { text: "Ese silencio no es neutral, es complicidad.", song: "Cobardes", album: "Tejido vital" },
     { text: "No es valentía hablar cuando es seguro… Es amor decir la verdad… aunque el mundo te odie por hacerlo.", song: "Cobardes", album: "Tejido vital" },
@@ -884,7 +718,6 @@ const quotesData = [
     { text: "Enséñales que caerse… también es parte de avanzar.", song: "Enséñales", album: "Tejido vital" },
     { text: "No hay herencia más valiosa que una vida recta.", song: "Ciudadanos del mundo", album: "Tejido vital" },
 
-    // REVOLUCIÓN MENTAL
     { text: "Cambiar de líder sin cambiar de mentalidad es como cambiar de jaula, pero seguir siendo pájaro.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Tu mente es tu mayor territorio ocupado y liberarla es tu deber más urgente.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Nos vendieron el silencio como paz y el confort como evolución.", song: "Manual para un pueblo dormido", album: "Revolucion mental" },
@@ -904,7 +737,6 @@ const quotesData = [
     { text: "Cambiamos rezos por acciones, likes por revoluciones.", song: "Nuevo código", album: "Revolucion mental" },
     { text: "Quejarse no es contribuir, criticar no es cambiar.", song: "Epílogo", album: "Revolucion mental" },
 
-    // CHACALES OPORTUNISTAS
     { text: "Huelen la tragedia como si fuera oportunidad.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Miran la tragedia, pero nunca la causa. Miran al pueblo… y lo ven como cifra.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Aquí el sol madura la fruta… pero la muerte la corta primero.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
@@ -922,7 +754,6 @@ const quotesData = [
     { text: "Cobardes que tiemblan ante el criminal, valientes pa’ callar al que quiere cambiar.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
     { text: "No mataron al hombre… despertaron al pueblo.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
 
-    // LUZ ENTRE LAS SOMBRAS
     { text: "La muerte no cierra, transforma. Abre la puerta de la memoria y nos enseña a mirar distinto.", song: "Introducción / 28 de octubre", album: "Luz entre las Sombras" },
     { text: "Corre libre donde no hay dolor, donde el cielo es verde y el alma es amor.", song: "Hasta que volvamos a correr", album: "Luz entre las Sombras" },
     { text: "Pequeña luz, que no se apagó, solo subiste antes que yo.", song: "Pequeña luz", album: "Luz entre las Sombras" },
@@ -937,7 +768,6 @@ const quotesData = [
     { text: "Cada paso que das hacia el perdón es un paso hacia ti mismo.", song: "Los que no regresan", album: "Luz entre las Sombras" },
     { text: "Hoy soltamos el dolor, no para olvidar, sino para caminar más ligeros.", song: "Después del silencio", album: "Luz entre las Sombras" },
 
-    // VOCES DE CAMBIO 2
     { text: "México despierta cuando tú sabes crecer.", song: "Mexico despierta", album: "Voces de Cambio 2" },
     { text: "Del pasado aprendemos, no para sufrir sino para actuar.", song: "Reflexión Musical MX", album: "Voces de Cambio 2" },
     { text: "El dolor se transforma en luz que nos guía.", song: "Memoria viva", album: "Voces de Cambio 2" },
@@ -1021,7 +851,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById("muteBtn");
     const starContainer = document.getElementById("starContainer"); 
     
-    // --- VARIABLES DEL NUEVO MODAL DE ÁLBUMES ---
+    // --- VARIABLES DEL MODAL DE ÁLBUMES ---
     const albumModal = document.getElementById("albumModal");
     const closeAlbumModal = document.querySelector(".close-album");
     const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
@@ -1030,6 +860,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTracklist = document.getElementById("modalTracklist");
     const modalPlatforms = document.getElementById("modalPlatforms");
     
+    const globalPlatformsForModal = [
+        { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
+        { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
+        { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
+        { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
+        { name: "SoundCloud", svg: `<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`, id: 'soundcloud' }
+    ];
+
     if(volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
         volumeSlider.addEventListener("input", (e) => {
@@ -1214,7 +1052,7 @@ document.addEventListener("DOMContentLoaded", () => {
     spawnSupernovaBatch();
 
     // ----------------------------------------------------------------------
-    // 3. NUEVAS LISTAS CON TRACKLIST Y LINKS EXACTOS
+    // 3. BASE DE DATOS DE DISCOS (CON TRACKLIST Y ENLACES)
     // ----------------------------------------------------------------------
     const singles = [
         {
@@ -1255,8 +1093,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Codigo rojo.webp",
-            title: "Codigo rojo",
-            tracks: ["Codigo rojo / Esto no empezó hoy"],
+            title: "Esto no empezó hoy",
+            tracks: ["Esto no empezó hoy (Narrado)", "Esto no empezó hoy (Rap)"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0&si=gS8ZkpysgtpLzzLB",
                 spotify: "https://open.spotify.com/album/0x1QYc6n54qlEAdsjo6sFu?si=Rrb6qFW4Tu-liIfSVU8Iig",
@@ -1268,7 +1106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             img: "images/La fuerza de todos.webp",
             title: "La fuerza de todos",
-            tracks: ["La fuerza de todos"],
+            tracks: ["La fuerza de todos (Rap)", "La fuerza de todos (Acustico)"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro",
                 spotify: "https://open.spotify.com/album/5alJBFihx9EwKaQpX8cKPa?si=HpwcBOIYRHiM4Wwc1Lt0LA",
@@ -1280,7 +1118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             img: "images/Regresar a casa.webp",
             title: "Regresar a casa",
-            tracks: ["Regresar a casa"],
+            tracks: ["VOLVER A CASA (Rap)", "VOLVER A CASA (Balada)"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE&si=fTPomu5xyEVts_dA",
                 spotify: "https://open.spotify.com/album/1Z3BWmi0DGxjMgslqZqokZ?si=BRAQZ80KT7OluuE7NI36SQ",
@@ -1292,7 +1130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             img: "images/Tres colores, un compromiso.webp",
             title: "Tres colores, un compromiso",
-            tracks: ["Tres colores, un compromiso"],
+            tracks: ["Tres Colores, Un Compromiso"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM",
                 spotify: "https://open.spotify.com/album/1MJdvRWqcBXJrADcCuD4Ia?si=gV2aTyeCTW61CGityRKZLA",
@@ -1307,7 +1145,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             img: "images/Voces de Cambio 1.webp",
             title: "Voces de Cambio 1",
-            tracks: ["Ciudad en silencio", "Raíces de fuego", "Sabes lo que haces", "Ecos del olvido", "Sociedad cómplice", "Normal es veneno", "El engaño del bien", "¿Injusticia o consecuencia?", "Ciclos y deudas", "Veneno en la sangre", "Herencia de hierro", "Resistencia pequeña", "El cambio está en ti", "No hay tirano eterno", "Hijos del olvido"],
+            tracks: ["Ciudad en silencio", "Raíces de fuego", "Sabes lo que haces", "Ecos del olvido", "Sociedad cómplice", "Normal es veneno", "El engaño del bien", "¿Injusticia o consecuencia?", "Ciclos y deudas", "Veneno en la sangre", "Herencia de hierro", "Resistencia pequeña", "El cambio esta en ti", "No hay tirano eterno", "Hijos del olvido"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ&si=V9AU17wGT6ErrJtY",
                 spotify: "https://open.spotify.com/album/2UAHh2wV6ntXOvb4F4VVhg?si=Ec-XVA8XTCqihw-9HEHMlg",
@@ -1319,7 +1157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             img: "images/Voces de Cambio 2.webp",
             title: "Voces de Cambio 2",
-            tracks: ["Mexico despierta", "Reflexión Musical MX", "Memoria viva", "Sombras y luz", "Semillas para mañana", "Lo que te espera", "El eco de los ancestros", "Orgullo mexicano", "En la union esta la fuerza", "No más excusas", "Se chingon", "Mexico eres tu / Mexico lindo", "El cambio está en ti V2", "Himno a México"],
+            tracks: ["México despierta", "Reflexión Musical MX", "Memoria viva", "Sombras y luz", "Semillas para mañana", "Lo que te espera", "El eco de los ancestros", "Orgullo Mexicano", "En la unión esta la fuerza", "No mas excusas", "Sé chingon", "México eres tú", "México lindo", "El cambio esta en ti V2", "Himno a México"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE&si=HitHQ9h5vU6iSTv8",
                 spotify: "https://open.spotify.com/album/20FVaU0J8cPCszEj1tgsr6?si=S9WmVWrtTtGCwSAgsyzrDg",
@@ -1330,8 +1168,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Estado contra estado.webp",
-            title: "Estado contra estado",
-            tracks: ["Estado contra estado"],
+            title: "Estado contra Estado",
+            tracks: ["Tierra de fuego y aguacate", "Pacto original", "Dos caminos", "Importado desde U.S.A", "Burocracia blindada", "No me callo", "Con sombrero o sin sombrero", "Octubre negro", "El pueblo también falla", "Narcoseries y narcocorridos", "Revolucion mental", "Estado contra Estado", "Himno a la Revolución Mental (Mariachi)", "Himno a la Revolución Mental (Dance)", "México despierta V2", "Memoria de fuego", "Los nadie"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow&si=OySd6YX-U8uHXnOV",
                 spotify: "https://open.spotify.com/album/3L2ZAYytRTzDIChcwRkLdY?si=uGLv11StT1ykGm-CJ9-_Jw",
@@ -1342,8 +1180,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Luz entre las Sombras.webp",
-            title: "Luz entre las Sombras",
-            tracks: ["Introducción / 28 de octubre", "Hasta que volvamos a correr", "Pequeña luz", "Hermano del alma", "Silencio en la cama", "Lo que me enseñaste", "Los que abrieron camino", "Voces que no callaron", "Perdóname", "Sin huella ni tumba", "Los que no regresan", "Después del silencio"],
+            title: "Luz entre las sombras",
+            tracks: ["Altar de los recuerdos", "Hasta que volvamos a correr", "28 de Octubre", "Pequeña luz", "A los que se fueron antes", "Hermano del alma", "Silencio en la cama", "Lo que me enseñaste", "Siempre en mi corazón", "Recuerdo tu voz", "Los que abrieron el camino", "Voces que no callaron", "Perdóname", "Sin huella ni tumba", "Los que no regresan", "Después del silencio"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4&si=iXoy5FUZtsS5REQ6",
                 spotify: "https://open.spotify.com/album/62pJjPSFwZf4MuHT45izrV?si=0DRH5AomRryVSIeNBzyQ0g",
@@ -1354,8 +1192,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Tiempo y vida.webp",
-            title: "Tiempo y vida",
-            tracks: ["Altar de vida", "Quédate", "Renacer", "Citlalli", "Alizée", "Mientras compartamos el sol", "Amigos del alma", "Aún despierto contigo", "A tu lado, mamá", "Padre, mi raíz", "Abuela de luz", "Abuelo, mi camino", "Voces que siguen luchando", "Hasta encontrarlos", "Aún hay lugar", "Perdón y gracias", "Tiempo y vida"],
+            title: "Tiempo y Vida",
+            tracks: ["Altar de vida", "Quédate", "Renacer", "Citlalli", "Alizée", "Mientras compartamos el sol", "Amigos del alma", "Aún despierto contigo", "A tu lado, mamá", "Padre, mi raíz", "Abuela, mi Luz", "Abuelo, mi camino", "Voces que siguen luchando", "Hasta encontrarlos", "Aún hay lugar", "Perdón y Gracias", "Tiempo y vida"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE&si=t6K1eboh-VHYlpm7",
                 spotify: "https://open.spotify.com/album/4OyMdNR6Ff9PX5KXJDs36E?si=OOhJll_gSo2UtOyU_6Pe3A",
@@ -1366,8 +1204,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/CHACALES OPORTUNISTAS.webp",
-            title: "CHACALES OPORTUNISTAS",
-            tracks: ["Introducción / Chacales oportunistas", "El oro verde", "Los que cuidaban la tierra", "Huracanes con uniforme", "Lodo y promesas", "La ley del fracaso", "Firma y olvida", "Las madres no duermen", "Sin huella ni tumba II", "Epílogo (México no olvida)", "Carlos Manzo, Luz en Uruapan"],
+            title: "Chacales oportunistas",
+            tracks: ["INTRODUCCIÓN (Chacales oportunistas)", "Chacales oportunistas", "El oro verde", "Los que cuidaban la tierra", "Huracanes con uniforme", "Lodo y promesas", "La ley de fracaso", "Firma y olvida", "Las madres no duermen", "Sin huella ni tumba II", "Epílogo (Chacales oportunistas)", "Carlos Manzo, Luz En Uruapan", "Chacales oportunistas V2"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A&si=GKFSqmdUdijNoyWs",
                 spotify: "https://open.spotify.com/album/5XWwchDBL4G0kACbGBebet?si=zD2zM6GtTcC1vJ7Z04T0sw",
@@ -1378,8 +1216,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Tejido vital.webp",
-            title: "Tejido vital",
-            tracks: ["El precio de la mentira", "Cobardes", "En la trinchera", "La primera trinchera", "Ni Ella sin Él ni Él sin Ella", "Empoderar no es guerra", "Amor en tiempos de ideologías cancerígenas", "Honra a tu pareja", "Juramento de dos", "Complemento eterno", "Cuida y educa", "Herencia que no se rompe", "Enséñales", "Ciudadanos del mundo"],
+            title: "Tejido Vital",
+            tracks: ["El Precio de la Mentira", "Cobardes", "En la trinchera", "La primera trinchera", "Ni Ella sin Él ni El sin Ella", "Empoderar no es guerra", "Amor en tiempos de ideologías cancerígenas", "Honra a tu pareja", "Juramento de dos", "Complemento eterno", "Cuida y educa", "Cuida y educa II", "Herencia que no se rompe", "Enseñales", "Ciudadanos del mundo", "Ni Ella sin Él ni El sin Ella (Remix)", "Ciudadanos del mundo II (Remix)"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs&si=IENzoXH5D1xv_xOn",
                 spotify: "https://open.spotify.com/album/2gSDQitygEjoVweX6PnqpK?si=0C-q47pmRJuUSIZ4OS2kQw",
@@ -1390,8 +1228,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Revolucion mental.webp",
-            title: "Revolucion mental",
-            tracks: ["Prólogo a Revolución Mental", "Manual para un pueblo dormido", "Neuronas en huelga", "La Caja idiota", "Mi enemigo", "Mexico bipolar", "Sin mesías", "Despierta cabrón", "Reinicio", "Espejo", "Conciencia colectiva", "Nuevo código", "Epílogo"],
+            title: "Revolucion Mental",
+            tracks: ["Prólogo a Revolución Mental", "Revolución Mental II", "Manual para un pueblo dormido", "Neuronas en huelga", "La caja idiota", "Mi enemigo", "México bipolar", "Sin Mesías", "Despierta carbón", "Reinicio", "Espejo", "Conciencia colectiva", "Nuevo código", "Epílogo a Revolución Mental", "Revolucion mental", "Revolución Mental II (Remix)", "Revolución Mental (Remix)"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU&si=nt9eLCqBjl8_kKqz",
                 spotify: "https://open.spotify.com/album/5ZiW2nNJnJX9ZeuBpZW6DS?si=bHkMqhAGShSYicHuKgnFQg",
@@ -1402,8 +1240,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Eres lo que escuchas.webp",
-            title: "Eres lo que escuchas",
-            tracks: ["Prólogo - Antes de darle play", "Eres lo que escuchas", "Empieza mal", "Solo sigue", "Dejalos ganar", "Espejo", "Cráter", "Luz que no se apaga", "Lo que soy", "Mierdaton", "Anestesia barata", "Hombre que despierta", "¿Qué es la moda?", "Payasos con corona de humo", "El peso del silencio", "Camino sobre el agua", "Simple", "Mente corazón", "Combate interior", "Bucle / Mundo imperfecto", "Las venas abiertas", "No todos son iguales", "Paraíso de sangre", "Del dolor al odio", "A qué costo"],
+            title: "Eres lo que Escuchas",
+            tracks: ["Prologo Antes de darle Play", "Eres lo que escuchas", "Empieza mal", "Solo sigue", "Dejalos ganar", "Espejo", "Cráter", "Luz que no se apaga", "Lo que soy", "Mierdaton", "Anestesia barata", "Hombre de verdad", "Hombre que despierta", "¿Qué es la moda?", "Payasos con coronas de humo", "El peso del silencio", "Camino sobre el agua", "Simple", "Mente y corazón", "Combate interno", "Mundo imperfecto", "Bucle", "Las venas abiertas", "No todos son iguales", "Paraíso de sangre", "Hijos del olvido", "Empieza mal (Remix)", "Del dolor al odio", "¿A qué costo?", "Eres lo que escuchas (Remix)", "Epílogo a Eres lo que escucha"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I&si=exhKQkfdndW8x4yK",
                 spotify: "https://open.spotify.com/album/20FnT6FbnltmFm9PiRSSkt?si=OD37ewXkRzyxJLLibBXmvQ",
@@ -1414,8 +1252,8 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             img: "images/Amor en tiempos de ideologias cancerigenas.webp",
-            title: "Amor en tiempos de ideologias cancerigenas",
-            tracks: ["Amor en tiempos de ideologías cancerígenas"],
+            title: "Amor en tiempos de ideologías cancerígenas",
+            tracks: ["ANTES DE AMAR (Cumbia)", "AMOR EN TIEMPOS DE IDEOLOGÍAS CANCERÍGENAS (Cumbia)", "SILENCIO EN LA CAMA (Cumbia)", "AUN DESPIERTO CONTIGO (Cumbia)", "PERDÓNAME (Cumbia)", "PERDÓN Y GRACIAS (Cumbia)", "JURAMENTO DE DOS (Cumbia)", "JURAMENTO DE 2 (Cumbia)", "HONRA A TU PAREJA (Cumbia)", "COMPLEMENTO ETERNO (Cumbia)", "AMOR CONSCIENTE (Cumbia)", "AFIRMACIÓN (Cumbia)", "TIEMPO DE CALIDAD (Cumbia)", "ACTOS DE SERVICIO (Cumbia)", "REGALOS (Cumbia)", "CONTACTO FÍSICO (Cumbia)", "AMOR MADURO (Cumbia)", "MARTE I (Cumbia)", "MARTE II (Cumbia)", "VENUS I (Cumbia)", "VENUS II (Cumbia)", "APRENDER A ORBITAR (Cumbia)", "PERDÓNAME (Bachata)", "PERDÓN Y GRACIAS (Salsa)", "AMOR EN TIEMPOS DE IDEOLOGÍAS CANCERÍGENAS (Merengue)", "COMPLEMENTO ETERNO (Vallenato)"],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA&si=ZB2a4jnRIkEyiJgK",
                 spotify: "https://open.spotify.com/album/5bouzliTlE1sm3qaIyEO8E?si=cs4bQlYESxiFc4mzFpsX6A",
@@ -1426,7 +1264,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL) ---
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
         if(!orbit) return;
@@ -1442,7 +1279,6 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.style.left=`calc(50% + ${x}px - 55px)`
             planet.style.top=`calc(50% + ${y}px - 55px)`
             
-            // EVENTO DE CLICK PARA ABRIR MODAL
             planet.onclick = () => {
                 modalAlbumCover.src = encodeURI(item.img);
                 modalAlbumTitle.innerText = item.title;
@@ -1460,13 +1296,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 modalPlatforms.innerHTML = "";
-                const globalPlatformsForModal = [
-                    { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
-                    { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
-                    { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
-                    { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-                    { name: "SoundCloud", svg: `<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`, id: 'soundcloud' }
-                ];
                 globalPlatformsForModal.forEach(p => {
                     let platLink = item.links && item.links[p.id] ? item.links[p.id] : "#";
                     if (platLink && platLink !== "#") {
@@ -1532,7 +1361,6 @@ document.addEventListener("DOMContentLoaded", () => {
         orbit.appendChild(fragment);
     }
 
-    // --- AQUÍ LLAMAMOS A DIBUJAR LOS PLANETAS (CORREGIDO) ---
     createOrbit(singles,"orbitSingles",210);
     createOrbit(albums,"orbitAlbums",360);
 
