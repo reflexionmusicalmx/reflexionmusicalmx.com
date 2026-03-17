@@ -647,7 +647,7 @@ bottom: -35px !important;
 </div>
 
 <script>
-// BASE DE DATOS DE FRASES ACTUALIZADA
+// BASE DE DATOS DE FRASES
 const quotesData = [
     // VOCES DE CAMBIO 1
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -839,6 +839,61 @@ const quotesData = [
     { text: "¡La nación no se vende jamás!", song: "Himno a México", album: "Voces de Cambio 2" }
 ];
 
+// --- LÓGICA DE MEMORIA DIARIA (LOCALSTORAGE) ---
+let quoteOrder = [];
+let quoteIndex = 0;
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function generateDailyOrder() {
+    quoteOrder = Array.from({ length: quotesData.length }, (_, i) => i);
+    shuffleArray(quoteOrder);
+    quoteIndex = 0;
+    try {
+        const today = new Date().toISOString().split('T')[0]; // Ej: "2026-03-16"
+        localStorage.setItem('rmmx_quoteDate', today);
+        localStorage.setItem('rmmx_quoteOrder', JSON.stringify(quoteOrder));
+        localStorage.setItem('rmmx_quoteIndex', quoteIndex);
+    } catch(e) { console.log("LocalStorage no disponible"); }
+}
+
+// Intentar cargar la lista diaria de hoy
+try {
+    const today = new Date().toISOString().split('T')[0];
+    const storedDate = localStorage.getItem('rmmx_quoteDate');
+    if (storedDate === today) {
+        quoteOrder = JSON.parse(localStorage.getItem('rmmx_quoteOrder'));
+        quoteIndex = parseInt(localStorage.getItem('rmmx_quoteIndex'), 10);
+        // Si hay error en los datos, o agregamos nuevas frases hoy
+        if (!quoteOrder || quoteOrder.length !== quotesData.length || isNaN(quoteIndex)) {
+            generateDailyOrder();
+        }
+    } else {
+        generateDailyOrder(); // Es un nuevo día, barajar de nuevo
+    }
+} catch(e) {
+    generateDailyOrder(); // Fallback si hay error
+}
+
+// Función para pedir la siguiente frase sin repetir
+function getNextQuote() {
+    if (quoteIndex >= quoteOrder.length) {
+        generateDailyOrder(); // Se acabaron todas las frases, volver a barajar
+    }
+    const q = quotesData[quoteOrder[quoteIndex]];
+    quoteIndex++;
+    try {
+        localStorage.setItem('rmmx_quoteIndex', quoteIndex);
+    } catch(e) {}
+    return q;
+}
+// ------------------------------------------------
+
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     setTimeout(() => {
@@ -948,7 +1003,7 @@ document.addEventListener("DOMContentLoaded", () => {
     drawCanvas();
 
     function showQuoteAndSpin() {
-        const q = quotesData[Math.floor(Math.random() * quotesData.length)];
+        const q = getNextQuote(); // Usamos la nueva función con memoria
         
         const quoteEl = document.createElement("div");
         quoteEl.className = "floating-quote";
