@@ -221,7 +221,7 @@ text-transform: uppercase;
 
 .tracklist-container {
 text-align: left;
-max-height: 280px; /* Aumentado para que quepa mejor el video */
+max-height: 380px;
 overflow-y: auto;
 margin-bottom: 20px;
 padding-right: 10px;
@@ -606,7 +606,7 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 
 <script>
 // ----------------------------------------------------------------------
-// 1. CONSTANTES (PLATAFORMAS Y MODALES)
+// 1. CONSTANTES GLOBALES (PLATAFORMAS)
 // ----------------------------------------------------------------------
 const globalPlatformsForModal = [
     { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
@@ -620,7 +620,6 @@ const globalPlatformsForModal = [
 // 2. BASE DE DATOS DE FRASES DIARIAS
 // ----------------------------------------------------------------------
 const quotesData = [
-    // VOCES DE CAMBIO 1
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Rompe las cadenas… pero primero rompe las tuyas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -652,7 +651,6 @@ const quotesData = [
     { text: "El odio se hereda si nadie lo explica.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
     { text: "Si hoy los negamos, mañana regresan; serán tempestades que el pueblo cosecha.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
 
-    // TIEMPO Y VIDA
     { text: "La vida no se repite, se renueva.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "No esperemos la ausencia para honrar la presencia.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "Tú nunca me juzgas, solo me entiendes.", song: "Quédate", album: "Tiempo y vida" },
@@ -678,7 +676,6 @@ const quotesData = [
     { text: "El amor se aprende cuando se atreve a perdonar.", song: "Perdón y gracias", album: "Tiempo y vida" },
     { text: "La vida se mide en lo que siembras hoy.", song: "Tiempo y vida", album: "Tiempo y vida" },
 
-    // ERES LO QUE ESCUCHAS
     { text: "Cada canción que eliges es un reflejo de lo que callas.", song: "Prólogo - Antes de darle play", album: "Eres lo que escuchas" },
     { text: "Si comes veneno, ¿qué esperas por dentro?", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
     { text: "Te hablas como te hablan, te tratas como te tratan.", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
@@ -716,7 +713,6 @@ const quotesData = [
     { text: "Una lucha que busca venganza no es justicia.", song: "Del dolor al odio", album: "Eres lo que escuchas" },
     { text: "El pueblo sin agua mientras tú brindas por ella.", song: "A qué costo", album: "Eres lo que escuchas" },
 
-    // TEJIDO VITAL
     { text: "La verdad no negocia, solo cobra al caer.", song: "El precio de la mentira", album: "Tejido vital" },
     { text: "Ese silencio no es neutral, es complicidad.", song: "Cobardes", album: "Tejido vital" },
     { text: "No es valentía hablar cuando es seguro… Es amor decir la verdad… aunque el mundo te odie por hacerlo.", song: "Cobardes", album: "Tejido vital" },
@@ -737,7 +733,6 @@ const quotesData = [
     { text: "Enséñales que caerse… también es parte de avanzar.", song: "Enséñales", album: "Tejido vital" },
     { text: "No hay herencia más valiosa que una vida recta.", song: "Ciudadanos del mundo", album: "Tejido vital" },
 
-    // REVOLUCIÓN MENTAL
     { text: "Cambiar de líder sin cambiar de mentalidad es como cambiar de jaula, pero seguir siendo pájaro.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Tu mente es tu mayor territorio ocupado y liberarla es tu deber más urgente.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Nos vendieron el silencio como paz y el confort como evolución.", song: "Manual para un pueblo dormido", album: "Revolucion mental" },
@@ -757,7 +752,6 @@ const quotesData = [
     { text: "Cambiamos rezos por acciones, likes por revoluciones.", song: "Nuevo código", album: "Revolucion mental" },
     { text: "Quejarse no es contribuir, criticar no es cambiar.", song: "Epílogo", album: "Revolucion mental" },
 
-    // CHACALES OPORTUNISTAS
     { text: "Huelen la tragedia como si fuera oportunidad.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Miran la tragedia, pero nunca la causa. Miran al pueblo… y lo ven como cifra.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Aquí el sol madura la fruta… pero la muerte la corta primero.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
@@ -775,7 +769,6 @@ const quotesData = [
     { text: "Cobardes que tiemblan ante el criminal, valientes pa’ callar al que quiere cambiar.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
     { text: "No mataron al hombre… despertaron al pueblo.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
 
-    // LUZ ENTRE LAS SOMBRAS
     { text: "La muerte no cierra, transforma. Abre la puerta de la memoria y nos enseña a mirar distinto.", song: "Introducción / 28 de octubre", album: "Luz entre las Sombras" },
     { text: "Corre libre donde no hay dolor, donde el cielo es verde y el alma es amor.", song: "Hasta que volvamos a correr", album: "Luz entre las Sombras" },
     { text: "Pequeña luz, que no se apagó, solo subiste antes que yo.", song: "Pequeña luz", album: "Luz entre las Sombras" },
@@ -790,7 +783,6 @@ const quotesData = [
     { text: "Cada paso que das hacia el perdón es un paso hacia ti mismo.", song: "Los que no regresan", album: "Luz entre las Sombras" },
     { text: "Hoy soltamos el dolor, no para olvidar, sino para caminar más ligeros.", song: "Después del silencio", album: "Luz entre las Sombras" },
 
-    // VOCES DE CAMBIO 2
     { text: "México despierta cuando tú sabes crecer.", song: "Mexico despierta", album: "Voces de Cambio 2" },
     { text: "Del pasado aprendemos, no para sufrir sino para actuar.", song: "Reflexión Musical MX", album: "Voces de Cambio 2" },
     { text: "El dolor se transforma en luz que nos guía.", song: "Memoria viva", album: "Voces de Cambio 2" },
@@ -849,9 +841,7 @@ try {
 }
 
 function getNextQuote() {
-    if (quoteIndex >= quoteOrder.length) {
-        generateDailyOrder();
-    }
+    if (quoteIndex >= quoteOrder.length) generateDailyOrder();
     const q = quotesData[quoteOrder[quoteIndex]];
     quoteIndex++;
     try { localStorage.setItem('rmmx_quoteIndex', quoteIndex); } catch(e) {}
@@ -866,9 +856,6 @@ window.addEventListener('load', () => {
     }, 500); 
 });
 
-// ----------------------------------------------------------------------
-// 3. INICIO DE LOGICA DOM
-// ----------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
 
     const modal = document.getElementById("bioModal");
@@ -879,7 +866,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById("muteBtn");
     const starContainer = document.getElementById("starContainer"); 
     
-    // VARIABLES DEL NUEVO MODAL DE ÁLBUMES
+    // --- VARIABLES DEL NUEVO MODAL DE ÁLBUMES ---
     const albumModal = document.getElementById("albumModal");
     const closeAlbumModal = document.querySelector(".close-album");
     const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
@@ -887,7 +874,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalAlbumTitle = document.getElementById("modalAlbumTitle");
     const modalTracklist = document.getElementById("modalTracklist");
     const modalPlatforms = document.getElementById("modalPlatforms");
-    
+
     if(volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
         volumeSlider.addEventListener("input", (e) => {
@@ -919,7 +906,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function closeAlbumPanel() {
         albumModal.classList.remove("show");
-        // Apagar reproductor de YouTube al cerrar el modal
         setTimeout(() => {
             modalTracklist.innerHTML = "";
         }, 400);
@@ -1288,7 +1274,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // --- FUNCIÓN PARA CREAR PLANETAS CON EL REPRODUCTOR YOUTUBE ---
+    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO Y VIDEO) ---
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
         if(!orbit) return;
@@ -1304,8 +1290,8 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.style.left=`calc(50% + ${x}px - 55px)`
             planet.style.top=`calc(50% + ${y}px - 55px)`
             
+            // EVENTO DE CLICK PARA ABRIR MODAL
             planet.onclick = () => {
-                // Silenciar el audio de fondo al abrir el disco
                 if(bioAudio && !bioAudio.paused) {
                     bioAudio.pause();
                     if(muteBtn) muteBtn.textContent = "🔇";
@@ -1316,7 +1302,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 modalTracklist.innerHTML = "";
                 
-                // EXTRAER EL ID DE LA PLAYLIST DE YOUTUBE
+                // EXTRAER ID Y YOUTUBE LINK
                 let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
                 let playlistId = "";
                 if (ytLink && ytLink !== "#") {
@@ -1326,21 +1312,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
+                let htmlContent = "";
+                
+                // 1. INYECTAR REPRODUCTOR SI EXISTE
                 if (playlistId) {
-                    // INYECTAR REPRODUCTOR DE YOUTUBE
-                    modalTracklist.innerHTML = `<iframe width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3);"></iframe>`;
+                    htmlContent += `<iframe width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
+                }
+
+                modalTracklist.innerHTML = htmlContent;
+
+                // 2. INYECTAR LISTA DE CANCIONES EN TEXTO SIEMPRE
+                if(item.tracks && item.tracks.length > 0) {
+                    item.tracks.forEach((track, index) => {
+                        let trackDiv = document.createElement("div");
+                        trackDiv.className = "track-item";
+                        trackDiv.innerText = `${index + 1}. ${track}`;
+                        modalTracklist.appendChild(trackDiv);
+                    });
                 } else {
-                    // SI NO HAY ENLACE, MOSTRAR LA LISTA DE TEXTO COMO RESPALDO
-                    if(item.tracks && item.tracks.length > 0) {
-                        item.tracks.forEach((track, index) => {
-                            let trackDiv = document.createElement("div");
-                            trackDiv.className = "track-item";
-                            trackDiv.innerText = `${index + 1}. ${track}`;
-                            modalTracklist.appendChild(trackDiv);
-                        });
-                    } else {
-                        modalTracklist.innerHTML = `<div class="track-item" style="text-align:center; color:gold;">Escúchalo ahora en plataformas digitales</div>`;
-                    }
+                    let trackDiv = document.createElement("div");
+                    trackDiv.className = "track-item";
+                    trackDiv.style.textAlign = "center";
+                    trackDiv.style.color = "gold";
+                    trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
+                    modalTracklist.appendChild(trackDiv);
                 }
 
                 modalPlatforms.innerHTML = "";
