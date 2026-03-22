@@ -195,33 +195,24 @@ color: #fff;
 transform: scale(1.1);
 }
 
-/* NUEVO: ESTILOS PARA EL MODAL DE ÁLBUMES */
+/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
 .album-modal-content {
 text-align: center;
 max-width: 500px;
 padding: 30px;
 }
 
-#modalAlbumCover {
-width: 180px;
-height: 180px;
-border-radius: 15px;
-box-shadow: 0 0 25px rgba(255,215,0,0.5);
-margin-bottom: 20px;
-object-fit: cover;
-border: 2px solid gold;
-}
-
 #modalAlbumTitle {
 text-align: center;
 font-size: 22px;
-margin-bottom: 15px;
+margin-top: 10px;
+margin-bottom: 20px;
 text-transform: uppercase;
 }
 
 .tracklist-container {
 text-align: left;
-max-height: 380px;
+max-height: 200px; /* Reducido para que quepa el reproductor */
 overflow-y: auto;
 margin-bottom: 20px;
 padding-right: 10px;
@@ -242,7 +233,7 @@ color: #eee;
 }
 .track-item:last-child { border-bottom: none; }
 
-/* ESTILOS PARA TRACKS CON LINKS INDIVIDUALES */
+/* ESTILOS PARA TRACKS INTERACTIVOS */
 .track-link {
 display: block;
 text-decoration: none;
@@ -250,9 +241,19 @@ color: #eee;
 transition: 0.2s;
 cursor: pointer;
 }
+
 .track-link:hover {
 color: #FFD700;
 background: rgba(255, 215, 0, 0.1);
+padding-left: 8px;
+}
+
+/* CLASE PARA LA PISTA QUE ESTÁ SONANDO */
+.active-track {
+color: #FFD700;
+font-weight: bold;
+background: rgba(255, 215, 0, 0.15);
+border-left: 4px solid gold;
 padding-left: 8px;
 }
 
@@ -521,10 +522,9 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
     #solarSystem { transform: scale(0.45); }
     .floating-social { transform: scale(0.8) translateY(-60%); left: 5px; }
     .floating-platforms { transform: scale(0.8) translateY(-60%); right: 5px; }
-    .modal-content { padding: 25px; width: 90%; max-height: 75vh; }
+    .modal-content { padding: 25px; width: 90%; max-height: 85vh; }
     .close-modal { right: 15px; top: 10px; }
     .floating-quote { font-size: 14px; width: 90%; padding: 20px; }
-    #modalAlbumCover { width: 140px; height: 140px; }
 }
 </style>
 
@@ -565,13 +565,16 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 <div id="albumModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content album-modal-content">
         <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
-        <img id="modalAlbumCover" src="" alt="Portada del Álbum">
+        
         <h2 id="modalAlbumTitle">Título del Álbum</h2>
-        <div class="tracklist-container" id="modalTracklist">
-            </div>
+        
+        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
+        
+        <div class="tracklist-container" id="modalTracklist"></div>
+        
         <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
-        <div class="album-platforms" id="modalPlatforms">
-            </div>
+        <div class="album-platforms" id="modalPlatforms"></div>
+        
         <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
     </div>
 </div>
@@ -619,9 +622,7 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 </div>
 
 <script>
-// ----------------------------------------------------------------------
-// 1. CONSTANTES GLOBALES Y MEMORIA DIARIA DE FRASES
-// ----------------------------------------------------------------------
+// FRASES DIARIAS INTACTAS
 const quotesData = [
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -719,7 +720,7 @@ const quotesData = [
     { text: "La verdad no negocia, solo cobra al caer.", song: "El precio de la mentira", album: "Tejido vital" },
     { text: "Ese silencio no es neutral, es complicidad.", song: "Cobardes", album: "Tejido vital" },
     { text: "No es valentía hablar cuando es seguro… Es amor decir la verdad… aunque el mundo te odie por hacerlo.", song: "Cobardes", album: "Tejido vital" },
-    { text: "La primera trinchera no está en la calle, está en tu interior.", song: "En la trinchera", album: "Tejido vital" },
+    { text: "La primera trinchera no está en la calle, transformarla es tu deber.", song: "En la trinchera", album: "Tejido vital" },
     { text: "La primera bala nunca es de plomo, es una idea que se mete en el lodo.", song: "La primera trinchera", album: "Tejido vital" },
     { text: "No somos rivales, somos la fuerza que construye el mundo cuando se respeta.", song: "Ni Ella sin Él ni Él sin Ella", album: "Tejido vital" },
     { text: "Venganza no es lo mismo que ser triunfante.", song: "Empoderar no es guerra", album: "Tejido vital" },
@@ -862,7 +863,7 @@ window.addEventListener('load', () => {
 });
 
 // ----------------------------------------------------------------------
-// 3. INICIO DE LOGICA DOM
+// 3. LÓGICA PRINCIPAL DEL DOM Y MODALES
 // ----------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -914,8 +915,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function closeAlbumPanel() {
         albumModal.classList.remove("show");
+        // Detiene el video de YouTube al cerrar el modal
         setTimeout(() => {
             modalTracklist.innerHTML = "";
+            const playerContainer = document.getElementById("modalPlayerContainer");
+            if(playerContainer) playerContainer.innerHTML = "";
         }, 400);
     }
 
@@ -1070,14 +1074,14 @@ document.addEventListener("DOMContentLoaded", () => {
     spawnSupernovaBatch();
 
     // ----------------------------------------------------------------------
-    // 4. DEFINICIÓN DE ÁLBUMES Y SENCILLOS
+    // 4. BASE DE DATOS (SENCILLOS Y ÁLBUMES CON REPRODUCTOR INTELIGENTE)
     // ----------------------------------------------------------------------
     const singles = [
         {
             img: "images/We rise as one.webp",
             title: "We rise as one",
             tracks: [
-                { name: "We rise as one", url: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs&si=CQbZ15ZKM4kbZobP" }
+                { name: "We rise as one", url: "https://music.youtube.com/watch?v=iD_3kV2LhaE&si=xcGnXratPfDPN-vh" }
             ],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs&si=6Nc2mOTytxGm18Nx",
@@ -1091,7 +1095,7 @@ document.addEventListener("DOMContentLoaded", () => {
             img: "images/Gracias 2025.webp",
             title: "Gracias 2025",
             tracks: [
-                { name: "Gracias 2025", url: "https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk&si=YJ2cpsGXYseYAHf7" }
+                { name: "Gracias 2025", url: "https://music.youtube.com/watch?v=v8Y2cvn9UjI&si=IO_De-68qamgjMUs" }
             ],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk&si=ElSlDGU7aDAoq09_",
@@ -1105,7 +1109,7 @@ document.addEventListener("DOMContentLoaded", () => {
             img: "images/Adultos TRASTORNADOS.webp",
             title: "Adultos TRASTORNADOS",
             tracks: [
-                { name: "Adultos TRASTORNADOS", url: "https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM&si=b5eCuLujAJ7TUo0H" }
+                { name: "Adultos TRASTORNADOS", url: "https://music.youtube.com/watch?v=3Fw4IKBMYY8&si=lw7nO19q_RrSP4Ho" }
             ],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM&si=lC3CzdQTOHkxfKva",
@@ -1178,10 +1182,10 @@ document.addEventListener("DOMContentLoaded", () => {
             img: "images/Del dolor al odio.webp",
             title: "Del dolor al odio",
             tracks: [
-                { name: "Del dolor al odio", url: "https://music.youtube.com/watch?v=9DMZPZ7m9Kw&si=rwg9NvTuQT_P2CG6" },
-                { name: "Muerte en la mirada", url: "https://music.youtube.com/watch?v=qkcbl8Z7VSs&si=9NRuzCzcsEQT8dbE" },
-                { name: "Sangre por sangre", url: "https://music.youtube.com/watch?v=ZLzNRJUQUGc&si=Y1i0BQeckvYj7x2y" },
-                { name: "El final del camino", url: "https://music.youtube.com/watch?v=xvdzZnHEWUo&si=2DJEaChcx6iYNrXt" }
+                { name: "Del dolor al Odio (Acustico)", url: "https://music.youtube.com/watch?v=9DMZPZ7m9Kw&si=rwg9NvTuQT_P2CG6" },
+                { name: "Del Dolor al Odio II (Rap)", url: "https://music.youtube.com/watch?v=qkcbl8Z7VSs&si=9NRuzCzcsEQT8dbE" },
+                { name: "Del Dolor Al Odio III (Rap)", url: "https://music.youtube.com/watch?v=ZLzNRJUQUGc&si=Y1i0BQeckvYj7x2y" },
+                { name: "Del Dolor Al Odio", url: "https://music.youtube.com/watch?v=xvdzZnHEWUo&si=2DJEaChcx6iYNrXt" }
             ],
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lt7XMszm6gl_8v0BWGOrIA2MnNbmELfn0&si=pgFPSDrfN8vQ13XE",
@@ -1390,14 +1394,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 { name: "Ni Ella sin Él ni El sin Ella", url: "https://music.youtube.com/watch?v=SClpcJJCOrg&si=yWNbIexRTpoUoq5c" },
                 { name: "Empoderar no es guerra", url: "https://music.youtube.com/watch?v=hZD3PjmUIe0&si=jEFQHhZzEQyR4yT0" },
                 { name: "Amor en tiempos de ideologías cancerígenas", url: "https://music.youtube.com/watch?v=fy3ko7Y3fR8&si=Vat4duftGjP8T_mk" },
-                { name: "Honra a tu pareja", url: "https://music.youtube.com/watch?v=fy3ko7Y3fR8&si=Vat4duftGjP8T_mk" },
+                { name: "Honra a tu pareja", url: "https://music.youtube.com/watch?v=wfjYiPzAmuk&si=MzGctBIFNbQzaJZ2" },
                 { name: "Juramento de dos", url: "https://music.youtube.com/watch?v=B8nBLs1Fbo4&si=RTY1KQjf2bvUESsB" },
                 { name: "Complemento eterno", url: "https://music.youtube.com/watch?v=27ulXc8Vopk&si=-QPYYUc4-B4DJX-p" },
                 { name: "Cuida y educa", url: "https://music.youtube.com/watch?v=iij2-wUhJ7Q&si=J250GvwWAbfbPBOK" },
                 { name: "Cuida y educa II", url: "https://music.youtube.com/watch?v=P338KqBK7kk&si=YLTLS_8M5NnpEI7m" },
                 { name: "Herencia que no se rompe", url: "https://music.youtube.com/watch?v=pL28P654UyQ&si=gxYVX-KrqK1Rm5TR" },
                 { name: "Enseñales", url: "https://music.youtube.com/watch?v=ENxZgOrIhB0&si=48HXoCJUFgarIdhr" },
-                { name: "Ciudadanos del mundo", url: "https://music.youtube.com/watch?v=ENxZgOrIhB0&si=48HXoCJUFgarIdhr" },
+                { name: "Ciudadanos del mundo", url: "https://music.youtube.com/watch?v=d0F8E5irhDM&si=4p2vRPfJBVo2FQxB" },
                 { name: "Ni Ella sin Él ni El sin Ella (Remix)", url: "https://music.youtube.com/watch?v=DRfgmHEjn3I&si=-9tYVUGvdCZqskdm" },
                 { name: "Ciudadanos del mundo II (Remix)", url: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9" }
             ],
@@ -1434,7 +1438,7 @@ document.addEventListener("DOMContentLoaded", () => {
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU&si=nt9eLCqBjl8_kKqz",
                 spotify: "https://open.spotify.com/album/5ZiW2nNJnJX9ZeuBpZW6DS?si=bHkMqhAGShSYicHuKgnFQg",
-                amazon: "https://music.amazon.com.mx/albums/B0G3BCX2MK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_8PoFV2wJH1CpoUgsasZSYCMSp",
+                amazon: "https://music.amazon.com.mx/albums/B0G4NF14XV?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_HJ9XRJt8EsxWt9M0kEetBEkoW",
                 apple: "https://music.apple.com/es/album/revoluci%C3%B3n-mental/1857713061",
                 soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/revolucion-mental-4?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
             }
@@ -1524,7 +1528,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO Y VIDEO INDIVIDUAL) ---
+    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO, LINKS Y VIDEO) ---
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
         if(!orbit) return;
@@ -1563,7 +1567,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-                let htmlContent = `<div id="ytPlayerContainer" style="width:100%; transition: 0.3s;">`;
+                let htmlContent = `<div id="modalPlayerContainer" style="width:100%; transition: 0.3s;">`;
                 
                 // INYECTAR REPRODUCTOR INICIAL DE LA PLAYLIST
                 if (playlistId) {
@@ -1583,6 +1587,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         trackLink.onclick = (e) => {
                             e.preventDefault();
+                            
+                            // ILUMINAR PISTA ACTIVA
+                            document.querySelectorAll('.track-link').forEach(el => el.classList.remove('active-track'));
+                            trackLink.classList.add('active-track');
+
                             let videoId = "";
                             // Extraer el 'v=' ID de Youtube Music
                             if(trackObj.url) {
@@ -1590,10 +1599,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 if(vMatch && vMatch[1]) videoId = vMatch[1];
                             }
                             
-                            // SI HAY VIDEO ID, CARGAR EN EL IFRAME
+                            // SI HAY VIDEO ID, CARGAR EN EL IFRAME AUTOMATICAMENTE
                             if(videoId) {
-                                const container = document.getElementById("ytPlayerContainer");
-                                container.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
+                                const container = document.getElementById("modalPlayerContainer");
+                                if(container) {
+                                    container.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
+                                }
                             } else {
                                 // Fallback por si la URL no es de Youtube
                                 window.open(trackObj.url, "_blank");
