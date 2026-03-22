@@ -195,7 +195,7 @@ color: #fff;
 transform: scale(1.1);
 }
 
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
+/* NUEVO: ESTILOS PARA EL MODAL DE ÁLBUMES (DISEÑO REPRODUCTOR ARRIBA) */
 .album-modal-content {
 text-align: center;
 max-width: 500px;
@@ -205,14 +205,29 @@ padding: 30px;
 #modalAlbumTitle {
 text-align: center;
 font-size: 22px;
-margin-top: 10px;
+margin-top: 5px;
 margin-bottom: 20px;
 text-transform: uppercase;
 }
 
+/* Contenedor del Iframe que reemplaza la portada */
+#modalPlayerWrapper {
+width: 100%;
+height: 250px;
+border-radius: 15px;
+box-shadow: 0 0 25px rgba(255,215,0,0.3);
+margin-bottom: 20px;
+border: 2px solid gold;
+background: #111;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
 .tracklist-container {
 text-align: left;
-max-height: 200px; /* Reducido para que quepa el reproductor */
+max-height: 200px; 
 overflow-y: auto;
 margin-bottom: 20px;
 padding-right: 10px;
@@ -252,9 +267,9 @@ padding-left: 8px;
 .active-track {
 color: #FFD700;
 font-weight: bold;
-background: rgba(255, 215, 0, 0.15);
+background: rgba(255, 215, 0, 0.2);
 border-left: 4px solid gold;
-padding-left: 8px;
+padding-left: 12px;
 }
 
 .album-platforms {
@@ -568,13 +583,14 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
         
         <h2 id="modalAlbumTitle">Título del Álbum</h2>
         
-        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
+        <div id="modalPlayerWrapper"></div>
         
-        <div class="tracklist-container" id="modalTracklist"></div>
+        <div class="tracklist-container" id="modalTracklist">
+            </div>
         
         <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
-        <div class="album-platforms" id="modalPlatforms"></div>
-        
+        <div class="album-platforms" id="modalPlatforms">
+            </div>
         <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
     </div>
 </div>
@@ -622,9 +638,7 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 </div>
 
 <script>
-// ----------------------------------------------------------------------
-// 1. CONSTANTES GLOBALES Y MEMORIA DIARIA DE FRASES
-// ----------------------------------------------------------------------
+// FRASES DIARIAS INTACTAS
 const quotesData = [
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -919,7 +933,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Detiene el video de YouTube al cerrar el modal
         setTimeout(() => {
             modalTracklist.innerHTML = "";
-            const playerContainer = document.getElementById("modalPlayerContainer");
+            const playerContainer = document.getElementById("modalPlayerWrapper");
             if(playerContainer) playerContainer.innerHTML = "";
         }, 400);
     }
@@ -1075,7 +1089,7 @@ document.addEventListener("DOMContentLoaded", () => {
     spawnSupernovaBatch();
 
     // ----------------------------------------------------------------------
-    // 4. DEFINICIÓN DE ÁLBUMES Y SENCILLOS CON LINKS ACTUALIZADOS
+    // 4. BASE DE DATOS (SENCILLOS Y ÁLBUMES CON REPRODUCTOR INTELIGENTE)
     // ----------------------------------------------------------------------
     const singles = [
         {
@@ -1401,7 +1415,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 { name: "Cuida y educa", url: "https://music.youtube.com/watch?v=iij2-wUhJ7Q&si=J250GvwWAbfbPBOK" },
                 { name: "Cuida y educa II", url: "https://music.youtube.com/watch?v=P338KqBK7kk&si=YLTLS_8M5NnpEI7m" },
                 { name: "Herencia que no se rompe", url: "https://music.youtube.com/watch?v=pL28P654UyQ&si=gxYVX-KrqK1Rm5TR" },
-                { name: "Enseñales", url: "https://music.youtube.com/watch?v=ENxZgOrIhB0&si=48HXoCJUFgarIdhr" },
                 { name: "Ciudadanos del mundo", url: "https://music.youtube.com/watch?v=d0F8E5irhDM&si=4p2vRPfJBVo2FQxB" },
                 { name: "Ni Ella sin Él ni El sin Ella (Remix)", url: "https://music.youtube.com/watch?v=DRfgmHEjn3I&si=-9tYVUGvdCZqskdm" },
                 { name: "Ciudadanos del mundo II (Remix)", url: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9" }
@@ -1529,7 +1542,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO, LINKS Y VIDEO) ---
+    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO, LINKS Y VIDEO INDIVIDUAL) ---
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
         if(!orbit) return;
@@ -1566,7 +1579,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-                let htmlContent = `<div id="modalPlayerContainer" style="width:100%; transition: 0.3s;">`;
+                let htmlContent = `<div id="ytPlayerContainer" style="width:100%; transition: 0.3s;">`;
                 
                 // INYECTAR REPRODUCTOR INICIAL DE LA PLAYLIST
                 if (playlistId) {
@@ -1576,7 +1589,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 modalTracklist.innerHTML = htmlContent;
 
-                // INYECTAR LISTA DE CANCIONES Y CAPTURAR CLICS PARA REPRODUCIR
+                // INYECTAR LISTA DE CANCIONES Y CAPTURAR CLICS PARA REPRODUCIR INDIVIDUALMENTE
                 if(item.tracks && item.tracks.length > 0) {
                     item.tracks.forEach((trackObj, index) => {
                         let trackLink = document.createElement("a");
@@ -1598,9 +1611,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 if(vMatch && vMatch[1]) videoId = vMatch[1];
                             }
                             
-                            // SI HAY VIDEO ID, CARGAR EN EL IFRAME AUTOMATICAMENTE
+                            // SI HAY VIDEO ID, CARGAR EN EL IFRAME
                             if(videoId) {
-                                const container = document.getElementById("modalPlayerContainer");
+                                const container = document.getElementById("ytPlayerContainer");
                                 if(container) {
                                     container.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
                                 }
