@@ -248,6 +248,7 @@ display: block;
 text-decoration: none;
 color: #eee;
 transition: 0.2s;
+cursor: pointer;
 }
 .track-link:hover {
 color: #FFD700;
@@ -619,7 +620,7 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 
 <script>
 // ----------------------------------------------------------------------
-// 1. FRASES DIARIAS (MEMORIA LOCAL) - INTACTO
+// 1. CONSTANTES GLOBALES Y MEMORIA DIARIA DE FRASES
 // ----------------------------------------------------------------------
 const quotesData = [
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -843,7 +844,9 @@ try {
 }
 
 function getNextQuote() {
-    if (quoteIndex >= quoteOrder.length) generateDailyOrder();
+    if (quoteIndex >= quoteOrder.length) {
+        generateDailyOrder();
+    }
     const q = quotesData[quoteOrder[quoteIndex]];
     quoteIndex++;
     try { localStorage.setItem('rmmx_quoteIndex', quoteIndex); } catch(e) {}
@@ -858,6 +861,9 @@ window.addEventListener('load', () => {
     }, 500); 
 });
 
+// ----------------------------------------------------------------------
+// 3. INICIO DE LOGICA DOM
+// ----------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
 
     const modal = document.getElementById("bioModal");
@@ -868,7 +874,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById("muteBtn");
     const starContainer = document.getElementById("starContainer"); 
     
-    // --- VARIABLES DEL NUEVO MODAL DE ÁLBUMES ---
+    // VARIABLES DEL NUEVO MODAL DE ÁLBUMES
     const albumModal = document.getElementById("albumModal");
     const closeAlbumModal = document.querySelector(".close-album");
     const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
@@ -876,7 +882,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalAlbumTitle = document.getElementById("modalAlbumTitle");
     const modalTracklist = document.getElementById("modalTracklist");
     const modalPlatforms = document.getElementById("modalPlatforms");
-
+    
     if(volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
         volumeSlider.addEventListener("input", (e) => {
@@ -1064,7 +1070,7 @@ document.addEventListener("DOMContentLoaded", () => {
     spawnSupernovaBatch();
 
     // ----------------------------------------------------------------------
-    // 2. BASE DE DATOS DE DISCOS (CON TRACKLIST INDIVIDUAL)
+    // 4. DEFINICIÓN DE ÁLBUMES Y SENCILLOS
     // ----------------------------------------------------------------------
     const singles = [
         {
@@ -1428,7 +1434,7 @@ document.addEventListener("DOMContentLoaded", () => {
             links: {
                 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU&si=nt9eLCqBjl8_kKqz",
                 spotify: "https://open.spotify.com/album/5ZiW2nNJnJX9ZeuBpZW6DS?si=bHkMqhAGShSYicHuKgnFQg",
-                amazon: "https://music.amazon.com.mx/albums/B0G4NF14XV?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_HJ9XRJt8EsxWt9M0kEetBEkoW",
+                amazon: "https://music.amazon.com.mx/albums/B0G3BCX2MK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_8PoFV2wJH1CpoUgsasZSYCMSp",
                 apple: "https://music.apple.com/es/album/revoluci%C3%B3n-mental/1857713061",
                 soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/revolucion-mental-4?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
             }
@@ -1518,7 +1524,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO, LINKS Y VIDEO) ---
+    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO Y VIDEO INDIVIDUAL) ---
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
         if(!orbit) return;
@@ -1534,6 +1540,7 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.style.left=`calc(50% + ${x}px - 55px)`
             planet.style.top=`calc(50% + ${y}px - 55px)`
             
+            // EVENTO DE CLICK PARA ABRIR MODAL
             planet.onclick = () => {
                 if(bioAudio && !bioAudio.paused) {
                     bioAudio.pause();
@@ -1546,6 +1553,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 modalTracklist.innerHTML = "";
                 
+                // EXTRAER ID DE PLAYLIST DE YOUTUBE
                 let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
                 let playlistId = "";
                 if (ytLink && ytLink !== "#") {
@@ -1555,22 +1563,43 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-                let htmlContent = "";
+                let htmlContent = `<div id="ytPlayerContainer" style="width:100%; transition: 0.3s;">`;
                 
+                // INYECTAR REPRODUCTOR INICIAL DE LA PLAYLIST
                 if (playlistId) {
-                    htmlContent += `<iframe width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
+                    htmlContent += `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
                 }
-
+                htmlContent += `</div>`;
+                
                 modalTracklist.innerHTML = htmlContent;
 
-                // INYECTAR LISTA DE CANCIONES COMO ENLACES
+                // INYECTAR LISTA DE CANCIONES Y CAPTURAR CLICS PARA REPRODUCIR
                 if(item.tracks && item.tracks.length > 0) {
                     item.tracks.forEach((trackObj, index) => {
                         let trackLink = document.createElement("a");
                         trackLink.className = "track-item track-link";
-                        trackLink.href = trackObj.url || "#";
-                        trackLink.target = "_blank";
+                        trackLink.href = "javascript:void(0);";
                         trackLink.innerText = `${index + 1}. ${trackObj.name}`;
+                        
+                        trackLink.onclick = (e) => {
+                            e.preventDefault();
+                            let videoId = "";
+                            // Extraer el 'v=' ID de Youtube Music
+                            if(trackObj.url) {
+                                let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
+                                if(vMatch && vMatch[1]) videoId = vMatch[1];
+                            }
+                            
+                            // SI HAY VIDEO ID, CARGAR EN EL IFRAME
+                            if(videoId) {
+                                const container = document.getElementById("ytPlayerContainer");
+                                container.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
+                            } else {
+                                // Fallback por si la URL no es de Youtube
+                                window.open(trackObj.url, "_blank");
+                            }
+                        };
+
                         modalTracklist.appendChild(trackLink);
                     });
                 } else {
@@ -1606,6 +1635,8 @@ document.addEventListener("DOMContentLoaded", () => {
             };
             
             const safeImgPath = encodeURI(item.img);
+            
+            // LA CLAVE: El nombre del archivo DEBE ser el que se use para enlazar los efectos
             let albumName = item.img.split('/').pop().replace('.webp', '');
             
             planet.setAttribute('data-album', albumName.toUpperCase());
