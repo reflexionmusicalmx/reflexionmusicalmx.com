@@ -153,7 +153,7 @@ padding: 40px;
 border-radius: 15px;
 max-width: 650px; 
 width: 85%;
-max-height: 90vh;
+max-height: 80vh;
 overflow-y: auto;
 overscroll-behavior: contain;
 -webkit-overflow-scrolling: touch;
@@ -195,10 +195,10 @@ color: #fff;
 transform: scale(1.1);
 }
 
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
+/* ESTILOS PARA EL MODAL DE ÁLBUMES (DISEÑO SOLICITADO: REPRODUCTOR Y LUEGO LISTA) */
 .album-modal-content {
 text-align: center;
-max-width: 550px;
+max-width: 500px;
 padding: 30px;
 }
 
@@ -210,9 +210,23 @@ margin-bottom: 20px;
 text-transform: uppercase;
 }
 
+/* Contenedor del Reproductor que reemplaza a la imagen */
+#modalPlayerContainer {
+width: 100%;
+height: 250px;
+margin-bottom: 20px;
+border-radius: 10px;
+overflow: hidden;
+box-shadow: 0 0 25px rgba(255,215,0,0.3);
+background: #111;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
 .tracklist-container {
 text-align: left;
-max-height: 250px;
+max-height: 200px; /* SCROLL SOLO PARA LAS CANCIONES */
 overflow-y: auto;
 margin-bottom: 20px;
 padding-right: 10px;
@@ -225,40 +239,38 @@ border: 1px solid rgba(255,215,0,0.2);
 .tracklist-container::-webkit-scrollbar { width: 4px; }
 .tracklist-container::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
 
-/* FILAS DE TRACKS CON BOTÓN COMPARTIR */
+/* FILA DE CADA PISTA (NOMBRE + BOTÓN COMPARTIR) */
 .track-row {
 display: flex;
 justify-content: space-between;
 align-items: center;
-padding: 10px;
+padding: 8px 10px;
 border-bottom: 1px solid rgba(255,215,0,0.15);
 transition: 0.2s;
 }
 
 .track-row:last-child { border-bottom: none; }
-.track-row:hover { background: rgba(255, 215, 0, 0.05); }
+.track-row:hover { background: rgba(255, 215, 0, 0.1); }
 
 .track-play-btn {
 cursor: pointer;
 color: #eee;
 flex-grow: 1;
-text-align: left;
 font-size: 14px;
+text-align: left;
 transition: 0.2s;
 }
-
 .track-play-btn:hover { color: #FFD700; }
 
 .track-share-btn {
 cursor: pointer;
-width: 20px;
-height: 20px;
+width: 18px;
+height: 18px;
 margin-left: 15px;
 display: flex;
 align-items: center;
 justify-content: center;
 }
-
 .track-share-btn svg { fill: #ccc; width: 100%; height: 100%; transition: 0.2s; }
 .track-share-btn:hover svg { fill: #FFD700; transform: scale(1.2); }
 
@@ -267,7 +279,6 @@ justify-content: center;
 background: rgba(255, 215, 0, 0.15) !important;
 border-left: 4px solid gold;
 }
-
 .active-track .track-play-btn {
 color: #FFD700;
 font-weight: bold;
@@ -296,7 +307,7 @@ background: gold; transform: scale(1.15);
 .album-platforms svg { fill: gold; width: 22px; transition: 0.25s; }
 .album-platforms a:hover svg { fill: #000; }
 
-/* BOTONES INFERIORES DEL MODAL */
+/* BOTONES INFERIORES DEL MODAL (VOLVER Y COMPARTIR) */
 .botones-modal {
 display: flex;
 gap: 10px;
@@ -322,6 +333,16 @@ letter-spacing: 1px;
 background: #FFD700;
 color: #000;
 }
+
+/* ESTILOS PARA COMPARTIR Y REPRODUCIR EN LAS FRASES FLOTANTES */
+.quote-action-btn { 
+width: 30px; height: 30px; cursor: pointer; transition: 0.2s; 
+border: 1px solid gold; border-radius: 50%; padding: 7px; box-sizing: border-box;
+display: flex; align-items: center; justify-content: center;
+}
+.quote-action-btn svg { fill: #FFD700; width: 15px; height: 15px; transition: 0.2s; }
+.quote-action-btn:hover { background: gold; transform: scale(1.15); }
+.quote-action-btn:hover svg { fill: #000; }
 
 /* CONTROLES DE AUDIO */
 .audio-controls {
@@ -516,33 +537,22 @@ top: 0; left: 0; transform: rotate(90deg);
 
 @keyframes burst { 0% { transform: scale(0); opacity: 0; } 40% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
 
-/* FRASES FLOTANTES EN EL CENTRO - AHORA SON INTERACTIVAS */
+/* FRASES FLOTANTES EN EL CENTRO */
 .floating-quote {
 position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
 background: rgba(0, 0, 0, 0.95); color: #fff; border: 1px solid #FFD700;
 padding: 30px 40px; border-radius: 15px; font-size: 16px; font-weight: bold;
-font-style: italic; text-align: center; box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
-pointer-events: auto; 
+font-style: italic; text-align: center; box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
+pointer-events: auto; /* IMPORTANTE: Para poder hacer click en los botones y cerrar */
 z-index: 100000; max-width: 85%; line-height: 1.6;
 will-change: transform, opacity;
 }
 
 .floating-quote span.song-name {
-font-size: 12px; color: #FFD700; display: block;
+font-size: 12px; color: #FFD700; margin-top: 10px; display: block;
 text-transform: uppercase; letter-spacing: 2px;
 }
 
-/* BOTONES DE LA FRASE */
-.quote-action-btn { 
-width: 35px; height: 35px; cursor: pointer; transition: 0.2s; 
-border: 1px solid gold; border-radius: 50%; padding: 8px; box-sizing: border-box;
-display: flex; align-items: center; justify-content: center;
-}
-.quote-action-btn svg { fill: #FFD700; width: 18px; height: 18px; transition: 0.2s; }
-.quote-action-btn:hover { background: gold; transform: scale(1.15); }
-.quote-action-btn:hover svg { fill: #000; }
-
-/* GIRO LENTO DEL ÁLBUM */
 .spin-active {
 animation: fastSpin 2s linear infinite !important;
 box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-index: 5000 !important;
@@ -602,7 +612,7 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
         
         <h2 id="modalAlbumTitle">Título del Álbum</h2>
         
-        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
+        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px; display:none;"></div>
         
         <div class="tracklist-container" id="modalTracklist"></div>
         
@@ -651,7 +661,6 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 </div>
 
 <script>
-// FRASES DIARIAS (MEMORIA LOCAL)
 const quotesData = [
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -847,9 +856,6 @@ window.addEventListener('load', () => {
     }, 500); 
 });
 
-// ----------------------------------------------------------------------
-// 3. LÓGICA PRINCIPAL DEL DOM Y MODALES
-// ----------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
 
     const modal = document.getElementById("bioModal");
@@ -868,9 +874,106 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalTracklist = document.getElementById("modalTracklist");
     const modalPlatforms = document.getElementById("modalPlatforms");
     
-    // ----------------------------------------------------------------------
-    // 4. BASE DE DATOS (SENCILLOS Y ÁLBUMES CON REPRODUCTOR FIJO)
-    // ----------------------------------------------------------------------
+    if(volumeSlider && bioAudio) {
+        bioAudio.volume = volumeSlider.value;
+        volumeSlider.addEventListener("input", (e) => {
+            bioAudio.volume = e.target.value;
+            muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
+        });
+    }
+
+    if(muteBtn && bioAudio) {
+        muteBtn.addEventListener("click", () => {
+            if (bioAudio.volume > 0) {
+                bioAudio.dataset.lastVol = bioAudio.volume; 
+                bioAudio.volume = 0;
+                volumeSlider.value = 0;
+                muteBtn.textContent = "🔇";
+            } else {
+                const lastVol = bioAudio.dataset.lastVol || 0.4;
+                bioAudio.volume = lastVol;
+                volumeSlider.value = lastVol;
+                muteBtn.textContent = "🔊";
+            }
+        });
+    }
+
+    function closeAndStopAudio() {
+        modal.classList.remove("show");
+        if(bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
+    }
+    
+    function closeAlbumPanel() {
+        albumModal.classList.remove("show");
+        setTimeout(() => {
+            modalPlayerContainer.innerHTML = "";
+            modalTracklist.innerHTML = "";
+        }, 400);
+    }
+
+    if(sun) {
+        sun.onclick = () => { 
+            modal.classList.add("show"); 
+            if(bioAudio) { bioAudio.play().catch(error => { console.log("Bloqueado:", error); }); }
+        };
+    }
+
+    if(closeBioModal) closeBioModal.addEventListener('click', closeAndStopAudio);
+    if(closeAlbumModal) closeAlbumModal.addEventListener('click', closeAlbumPanel);
+    if(btnCerrarAlbum) btnCerrarAlbum.addEventListener('click', closeAlbumPanel);
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) closeAndStopAudio();
+        if (event.target === albumModal) closeAlbumPanel();
+    });
+    window.addEventListener('touchstart', (event) => {
+        if (event.target === modal) closeAndStopAudio();
+        if (event.target === albumModal) closeAlbumPanel();
+    }, {passive: true});
+
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    
+    const numStars = window.innerWidth < 768 ? 80 : 300; 
+    let backgroundStars = [];
+
+    function setCanvasSize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initStars();
+    }
+    
+    function initStars() {
+        backgroundStars = [];
+        for (let i = 0; i < numStars; i++) {
+            backgroundStars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 1.5,
+                opacity: Math.random(),
+                speed: 0.005 + Math.random() * 0.01
+            });
+        }
+    }
+
+    function drawCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        backgroundStars.forEach(s => {
+            s.opacity += s.speed;
+            if (s.opacity >= 1 || s.opacity <= 0.1) s.speed *= -1;
+            ctx.fillStyle = `rgba(255, 215, 0, ${s.opacity})`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(drawCanvas);
+    }
+
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
+    drawCanvas();
+
+    // DATOS DE LOS DISCOS Y SENCILLOS
     const singles = [
         {
             img: "images/We rise as one.webp",
@@ -1341,6 +1444,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        const btnShareAlbum = document.getElementById("btnShareAlbum");
+        if(btnShareAlbum) {
+            btnShareAlbum.onclick = () => {
+                let ytLinkShare = item.links && item.links.youtube ? item.links.youtube : window.location.href;
+                const shareData = {
+                    title: 'Reflexión Musical MX',
+                    text: `Escucha "${item.title}" de Reflexión Musical MX:\n`,
+                    url: ytLinkShare
+                };
+                if (navigator.share) {
+                    navigator.share(shareData).catch(console.error);
+                } else {
+                    navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+                    alert("¡Enlace del álbum copiado al portapapeles!");
+                }
+            };
+        }
+
         modalTracklist.innerHTML = "";
 
         let initialVideoId = "";
@@ -1462,24 +1583,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 modalPlatforms.appendChild(a);
             }
         });
-
-        const btnShareAlbum = document.getElementById("btnShareAlbum");
-        if(btnShareAlbum) {
-            btnShareAlbum.onclick = () => {
-                let ytLinkShare = item.links && item.links.youtube ? item.links.youtube : window.location.href;
-                const shareData = {
-                    title: 'Reflexión Musical MX',
-                    text: `Escucha "${item.title}" de Reflexión Musical MX:\n`,
-                    url: ytLinkShare
-                };
-                if (navigator.share) {
-                    navigator.share(shareData).catch(console.error);
-                } else {
-                    navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-                    alert("¡Enlace del álbum copiado al portapapeles!");
-                }
-            };
-        }
 
         albumModal.classList.add("show");
     }
