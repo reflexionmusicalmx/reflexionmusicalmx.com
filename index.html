@@ -153,7 +153,7 @@ padding: 40px;
 border-radius: 15px;
 max-width: 650px; 
 width: 85%;
-max-height: 85vh;
+max-height: 80vh;
 overflow-y: auto;
 overscroll-behavior: contain;
 -webkit-overflow-scrolling: touch;
@@ -198,93 +198,63 @@ transform: scale(1.1);
 /* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
 .album-modal-content {
 text-align: center;
-max-width: 550px;
+max-width: 500px;
 padding: 30px;
 }
 
 #modalAlbumTitle {
 text-align: center;
 font-size: 22px;
-margin-top: 5px;
+margin-top: 10px;
 margin-bottom: 20px;
 text-transform: uppercase;
 }
 
-/* Contenedor del Reproductor de YouTube */
-#modalPlayerContainer {
-width: 100%;
-height: 250px;
-margin-bottom: 20px;
-border-radius: 10px;
-overflow: hidden;
-box-shadow: 0 0 25px rgba(255,215,0,0.3);
-background: #111;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
 .tracklist-container {
 text-align: left;
-max-height: 200px; /* SCROLL SOLO PARA LAS CANCIONES */
+max-height: 200px; /* Reducido para que quepa el reproductor */
 overflow-y: auto;
 margin-bottom: 20px;
 padding-right: 10px;
 background: rgba(255, 215, 0, 0.05);
 border-radius: 10px;
-padding: 10px;
+padding: 15px;
 border: 1px solid rgba(255,215,0,0.2);
 }
 
 .tracklist-container::-webkit-scrollbar { width: 4px; }
 .tracklist-container::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
 
-/* FILAS DE TRACKS CON BOTÓN COMPARTIR */
-.track-row {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 10px;
+.track-item {
+padding: 8px 0;
 border-bottom: 1px solid rgba(255,215,0,0.15);
-transition: 0.2s;
-}
-
-.track-row:last-child { border-bottom: none; }
-.track-row:hover { background: rgba(255, 215, 0, 0.05); }
-
-.track-play-btn {
-cursor: pointer;
-color: #eee;
-flex-grow: 1;
-transition: 0.2s;
-text-align: left;
 font-size: 14px;
+color: #eee;
 }
+.track-item:last-child { border-bottom: none; }
 
-.track-play-btn:hover { color: #FFD700; }
-
-.track-share-btn {
+/* ESTILOS PARA TRACKS INTERACTIVOS */
+.track-link {
+display: block;
+text-decoration: none;
+color: #eee;
+transition: 0.2s;
 cursor: pointer;
-width: 18px;
-height: 18px;
-margin-left: 15px;
-display: flex;
-align-items: center;
-justify-content: center;
 }
 
-.track-share-btn svg { fill: #ccc; width: 100%; height: 100%; transition: 0.2s; }
-.track-share-btn:hover svg { fill: #FFD700; transform: scale(1.2); }
+.track-link:hover {
+color: #FFD700;
+background: rgba(255, 215, 0, 0.1);
+padding-left: 8px;
+}
 
 /* CLASE PARA LA PISTA QUE ESTÁ SONANDO */
 .active-track {
-background: rgba(255, 215, 0, 0.15) !important;
-border-left: 4px solid gold;
-}
-
-.active-track .track-play-btn {
 color: #FFD700;
 font-weight: bold;
+background: rgba(255, 215, 0, 0.15);
+border-left: 4px solid gold;
+padding-left: 8px;
 }
 
 .album-platforms {
@@ -310,29 +280,22 @@ background: gold; transform: scale(1.15);
 .album-platforms svg { fill: gold; width: 22px; transition: 0.25s; }
 .album-platforms a:hover svg { fill: #000; }
 
-/* BOTONES INFERIORES DEL MODAL (VOLVER Y COMPARTIR) */
-.botones-modal {
-display: flex;
-gap: 10px;
-}
-
-.btn-volver, .btn-compartir {
-flex: 1;
+.btn-volver {
 background: transparent;
 border: 1px solid #FFD700;
 color: #FFD700;
-padding: 12px 10px;
+padding: 12px 20px;
 border-radius: 8px;
 cursor: pointer;
 font-family: 'Merriweather', serif;
 font-weight: bold;
-font-size: 13px;
+font-size: 14px;
+width: 100%;
 transition: 0.3s;
 text-transform: uppercase;
 letter-spacing: 1px;
 }
-
-.btn-volver:hover, .btn-compartir:hover {
+.btn-volver:hover {
 background: #FFD700;
 color: #000;
 }
@@ -530,31 +493,22 @@ top: 0; left: 0; transform: rotate(90deg);
 
 @keyframes burst { 0% { transform: scale(0); opacity: 0; } 40% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
 
-/* FRASES FLOTANTES EN EL CENTRO - FIJAS Y CON BOTONES */
+/* FRASES FLOTANTES EN EL CENTRO */
 .floating-quote {
 position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-background: rgba(0, 0, 0, 0.95); color: #fff; border: 1px solid #FFD700;
-padding: 30px 40px; border-radius: 15px; font-size: 16px; font-weight: bold;
-font-style: italic; text-align: center; box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
-pointer-events: auto; /* Permite hacer clic en la frase */
-z-index: 100000; max-width: 85%; line-height: 1.6;
+background: rgba(0, 0, 0, 0.9); color: #fff; border: 1px solid #FFD700;
+padding: 25px 35px; border-radius: 15px; font-size: 16px; font-weight: bold;
+font-style: italic; text-align: center; box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
+pointer-events: none; z-index: 100000; max-width: 80%; line-height: 1.5;
 will-change: transform, opacity;
 }
 
-.floating-quote span.song-name {
+.floating-quote span {
 font-size: 12px; color: #FFD700; margin-top: 10px; display: block;
 text-transform: uppercase; letter-spacing: 2px;
 }
 
-.quote-action-btn { 
-width: 40px; height: 40px; cursor: pointer; transition: 0.2s; 
-border: 1px solid gold; border-radius: 50%; padding: 10px; box-sizing: border-box;
-display: flex; align-items: center; justify-content: center; background: #111;
-}
-.quote-action-btn svg { fill: #FFD700; width: 100%; height: 100%; transition: 0.2s; }
-.quote-action-btn:hover { background: gold; transform: scale(1.15); }
-.quote-action-btn:hover svg { fill: #000; }
-
+/* GIRO LENTO DEL ÁLBUM */
 .spin-active {
 animation: fastSpin 2s linear infinite !important;
 box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-index: 5000 !important;
@@ -570,7 +524,7 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
     .floating-platforms { transform: scale(0.8) translateY(-60%); right: 5px; }
     .modal-content { padding: 25px; width: 90%; max-height: 85vh; }
     .close-modal { right: 15px; top: 10px; }
-    .floating-quote { font-size: 14px; width: 90%; padding: 25px; }
+    .floating-quote { font-size: 14px; width: 90%; padding: 20px; }
 }
 </style>
 
@@ -614,17 +568,14 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
         
         <h2 id="modalAlbumTitle">Título del Álbum</h2>
         
-        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px; display:none;"></div>
+        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
         
         <div class="tracklist-container" id="modalTracklist"></div>
         
         <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
         <div class="album-platforms" id="modalPlatforms"></div>
         
-        <div class="botones-modal">
-            <button id="btnCerrarAlbum" class="btn-volver">Volver</button>
-            <button id="btnShareAlbum" class="btn-compartir">Compartir Álbum</button>
-        </div>
+        <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
     </div>
 </div>
 
@@ -662,31 +613,56 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 <svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg></a>
 </div>
 
+<div id="solarSystem">
+<div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
+</div>
+<div id="orbitSingles" class="orbit"></div>
+<div id="orbitAlbums" class="orbit"></div>
+</div>
+
 <script>
+// ----------------------------------------------------------------------
+// 1. CONSTANTES GLOBALES Y MEMORIA DIARIA DE FRASES
+// ----------------------------------------------------------------------
 const quotesData = [
     { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
     { text: "Rompe las cadenas… pero primero rompe las tuyas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
+    { text: "No somos cenizas, somos volcán dormido.", song: "Raíces de fuego", album: "Voces de Cambio 1" },
+    { text: "Traen cadenas de oro, pero son de mentira.", song: "Raíces de fuego", album: "Voces de Cambio 1" },
     { text: "Lo que hoy te callas, mañana te ahoga.", song: "Sabes lo que haces", album: "Voces de Cambio 1" },
     { text: "No es la vida contra ti, es tu reflejo multiplicado.", song: "Sabes lo que haces", album: "Voces de Cambio 1" },
+    { text: "El que calla vuelve a caer, pero el que recuerda vuelve a nacer.", song: "Ecos del olvido", album: "Voces de Cambio 1" },
+    { text: "La memoria es fuerza, la memoria es destino.", song: "Ecos del olvido", album: "Voces de Cambio 1" },
     { text: "El silencio fue tu cómplice, la indiferencia tu aliada.", song: "Sociedad cómplice", album: "Voces de Cambio 1" },
     { text: "Lo que callas hoy, mañana te va a cobrar.", song: "Sociedad cómplice", album: "Voces de Cambio 1" },
     { text: "Lo que se normaliza termina siendo ley.", song: "Normal es veneno", album: "Voces de Cambio 1" },
     { text: "Si lo normal duele, ya no es normal; si lo normal mata, ya no es costumbre, es mal.", song: "Normal es veneno", album: "Voces de Cambio 1" },
-    { text: "El silencio le llaman Paz, pero es miedo disfrazado.", song: "El engaño del bien", album: "Voces de Cambio 1" },
+    { text: "El silencio se llama 'paz', pero es miedo disfrazado.", song: "El engaño del bien", album: "Voces de Cambio 1" },
     { text: "El bien verdadero no siempre gusta ni es cómodo.", song: "El engaño del bien", album: "Voces de Cambio 1" },
     { text: "No podemos tapar el sol con la mano ajena.", song: "¿Injusticia o consecuencia?", album: "Voces de Cambio 1" },
     { text: "La vida no es solo castigo ni solo perdón, es reconocer tu parte y tomar la dirección.", song: "¿Injusticia o consecuencia?", album: "Voces de Cambio 1" },
     { text: "Cambiamos de amo, pero no de pecado.", song: "Ciclos y deudas", album: "Voces de Cambio 1" },
     { text: "Si no entendemos la historia de frente, seremos rehenes del mismo presente.", song: "Ciclos y deudas", album: "Voces de Cambio 1" },
+    { text: "¡Despierta, México, que el suelo está podrido!", song: "Veneno en la sangre", album: "Voces de Cambio 1" },
+    { text: "Compramos el agua mientras el río es cruel.", song: "Veneno en la sangre", album: "Voces de Cambio 1" },
+    { text: "Que no hereden cadenas, que no carguen dolor.", song: "Herencia de hierro", album: "Voces de Cambio 1" },
+    { text: "Podemos fundir el hierro y cambiar el camino.", song: "Herencia de hierro", album: "Voces de Cambio 1" },
+    { text: "Una semilla que plantas en silencio rompe la cadena.", song: "Resistencia pequeña", album: "Voces de Cambio 1" },
+    { text: "No hay resistencia mínima cuando nace el corazón.", song: "Resistencia pequeña", album: "Voces de Cambio 1" },
     { text: "Señalar es fácil, criticar es simple... pero dar el ejemplo, eso sí pesa.", song: "El cambio está en ti", album: "Voces de Cambio 1" },
+    { text: "La dignidad no se compra y la verdad no se entierra.", song: "No hay tirano eterno", album: "Voces de Cambio 1" },
     { text: "El poder se tambalea cuando el pueblo ya no huye.", song: "No hay tirano eterno", album: "Voces de Cambio 1" },
     { text: "El odio se hereda si nadie lo explica.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
     { text: "Si hoy los negamos, mañana regresan; serán tempestades que el pueblo cosecha.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
+
+    { text: "La vida no se repite, se renueva.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "No esperemos la ausencia para honrar la presencia.", song: "Altar de vida", album: "Tiempo y vida" },
     { text: "Tú nunca me juzgas, solo me entiendes.", song: "Quédate", album: "Tiempo y vida" },
     { text: "Seré el viento que acaricie tu pelo, seré tu sombra, tu guardián eterno.", song: "Quédate", album: "Tiempo y vida" },
     { text: "El dolor no me quita el amor, me enseña el valor de seguir.", song: "Renacer", album: "Tiempo y vida" },
+    { text: "Porque vivir… también es resistir.", song: "Renacer", album: "Tiempo y vida" },
     { text: "Tus ojos aún no saben mirar, pero ya enseñan lo que es amar.", song: "Citlalli", album: "Tiempo y vida" },
     { text: "Amar es estar despierto en el sueño de los dos.", song: "Alizée", album: "Tiempo y vida" },
     { text: "La vida vale tanto… porque tú estás en ella.", song: "Alizée", album: "Tiempo y vida" },
@@ -698,12 +674,14 @@ const quotesData = [
     { text: "De ti aprendí que el valor no grita, camina firme y nunca se quita.", song: "Padre, mi raíz", album: "Tiempo y vida" },
     { text: "Tu abrazo es tiempo que no se va.", song: "Abuela de luz", album: "Tiempo y vida" },
     { text: "La vida vale más cuando se da sin medir.", song: "Abuelo, mi camino", album: "Tiempo y vida" },
+    { text: "No hay muro que encierre el viento ni cadena que ate el pensamiento.", song: "Voces que siguen luchando", album: "Tiempo y vida" },
     { text: "Buscar no es locura… es un grito de amor.", song: "Hasta encontrarlos", album: "Tiempo y vida" },
     { text: "No hay muerte que venza a una madre con su fe.", song: "Hasta encontrarlos", album: "Tiempo y vida" },
     { text: "El amor no se acaba, solo aprende a esperar.", song: "Aún hay lugar", album: "Tiempo y vida" },
     { text: "El perdón florece cuando se deja de juzgar.", song: "Aún hay lugar", album: "Tiempo y vida" },
     { text: "El amor se aprende cuando se atreve a perdonar.", song: "Perdón y gracias", album: "Tiempo y vida" },
     { text: "La vida se mide en lo que siembras hoy.", song: "Tiempo y vida", album: "Tiempo y vida" },
+
     { text: "Cada canción que eliges es un reflejo de lo que callas.", song: "Prólogo - Antes de darle play", album: "Eres lo que escuchas" },
     { text: "Si comes veneno, ¿qué esperas por dentro?", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
     { text: "Te hablas como te hablan, te tratas como te tratan.", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
@@ -713,8 +691,14 @@ const quotesData = [
     { text: "A veces el silencio… es más sabio que mil argumentos.", song: "Dejalos ganar", album: "Eres lo que escuchas" },
     { text: "Discutir con un necio… Es entregarle tu energía.", song: "Dejalos ganar", album: "Eres lo que escuchas" },
     { text: "Si convives con un cojo... Aprendes a cojear.", song: "Espejo", album: "Eres lo que escuchas" },
+    { text: "Prefiero la soledad que una mesa podrida donde todos brindan con el alma vencida.", song: "Espejo", album: "Eres lo que escuchas" },
+    { text: "No nací roto, me rompieron.", song: "Cráter", album: "Eres lo que escuchas" },
     { text: "No quiero tu paz si me exige silencio ni tus abrazos cargados de desprecio.", song: "Cráter", album: "Eres lo que escuchas" },
+    { text: "Tu historia no es falla, es combustible.", song: "Luz que no se apaga", album: "Eres lo que escuchas" },
+    { text: "No te hicieron para encajar, te hicieron para expandir.", song: "Luz que no se apaga", album: "Eres lo que escuchas" },
+    { text: "Quien se escucha se libera del molde.", song: "Lo que soy", album: "Eres lo que escuchas" },
     { text: "Prefiero la herida que me deja el viento que el cómodo frío de un falso aliento.", song: "Lo que soy", album: "Eres lo que escuchas" },
+    { text: "Si no edifica, si no inspira, si solo degrada... eso no es reggaetón.", song: "Mierdaton", album: "Eres lo que escuchas" },
     { text: "Por más que presumas balas… sigues huyendo de ti mismo.", song: "Anestesia barata", album: "Eres lo que escuchas" },
     { text: "Si la vida de otros te sirve pa' brillar, no eres artista… eres irresponsable social.", song: "Anestesia barata", album: "Eres lo que escuchas" },
     { text: "Ser hombre no es un disfraz, es carácter y es verdad.", song: "Hombre que despierta", album: "Eres lo que escuchas" },
@@ -723,15 +707,25 @@ const quotesData = [
     { text: "Se entretiene el cuerpo, pero el alma se apaga.", song: "Payasos con corona de humo", album: "Eres lo que escuchas" },
     { text: "El dolor enseña lo que nadie quiere, que hasta el amor más puro a veces hiere.", song: "El peso del silencio", album: "Eres lo que escuchas" },
     { text: "Caminar sobre el agua no es magia, es creer en ti cuando nadie más lo hace.", song: "Camino sobre el agua", album: "Eres lo que escuchas" },
+    { text: "La clase no se compra, no se vende, no espera.", song: "Simple", album: "Eres lo que escuchas" },
+    { text: "La sabiduría no es solo pensar, ni la pasión ciega, sin rumbo ni lugar.", song: "Mente corazón", album: "Eres lo que escuchas" },
     { text: "La fuerza verdadera nace de la pena.", song: "Combate interior", album: "Eres lo que escuchas" },
+    { text: "Beso sin amar y me llamo traidor por creer.", song: "Bucle / Mundo imperfecto", album: "Eres lo que escuchas" },
     { text: "El mundo gira imperfecto — nosotros fingimos que está bien.", song: "Bucle / Mundo imperfecto", album: "Eres lo que escuchas" },
+    { text: "América late, no está vencida; las venas abiertas, la herida no se olvida.", song: "Las venas abiertas", album: "Eres lo que escuchas" },
     { text: "Tu pareja es un reflejo de lo que aceptas.", song: "No todos son iguales", album: "Eres lo que escuchas" },
+    { text: "Fuiste tú quien abrió la puerta.", song: "No todos son iguales", album: "Eres lo que escuchas" },
+    { text: "El paraíso del narco es sólo un infierno con perfume caro.", song: "Paraíso de sangre", album: "Eres lo que escuchas" },
     { text: "Una lucha que busca venganza no es justicia.", song: "Del dolor al odio", album: "Eres lo que escuchas" },
+    { text: "El pueblo sin agua mientras tú brindas por ella.", song: "A qué costo", album: "Eres lo que escuchas" },
+
     { text: "La verdad no negocia, solo cobra al caer.", song: "El precio de la mentira", album: "Tejido vital" },
     { text: "Ese silencio no es neutral, es complicidad.", song: "Cobardes", album: "Tejido vital" },
     { text: "No es valentía hablar cuando es seguro… Es amor decir la verdad… aunque el mundo te odie por hacerlo.", song: "Cobardes", album: "Tejido vital" },
     { text: "La primera trinchera no está en la calle, está en tu interior.", song: "En la trinchera", album: "Tejido vital" },
+    { text: "La primera bala nunca es de plomo, es una idea que se mete en el lodo.", song: "La primera trinchera", album: "Tejido vital" },
     { text: "No somos rivales, somos la fuerza que construye el mundo cuando se respeta.", song: "Ni Ella sin Él ni Él sin Ella", album: "Tejido vital" },
+    { text: "Venganza no es lo mismo que ser triunfante.", song: "Empoderar no es guerra", album: "Tejido vital" },
     { text: "El verdadero poder no destruye, construye.", song: "Empoderar no es guerra", album: "Tejido vital" },
     { text: "Amar hoy es rebeldía, porque el odio está de moda.", song: "Amor en tiempos de ideologías cancerígenas", album: "Tejido vital" },
     { text: "Si en tu casa hay guerra, no hables de paz afuera.", song: "Honra a tu pareja", album: "Tejido vital" },
@@ -744,36 +738,44 @@ const quotesData = [
     { text: "Tus hijos no necesitan los lujos que no tuviste… Necesitan la paz… que tampoco te dieron.", song: "Enséñales", album: "Tejido vital" },
     { text: "Enséñales que caerse… también es parte de avanzar.", song: "Enséñales", album: "Tejido vital" },
     { text: "No hay herencia más valiosa que una vida recta.", song: "Ciudadanos del mundo", album: "Tejido vital" },
+
     { text: "Cambiar de líder sin cambiar de mentalidad es como cambiar de jaula, pero seguir siendo pájaro.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Tu mente es tu mayor territorio ocupado y liberarla es tu deber más urgente.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
     { text: "Nos vendieron el silencio como paz y el confort como evolución.", song: "Manual para un pueblo dormido", album: "Revolucion mental" },
-    { text: "La caja idiota no me enseña a sentir, me vende verdades listas pa' consumir.", song: "La Caja idiota", album: "Revolucion mental" },
+    { text: "Dormimos en cadenas doradas creyendo que son pulseras sagradas.", song: "Neuronas en huelga", album: "Revolucion mental" },
+    { text: "La caja idiota no me enseña a sentir, me vende verdades listas pa’ consumir.", song: "La Caja idiota", album: "Revolucion mental" },
     { text: "Soy mi propio enemigo, el miedo que me encierra, el fuego que apago, la voz que me entierra.", song: "Mi enemigo", album: "Revolucion mental" },
     { text: "No hay enemigo más peligroso que el que vive bajo tu cara.", song: "Mi enemigo", album: "Revolucion mental" },
     { text: "Idolatramos al que roba mejor y al que es honesto lo llaman traidor.", song: "Mexico bipolar", album: "Revolucion mental" },
     { text: "Gritamos justicia, pero calla el vecino cuando el crimen es su destino.", song: "Mexico bipolar", album: "Revolucion mental" },
+    { text: "Confundimos esperanza con fe y la fe con el miedo a perder.", song: "Sin mesías", album: "Revolucion mental" },
     { text: "El silencio del pueblo es el arma del tirano.", song: "Despierta cabrón", album: "Revolucion mental" },
     { text: "No le pidas al cielo lo que tú no haces.", song: "Despierta cabrón", album: "Revolucion mental" },
     { text: "No somos lo que el sistema hace de nosotros, somos lo que decidimos ser después de saberlo.", song: "Reinicio", album: "Revolucion mental" },
     { text: "Me creí sabio porque dudaba, pero dudaba por miedo.", song: "Espejo", album: "Revolucion mental" },
     { text: "El cambio empieza cuando te sostienes la mirada sin mentirte.", song: "Espejo", album: "Revolucion mental" },
+    { text: "Uno no despierta solo. Despierta el que aprende a mirar al otro.", song: "Conciencia colectiva", album: "Revolucion mental" },
     { text: "Cambiamos rezos por acciones, likes por revoluciones.", song: "Nuevo código", album: "Revolucion mental" },
     { text: "Quejarse no es contribuir, criticar no es cambiar.", song: "Epílogo", album: "Revolucion mental" },
+
     { text: "Huelen la tragedia como si fuera oportunidad.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Miran la tragedia, pero nunca la causa. Miran al pueblo… y lo ven como cifra.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
     { text: "Aquí el sol madura la fruta… pero la muerte la corta primero.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
     { text: "El que cultiva muere… el que negocia con armas vive y vuelve a crecer.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
-    { text: "El bosque llora suave, pero su memoria nunca se gasta.", song: "Los que cuidaban la tierra", album: "CHACALES OPORTUNISTAS" },
+    { text: "El bosque llora suave, pero su memoria nunca se gasta. Guardias de la vida que el país dejó sin guardia.", song: "Los que cuidaban la tierra", album: "CHACALES OPORTUNISTAS" },
     { text: "El desastre llegó con viento… pero el saqueo llegó con credencial.", song: "Huracanes con uniforme", album: "CHACALES OPORTUNISTAS" },
     { text: "¿De qué sirve un estado que no llega? ¿De qué sirve un líder que no mira?", song: "Lodo y promesas", album: "CHACALES OPORTUNISTAS" },
     { text: "Las leyes no nacen por justicia… nacen por fracaso.", song: "La ley del fracaso", album: "CHACALES OPORTUNISTAS" },
     { text: "Si la ley lleva tu nombre, no fue un triunfo. Fue un país que no te cuidó.", song: "La ley del fracaso", album: "CHACALES OPORTUNISTAS" },
     { text: "Firman reformas con tinta ajena, el muerto siempre firma con sangre.", song: "Firma y olvida", album: "CHACALES OPORTUNISTAS" },
+    { text: "No buscamos tumbas… buscamos señales de vida.", song: "Las madres no duermen", album: "CHACALES OPORTUNISTAS" },
     { text: "Si ellas siguen de pie, el país no puede seguir arrodillado.", song: "Las madres no duermen", album: "CHACALES OPORTUNISTAS" },
     { text: "Porque un desaparecido es un país incompleto.", song: "Sin huella ni tumba II", album: "CHACALES OPORTUNISTAS" },
     { text: "La memoria aquí no es un archivo, es un machete.", song: "Epílogo (México no olvida)", album: "CHACALES OPORTUNISTAS" },
-    { text: "Cobardes que tiemblan ante el criminal, valientes pa' callar al que quiere cambiar.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
+    { text: "Cobardes que tiemblan ante el criminal, valientes pa’ callar al que quiere cambiar.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
     { text: "No mataron al hombre… despertaron al pueblo.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
+
+    { text: "La muerte no cierra, transforma. Abre la puerta de la memoria y nos enseña a mirar distinto.", song: "Introducción / 28 de octubre", album: "Luz entre las Sombras" },
     { text: "Corre libre donde no hay dolor, donde el cielo es verde y el alma es amor.", song: "Hasta que volvamos a correr", album: "Luz entre las Sombras" },
     { text: "Pequeña luz, que no se apagó, solo subiste antes que yo.", song: "Pequeña luz", album: "Luz entre las Sombras" },
     { text: "Donde habita el amor… no existe el 'nunca más'.", song: "Hermano del alma", album: "Luz entre las Sombras" },
@@ -781,20 +783,24 @@ const quotesData = [
     { text: "Lo que me enseñaste vive en mí, no hay distancia que lo pueda borrar.", song: "Lo que me enseñaste", album: "Luz entre las Sombras" },
     { text: "Tus manos eran mapas de historias que contar.", song: "Los que abrieron camino", album: "Luz entre las Sombras" },
     { text: "Sabían que el silencio era traición al corazón.", song: "Voces que no callaron", album: "Luz entre las Sombras" },
-    { text: "Perdóname por no decir 'te amo' a tiempo.", song: "Perdóname", album: "Luz entre las Sombras" },
+    { text: "Perdóname por no decir 'te amo' a tiempo, por no estar allí cuando el cielo abrió tu aliento.", song: "Perdóname", album: "Luz entre las Sombras" },
     { text: "Me escondí tras mi cobarde corazón con miedo de entender.", song: "Perdóname", album: "Luz entre las Sombras" },
+    { text: "Ni vivos ni muertos, solo sombras y eco.", song: "Sin huella ni tumba", album: "Luz entre las Sombras" },
     { text: "Cada paso que das hacia el perdón es un paso hacia ti mismo.", song: "Los que no regresan", album: "Luz entre las Sombras" },
     { text: "Hoy soltamos el dolor, no para olvidar, sino para caminar más ligeros.", song: "Después del silencio", album: "Luz entre las Sombras" },
+
     { text: "México despierta cuando tú sabes crecer.", song: "Mexico despierta", album: "Voces de Cambio 2" },
     { text: "Del pasado aprendemos, no para sufrir sino para actuar.", song: "Reflexión Musical MX", album: "Voces de Cambio 2" },
     { text: "El dolor se transforma en luz que nos guía.", song: "Memoria viva", album: "Voces de Cambio 2" },
     { text: "El mundo no cambia solo con quejas o palabras, se transforma quien actúa.", song: "Sombras y luz", album: "Voces de Cambio 2" },
-    { text: "El futuro no nace en decretos ni en balas, se gesta en los gestos pequeños.", song: "Semillas para mañana", album: "Voces de Cambio 2" },
+    { text: "El futuro no nace en decretos ni en balas, se gesta en los gestos pequeños que no se embalsaman.", song: "Semillas para mañana", album: "Voces de Cambio 2" },
     { text: "Lo que te espera no viene del cielo... es tu reflejo, la consecuencia que te mira a los ojos.", song: "Lo que te espera", album: "Voces de Cambio 2" },
-    { text: "No elegimos lo heredado, pero sí qué dejamos.", song: "El eco de los ancestros", album: "Voces de Cambio 2" },
-    { text: "Defienden partidos como si fueran religión... pero cuando el temblor llega, nadie pregunta de qué partido eres.", song: "En la union esta la fuerza", album: "Voces de Cambio 2" },
-    { text: "No hay mesías... el país cambia cuando dejamos de ser unos ingenuos.", song: "No más excusas", album: "Voces de Cambio 2" },
-    { text: "Sé chingón, sin chingarte a los demás.", song: "Se chingon", album: "Voces de Cambio 2" },
+    { text: "No elegimos lo heredado, pero sí qué dejamos: romper cadenas viejas o seguirlas entregando.", song: "El eco de los ancestros", album: "Voces de Cambio 2" },
+    { text: "Mexicano, soy de esta tierra bella, más que mariachi, más que tequila o mezcal... haciendo lo que es justo aquí.", song: "Orgullo mexicano", album: "Voces de Cambio 2" },
+    { text: "Defienden partidos como si fueran religión... pero cuando el temblor llega, todos corren a ayudar, y nadie pregunta de qué partido eres.", song: "En la union esta la fuerza", album: "Voces de Cambio 2" },
+    { text: "No hay mesías, no hay milagro ni salvación... el país no cambia con discursos bonitos, cambia cuando dejamos de ser unos ingenuos.", song: "No más excusas", album: "Voces de Cambio 2" },
+    { text: "Sé chingón, sin chingarte a los demás, no hace falta tumbar pa' llegar a más.", song: "Se chingon", album: "Voces de Cambio 2" },
+    { text: "La victoria más pura es la que compartes más.", song: "Se chingon", album: "Voces de Cambio 2" },
     { text: "El México que críticas, lo construyes Tú.", song: "Mexico eres tu / Mexico lindo", album: "Voces de Cambio 2" },
     { text: "Te quejas de la impunidad, pero sobornas al tránsito para evitar la multa.", song: "Mexico eres tu / Mexico lindo", album: "Voces de Cambio 2" },
     { text: "No busques culpables afuera… mírate al espejo.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
@@ -858,6 +864,9 @@ window.addEventListener('load', () => {
     }, 500); 
 });
 
+// ----------------------------------------------------------------------
+// 3. LÓGICA PRINCIPAL DEL DOM Y MODALES
+// ----------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
 
     const modal = document.getElementById("bioModal");
@@ -868,14 +877,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const muteBtn = document.getElementById("muteBtn");
     const starContainer = document.getElementById("starContainer"); 
     
+    // VARIABLES DEL NUEVO MODAL DE ÁLBUMES
     const albumModal = document.getElementById("albumModal");
     const closeAlbumModal = document.querySelector(".close-album");
     const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
     const modalAlbumTitle = document.getElementById("modalAlbumTitle");
-    const modalPlayerContainer = document.getElementById("modalPlayerContainer");
     const modalTracklist = document.getElementById("modalTracklist");
     const modalPlatforms = document.getElementById("modalPlatforms");
-
+    
     if(volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
         volumeSlider.addEventListener("input", (e) => {
@@ -907,10 +916,11 @@ document.addEventListener("DOMContentLoaded", () => {
     
     function closeAlbumPanel() {
         albumModal.classList.remove("show");
+        // Detiene el video de YouTube al cerrar el modal
         setTimeout(() => {
-            modalPlayerContainer.innerHTML = "";
             modalTracklist.innerHTML = "";
-            modalPlayerContainer.style.display = "none";
+            const playerContainer = document.getElementById("modalPlayerContainer");
+            if(playerContainer) playerContainer.innerHTML = "";
         }, 400);
     }
 
@@ -976,7 +986,97 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('resize', setCanvasSize);
     drawCanvas();
 
-    // DEFINICIÓN DE ÁLBUMES PARA QUE LA FUNCIÓN GLOBAL LOS ENCUENTRE
+    function showQuoteAndSpin() {
+        const q = getNextQuote(); 
+        
+        const quoteEl = document.createElement("div");
+        quoteEl.className = "floating-quote";
+        
+        quoteEl.innerHTML = `"${q.text}"<br><span>${q.song}</span>`;
+        
+        document.body.appendChild(quoteEl);
+
+        quoteEl.animate([
+            { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' },
+            { opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)', offset: 0.05 },
+            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.1 },
+            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.9 },
+            { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' }
+        ], { duration: 8000, easing: 'ease-out' }).onfinish = () => quoteEl.remove();
+
+        const planetImg = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter img`);
+        const planetTooltip = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter .tooltip`);
+        
+        if(planetImg) {
+            planetImg.classList.add("spin-active");
+            if(planetTooltip) planetTooltip.classList.add("force-tooltip");
+            
+            setTimeout(() => {
+                planetImg.classList.remove("spin-active");
+                if(planetTooltip) planetTooltip.classList.remove("force-tooltip");
+            }, 8000);
+        }
+    }
+
+    let isQuoteActive = false;
+    let currentSpawnTimeout = null;
+
+    function removeAllSupernovas() {
+        const supernovas = document.querySelectorAll('.supernova-hitbox');
+        supernovas.forEach(sn => sn.remove());
+    }
+
+    function spawnSupernovaBatch() {
+        if (isQuoteActive) {
+            if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
+            return;
+        }
+
+        removeAllSupernovas();
+
+        for (let i = 0; i < 3; i++) {
+            const hitbox = document.createElement("div");
+            hitbox.className = "supernova-hitbox";
+            hitbox.style.left = (Math.random() * window.innerWidth) + "px";
+            hitbox.style.top = (Math.random() * window.innerHeight) + "px";
+
+            const flash = document.createElement("div");
+            flash.className = "supernova";
+            flash.innerHTML = '<div class="ray-x"></div>'; 
+            
+            hitbox.appendChild(flash);
+            
+            hitbox.onclick = function() {
+                if (isQuoteActive) return;
+
+                isQuoteActive = true;
+                showQuoteAndSpin(); 
+                removeAllSupernovas(); 
+
+                if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
+
+                setTimeout(() => {
+                    isQuoteActive = false; 
+                    spawnSupernovaBatch(); 
+                }, 8000);
+            };
+
+            if(starContainer) starContainer.appendChild(hitbox); 
+        }
+
+        currentSpawnTimeout = setTimeout(() => {
+            if (!isQuoteActive) {
+                removeAllSupernovas();
+                currentSpawnTimeout = setTimeout(spawnSupernovaBatch, 1000);
+            }
+        }, 3500); 
+    }
+
+    spawnSupernovaBatch();
+
+    // ----------------------------------------------------------------------
+    // 4. DEFINICIÓN DE ÁLBUMES Y SENCILLOS CON LINKS ACTUALIZADOS
+    // ----------------------------------------------------------------------
     const singles = [
         {
             img: "images/We rise as one.webp",
@@ -1301,7 +1401,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 { name: "Cuida y educa", url: "https://music.youtube.com/watch?v=iij2-wUhJ7Q&si=J250GvwWAbfbPBOK" },
                 { name: "Cuida y educa II", url: "https://music.youtube.com/watch?v=P338KqBK7kk&si=YLTLS_8M5NnpEI7m" },
                 { name: "Herencia que no se rompe", url: "https://music.youtube.com/watch?v=pL28P654UyQ&si=gxYVX-KrqK1Rm5TR" },
-                { name: "Enséñales", url: "https://music.youtube.com/watch?v=ENxZgOrIhB0&si=48HXoCJUFgarIdhr" },
+                { name: "Enseñales", url: "https://music.youtube.com/watch?v=ENxZgOrIhB0&si=48HXoCJUFgarIdhr" },
                 { name: "Ciudadanos del mundo", url: "https://music.youtube.com/watch?v=d0F8E5irhDM&si=4p2vRPfJBVo2FQxB" },
                 { name: "Ni Ella sin Él ni El sin Ella (Remix)", url: "https://music.youtube.com/watch?v=DRfgmHEjn3I&si=-9tYVUGvdCZqskdm" },
                 { name: "Ciudadanos del mundo II (Remix)", url: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9" }
@@ -1429,296 +1529,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    // FUNCION PARA MOSTRAR FRASES
-    let isQuoteActive = false;
-    let currentSpawnTimeout = null;
-
-    function showQuoteAndSpin() {
-        const q = getNextQuote(); 
-        
-        const quoteEl = document.createElement("div");
-        quoteEl.className = "floating-quote";
-        
-        quoteEl.innerHTML = `
-            <span class="close-quote" style="position:absolute; top: 10px; right: 15px; cursor:pointer; font-size:24px; color:#FFD700; font-family:sans-serif; line-height: 1;">×</span>
-            "${q.text}"<br><span class="song-name" style="font-size: 12px; color: #FFD700; margin-top: 10px; display: block; text-transform: uppercase; letter-spacing: 2px;">${q.song}</span>
-            <div style="display:flex; justify-content:center; gap:25px; margin-top: 20px;">
-                <div class="quote-action-btn share-btn" title="Compartir frase">
-                    <svg viewBox="0 0 512 512"><path d="M307 34.8c-11.5 5.1-19 16.6-19 29.2v64H176C78.8 128 0 206.8 0 304c0 44.4 16.4 84.8 43.6 116.2 4 4.6 10 7.8 16.4 7.8s12.4-3.2 16.4-7.8c14.4-16.6 23.6-38.2 23.6-60.2 0-35.3-28.7-64-64-64H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h144c53 0 96 43 96 96v64c0 12.6 7.5 24.1 19 29.2s25 3 34.4-5.4l160-144c6.7-6.1 10.6-14.7 10.6-23.8s-3.9-17.7-10.6-23.8l-160-144c-9.4-8.4-22.9-10.5-34.4-5.4z"/></svg>
-                </div>
-                <div class="quote-action-btn play-btn" title="Escuchar canción">
-                    <svg viewBox="0 0 384 512"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(quoteEl);
-
-        const closeBtn = quoteEl.querySelector('.close-quote');
-        const shareBtn = quoteEl.querySelector('.share-btn');
-        const playBtn = quoteEl.querySelector('.play-btn');
-
-        const planetImg = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter img`);
-        const planetTooltip = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter .tooltip`);
-        
-        if(planetImg) planetImg.classList.add("spin-active");
-        if(planetTooltip) planetTooltip.classList.add("force-tooltip");
-
-        function closeQuote() {
-            quoteEl.animate([
-                { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
-                { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' }
-            ], { duration: 300, easing: 'ease-in' }).onfinish = () => {
-                quoteEl.remove();
-                if(planetImg) planetImg.classList.remove("spin-active");
-                if(planetTooltip) planetTooltip.classList.remove("force-tooltip");
-                isQuoteActive = false;
-                spawnSupernovaBatch(); 
-            };
-        }
-
-        closeBtn.onclick = (e) => { e.stopPropagation(); closeQuote(); };
-
-        shareBtn.onclick = (e) => {
-            e.stopPropagation();
-            const shareData = {
-                title: 'Reflexión Musical MX',
-                text: `"${q.text}"\n- ${q.song}\n\nExplora el universo musical aquí:\n`,
-                url: window.location.href
-            };
-            if (navigator.share) {
-                navigator.share(shareData).catch(console.error);
-            } else {
-                navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-                alert("¡Frase copiada al portapapeles!");
-            }
-        };
-
-        playBtn.onclick = (e) => {
-            e.stopPropagation();
-            let targetAlbum = albums.find(a => a.title.toUpperCase() === q.album.toUpperCase());
-            if (!targetAlbum) {
-                targetAlbum = singles.find(s => s.title.toUpperCase() === q.album.toUpperCase());
-            }
-            closeQuote(); 
-            if (targetAlbum) {
-                setTimeout(() => {
-                    window.openAlbumModal(targetAlbum, q.song);
-                }, 300);
-            }
-        };
-
-        quoteEl.animate([
-            { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' },
-            { opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)', offset: 0.7 },
-            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' }
-        ], { duration: 600, easing: 'ease-out', fill: 'forwards' });
-    }
-
-    function removeAllSupernovas() {
-        const supernovas = document.querySelectorAll('.supernova-hitbox');
-        supernovas.forEach(sn => sn.remove());
-    }
-
-    function spawnSupernovaBatch() {
-        if (isQuoteActive) {
-            if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
-            return;
-        }
-        removeAllSupernovas();
-        for (let i = 0; i < 3; i++) {
-            const hitbox = document.createElement("div");
-            hitbox.className = "supernova-hitbox";
-            hitbox.style.left = (Math.random() * window.innerWidth) + "px";
-            hitbox.style.top = (Math.random() * window.innerHeight) + "px";
-
-            const flash = document.createElement("div");
-            flash.className = "supernova";
-            flash.innerHTML = '<div class="ray-x"></div>'; 
-            
-            hitbox.appendChild(flash);
-            hitbox.onclick = function() {
-                if (isQuoteActive) return;
-                isQuoteActive = true;
-                showQuoteAndSpin(); 
-                removeAllSupernovas(); 
-                if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
-            };
-            if(starContainer) starContainer.appendChild(hitbox); 
-        }
-
-        currentSpawnTimeout = setTimeout(() => {
-            if (!isQuoteActive) {
-                removeAllSupernovas();
-                currentSpawnTimeout = setTimeout(spawnSupernovaBatch, 1000);
-            }
-        }, 3500); 
-    }
-
-    spawnSupernovaBatch();
-
-    // FUNCION PRINCIPAL: ABRIR EL ÁLBUM Y CONTROLAR REPRODUCCIÓN
-    window.openAlbumModal = function(item, trackNameToPlay = null) {
-        if(bioAudio && !bioAudio.paused) {
-            bioAudio.pause();
-            if(muteBtn) muteBtn.textContent = "🔇";
-        }
-
-        modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
-        
-        let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
-        let playlistId = "";
-        if (ytLink && ytLink !== "#") {
-            const match = ytLink.match(/[?&]list=([^&]+)/);
-            if (match && match[1]) {
-                playlistId = match[1];
-            }
-        }
-
-        const btnShareAlbum = document.getElementById("btnShareAlbum");
-        if(btnShareAlbum) {
-            btnShareAlbum.onclick = () => {
-                let ytLinkShare = item.links && item.links.youtube ? item.links.youtube : window.location.href;
-                const shareData = {
-                    title: 'Reflexión Musical MX',
-                    text: `Escucha "${item.title}" de Reflexión Musical MX:\n`,
-                    url: ytLinkShare
-                };
-                if (navigator.share) {
-                    navigator.share(shareData).catch(console.error);
-                } else {
-                    navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-                    alert("¡Enlace del álbum copiado al portapapeles!");
-                }
-            };
-        }
-
-        modalTracklist.innerHTML = "";
-
-        let initialVideoId = "";
-        let initialTrackIndex = -1;
-        
-        if (trackNameToPlay && item.tracks) {
-            const tIndex = item.tracks.findIndex(t => t.name.toLowerCase().includes(trackNameToPlay.toLowerCase()) || trackNameToPlay.toLowerCase().includes(t.name.toLowerCase()));
-            if (tIndex !== -1) {
-                initialTrackIndex = tIndex;
-                let vMatch = item.tracks[tIndex].url.match(/[?&]v=([^&]+)/);
-                if(vMatch && vMatch[1]) initialVideoId = vMatch[1];
-            }
-        }
-
-        if (initialVideoId) {
-            modalPlayerContainer.style.display = "block";
-            let embedUrl = `https://www.youtube.com/embed/${initialVideoId}?autoplay=1`;
-            if(playlistId) embedUrl += `&list=${playlistId}`;
-            modalPlayerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
-        } else if (playlistId) {
-            modalPlayerContainer.style.display = "block";
-            modalPlayerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
-        } else {
-            modalPlayerContainer.innerHTML = "";
-            modalPlayerContainer.style.display = "none";
-        }
-
-        if(item.tracks && item.tracks.length > 0) {
-            item.tracks.forEach((trackObj, index) => {
-                let trackRow = document.createElement("div");
-                trackRow.className = "track-row";
-                
-                if (index === initialTrackIndex) {
-                    trackRow.classList.add('active-track');
-                }
-
-                let trackName = document.createElement("span");
-                trackName.className = "track-play-btn";
-                trackName.innerText = `${index + 1}. ${trackObj.name}`;
-                
-                trackName.onclick = (e) => {
-                    e.preventDefault();
-                    document.querySelectorAll('.track-row').forEach(el => el.classList.remove('active-track'));
-                    trackRow.classList.add('active-track');
-
-                    let videoId = "";
-                    if(trackObj.url) {
-                        let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
-                        if(vMatch && vMatch[1]) videoId = vMatch[1];
-                    }
-                    
-                    if(videoId) {
-                        modalPlayerContainer.style.display = "block";
-                        let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                        if(playlistId) embedUrl += `&list=${playlistId}`;
-                        modalPlayerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
-                    } else {
-                        window.open(trackObj.url, "_blank");
-                    }
-                };
-
-                let shareBtn = document.createElement("span");
-                shareBtn.className = "track-share-btn";
-                shareBtn.innerHTML = `<svg viewBox="0 0 512 512"><path d="M307 34.8c-11.5 5.1-19 16.6-19 29.2v64H176C78.8 128 0 206.8 0 304c0 44.4 16.4 84.8 43.6 116.2 4 4.6 10 7.8 16.4 7.8s12.4-3.2 16.4-7.8c14.4-16.6 23.6-38.2 23.6-60.2 0-35.3-28.7-64-64-64H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h144c53 0 96 43 96 96v64c0 12.6 7.5 24.1 19 29.2s25 3 34.4-5.4l160-144c6.7-6.1 10.6-14.7 10.6-23.8s-3.9-17.7-10.6-23.8l-160-144c-9.4-8.4-22.9-10.5-34.4-5.4z"/></svg>`;
-                shareBtn.title = "Compartir pista";
-                
-                shareBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    const trackUrl = trackObj.url || window.location.href;
-                    const shareData = {
-                        title: 'Reflexión Musical MX',
-                        text: `Escucha "${trackObj.name}" del álbum ${item.title}:\n`,
-                        url: trackUrl
-                    };
-                    if (navigator.share) {
-                        navigator.share(shareData).catch(console.error);
-                    } else {
-                        navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-                        alert("¡Enlace de la pista copiado al portapapeles!");
-                    }
-                };
-
-                trackRow.appendChild(trackName);
-                trackRow.appendChild(shareBtn);
-                modalTracklist.appendChild(trackRow);
-            });
-
-            if (initialTrackIndex !== -1) {
-                setTimeout(() => {
-                    const activeEl = modalTracklist.querySelector('.active-track');
-                    if(activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 500);
-            }
-        } else {
-            let trackDiv = document.createElement("div");
-            trackDiv.className = "track-item";
-            trackDiv.style.textAlign = "center";
-            trackDiv.style.color = "gold";
-            trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
-            modalTracklist.appendChild(trackDiv);
-        }
-
-        modalPlatforms.innerHTML = "";
-        const globalPlatformsForModal = [
-            { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
-            { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
-            { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
-            { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-            { name: "SoundCloud", svg: `<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`, id: 'soundcloud' }
-        ];
-        globalPlatformsForModal.forEach(p => {
-            let platLink = item.links && item.links[p.id] ? item.links[p.id] : "#";
-            if (platLink && platLink !== "#") {
-                let a = document.createElement("a");
-                a.href = platLink;
-                a.target = "_blank";
-                a.innerHTML = p.svg;
-                a.setAttribute('aria-label', `Escuchar en ${p.name}`);
-                modalPlatforms.appendChild(a);
-            }
-        });
-
-        albumModal.classList.add("show");
-    }
-
-    // --- FUNCIÓN PARA CREAR PLANETAS EN LAS ÓRBITAS ---
+    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO, LINKS Y VIDEO) ---
     function createOrbit(data,id,radius){
         const orbit=document.getElementById(id)
         if(!orbit) return;
@@ -1734,16 +1545,114 @@ document.addEventListener("DOMContentLoaded", () => {
             planet.style.left=`calc(50% + ${x}px - 55px)`
             planet.style.top=`calc(50% + ${y}px - 55px)`
             
+            // EVENTO DE CLICK PARA ABRIR MODAL
             planet.onclick = () => {
-                window.openAlbumModal(item);
+                if(bioAudio && !bioAudio.paused) {
+                    bioAudio.pause();
+                    if(muteBtn) muteBtn.textContent = "🔇";
+                }
+
+                modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
+                
+                modalTracklist.innerHTML = "";
+                
+                // EXTRAER ID DE PLAYLIST DE YOUTUBE PARA CARGA INICIAL
+                let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
+                let playlistId = "";
+                if (ytLink && ytLink !== "#") {
+                    const match = ytLink.match(/[?&]list=([^&]+)/);
+                    if (match && match[1]) {
+                        playlistId = match[1];
+                    }
+                }
+
+                let htmlContent = `<div id="modalPlayerContainer" style="width:100%; transition: 0.3s;">`;
+                
+                // INYECTAR REPRODUCTOR INICIAL DE LA PLAYLIST
+                if (playlistId) {
+                    htmlContent += `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
+                }
+                htmlContent += `</div>`;
+                
+                modalTracklist.innerHTML = htmlContent;
+
+                // INYECTAR LISTA DE CANCIONES Y CAPTURAR CLICS PARA REPRODUCIR
+                if(item.tracks && item.tracks.length > 0) {
+                    item.tracks.forEach((trackObj, index) => {
+                        let trackLink = document.createElement("a");
+                        trackLink.className = "track-item track-link";
+                        trackLink.href = "javascript:void(0);";
+                        trackLink.innerText = `${index + 1}. ${trackObj.name}`;
+                        
+                        trackLink.onclick = (e) => {
+                            e.preventDefault();
+                            
+                            // ILUMINAR PISTA ACTIVA
+                            document.querySelectorAll('.track-link').forEach(el => el.classList.remove('active-track'));
+                            trackLink.classList.add('active-track');
+
+                            let videoId = "";
+                            // Extraer el 'v=' ID de Youtube Music
+                            if(trackObj.url) {
+                                let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
+                                if(vMatch && vMatch[1]) videoId = vMatch[1];
+                            }
+                            
+                            // SI HAY VIDEO ID, CARGAR EN EL IFRAME AUTOMATICAMENTE
+                            if(videoId) {
+                                const container = document.getElementById("modalPlayerContainer");
+                                if(container) {
+                                    container.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 15px;"></iframe>`;
+                                }
+                            } else {
+                                // Fallback por si la URL no es de Youtube
+                                window.open(trackObj.url, "_blank");
+                            }
+                        };
+
+                        modalTracklist.appendChild(trackLink);
+                    });
+                } else {
+                    let trackDiv = document.createElement("div");
+                    trackDiv.className = "track-item";
+                    trackDiv.style.textAlign = "center";
+                    trackDiv.style.color = "gold";
+                    trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
+                    modalTracklist.appendChild(trackDiv);
+                }
+
+                modalPlatforms.innerHTML = "";
+                const globalPlatformsForModal = [
+                    { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
+                    { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
+                    { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
+                    { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
+                    { name: "SoundCloud", svg: `<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`, id: 'soundcloud' }
+                ];
+                globalPlatformsForModal.forEach(p => {
+                    let platLink = item.links && item.links[p.id] ? item.links[p.id] : "#";
+                    if (platLink && platLink !== "#") {
+                        let a = document.createElement("a");
+                        a.href = platLink;
+                        a.target = "_blank";
+                        a.innerHTML = p.svg;
+                        a.setAttribute('aria-label', `Escuchar en ${p.name}`);
+                        modalPlatforms.appendChild(a);
+                    }
+                });
+
+                albumModal.classList.add("show");
             };
             
             const safeImgPath = encodeURI(item.img);
-            let albumName = item.title || item.img.split('/').pop().replace('.webp', '');
+            
+            // LA CLAVE: El nombre del archivo DEBE ser el que se use para enlazar los efectos
+            let albumName = item.img.split('/').pop().replace('.webp', '');
             
             planet.setAttribute('data-album', albumName.toUpperCase());
             
             let extraHTML = "";
+            
             if(albumName.toUpperCase() === "TEJIDO VITAL") {
                 extraHTML = `
                 <div class="family-symbol-container">
@@ -1754,6 +1663,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>`;
             }
 
+            // CARGA DE IMAGEN CON FALLBACK A LOGO SI AÚN NO EXISTE (Para los nuevos EP/Sencillos)
             planet.innerHTML=`<div class="counter"><img src="${safeImgPath}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
             
             if(albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
@@ -1787,13 +1697,47 @@ document.addEventListener("DOMContentLoaded", () => {
         orbit.appendChild(fragment);
     }
 
-    try {
-        createOrbit(singles,"orbitSingles",210);
-        createOrbit(albums,"orbitAlbums",360);
-    } catch(err) {
-        console.error("Error cargando el universo:", err);
-    }
+    createOrbit(singles,"orbitSingles",210);
+    createOrbit(albums,"orbitAlbums",360);
 
+    const upcomingReleases = [
+        { text: "🎵 PRÓXIMO SENCILLO", link: "#" },
+        { text: "💿 NUEVO ÁLBUM", link: "#" },
+        { text: "📖 LIBRO: ALGO ESTÁ MAL", link: "#" }
+    ];
+
+    function createShootingStar(){
+        try {
+            const release = upcomingReleases[Math.floor(Math.random() * upcomingReleases.length)]; 
+            const star = document.createElement("div");
+            star.className = "shootingStar";
+            star.innerHTML = `
+                <div class="tail"></div>
+                <div class="starIconWrapper" style="width: auto; border-radius: 20px; padding: 5px 15px;">
+                    <span class="starIconText">${release.text}</span>
+                </div>`;
+            if(starContainer) starContainer.appendChild(star); 
+            let startX, startY, endX, endY;
+            const edge = Math.floor(Math.random() * 4); 
+            const offset = 100;
+            if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
+            else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
+            else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
+            else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
+            star.style.left = startX + "px";
+            star.style.top = startY + "px";
+            const dx = endX - startX; const dy = endY - startY;
+            const angleRad = Math.atan2(dy, dx);
+            const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
+            const tail = star.querySelector('.tail');
+            tail.style.width = (150 + Math.random() * 100) + "px";
+            tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
+            star.animate([{ transform: "translate(0, 0)", opacity: 1 }, { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }], { duration: 12000 + Math.random() * 6000, easing: "linear" });
+            star.onclick = () => { if (release.link !== "#") window.open(release.link, "_blank"); };
+            setTimeout(() => star.remove(), 19000);
+        } catch (e) { console.error(e); }
+    }
+    setInterval(createShootingStar, 6000);
 });
 </script>
 
