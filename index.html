@@ -1,3491 +1,396 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
-
-
 <head>
-
-
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
-
-
-
-<title>Reflexión Musical MX</title>
-
-
-
-<link rel="preload" as="image" href="images/REFLEXIÓN MUSICAL MX 1.webp" fetchpriority="high">
-
-
-
-<link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#FFD700">
-
-<link rel="apple-touch-icon" href="images/icon-192.png">
-
-
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-
-
-<style>
-
-/* BLOQUEO PARA MÓVILES */
-
-html, body {
-
-background:#000;
-
-color:#FFD700;
-
-font-family: 'Merriweather', serif;
-
-margin:0;
-
-padding:0;
-
-width: 100%;
-
-height: 100%;
-
-overflow:hidden;
-
-text-align:center;
-
-overscroll-behavior: none;
-
-touch-action: none;
-
-}
-
-
-
-/* CAJA DE CRISTAL PARA ESTRELLAS FUGACES */
-
-#starContainer {
-
-position: absolute;
-
-top: 0; left: 0;
-
-width: 100%;
-
-height: 100%;
-
-overflow: hidden; 
-
-pointer-events: none; 
-
-z-index: 1000;
-
-}
-
-
-
-/* PANTALLA DE CARGA */
-
-#loader {
-
-position: fixed;
-
-top: 0; left: 0;
-
-width: 100%; height: 100%;
-
-background: #000;
-
-z-index: 99999;
-
-display: flex;
-
-flex-direction: column;
-
-align-items: center;
-
-justify-content: center;
-
-transition: opacity 0.8s ease;
-
-will-change: opacity;
-
-}
-
-
-
-#loader img {
-
-width: 180px;
-
-animation: pulse 2s infinite;
-
-will-change: transform, filter;
-
-}
-
-
-
-#loader p {
-
-color: #FFD700;
-
-margin-top: 25px;
-
-font-weight: 700;
-
-letter-spacing: 3px;
-
-font-size: 14px;
-
-}
-
-
-
-/* FONDO ESTÁTICO */
-
-#bg{
-
-position:fixed;
-
-top:0; left:0;
-
-width:100%; height:100%;
-
-z-index:-1;
-
-pointer-events:none;
-
-}
-
-
-
-/* SISTEMA SOLAR (GPU ACCELERATED) */
-
-#solarSystem{
-
-position:absolute;
-
-top:0; left:0;
-
-width:100%; height:100%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-transition: transform 0.3s ease; 
-
-will-change: transform;
-
-transform: translateZ(0);
-
-}
-
-
-
-/* LOGO CENTRAL (EL SOL) */
-
-#sun{
-
-position:absolute;
-
-width:200px;
-
-z-index:10;
-
-animation:pulse 5s infinite;
-
-cursor: pointer;
-
-transition: transform 0.3s ease;
-
-will-change: transform, filter;
-
-transform: translateZ(0);
-
-}
-
-
-
-#sun:hover {
-
-transform: scale(1.1) translateZ(0);
-
-}
-
-
-
-#sun img{
-
-width:100%;
-
-}
-
-
-
-@keyframes pulse{
-
-0%{filter:drop-shadow(0 0 15px gold);}
-
-50%{filter:drop-shadow(0 0 50px gold);}
-
-100%{filter:drop-shadow(0 0 15px gold);}
-
-}
-
-
-
-/* MODALES BASE */
-
-.modal {
-
-display: none; 
-
-position: fixed; 
-
-z-index: 100000;
-
-left: 0; top: 0; 
-
-width: 100%; height: 100%;
-
-background-color: rgba(0,0,0,0.85);
-
-backdrop-filter: blur(5px);
-
-opacity: 0; 
-
-transition: opacity 0.4s ease;
-
-align-items: center; 
-
-justify-content: center;
-
--webkit-transform: translateZ(0);
-
-transform: translateZ(0);
-
-touch-action: auto;
-
-}
-
-
-
-.modal.show {
-
-display: flex; 
-
-opacity: 1;
-
-}
-
-
-
-.modal-content {
-
-background: #0a0a0a; 
-
-border: 1px solid #FFD700;
-
-padding: 40px; 
-
-border-radius: 15px;
-
-max-width: 650px; 
-
-width: 85%;
-
-max-height: 80vh;
-
-overflow-y: auto;
-
-overscroll-behavior: contain;
-
--webkit-overflow-scrolling: touch;
-
-text-align: left; 
-
-position: relative;
-
-box-shadow: 0 0 40px rgba(255,215,0,0.2);
-
-color: #ddd;
-
-line-height: 1.8;
-
-}
-
-
-
-.modal-content::-webkit-scrollbar { width: 6px; }
-
-.modal-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
-
-
-
-.modal-content h2 { 
-
-color: #FFD700; 
-
-margin-top: 0; 
-
-font-weight: 700;
-
-font-size: 26px;
-
-border-bottom: 1px solid rgba(255,215,0,0.3);
-
-padding-bottom: 15px;
-
-margin-bottom: 25px;
-
-}
-
-
-
-.modal-content p {
-
-margin-bottom: 15px;
-
-font-size: 15px;
-
-}
-
-
-
-.close-modal {
-
-position: absolute; 
-
-right: 25px; top: 20px;
-
-color: #FFD700; font-size: 32px; font-weight: bold; 
-
-cursor: pointer; transition: 0.2s; z-index: 10;
-
-font-family: sans-serif;
-
-}
-
-
-
-.close-modal:hover {
-
-color: #fff;
-
-transform: scale(1.1);
-
-}
-
-
-
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO (SIN IMAGEN, REPRODUCTOR FIJO Y SCROLL LISTA) */
-
-.album-modal-content {
-
-text-align: center;
-
-max-width: 500px;
-
-padding: 30px;
-
-}
-
-
-
-#modalAlbumTitle {
-
-text-align: center;
-
-font-size: 22px;
-
-margin-top: 5px;
-
-margin-bottom: 20px;
-
-text-transform: uppercase;
-
-}
-
-
-
-.tracklist-container {
-
-text-align: left;
-
-max-height: 200px; /* SCROLL SOLO PARA LAS CANCIONES */
-
-overflow-y: auto;
-
-margin-bottom: 20px;
-
-padding-right: 10px;
-
-background: rgba(255, 215, 0, 0.05);
-
-border-radius: 10px;
-
-padding: 15px;
-
-border: 1px solid rgba(255,215,0,0.2);
-
-}
-
-
-
-.tracklist-container::-webkit-scrollbar { width: 4px; }
-
-.tracklist-container::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
-
-
-
-.track-item {
-
-padding: 8px 0;
-
-border-bottom: 1px solid rgba(255,215,0,0.15);
-
-font-size: 14px;
-
-color: #eee;
-
-}
-
-.track-item:last-child { border-bottom: none; }
-
-
-
-/* ESTILOS PARA TRACKS INTERACTIVOS */
-
-.track-link {
-
-display: block;
-
-text-decoration: none;
-
-color: #eee;
-
-transition: 0.2s;
-
-cursor: pointer;
-
-}
-
-
-
-.track-link:hover {
-
-color: #FFD700;
-
-background: rgba(255, 215, 0, 0.1);
-
-padding-left: 8px;
-
-}
-
-
-
-/* CLASE PARA LA PISTA QUE ESTÁ SONANDO */
-
-.active-track {
-
-color: #000;
-
-font-weight: bold;
-
-background: #FFD700;
-
-border-radius: 4px;
-
-padding-left: 12px;
-
-}
-
-
-
-.album-platforms {
-
-display: flex;
-
-justify-content: center;
-
-flex-wrap: wrap;
-
-gap: 15px;
-
-margin-top: 15px;
-
-margin-bottom: 20px;
-
-}
-
-
-
-.album-platforms a {
-
-width: 45px; height: 45px;
-
-background: #111; border: 1px solid gold; border-radius: 12px;
-
-display: flex; align-items: center; justify-content: center;
-
-transition: 0.25s;
-
-}
-
-
-
-.album-platforms a:hover {
-
-background: gold; transform: scale(1.15);
-
-}
-
-
-
-.album-platforms svg { fill: gold; width: 22px; transition: 0.25s; }
-
-.album-platforms a:hover svg { fill: #000; }
-
-
-
-.btn-volver {
-
-background: transparent;
-
-border: 1px solid #FFD700;
-
-color: #FFD700;
-
-padding: 12px 20px;
-
-border-radius: 8px;
-
-cursor: pointer;
-
-font-family: 'Merriweather', serif;
-
-font-weight: bold;
-
-font-size: 14px;
-
-width: 100%;
-
-transition: 0.3s;
-
-text-transform: uppercase;
-
-letter-spacing: 1px;
-
-}
-
-.btn-volver:hover {
-
-background: #FFD700;
-
-color: #000;
-
-}
-
-
-
-/* CONTROLES DE AUDIO */
-
-.audio-controls {
-
-background: #111; border: 1px solid #FFD700; border-radius: 10px;
-
-padding: 12px 20px; margin-top: 25px; display: flex; align-items: center;
-
-justify-content: space-between; gap: 15px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-
-}
-
-
-
-.audio-controls span { font-size: 22px; cursor: pointer; user-select: none; font-family: sans-serif; }
-
-.audio-controls .vol-label { font-size: 13px; font-weight: 700; color: #FFD700; letter-spacing: 1px; cursor: default; }
-
-#volumeSlider { flex-grow: 1; accent-color: #FFD700; height: 6px; background: #333; border-radius: 5px; outline: none; cursor: pointer; }
-
-
-
-/* ORBITAS (GPU ACCELERATED) */
-
-.orbit{
-
-position:absolute;
-
-border-radius:50%;
-
-border:1px solid rgba(255,215,0,.15);
-
-pointer-events:none; 
-
-will-change: transform;
-
-transform: translateZ(0);
-
-}
-
-
-
-#orbitSingles{ width:420px; height:420px; animation:spin 45s linear infinite; }
-
-#orbitAlbums{ width:720px; height:720px; animation:spin 95s linear infinite; }
-
-
-
-#orbitSingles:hover, #orbitSingles:hover .counter,
-
-#orbitAlbums:hover, #orbitAlbums:hover .counter { animation-play-state: paused; }
-
-
-
-@keyframes spin{
-
-from{transform:rotate(0deg) translateZ(0);}
-
-to{transform:rotate(360deg) translateZ(0);}
-
-}
-
-
-
-/* DISCOS */
-
-.planet{
-
-position:absolute;
-
-width:110px; height:110px;
-
-border-radius:50%;
-
-cursor:pointer;
-
-transition:.3s;
-
-display:flex; align-items:center; justify-content:center;
-
-background:#000;
-
-box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4);
-
-pointer-events:auto; 
-
-will-change: transform;
-
-}
-
-
-
-.planet:hover{
-
-transform:scale(1.3) translateZ(0);
-
-box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
-
-z-index: 100;
-
-}
-
-
-
-/* CONTRA ROTACION Y TOOLTIPS */
-
-.counter{
-
-width:100%; height:100%;
-
-animation:counterSpin 45s linear infinite;
-
-position: relative; 
-
-border-radius: 50%;
-
-will-change: transform;
-
-}
-
-
-
-.counter img{
-
-width:100%; height:100%;
-
-object-fit:cover;
-
-border-radius:50%;
-
-pointer-events:none;
-
-}
-
-
-
-#orbitAlbums .counter{ animation-duration:95s; }
-
-
-
-@keyframes counterSpin{
-
-from{transform:rotate(0deg) translateZ(0);}
-
-to{transform:rotate(-360deg) translateZ(0);}
-
-}
-
-
-
-/* TOOLTIPS CON MAYUSCULAS */
-
-.tooltip {
-
-position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-
-background: rgba(0, 0, 0, 0.9); color: #FFD700;
-
-padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 700;
-
-white-space: nowrap; border: 1px solid rgba(255,215,0,0.5); opacity: 0;
-
-visibility: hidden; transition: all 0.3s ease; pointer-events: none;
-
-box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 1px;
-
-}
-
-
-
-.planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
-
-
-
-/* EFECTO FAMILIA */
-
-.family-symbol-container {
-
-position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
-
-display: flex; align-items: flex-end; justify-content: center; gap: 5px;
-
-background: rgba(0,0,0,0.8); padding: 8px 12px; border: 1px solid gold; border-radius: 10px;
-
-opacity: 0; transition: 0.3s; pointer-events: none;
-
-}
-
-.planet:hover .family-symbol-container { opacity: 1; bottom: 125%; }
-
-.fam-fig { display: flex; flex-direction: column; align-items: center; }
-
-.fam-head { width: 10px; height: 10px; background: gold; border-radius: 50%; margin-bottom: 2px; }
-
-.fam-body-m { width: 16px; height: 24px; background: gold; border-radius: 4px 4px 0 0; }
-
-.fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
-
-.fam-child { transform: scale(0.65); transform-origin: bottom; }
-
-
-
-/* EFECTO CORAZONES */
-
-.heart-bubble { position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity; }
-
-
-
-/* REDES LATERALES (IZQUIERDA) */
-
-.floating-social{
-
-position:absolute; top:50%; left:15px; transform:translateY(-50%);
-
-display:flex; flex-direction:column; gap:15px; z-index:999;
-
-}
-
-
-
-.floating-social a{
-
-background:#111; color:#FFD700; width:45px; height:45px;
-
-display:flex; align-items:center; justify-content:center;
-
-border-radius:10px; text-decoration:none; transition:.25s;
-
-padding: 10px; box-sizing: border-box; border: 1px solid gold;
-
-}
-
-
-
-.floating-social svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
-
-.floating-social a:hover{ background:#FFD700; transform:scale(1.2); }
-
-.floating-social a:hover svg { fill: #000; }
-
-
-
-/* PLATAFORMAS DIGITALES GLOBALES (DERECHA) */
-
-.floating-platforms{
-
-position:absolute; top:50%; right:15px; transform:translateY(-50%);
-
-display:flex; flex-direction:column; gap:15px; z-index:999;
-
-}
-
-
-
-.floating-platforms a{
-
-background:#111; color:#FFD700; width:45px; height:45px;
-
-display:flex; align-items:center; justify-content:center;
-
-border-radius:10px; text-decoration:none; transition:.25s;
-
-padding: 10px; box-sizing: border-box; border: 1px solid gold;
-
-}
-
-
-
-.floating-platforms svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
-
-.floating-platforms a:hover{ background:#FFD700; transform:scale(1.2); }
-
-.floating-platforms a:hover svg { fill: #000; }
-
-
-
-/* ESTRELLAS FUGACES (PRÓXIMOS LANZAMIENTOS) */
-
-.shootingStar {
-
-position: absolute; cursor: pointer; pointer-events: auto;
-
-display: flex; align-items: center; z-index: 1001; will-change: transform;
-
-}
-
-
-
-.starIconWrapper {
-
-background: #000; border: 1px solid gold; border-radius: 20px;
-
-padding: 6px 15px; filter: drop-shadow(0 0 10px gold);
-
-display: flex; align-items: center; justify-content: center;
-
-position: relative; z-index: 2;
-
-}
-
-
-
-.starIconText {
-
-color: #FFD700; font-size: 10px; font-weight: bold;
-
-white-space: nowrap; font-family: sans-serif; letter-spacing: 1px;
-
-}
-
-
-
-.tail {
-
-position: absolute; top: 50%; left: 50%; height: 3px;
-
-background: linear-gradient(to right, rgba(255,215,0,0.9), transparent);
-
-transform-origin: left center; filter: blur(1px); pointer-events: none; z-index: 1;
-
-}
-
-
-
-/* DESTELLOS DE ESTRELLAS (SUPERNOVAS) TÁCTILES */
-
-.supernova-hitbox {
-
-position: absolute; width: 50px; height: 50px; background: transparent;
-
-border-radius: 50%; z-index: 5000; pointer-events: auto; cursor: pointer;
-
-transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center;
-
-}
-
-
-
-.supernova {
-
-position: relative; width: 4px; height: 4px; background: #fff;
-
-border-radius: 50%; box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8);
-
-animation: burst 2.5s ease-in-out forwards; pointer-events: none;
-
-}
-
-
-
-.supernova::before, .supernova::after {
-
-content: ''; position: absolute; background: radial-gradient(circle, gold 0%, transparent 70%);
-
-top: 50%; left: 50%; transform: translate(-50%, -50%);
-
-}
-
-.supernova::before { width: 60px; height: 2px; }
-
-.supernova::after { width: 2px; height: 60px; }
-
-
-
-.ray-x {
-
-position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%);
-
-top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg);
-
-}
-
-.ray-x::after {
-
-content: ''; position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%);
-
-top: 0; left: 0; transform: rotate(90deg);
-
-}
-
-
-
-@keyframes burst { 0% { transform: scale(0); opacity: 0; } 40% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
-
-
-
-/* FRASES FLOTANTES EN EL CENTRO */
-
-.floating-quote {
-
-position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-
-background: rgba(0, 0, 0, 0.9); color: #fff; border: 1px solid #FFD700;
-
-padding: 25px 35px; border-radius: 15px; font-size: 16px; font-weight: bold;
-
-font-style: italic; text-align: center; box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
-
-pointer-events: none; z-index: 100000; max-width: 80%; line-height: 1.5;
-
-will-change: transform, opacity;
-
-}
-
-
-
-.floating-quote span {
-
-font-size: 12px; color: #FFD700; margin-top: 10px; display: block;
-
-text-transform: uppercase; letter-spacing: 2px;
-
-}
-
-
-
-/* GIRO LENTO DEL ÁLBUM */
-
-.spin-active {
-
-animation: fastSpin 2s linear infinite !important;
-
-box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-index: 5000 !important;
-
-}
-
-@keyframes fastSpin { 100% { transform: rotate(360deg) translateZ(0); } }
-
-
-
-.force-tooltip { opacity: 1 !important; visibility: visible !important; bottom: -35px !important; }
-
-
-
-/* RESPONSIVIDAD */
-
-@media (max-width: 768px) {
-
-    #solarSystem { transform: scale(0.45); }
-
-    .floating-social { transform: scale(0.8) translateY(-60%); left: 5px; }
-
-    .floating-platforms { transform: scale(0.8) translateY(-60%); right: 5px; }
-
-    .modal-content { padding: 25px; width: 90%; max-height: 85vh; }
-
-    .close-modal { right: 15px; top: 10px; }
-
-    .floating-quote { font-size: 14px; width: 90%; padding: 20px; }
-
-}
-
-</style>
-
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Rap, Folk y educación emocional desde Guadalajara.">
+    <meta name="author" content="Reflexión Musical MX">
+
+    <title>Reflexión Musical MX | El Universo</title>
+
+    <link rel="preload" as="image" href="images/REFLEXIÓN MUSICAL MX 1.webp" fetchpriority="high">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFD700">
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* BLOQUEO PARA MÓVILES Y ESTÉTICA BASE */
+        html, body {
+            background: #000;
+            color: #FFD700;
+            font-family: 'Merriweather', serif;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            text-align: center;
+            overscroll-behavior: none;
+            touch-action: none;
+        }
+
+        /* CAJA DE CRISTAL PARA ESTRELLAS FUGACES */
+        #starContainer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* PANTALLA DE CARGA */
+        #loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+            will-change: opacity;
+        }
+
+        #loader img {
+            width: 180px;
+            animation: pulse 2s infinite;
+        }
+
+        #loader p {
+            color: #FFD700;
+            margin-top: 25px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 14px;
+        }
+
+        /* FONDO ESTÁTICO (CANVAS) */
+        #bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* SISTEMA SOLAR */
+        #solarSystem {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+
+        /* LOGO CENTRAL (EL SOL) */
+        #sun {
+            position: absolute;
+            width: 200px;
+            z-index: 10;
+            animation: pulse 5s infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #sun:hover { transform: scale(1.1); }
+        #sun img { width: 100%; filter: drop-shadow(0 0 20px gold); }
+
+        @keyframes pulse {
+            0% { filter: drop-shadow(0 0 15px gold); }
+            50% { filter: drop-shadow(0 0 45px gold); }
+            100% { filter: drop-shadow(0 0 15px gold); }
+        }
+
+        /* MODALES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            align-items: center;
+            justify-content: center;
+            touch-action: auto;
+        }
+
+        .modal.show { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: #0a0a0a;
+            border: 1px solid #FFD700;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 85%;
+            max-height: 85vh;
+            overflow-y: auto;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255,215,0,0.15);
+        }
+
+        .modal-content h2 { color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; }
+
+        .close-modal {
+            position: absolute;
+            right: 20px; top: 15px;
+            color: #FFD700; font-size: 35px; font-weight: bold;
+            cursor: pointer; z-index: 11;
+        }
+
+        /* TRACKLIST Y REPRODUCTOR */
+        .tracklist-container {
+            max-height: 250px;
+            overflow-y: auto;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+
+        .track-link {
+            display: block;
+            padding: 10px;
+            color: #eee;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,215,0,0.1);
+            transition: 0.2s;
+        }
+
+        .track-link:hover { background: rgba(255, 215, 0, 0.15); padding-left: 15px; }
+        .active-track { background: #FFD700; color: #000; font-weight: bold; border-radius: 5px; }
+
+        /* ÓRBITAS Y PLANETAS */
+        .orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255,215,0,0.1);
+            pointer-events: none;
+        }
+
+        #orbitSingles { width: 420px; height: 420px; animation: spin 50s linear infinite; }
+        #orbitAlbums { width: 720px; height: 720px; animation: spin 100s linear infinite; }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .planet {
+            position: absolute;
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #000;
+            box-shadow: 0 0 15px rgba(255,215,0,0.4);
+            pointer-events: auto;
+        }
+
+        .planet:hover { transform: scale(1.2); z-index: 100; box-shadow: 0 0 30px gold; }
+
+        .counter { width: 100%; height: 100%; animation: counterSpin 50s linear infinite; border-radius: 50%; overflow: hidden; position: relative; }
+        #orbitAlbums .counter { animation-duration: 100s; }
+
+        @keyframes counterSpin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        .counter img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* TOOLTIPS */
+        .tooltip {
+            position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.9); color: gold; padding: 5px 10px;
+            font-size: 10px; border: 1px solid gold; border-radius: 4px;
+            opacity: 0; transition: 0.3s; white-space: nowrap;
+        }
+        .planet:hover .tooltip { opacity: 1; bottom: -40px; }
+
+        /* FRASES FLOTANTES */
+        .floating-quote {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.95); color: #fff; border: 1px solid gold;
+            padding: 25px; border-radius: 15px; text-align: center;
+            z-index: 100001; max-width: 80%; box-shadow: 0 0 40px gold;
+        }
+
+        /* RESPONSIVIDAD */
+        @media (max-width: 768px) {
+            #solarSystem { transform: scale(0.5); }
+            .modal-content { width: 90%; padding: 20px; }
+        }
+    </style>
 </head>
-
-
 
 <body>
 
-
-
 <div id="loader">
-
-    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high">
-
+    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando">
     <p>INICIANDO UNIVERSO...</p>
-
 </div>
 
-
+<canvas id="bg"></canvas>
+<div id="starContainer"></div>
 
 <audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
 
-
-
-<div id="bioModal" class="modal" role="dialog" aria-modal="true">
-
+<div id="bioModal" class="modal">
     <div class="modal-content">
-
-        <span class="close-modal close-bio" aria-label="Cerrar biografía" role="button" tabindex="0">×</span>
-
+        <span class="close-modal close-bio">×</span>
         <h2>Reflexión Musical MX</h2>
-
-        <p>Reflexión Musical MX nace de una idea simple pero poderosa: la música también puede hacer pensar.</p>
-
-        <p>En un mundo lleno de ruido, este proyecto utiliza canciones para hablar de lo que muchas veces se evita: la pérdida de valores, los conflictos sociales, la violencia, la desigualdad y las decisiones que están moldeando el futuro de la humanidad.</p>
-
-        <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
-
-        <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
-
-        <p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
-
-        
-
-        <div class="audio-controls">
-
-            <span id="muteBtn" aria-label="Silenciar o activar audio" role="button" tabindex="0">🔊</span>
-
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
-
-            <span class="vol-label">VOL</span>
-
-        </div>
-
-
-
-        <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
-
-        <p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
-
-            Próximamente: "Algo está mal" (Libro)
-
-        </p>
-
+        <p>Este proyecto utiliza la música para hablar de lo que muchas veces se evita: educación emocional, conciencia social y el futuro de la humanidad.</p>
+        <p>¿Eres lo que escuchas?</p>
+        <hr style="border: 0; border-top: 1px solid gold; margin: 20px 0;">
+        <p style="font-style: italic; text-align: center;">Próximamente: "Algo está mal" (Libro)</p>
     </div>
-
 </div>
 
-
-
-<div id="albumModal" class="modal" role="dialog" aria-modal="true">
-
-    <div class="modal-content album-modal-content">
-
-        <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
-
-        
-
-        <h2 id="modalAlbumTitle">Título del Álbum</h2>
-
-        
-
-        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
-
-        
-
+<div id="albumModal" class="modal">
+    <div class="modal-content" style="text-align: center;">
+        <span class="close-modal close-album">×</span>
+        <h2 id="modalAlbumTitle">Título</h2>
+        <div id="modalPlayerContainer" style="margin-bottom: 15px;"></div>
         <div class="tracklist-container" id="modalTracklist"></div>
-
-        
-
-        <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
-
-        <div class="album-platforms" id="modalPlatforms"></div>
-
-        
-
-        <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
-
+        <div id="modalPlatforms" style="display: flex; justify-content: center; gap: 15px;"></div>
     </div>
-
 </div>
-
-
-
-<canvas id="bg" aria-hidden="true"></canvas>
-
-
-
-<div id="starContainer" aria-hidden="true"></div>
-
-
-
-<div class="floating-social">
-
-<a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
-
-<svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg></a>
-
-<a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar TikTok">
-
-<svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg></a>
-
-<a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Facebook">
-
-<svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
-
-<a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Instagram">
-
-<svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
-
-<a href="https://x.com/RMusicalMX" target="_blank" aria-label="Visitar X (Twitter)">
-
-<svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
-
-<a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
-
-<svg viewBox="0 0 448 512"><path d="M331.5 235.7c2.2 .9 4.2 1.9 6.3 2.8c29.2 14.1 50.6 35.2 61.8 61.4c15.7 36.5 17.2 95.8-30.3 143.2c-36.2 36.2-86.6 54.3-146.4 54.3c-108.5 0-188-75.8-188-182.2c0-109.9 85.3-189.5 197.8-189.5c88.8 0 148 48.7 175.7 99.1c7.8 14.1 1.7 33-14 38.6c-13.3 4.8-29.2-.8-36.8-12.7c-17.7-28-54.8-63.4-119.5-63.4c-78.5 0-136.2 55.4-136.2 131.6c0 80 54 125.7 127 125.7c33.5 0 68-12.9 89.2-34.1c17-17 21.7-44.1 11.2-68.5c-7.2-16.7-22.3-30.9-46.7-39.6c-13.6-4.9-28-7.7-42.5-8.5c-44-2.5-87.3 10.9-115.3 35.8c-26.6 23.6-41.6 56.4-41.6 89.7c0 38.7 21.4 75.8 57.7 99.7c33 21.7 75.5 32.7 118.8 32.7c39.6 0 76.5-10.4 105.7-30.1c-13.1 7.1-28.7 11.2-45.3 11.2c-56 0-101.3-45.3-101.3-101.3c0-42.2 25.8-78.3 63.4-93.5c-9.6-1.5-19.5-2.2-29.7-2.2c-67.4 0-120.9 40.5-120.9 98c0 40 27.5 73.6 67.5 89.6c32.7 13.1 71.9 14.6 110.1 4c31.1-8.6 57.6-26.9 76.2-51.5c-15.3 22.6-38.6 39.7-65.7 46.5c-18.7 4.6-38.4 4.7-57.1 .2c-35-8.2-64.6-30.9-82.4-62.8c-18-32.3-21.7-69.8-10.3-104.6c11.4-34.8 38.3-63.1 73.1-77.8c34.8-14.7 73.4-14.8 108.3-.3z"/></svg></a>
-
-<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud">
-
-<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg></a>
-
-</div>
-
-
-
-<div class="floating-platforms">
-
-<a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN" target="_blank" aria-label="Escuchar en Spotify">
-
-<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg></a>
-
-<a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" aria-label="Escuchar en Amazon Music">
-
-<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg></a>
-
-<a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Escuchar en Apple Music">
-
-<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></a>
-
-<a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="Escuchar en YouTube Music">
-
-<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
-
-<a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="Escuchar en SoundCloud">
-
-<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg></a>
-
-</div>
-
-
 
 <div id="solarSystem">
-
-<div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
-
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
-
+    <div id="sun" title="Biografía">
+        <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Sol">
+    </div>
+    <div id="orbitSingles" class="orbit"></div>
+    <div id="orbitAlbums" class="orbit"></div>
 </div>
-
-<div id="orbitSingles" class="orbit"></div>
-
-<div id="orbitAlbums" class="orbit"></div>
-
-</div>
-
-
 
 <script>
-
-// FRASES DIARIAS INTACTAS
-
-const quotesData = [
-
-    { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
-
-    { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
-
-    { text: "Rompe las cadenas… pero primero rompe las tuyas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
-
-    { text: "No somos cenizas, somos volcán dormido.", song: "Raíces de fuego", album: "Voces de Cambio 1" },
-
-    { text: "Traen cadenas de oro, pero son de mentira.", song: "Raíces de fuego", album: "Voces de Cambio 1" },
-
-    { text: "Lo que hoy te callas, mañana te ahoga.", song: "Sabes lo que haces", album: "Voces de Cambio 1" },
-
-    { text: "No es la vida contra ti, es tu reflejo multiplicado.", song: "Sabes lo que haces", album: "Voces de Cambio 1" },
-
-    { text: "El que calla vuelve a caer, pero el que recuerda vuelve a nacer.", song: "Ecos del olvido", album: "Voces de Cambio 1" },
-
-    { text: "La memoria es fuerza, la memoria es destino.", song: "Ecos del olvido", album: "Voces de Cambio 1" },
-
-    { text: "El silencio fue tu cómplice, la indiferencia tu aliada.", song: "Sociedad cómplice", album: "Voces de Cambio 1" },
-
-    { text: "Lo que callas hoy, mañana te va a cobrar.", song: "Sociedad cómplice", album: "Voces de Cambio 1" },
-
-    { text: "Lo que se normaliza termina siendo ley.", song: "Normal es veneno", album: "Voces de Cambio 1" },
-
-    { text: "Si lo normal duele, ya no es normal; si lo normal mata, ya no es costumbre, es mal.", song: "Normal es veneno", album: "Voces de Cambio 1" },
-
-    { text: "El silencio se llama 'paz', pero es miedo disfrazado.", song: "El engaño del bien", album: "Voces de Cambio 1" },
-
-    { text: "El bien verdadero no siempre gusta ni es cómodo.", song: "El engaño del bien", album: "Voces de Cambio 1" },
-
-    { text: "No podemos tapar el sol con la mano ajena.", song: "¿Injusticia o consecuencia?", album: "Voces de Cambio 1" },
-
-    { text: "La vida no es solo castigo ni solo perdón, es reconocer tu parte y tomar la dirección.", song: "¿Injusticia o consecuencia?", album: "Voces de Cambio 1" },
-
-    { text: "Cambiamos de amo, pero no de pecado.", song: "Ciclos y deudas", album: "Voces de Cambio 1" },
-
-    { text: "Si no entendemos la historia de frente, seremos rehenes del mismo presente.", song: "Ciclos y deudas", album: "Voces de Cambio 1" },
-
-    { text: "¡Despierta, México, que el suelo está podrido!", song: "Veneno en la sangre", album: "Voces de Cambio 1" },
-
-    { text: "Compramos el agua mientras el río es cruel.", song: "Veneno en la sangre", album: "Voces de Cambio 1" },
-
-    { text: "Que no hereden cadenas, que no carguen dolor.", song: "Herencia de hierro", album: "Voces de Cambio 1" },
-
-    { text: "Podemos fundir el hierro y cambiar el camino.", song: "Herencia de hierro", album: "Voces de Cambio 1" },
-
-    { text: "Una semilla que plantas en silencio rompe la cadena.", song: "Resistencia pequeña", album: "Voces de Cambio 1" },
-
-    { text: "No hay resistencia mínima cuando nace el corazón.", song: "Resistencia pequeña", album: "Voces de Cambio 1" },
-
-    { text: "Señalar es fácil, criticar es simple... pero dar el ejemplo, eso sí pesa.", song: "El cambio está en ti", album: "Voces de Cambio 1" },
-
-    { text: "La dignidad no se compra y la verdad no se entierra.", song: "No hay tirano eterno", album: "Voces de Cambio 1" },
-
-    { text: "El poder se tambalea cuando el pueblo ya no huye.", song: "No hay tirano eterno", album: "Voces de Cambio 1" },
-
-    { text: "El odio se hereda si nadie lo explica.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
-
-    { text: "Si hoy los negamos, mañana regresan; serán tempestades que el pueblo cosecha.", song: "Hijos del olvido", album: "Voces de Cambio 1" },
-
-
-
-    { text: "La vida no se repite, se renueva.", song: "Altar de vida", album: "Tiempo y vida" },
-
-    { text: "No esperemos la ausencia para honrar la presencia.", song: "Altar de vida", album: "Tiempo y vida" },
-
-    { text: "Tú nunca me juzgas, solo me entiendes.", song: "Quédate", album: "Tiempo y vida" },
-
-    { text: "Seré el viento que acaricie tu pelo, seré tu sombra, tu guardián eterno.", song: "Quédate", album: "Tiempo y vida" },
-
-    { text: "El dolor no me quita el amor, me enseña el valor de seguir.", song: "Renacer", album: "Tiempo y vida" },
-
-    { text: "Porque vivir… también es resistir.", song: "Renacer", album: "Tiempo y vida" },
-
-    { text: "Tus ojos aún no saben mirar, pero ya enseñan lo que es amar.", song: "Citlalli", album: "Tiempo y vida" },
-
-    { text: "Amar es estar despierto en el sueño de los dos.", song: "Alizée", album: "Tiempo y vida" },
-
-    { text: "La vida vale tanto… porque tú estás en ella.", song: "Alizée", album: "Tiempo y vida" },
-
-    { text: "Vale más un abrazo que mil razones sin perdón.", song: "Mientras compartamos el sol", album: "Tiempo y vida" },
-
-    { text: "Lo que se vive y se agradece nunca se pierde, siempre renace.", song: "Amigos del alma", album: "Tiempo y vida" },
-
-    { text: "El amor madura cuando aprende a perdonar.", song: "Aún despierto contigo", album: "Tiempo y vida" },
-
-    { text: "Amar no es prometer, es quedarse y volver a intentar.", song: "Aún despierto contigo", album: "Tiempo y vida" },
-
-    { text: "Tus manos tejen el tiempo y el cansancio se vuelve flor.", song: "A tu lado, mamá", album: "Tiempo y vida" },
-
-    { text: "De ti aprendí que el valor no grita, camina firme y nunca se quita.", song: "Padre, mi raíz", album: "Tiempo y vida" },
-
-    { text: "Tu abrazo es tiempo que no se va.", song: "Abuela de luz", album: "Tiempo y vida" },
-
-    { text: "La vida vale más cuando se da sin medir.", song: "Abuelo, mi camino", album: "Tiempo y vida" },
-
-    { text: "No hay muro que encierre el viento ni cadena que ate el pensamiento.", song: "Voces que siguen luchando", album: "Tiempo y vida" },
-
-    { text: "Buscar no es locura… es un grito de amor.", song: "Hasta encontrarlos", album: "Tiempo y vida" },
-
-    { text: "No hay muerte que venza a una madre con su fe.", song: "Hasta encontrarlos", album: "Tiempo y vida" },
-
-    { text: "El amor no se acaba, solo aprende a esperar.", song: "Aún hay lugar", album: "Tiempo y vida" },
-
-    { text: "El perdón florece cuando se deja de juzgar.", song: "Aún hay lugar", album: "Tiempo y vida" },
-
-    { text: "El amor se aprende cuando se atreve a perdonar.", song: "Perdón y gracias", album: "Tiempo y vida" },
-
-    { text: "La vida se mide en lo que siembras hoy.", song: "Tiempo y vida", album: "Tiempo y vida" },
-
-
-
-    { text: "Cada canción que eliges es un reflejo de lo que callas.", song: "Prólogo - Antes de darle play", album: "Eres lo que escuchas" },
-
-    { text: "Si comes veneno, ¿qué esperas por dentro?", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
-
-    { text: "Te hablas como te hablan, te tratas como te tratan.", song: "Eres lo que escuchas", album: "Eres lo que escuchas" },
-
-    { text: "Un paso torpe vale más que mil planeados.", song: "Empieza mal", album: "Eres lo que escuchas" },
-
-    { text: "La perfección es el disfraz del que se esconde.", song: "Empieza mal", album: "Eres lo que escuchas" },
-
-    { text: "Lo que parece fácil es el resultado de no rendirse.", song: "Solo sigue", album: "Eres lo que escuchas" },
-
-    { text: "A veces el silencio… es más sabio que mil argumentos.", song: "Dejalos ganar", album: "Eres lo que escuchas" },
-
-    { text: "Discutir con un necio… Es entregarle tu energía.", song: "Dejalos ganar", album: "Eres lo que escuchas" },
-
-    { text: "Si convives con un cojo... Aprendes a cojear.", song: "Espejo", album: "Eres lo que escuchas" },
-
-    { text: "Prefiero la soledad que una mesa podrida donde todos brindan con el alma vencida.", song: "Espejo", album: "Eres lo que escuchas" },
-
-    { text: "No nací roto, me rompieron.", song: "Cráter", album: "Eres lo que escuchas" },
-
-    { text: "No quiero tu paz si me exige silencio ni tus abrazos cargados de desprecio.", song: "Cráter", album: "Eres lo que escuchas" },
-
-    { text: "Tu historia no es falla, es combustible.", song: "Luz que no se apaga", album: "Eres lo que escuchas" },
-
-    { text: "No te hicieron para encajar, te hicieron para expandir.", song: "Luz que no se apaga", album: "Eres lo que escuchas" },
-
-    { text: "Quien se escucha se libera del molde.", song: "Lo que soy", album: "Eres lo que escuchas" },
-
-    { text: "Prefiero la herida que me deja el viento que el cómodo frío de un falso aliento.", song: "Lo que soy", album: "Eres lo que escuchas" },
-
-    { text: "Si no edifica, si no inspira, si solo degrada... eso no es reggaetón.", song: "Mierdaton", album: "Eres lo que escuchas" },
-
-    { text: "Por más que presumas balas… sigues huyendo de ti mismo.", song: "Anestesia barata", album: "Eres lo que escuchas" },
-
-    { text: "Si la vida de otros te sirve pa' brillar, no eres artista… eres irresponsable social.", song: "Anestesia barata", album: "Eres lo que escuchas" },
-
-    { text: "Ser hombre no es un disfraz, es carácter y es verdad.", song: "Hombre que despierta", album: "Eres lo que escuchas" },
-
-    { text: "Estar a la moda es renunciar al criterio propio para mendigar la aceptación.", song: "¿Qué es la moda?", album: "Eres lo que escuchas" },
-
-    { text: "Quien vive a la moda… muere sin identidad.", song: "¿Qué es la moda?", album: "Eres lo que escuchas" },
-
-    { text: "Se entretiene el cuerpo, pero el alma se apaga.", song: "Payasos con corona de humo", album: "Eres lo que escuchas" },
-
-    { text: "El dolor enseña lo que nadie quiere, que hasta el amor más puro a veces hiere.", song: "El peso del silencio", album: "Eres lo que escuchas" },
-
-    { text: "Caminar sobre el agua no es magia, es creer en ti cuando nadie más lo hace.", song: "Camino sobre el agua", album: "Eres lo que escuchas" },
-
-    { text: "La clase no se compra, no se vende, no espera.", song: "Simple", album: "Eres lo que escuchas" },
-
-    { text: "La sabiduría no es solo pensar, ni la pasión ciega, sin rumbo ni lugar.", song: "Mente corazón", album: "Eres lo que escuchas" },
-
-    { text: "La fuerza verdadera nace de la pena.", song: "Combate interior", album: "Eres lo que escuchas" },
-
-    { text: "Beso sin amar y me llamo traidor por creer.", song: "Bucle / Mundo imperfecto", album: "Eres lo que escuchas" },
-
-    { text: "El mundo gira imperfecto — nosotros fingimos que está bien.", song: "Bucle / Mundo imperfecto", album: "Eres lo que escuchas" },
-
-    { text: "América late, no está vencida; las venas abiertas, la herida no se olvida.", song: "Las venas abiertas", album: "Eres lo que escuchas" },
-
-    { text: "Tu pareja es un reflejo de lo que aceptas.", song: "No todos son iguales", album: "Eres lo que escuchas" },
-
-    { text: "Fuiste tú quien abrió la puerta.", song: "No todos son iguales", album: "Eres lo que escuchas" },
-
-    { text: "El paraíso del narco es sólo un infierno con perfume caro.", song: "Paraíso de sangre", album: "Eres lo que escuchas" },
-
-    { text: "Una lucha que busca venganza no es justicia.", song: "Del dolor al odio", album: "Eres lo que escuchas" },
-
-    { text: "El pueblo sin agua mientras tú brindas por ella.", song: "A qué costo", album: "Eres lo que escuchas" },
-
-
-
-    { text: "La verdad no negocia, solo cobra al caer.", song: "El precio de la mentira", album: "Tejido vital" },
-
-    { text: "Ese silencio no es neutral, es complicidad.", song: "Cobardes", album: "Tejido vital" },
-
-    { text: "No es valentía hablar cuando es seguro… Es amor decir la verdad… aunque el mundo te odie por hacerlo.", song: "Cobardes", album: "Tejido vital" },
-
-    { text: "La primera trinchera no está en la calle, transformarla es tu deber.", song: "En la trinchera", album: "Tejido vital" },
-
-    { text: "La primera bala nunca es de plomo, es una idea que se mete en el lodo.", song: "La primera trinchera", album: "Tejido vital" },
-
-    { text: "No somos rivales, somos la fuerza que construye el mundo cuando se respeta.", song: "Ni Ella sin Él ni Él sin Ella", album: "Tejido vital" },
-
-    { text: "Venganza no es lo mismo que ser triunfante.", song: "Empoderar no es guerra", album: "Tejido vital" },
-
-    { text: "El verdadero poder no destruye, construye.", song: "Empoderar no es guerra", album: "Tejido vital" },
-
-    { text: "Amar hoy es rebeldía, porque el odio está de moda.", song: "Amor en tiempos de ideologías cancerígenas", album: "Tejido vital" },
-
-    { text: "Si en tu casa hay guerra, no hables de paz afuera.", song: "Honra a tu pareja", album: "Tejido vital" },
-
-    { text: "El enemigo más sutil y letal es la costumbre fría que mata lo especial.", song: "Honra a tu pareja", album: "Tejido vital" },
-
-    { text: "Me enseñaste que el amor no solo besa… también enfrenta.", song: "Juramento de dos", album: "Tejido vital" },
-
-    { text: "No fue suerte, fue decisión y fue guerra; dos soldados caminando la misma tierra.", song: "Complemento eterno", album: "Tejido vital" },
-
-    { text: "Si no lo haces tú, lo hará la calle.", song: "Cuida y educa", album: "Tejido vital" },
-
-    { text: "La lealtad no se vende y la dignidad no se alquila.", song: "Cuida y educa", album: "Tejido vital" },
-
-    { text: "El éxito no es lujo, es dormir sin cadenas.", song: "Herencia que no se rompe", album: "Tejido vital" },
-
-    { text: "Tus hijos no necesitan los lujos que no tuviste… Necesitan la paz… que tampoco te dieron.", song: "Enséñales", album: "Tejido vital" },
-
-    { text: "Enséñales que caerse… también es parte de avanzar.", song: "Enséñales", album: "Tejido vital" },
-
-    { text: "No hay herencia más valiosa que una vida recta.", song: "Ciudadanos del mundo", album: "Tejido vital" },
-
-
-
-    { text: "Cambiar de líder sin cambiar de mentalidad es como cambiar de jaula, pero seguir siendo pájaro.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
-
-    { text: "Tu mente es tu mayor territorio ocupado y liberarla es tu deber más urgente.", song: "Prólogo a Revolución Mental", album: "Revolucion mental" },
-
-    { text: "Nos vendieron el silencio como paz y el confort como evolución.", song: "Manual para un pueblo dormido", album: "Revolucion mental" },
-
-    { text: "Dormimos en cadenas doradas creyendo que son pulseras sagradas.", song: "Neuronas en huelga", album: "Revolucion mental" },
-
-    { text: "La caja idiota no me enseña a sentir, me vende verdades listas pa’ consumir.", song: "La Caja idiota", album: "Revolucion mental" },
-
-    { text: "Soy mi propio enemigo, el miedo que me encierra, el fuego que apago, la voz que me entierra.", song: "Mi enemigo", album: "Revolucion mental" },
-
-    { text: "No hay enemigo más peligroso que el que vive bajo tu cara.", song: "Mi enemigo", album: "Revolucion mental" },
-
-    { text: "Idolatramos al que roba mejor y al que es honesto lo llaman traidor.", song: "Mexico bipolar", album: "Revolucion mental" },
-
-    { text: "Gritamos justicia, pero calla el vecino cuando el crimen es su destino.", song: "Mexico bipolar", album: "Revolucion mental" },
-
-    { text: "Confundimos esperanza con fe y la fe con el miedo a perder.", song: "Sin mesías", album: "Revolucion mental" },
-
-    { text: "El silencio del pueblo es el arma del tirano.", song: "Despierta cabrón", album: "Revolucion mental" },
-
-    { text: "No le pidas al cielo lo que tú no haces.", song: "Despierta cabrón", album: "Revolucion mental" },
-
-    { text: "No somos lo que el sistema hace de nosotros, somos lo que decidimos ser después de saberlo.", song: "Reinicio", album: "Revolucion mental" },
-
-    { text: "Me creí sabio porque dudaba, pero dudaba por miedo.", song: "Espejo", album: "Revolucion mental" },
-
-    { text: "El cambio empieza cuando te sostienes la mirada sin mentirte.", song: "Espejo", album: "Revolucion mental" },
-
-    { text: "Uno no despierta solo. Despierta el que aprende a mirar al otro.", song: "Conciencia colectiva", album: "Revolucion mental" },
-
-    { text: "Cambiamos rezos por acciones, likes por revoluciones.", song: "Nuevo código", album: "Revolucion mental" },
-
-    { text: "Quejarse no es contribuir, criticar no es cambiar.", song: "Epílogo", album: "Revolucion mental" },
-
-
-
-    { text: "Huelen la tragedia como si fuera oportunidad.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Miran la tragedia, pero nunca la causa. Miran al pueblo… y lo ven como cifra.", song: "Introducción / Chacales oportunistas", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Aquí el sol madura la fruta… pero la muerte la corta primero.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "El que cultiva muere… el que negocia con armas vive y vuelve a crecer.", song: "El oro verde", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "El bosque llora suave, pero su memoria nunca se gasta. Guardias de la vida que el país dejó sin guardia.", song: "Los que cuidaban la tierra", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "El desastre llegó con viento… pero el saqueo llegó con credencial.", song: "Huracanes con uniforme", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "¿De qué sirve un estado que no llega? ¿De qué sirve un líder que no mira?", song: "Lodo y promesas", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Las leyes no nacen por justicia… nacen por fracaso.", song: "La ley del fracaso", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Si la ley lleva tu nombre, no fue un triunfo. Fue un país que no te cuidó.", song: "La ley del fracaso", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Firman reformas con tinta ajena, el muerto siempre firma con sangre.", song: "Firma y olvida", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "No buscamos tumbas… buscamos señales de vida.", song: "Las madres no duermen", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Si ellas siguen de pie, el país no puede seguir arrodillado.", song: "Las madres no duermen", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Porque un desaparecido es un país incompleto.", song: "Sin huella ni tumba II", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "La memoria aquí no es un archivo, es un machete.", song: "Epílogo (México no olvida)", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "Cobardes que tiemblan ante el criminal, valientes pa’ callar al que quiere cambiar.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
-
-    { text: "No mataron al hombre… despertaron al pueblo.", song: "Carlos Manzo, Luz en Uruapan", album: "CHACALES OPORTUNISTAS" },
-
-
-
-    { text: "La muerte no cierra, transforma. Abre la puerta de la memoria y nos enseña a mirar distinto.", song: "Introducción / 28 de octubre", album: "Luz entre las Sombras" },
-
-    { text: "Corre libre donde no hay dolor, donde el cielo es verde y el alma es amor.", song: "Hasta que volvamos a correr", album: "Luz entre las Sombras" },
-
-    { text: "Pequeña luz, que no se apagó, solo subiste antes que yo.", song: "Pequeña luz", album: "Luz entre las Sombras" },
-
-    { text: "Donde habita el amor… no existe el 'nunca más'.", song: "Hermano del alma", album: "Luz entre las Sombras" },
-
-    { text: "Hay heridas que no duelen, solo aprenden a respirar.", song: "Silencio en la cama", album: "Luz entre las Sombras" },
-
-    { text: "Lo que me enseñaste vive en mí, no hay distancia que lo pueda borrar.", song: "Lo que me enseñaste", album: "Luz entre las Sombras" },
-
-    { text: "Tus manos eran mapas de historias que contar.", song: "Los que abrieron camino", album: "Luz entre las Sombras" },
-
-    { text: "Sabían que el silencio era traición al corazón.", song: "Voces que no callaron", album: "Luz entre las Sombras" },
-
-    { text: "Perdóname por no decir 'te amo' a tiempo, por no estar allí cuando el cielo abrió tu aliento.", song: "Perdóname", album: "Luz entre las Sombras" },
-
-    { text: "Me escondí tras mi cobarde corazón con miedo de entender.", song: "Perdóname", album: "Luz entre las Sombras" },
-
-    { text: "Ni vivos ni muertos, solo sombras y eco.", song: "Sin huella ni tumba", album: "Luz entre las Sombras" },
-
-    { text: "Cada paso que das hacia el perdón es un paso hacia ti mismo.", song: "Los que no regresan", album: "Luz entre las Sombras" },
-
-    { text: "Hoy soltamos el dolor, no para olvidar, sino para caminar más ligeros.", song: "Después del silencio", album: "Luz entre las Sombras" },
-
-
-
-    { text: "México despierta cuando tú sabes crecer.", song: "Mexico despierta", album: "Voces de Cambio 2" },
-
-    { text: "Del pasado aprendemos, no para sufrir sino para actuar.", song: "Reflexión Musical MX", album: "Voces de Cambio 2" },
-
-    { text: "El dolor se transforma en luz que nos guía.", song: "Memoria viva", album: "Voces de Cambio 2" },
-
-    { text: "El mundo no cambia solo con quejas o palabras, se transforma quien actúa.", song: "Sombras y luz", album: "Voces de Cambio 2" },
-
-    { text: "El futuro no nace en decretos ni en balas, se gesta en los gestos pequeños que no se embalsaman.", song: "Semillas para mañana", album: "Voces de Cambio 2" },
-
-    { text: "Lo que te espera no viene del cielo... es tu reflejo, la consecuencia que te mira a los ojos.", song: "Lo que te espera", album: "Voces de Cambio 2" },
-
-    { text: "No elegimos lo heredado, pero sí qué dejamos: romper cadenas viejas o seguirlas entregando.", song: "El eco de los ancestros", album: "Voces de Cambio 2" },
-
-    { text: "Mexicano, soy de esta tierra bella, más que mariachi, más que tequila o mezcal... haciendo lo que es justo aquí.", song: "Orgullo mexicano", album: "Voces de Cambio 2" },
-
-    { text: "Defienden partidos como si fueran religión... pero cuando el temblor llega, todos corren a ayudar, y nadie pregunta de qué partido eres.", song: "En la union esta la fuerza", album: "Voces de Cambio 2" },
-
-    { text: "No hay mesías, no hay milagro ni salvación... el país no cambia con discursos bonitos, cambia cuando dejamos de ser unos ingenuos.", song: "No más excusas", album: "Voces de Cambio 2" },
-
-    { text: "Sé chingón, sin chingarte a los demás, no hace falta tumbar pa' llegar a más.", song: "Se chingon", album: "Voces de Cambio 2" },
-
-    { text: "La victoria más pura es la que compartes más.", song: "Se chingon", album: "Voces de Cambio 2" },
-
-    { text: "El México que críticas, lo construyes Tú.", song: "Mexico eres tu / Mexico lindo", album: "Voces de Cambio 2" },
-
-    { text: "Te quejas de la impunidad, pero sobornas al tránsito para evitar la multa.", song: "Mexico eres tu / Mexico lindo", album: "Voces de Cambio 2" },
-
-    { text: "No busques culpables afuera… mírate al espejo.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
-
-    { text: "No hay revolución sin transformación, primero en tu mente, después en acción.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
-
-    { text: "¡La nación no se vende jamás!", song: "Himno a México", album: "Voces de Cambio 2" }
-
-];
-
-
-
-let quoteOrder = [];
-
-let quoteIndex = 0;
-
-
-
-function shuffleArray(array) {
-
-    for (let i = array.length - 1; i > 0; i--) {
-
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [array[i], array[j]] = [array[j], array[i]];
-
-    }
-
-}
-
-
-
-function generateDailyOrder() {
-
-    quoteOrder = Array.from({ length: quotesData.length }, (_, i) => i);
-
-    shuffleArray(quoteOrder);
-
-    quoteIndex = 0;
-
-    try {
-
-        const today = new Date().toISOString().split('T')[0];
-
-        localStorage.setItem('rmmx_quoteDate', today);
-
-        localStorage.setItem('rmmx_quoteOrder', JSON.stringify(quoteOrder));
-
-        localStorage.setItem('rmmx_quoteIndex', quoteIndex);
-
-    } catch(e) {}
-
-}
-
-
-
-try {
-
-    const today = new Date().toISOString().split('T')[0];
-
-    const storedDate = localStorage.getItem('rmmx_quoteDate');
-
-    if (storedDate === today) {
-
-        quoteOrder = JSON.parse(localStorage.getItem('rmmx_quoteOrder'));
-
-        quoteIndex = parseInt(localStorage.getItem('rmmx_quoteIndex'), 10);
-
-        if (!quoteOrder || quoteOrder.length !== quotesData.length || isNaN(quoteIndex)) {
-
-            generateDailyOrder();
-
-        }
-
-    } else {
-
-        generateDailyOrder();
-
-    }
-
-} catch(e) {
-
-    generateDailyOrder();
-
-}
-
-
-
-function getNextQuote() {
-
-    if (quoteIndex >= quoteOrder.length) {
-
-        generateDailyOrder();
-
-    }
-
-    const q = quotesData[quoteOrder[quoteIndex]];
-
-    quoteIndex++;
-
-    try { localStorage.setItem('rmmx_quoteIndex', quoteIndex); } catch(e) {}
-
-    return q;
-
-}
-
-
-
-window.addEventListener('load', () => {
-
-    const loader = document.getElementById('loader');
-
-    setTimeout(() => {
-
-        loader.style.opacity = '0';
-
-        setTimeout(() => loader.remove(), 800);
-
-    }, 500); 
-
-});
-
-
-
-// ----------------------------------------------------------------------
-
-// 3. LÓGICA PRINCIPAL DEL DOM Y MODALES
-
-// ----------------------------------------------------------------------
-
-document.addEventListener("DOMContentLoaded", () => {
-
-
-
-    const modal = document.getElementById("bioModal");
-
-    const sun = document.getElementById("sun");
-
-    const closeBioModal = document.querySelector(".close-bio");
-
-    const bioAudio = document.getElementById("bioAudio"); 
-
-    const volumeSlider = document.getElementById("volumeSlider");
-
-    const muteBtn = document.getElementById("muteBtn");
-
-    const starContainer = document.getElementById("starContainer"); 
-
-    
-
-    // VARIABLES DEL NUEVO MODAL DE ÁLBUMES
-
-    const albumModal = document.getElementById("albumModal");
-
-    const closeAlbumModal = document.querySelector(".close-album");
-
-    const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
-
-    const modalAlbumTitle = document.getElementById("modalAlbumTitle");
-
-    const modalPlayerContainer = document.getElementById("modalPlayerContainer");
-
-    const modalTracklist = document.getElementById("modalTracklist");
-
-    const modalPlatforms = document.getElementById("modalPlatforms");
-
-    
-
-    if(volumeSlider && bioAudio) {
-
-        bioAudio.volume = volumeSlider.value;
-
-        volumeSlider.addEventListener("input", (e) => {
-
-            bioAudio.volume = e.target.value;
-
-            muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
-
-        });
-
-    }
-
-
-
-    if(muteBtn && bioAudio) {
-
-        muteBtn.addEventListener("click", () => {
-
-            if (bioAudio.volume > 0) {
-
-                bioAudio.dataset.lastVol = bioAudio.volume; 
-
-                bioAudio.volume = 0;
-
-                volumeSlider.value = 0;
-
-                muteBtn.textContent = "🔇";
-
-            } else {
-
-                const lastVol = bioAudio.dataset.lastVol || 0.4;
-
-                bioAudio.volume = lastVol;
-
-                volumeSlider.value = lastVol;
-
-                muteBtn.textContent = "🔊";
-
-            }
-
-        });
-
-    }
-
-
-
-    function closeAndStopAudio() {
-
-        modal.classList.remove("show");
-
-        if(bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
-
-    }
-
-    
-
-    function closeAlbumPanel() {
-
-        albumModal.classList.remove("show");
-
-        // Detiene el video de YouTube al cerrar el modal limpiando contenedores
-
-        setTimeout(() => {
-
-            modalPlayerContainer.innerHTML = "";
-
-            modalTracklist.innerHTML = "";
-
-        }, 400);
-
-    }
-
-
-
-    if(sun) {
-
-        sun.onclick = () => { 
-
-            modal.classList.add("show"); 
-
-            if(bioAudio) { bioAudio.play().catch(error => { console.log("Bloqueado:", error); }); }
-
-        };
-
-    }
-
-
-
-    if(closeBioModal) closeBioModal.addEventListener('click', closeAndStopAudio);
-
-    if(closeAlbumModal) closeAlbumModal.addEventListener('click', closeAlbumPanel);
-
-    if(btnCerrarAlbum) btnCerrarAlbum.addEventListener('click', closeAlbumPanel);
-
-    
-
-    window.addEventListener('click', (event) => {
-
-        if (event.target === modal) closeAndStopAudio();
-
-        if (event.target === albumModal) closeAlbumPanel();
-
-    });
-
-    window.addEventListener('touchstart', (event) => {
-
-        if (event.target === modal) closeAndStopAudio();
-
-        if (event.target === albumModal) closeAlbumPanel();
-
-    }, {passive: true});
-
-
-
+    // DATOS DE LAS FRASES (Iguales a las tuyas)
+    const quotesData = [
+        { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
+        // ... (Agrega aquí el resto de tus frases para que el script las use)
+    ];
+
+    // LÓGICA DE LAS ESTRELLAS (CANVAS)
     const canvas = document.getElementById("bg");
-
     const ctx = canvas.getContext("2d");
-
-    
-
-    const numStars = window.innerWidth < 768 ? 80 : 300; 
-
-    let backgroundStars = [];
-
-
-
-    function setCanvasSize() {
-
-        canvas.width = window.innerWidth;
-
-        canvas.height = window.innerHeight;
-
-        initStars();
-
-    }
-
-    
+    let stars = [];
 
     function initStars() {
-
-        backgroundStars = [];
-
-        for (let i = 0; i < numStars; i++) {
-
-            backgroundStars.push({
-
-                x: Math.random() * canvas.width,
-
-                y: Math.random() * canvas.height,
-
-                r: Math.random() * 1.5,
-
-                opacity: Math.random(),
-
-                speed: 0.005 + Math.random() * 0.01
-
-            });
-
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        stars = [];
+        for (let i = 0; i < 200; i++) {
+            stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5, o: Math.random() });
         }
-
     }
 
-
-
-    function drawCanvas() {
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        backgroundStars.forEach(s => {
-
-            s.opacity += s.speed;
-
-            if (s.opacity >= 1 || s.opacity <= 0.1) s.speed *= -1;
-
-            ctx.fillStyle = `rgba(255, 215, 0, ${s.opacity})`;
-
+    function draw() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(s => {
+            ctx.fillStyle = `rgba(255, 215, 0, ${Math.abs(Math.sin(Date.now() * 0.001 + s.o))})`;
             ctx.beginPath();
-
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-
             ctx.fill();
+        });
+        requestAnimationFrame(draw);
+    }
+    initStars(); draw();
 
+    // LÓGICA DE REPRODUCTOR Y MODALES
+    document.addEventListener("DOMContentLoaded", () => {
+        const sun = document.getElementById("sun");
+        const bioModal = document.getElementById("bioModal");
+        const albumModal = document.getElementById("albumModal");
+
+        // Abrir Bio
+        sun.onclick = () => {
+            bioModal.classList.add("show");
+            document.getElementById("bioAudio").play().catch(() => {});
+        };
+
+        // Cerrar Modales
+        document.querySelectorAll(".close-modal").forEach(btn => {
+            btn.onclick = () => {
+                bioModal.classList.remove("show");
+                albumModal.classList.remove("show");
+                document.getElementById("modalPlayerContainer").innerHTML = ""; // Detener video
+                document.getElementById("bioAudio").pause();
+            };
         });
 
-        requestAnimationFrame(drawCanvas);
-
-    }
-
-
-
-    setCanvasSize();
-
-    window.addEventListener('resize', setCanvasSize);
-
-    drawCanvas();
-
-
-
-    function showQuoteAndSpin() {
-
-        const q = getNextQuote(); 
-
-        
-
-        const quoteEl = document.createElement("div");
-
-        quoteEl.className = "floating-quote";
-
-        
-
-        quoteEl.innerHTML = `"${q.text}"<br><span>${q.song}</span>`;
-
-        
-
-        document.body.appendChild(quoteEl);
-
-
-
-        quoteEl.animate([
-
-            { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' },
-
-            { opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)', offset: 0.05 },
-
-            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.1 },
-
-            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.9 },
-
-            { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' }
-
-        ], { duration: 8000, easing: 'ease-out' }).onfinish = () => quoteEl.remove();
-
-
-
-        const planetImg = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter img`);
-
-        const planetTooltip = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter .tooltip`);
-
-        
-
-        if(planetImg) {
-
-            planetImg.classList.add("spin-active");
-
-            if(planetTooltip) planetTooltip.classList.add("force-tooltip");
-
-            
-
-            setTimeout(() => {
-
-                planetImg.classList.remove("spin-active");
-
-                if(planetTooltip) planetTooltip.classList.remove("force-tooltip");
-
-            }, 8000);
-
+        // Función para extraer ID de Youtube
+        function getYTId(url) {
+            const match = url.match(/[?&]v=([^&]+)/);
+            return match ? match[1] : null;
         }
 
-    }
-
-
-
-    let isQuoteActive = false;
-
-    let currentSpawnTimeout = null;
-
-
-
-    function removeAllSupernovas() {
-
-        const supernovas = document.querySelectorAll('.supernova-hitbox');
-
-        supernovas.forEach(sn => sn.remove());
-
-    }
-
-
-
-    function spawnSupernovaBatch() {
-
-        if (isQuoteActive) {
-
-            if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
-
-            return;
-
-        }
-
-
-
-        removeAllSupernovas();
-
-
-
-        for (let i = 0; i < 3; i++) {
-
-            const hitbox = document.createElement("div");
-
-            hitbox.className = "supernova-hitbox";
-
-            hitbox.style.left = (Math.random() * window.innerWidth) + "px";
-
-            hitbox.style.top = (Math.random() * window.innerHeight) + "px";
-
-
-
-            const flash = document.createElement("div");
-
-            flash.className = "supernova";
-
-            flash.innerHTML = '<div class="ray-x"></div>'; 
-
-            
-
-            hitbox.appendChild(flash);
-
-            
-
-            hitbox.onclick = function() {
-
-                if (isQuoteActive) return;
-
-
-
-                isQuoteActive = true;
-
-                showQuoteAndSpin(); 
-
-                removeAllSupernovas(); 
-
-
-
-                if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
-
-
-
-                setTimeout(() => {
-
-                    isQuoteActive = false; 
-
-                    spawnSupernovaBatch(); 
-
-                }, 8000);
-
-            };
-
-
-
-            if(starContainer) starContainer.appendChild(hitbox); 
-
-        }
-
-
-
-        currentSpawnTimeout = setTimeout(() => {
-
-            if (!isQuoteActive) {
-
-                removeAllSupernovas();
-
-                currentSpawnTimeout = setTimeout(spawnSupernovaBatch, 1000);
-
-            }
-
-        }, 3500); 
-
-    }
-
-
-
-    spawnSupernovaBatch();
-
-
-
-    // ----------------------------------------------------------------------
-
-    // 4. BASE DE DATOS (SENCILLOS Y ÁLBUMES CON REPRODUCTOR FIJO)
-
-    // ----------------------------------------------------------------------
-
-    const singles = [
-
-        {
-
-            img: "images/We rise as one.webp",
-
-            title: "We rise as one",
-
-            tracks: [
-
-                { name: "We rise as one", url: "https://music.youtube.com/watch?v=iD_3kV2LhaE&si=xcGnXratPfDPN-vh" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs&si=6Nc2mOTytxGm18Nx",
-
-                spotify: "https://open.spotify.com/album/1hx8kcmgYi0CMT25xiNyUz?si=l1oh9MgqTRqvVBETnPfLAw",
-
-                amazon: "https://music.amazon.com.mx/albums/B0FZXWR7N7?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_1htG2t81fygJkZHqOaGTiGrt2",
-
-                apple: "https://music.apple.com/es/album/we-rise-as-one-single/1851049433",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/we-rise-as-one?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Gracias 2025.webp",
-
-            title: "Gracias 2025",
-
-            tracks: [
-
-                { name: "Gracias 2025", url: "https://music.youtube.com/watch?v=v8Y2cvn9UjI&si=IO_De-68qamgjMUs" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk&si=ElSlDGU7aDAoq09_",
-
-                spotify: "https://open.spotify.com/album/3UUtgG1Lvn1zmTpY94PCmN?si=xylJPSN9QBywlTXl5wAfxg",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GGXJ3XG3?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_DaYoUDq5Q1wxw16NsSgzqxpUz",
-
-                apple: "https://music.apple.com/es/album/gracias-2025-single/1869178508",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/gracias-2025?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Adultos TRASTORNADOS.webp",
-
-            title: "Adultos TRASTORNADOS",
-
-            tracks: [
-
-                { name: "Adultos TRASTORNADOS", url: "https://music.youtube.com/watch?v=3Fw4IKBMYY8&si=lw7nO19q_RrSP4Ho" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM&si=lC3CzdQTOHkxfKva",
-
-                spotify: "https://open.spotify.com/album/64O12821a5VeL4CDsvFkhq?si=N_vPDU_9T1-girApegfDAg",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GNPGPNWP?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_g8XNcuz2b8BdsxH2UE3W2y8YV",
-
-                apple: "https://music.apple.com/es/album/adultos-trastornados-single/1877753106",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/adultos-trastornados?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Codigo rojo.webp",
-
-            title: "Esto no empezó hoy",
-
-            tracks: [
-
-                { name: "Esto no empezó hoy (Narrado)", url: "https://music.youtube.com/watch?v=PWf6RhJchKs&si=zE2lTHmnLQqcMrBS" },
-
-                { name: "Esto no empezó hoy (Rap)", url: "https://music.youtube.com/watch?v=i2oIbK6Ii9I&si=Wn_WP_snBIAjkbox" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0&si=gS8ZkpysgtpLzzLB",
-
-                spotify: "https://open.spotify.com/album/0x1QYc6n54qlEAdsjo6sFu?si=Rrb6qFW4Tu-liIfSVU8Iig",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GQ588HLX?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_tytyNcoQHL2GRezLygimc3cnt",
-
-                apple: "https://music.apple.com/es/album/esto-no-empez%C3%B3-hoy-single/1880118370",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/esto-no-empezo-hoy?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/La fuerza de todos.webp",
-
-            title: "La fuerza de todos",
-
-            tracks: [
-
-                { name: "La fuerza de todos (Rap)", url: "https://music.youtube.com/watch?v=EVJ4n6XtSN8&si=siFeTAWj8anZLv3O" },
-
-                { name: "La fuerza de todos (Acustico)", url: "https://music.youtube.com/watch?v=8L9-p_73I2c&si=A7OhreCOAjqiJ_sZ" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro",
-
-                spotify: "https://open.spotify.com/album/5alJBFihx9EwKaQpX8cKPa?si=HpwcBOIYRHiM4Wwc1Lt0LA",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GQ6SGM4C?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_3D9YA3SH5TRRBK8EVIcsqdZVG",
-
-                apple: "https://music.apple.com/es/album/la-fuerza-de-todos-single/1880182072",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/la-fuerza-de-todos-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Regresar a casa.webp",
-
-            title: "Regresar a casa",
-
-            tracks: [
-
-                { name: "VOLVER A CASA (Rap)", url: "https://music.youtube.com/watch?v=O9HXdo89e60&si=HKXqdhLWuMhW_WSJ" },
-
-                { name: "VOLVER A CASA (Balada)", url: "https://music.youtube.com/watch?v=IJNm0CCVGls&si=mgkhP7GbMfVM_7Ty" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE&si=fTPomu5xyEVts_dA",
-
-                spotify: "https://open.spotify.com/album/1Z3BWmi0DGxjMgslqZqokZ?si=BRAQZ80KT7OluuE7NI36SQ",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GQ5YYPTY?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_2x0KpXE2G0D6M94bkJuhnJK0a",
-
-                apple: "https://music.apple.com/es/album/regresar-a-casa-single/1880183940",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/regresar-a-casa-2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Tres colores, un compromiso.webp",
-
-            title: "Tres colores, un compromiso",
-
-            tracks: [
-
-                { name: "Tres Colores, Un Compromiso", url: "https://music.youtube.com/watch?v=CHiMyTyndHg&si=9O7sCkKh4LOSGlxY" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM",
-
-                spotify: "https://open.spotify.com/album/1MJdvRWqcBXJrADcCuD4Ia?si=gV2aTyeCTW61CGityRKZLA",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GQD9LB1H?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_eDJdSeRaEBF3MdaI6m5Mg5J8G",
-
-                apple: "https://music.apple.com/es/album/tres-colores-un-compromiso-single/1880483551",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/tres-colores-un-compromiso?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Del dolor al odio.webp",
-
-            title: "Del dolor al odio",
-
-            tracks: [
-
-                { name: "Del dolor al Odio (Acustico)", url: "https://music.youtube.com/watch?v=9DMZPZ7m9Kw&si=rwg9NvTuQT_P2CG6" },
-
-                { name: "Del Dolor al Odio II (Rap)", url: "https://music.youtube.com/watch?v=qkcbl8Z7VSs&si=9NRuzCzcsEQT8dbE" },
-
-                { name: "Del Dolor Al Odio III (Rap)", url: "https://music.youtube.com/watch?v=ZLzNRJUQUGc&si=Y1i0BQeckvYj7x2y" },
-
-                { name: "Del Dolor Al Odio", url: "https://music.youtube.com/watch?v=xvdzZnHEWUo&si=2DJEaChcx6iYNrXt" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lt7XMszm6gl_8v0BWGOrIA2MnNbmELfn0&si=pgFPSDrfN8vQ13XE",
-
-                spotify: "https://open.spotify.com/album/7m7tt0KcHFbmg1JPDu2B2S?si=MFQRyAQ3RouFK3ICw_AW8A",
-
-                amazon: "https://music.amazon.es/albums/B0GS3NCY9D?marketplaceId=A1RKKUPIHCS9HS&musicTerritory=ES&ref=dm_sh_Zs0K7UdhM6FlxoDfz1EkFzt8q",
-
-                apple: "https://music.apple.com/pe/album/del-dolor-al-odio-ep/1884126596",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/del-dolor-al-odio-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Antes de las armas.webp",
-
-            title: "Antes de las armas",
-
-            tracks: [
-
-                { name: "Antes de las armas", url: "https://music.youtube.com/watch?v=RNW5v_36IJU&si=FzWM5VeM7c9FiKbd" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kydOEDIwMtIG24XfwEVvC5qRewXzTaEh0&si=oJh5SnxF2RKMQHEX",
-
-                spotify: "https://open.spotify.com/album/4GGDQzH729FJvFz0f9bD9j?si=hiRR5JNsQZ-G6yAF9mh28A",
-
-                amazon: "https://music.amazon.es/albums/B0GTDHLTNB?marketplaceId=A1RKKUPIHCS9HS&musicTerritory=ES&ref=dm_sh_bcbSenuHfOjqyOfw1ZkqvNKPR",
-
-                apple: "https://music.apple.com/pe/album/antes-de-las-armas-single/1886860585",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/antes-de-las-armas?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        }
-
-    ];
-
-
-
-    const albums = [
-
-        {
-
-            img: "images/Voces de Cambio 1.webp",
-
-            title: "Voces de Cambio 1",
-
-            tracks: [
-
-                { name: "Ciudad en silencio", url: "https://music.youtube.com/watch?v=Pes1UMLzo4k&si=YcgqK8zfBkm_gUIT" },
-
-                { name: "Raíces de fuego", url: "https://music.youtube.com/watch?v=dhfbqQ-eA4k&si=EczJLPwIrIIpfeIU" },
-
-                { name: "Sabes lo que haces", url: "https://music.youtube.com/watch?v=Q3S-VNSAapw&si=QgDPla23rzXIj0rT" },
-
-                { name: "Ecos del olvido", url: "https://music.youtube.com/watch?v=ph3wGjm-_ik&si=Yg2teMWmnLJamOdt" },
-
-                { name: "Sociedad cómplice", url: "https://music.youtube.com/watch?v=R9KMu-dwGe4&si=cqS_4pTMbmIWT0ek" },
-
-                { name: "Normal es veneno", url: "https://music.youtube.com/watch?v=PsQBC2vE0Dg&si=Lal0n1yAmZjsVCb2" },
-
-                { name: "El engaño del bien", url: "https://music.youtube.com/watch?v=9OJqY11gXYQ&si=Lc66U6wOvAANDHA-" },
-
-                { name: "¿Injusticia o consecuencia?", url: "https://music.youtube.com/watch?v=Jf2rcqHA2co&si=VAj2rF0xKIlMgwLO" },
-
-                { name: "Ciclos y deudas", url: "https://music.youtube.com/watch?v=3cgg-yS72aY&si=AqrLj9qT-ds6aHne" },
-
-                { name: "Veneno en la sangre", url: "https://music.youtube.com/watch?v=P5ze7xM8HYU&si=b0HgB4UsybG94y9T" },
-
-                { name: "Herencia de hierro", url: "https://music.youtube.com/watch?v=Y3QfelDKPfM&si=qKnYUE2JDyjgLd6h" },
-
-                { name: "Resistencia pequeña", url: "https://music.youtube.com/watch?v=bLkproBlzKk&si=cZ9MezEsycdhhcUa" },
-
-                { name: "El cambio esta en ti", url: "https://music.youtube.com/watch?v=LVcrBqw_3gc&si=8pXJ8bW2uSv1UpAS" },
-
-                { name: "No hay tirano eterno", url: "https://music.youtube.com/watch?v=UOtU-E1R9yw&si=8aT2H9bn1xA8fk8z" },
-
-                { name: "Hijos del olvido", url: "https://music.youtube.com/watch?v=n2GMzHW2NyQ&si=i3OviOjOPov5cBmf" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ&si=V9AU17wGT6ErrJtY",
-
-                spotify: "https://open.spotify.com/album/2UAHh2wV6ntXOvb4F4VVhg?si=Ec-XVA8XTCqihw-9HEHMlg",
-
-                amazon: "https://music.amazon.com.mx/albums/B0FS3YS4NX?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_DwtYRuWH9A1rjZEvEyW5aZoIB",
-
-                apple: "https://music.apple.com/es/album/voces-de-cambio/1841491477",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/voces-de-cambio?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Voces de Cambio 2.webp",
-
-            title: "Voces de Cambio 2",
-
-            tracks: [
-
-                { name: "México despierta", url: "https://music.youtube.com/watch?v=a1czD9mZZ0I&si=ZuSpay1LacJEx1cp" },
-
-                { name: "Reflexión Musical MX", url: "https://music.youtube.com/watch?v=_jvqZKxJbuI&si=iQYQz8_UmvY9uTOW" },
-
-                { name: "Memoria viva", url: "https://music.youtube.com/watch?v=H31wXA4k90Q&si=dIYImN4EIG7H3GOd" },
-
-                { name: "Sombras y luz", url: "https://music.youtube.com/watch?v=RFK6Cdg8nNg&si=un_c4lheVFgTzU1X" },
-
-                { name: "Semillas para mañana", url: "https://music.youtube.com/watch?v=A_y7b7FCZzM&si=Qy2Tng-kVEsTkNCT" },
-
-                { name: "Lo que te espera", url: "https://music.youtube.com/watch?v=f-nQnl2cyh4&si=dvo0IdNr-aU0VhKn" },
-
-                { name: "El eco de los ancestros", url: "https://music.youtube.com/watch?v=SL1g2KNmsNU&si=7SCYljVW7jLGt7hL" },
-
-                { name: "Orgullo Mexicano", url: "https://music.youtube.com/watch?v=cWt-0UlxBiE&si=rKTfdVuH601c2z5s" },
-
-                { name: "En la unión esta la fuerza", url: "https://music.youtube.com/watch?v=aiIUuSsnceE&si=JQ-rATna_9ShR1Uo" },
-
-                { name: "No mas excusas", url: "https://music.youtube.com/watch?v=hZZHyZLnksc&si=EWKMGi-QJ5xQGkrK" },
-
-                { name: "Sé chingon", url: "https://music.youtube.com/watch?v=4wERhwa_OD8&si=Mdgeq9L6_3EZIgsN" },
-
-                { name: "México eres tú", url: "https://music.youtube.com/watch?v=8p5OR0U-dfg&si=LlXn94wCxJ3JHPl7" },
-
-                { name: "México lindo", url: "https://music.youtube.com/watch?v=8p5OR0U-dfg&si=LlXn94wCxJ3JHPl7" },
-
-                { name: "El cambio esta en ti V2", url: "https://music.youtube.com/watch?v=Kx5tCK_VTag&si=I2fott2b036dA1Gr" },
-
-                { name: "Himno a México", url: "https://music.youtube.com/watch?v=4y2QWiIFZbM&si=ty03qtEViIensnVf" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE&si=HitHQ9h5vU6iSTv8",
-
-                spotify: "https://open.spotify.com/album/20FVaU0J8cPCszEj1tgsr6?si=S9WmVWrtTtGCwSAgsyzrDg",
-
-                amazon: "https://music.amazon.com.mx/albums/B0FT7PQGKF?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_E0CCAEmpHKYAjyX4YbrBIIKWC",
-
-                apple: "#",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/voces-de-cambio-v2?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Estado contra estado.webp",
-
-            title: "Estado contra Estado",
-
-            tracks: [
-
-                { name: "Tierra de fuego y aguacate", url: "https://music.youtube.com/watch?v=BpfD0xO2Vk4&si=5JhWr1XBdkfNYkQx" },
-
-                { name: "Pacto original", url: "https://music.youtube.com/watch?v=yWokDFk0pM0&si=lFhOltMtKGuaxxmj" },
-
-                { name: "Dos caminos", url: "https://music.youtube.com/watch?v=gYgQxMWRFbQ&si=BF32PDoAdZ4L2g8z" },
-
-                { name: "Importado desde U.S.A", url: "https://music.youtube.com/watch?v=C4v-_bnAKCU&si=QGDXqojNxEWhNjxf" },
-
-                { name: "Burocracia blindada", url: "https://music.youtube.com/watch?v=FolY6AYfa28&si=92gMr0pV3NBz5zBB" },
-
-                { name: "No me callo", url: "https://music.youtube.com/watch?v=Dwhwt-ifpJ8&si=ZjTE5QapxbL3g0lu" },
-
-                { name: "Con sombrero o sin sombrero", url: "https://music.youtube.com/watch?v=UA4PCTpdhek&si=NRBer7LUSWP0A7zJ" },
-
-                { name: "Octubre negro", url: "https://music.youtube.com/watch?v=BcqTRTxxMTE&si=abA6kQFbE8JEqFxo" },
-
-                { name: "El pueblo también falla", url: "https://music.youtube.com/watch?v=QxJ2HzFJGkQ&si=3-qFUv3vXs-3m3XC" },
-
-                { name: "Narcoseries y narcocorridos", url: "https://music.youtube.com/watch?v=Vab_djVZA7c&si=6RpIyG3HqpsFiEB7" },
-
-                { name: "Revolucion mental", url: "https://music.youtube.com/watch?v=Zp5Tyl8QN10&si=62BCYCN0RYbSTQep" },
-
-                { name: "Estado contra Estado", url: "https://music.youtube.com/watch?v=oMJ5kqH6Xbs&si=ICW82qV8s0btJj9i" },
-
-                { name: "Himno a la Revolución Mental (Mariachi)", url: "https://music.youtube.com/watch?v=qOlryawUFjA&si=QO2iHBHW4Lu3CUgS" },
-
-                { name: "Himno a la Revolución Mental (Dance)", url: "https://music.youtube.com/watch?v=Qqex2D9kceg&si=x-8an_LvU5nCEuJZ" },
-
-                { name: "México despierta V2", url: "https://music.youtube.com/watch?v=LJfKoHzhFN0&si=VY5lQh5nc-FEfA_R" },
-
-                { name: "Memoria de fuego", url: "https://music.youtube.com/watch?v=Mu28wBp8RrA&si=2FYAuKkKsbMGi9Sc" },
-
-                { name: "Los nadie", url: "https://music.youtube.com/watch?v=WRlhwVGo6y4&si=jbvwzIAhYRygDJxY" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow&si=OySd6YX-U8uHXnOV",
-
-                spotify: "https://open.spotify.com/album/3L2ZAYytRTzDIChcwRkLdY?si=uGLv11StT1ykGm-CJ9-_Jw",
-
-                amazon: "https://music.amazon.com.mx/albums/B0FVJB8H74?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_yYclccmQj3BzSNhOzxh6dLXGm",
-
-                apple: "#",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/estado-contra-estado?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Luz entre las Sombras.webp",
-
-            title: "Luz entre las sombras",
-
-            tracks: [
-
-                { name: "Altar de los recuerdos", url: "https://music.youtube.com/watch?v=7hcMbr6u6Uc&si=Aocl_itpRODvZaii" },
-
-                { name: "Hasta que volvamos a correr", url: "https://music.youtube.com/watch?v=eOcQLmhDvS0&si=xSRmUALgcLHppprA" },
-
-                { name: "28 de Octubre", url: "https://music.youtube.com/watch?v=dQ3Gzz-08f0&si=c8uazRYOgw-zJK_t" },
-
-                { name: "Pequeña luz", url: "https://music.youtube.com/watch?v=rbF0hBIYMbM&si=woqjAXIUVw9pfZkm" },
-
-                { name: "A los que se fueron antes", url: "https://music.youtube.com/watch?v=vfiLO3Dtp5s&si=a5SAlg7SKAXYnVC0" },
-
-                { name: "Hermano del alma", url: "https://music.youtube.com/watch?v=9I9Jtp_CkHE&si=jiwGPK9Pt7YjYlZ7" },
-
-                { name: "Silencio en la cama", url: "https://music.youtube.com/watch?v=t9-gGfOc-qM&si=I2otaDjT_vmx-kEH" },
-
-                { name: "Lo que me enseñaste", url: "https://music.youtube.com/watch?v=LUper4LyXhU&si=rT9pJYwr-ztmOXlG" },
-
-                { name: "Siempre en mi corazón", url: "https://music.youtube.com/watch?v=jmj879X5YGo&si=7s3dCjVC_qxR7XRV" },
-
-                { name: "Recuerdo tu voz", url: "https://music.youtube.com/watch?v=D0tyCcrfDz0&si=xtdp6isKNPu-JyTC" },
-
-                { name: "Los que abrieron el camino", url: "https://music.youtube.com/watch?v=tQZRe5Fjnko&si=dv7pYxt9mVxvxrmi" },
-
-                { name: "Voces que no callaron", url: "https://music.youtube.com/watch?v=nXSTBm24Qzo&si=M1MQwy0AbZgAxCtA" },
-
-                { name: "Perdóname", url: "https://music.youtube.com/watch?v=Oa1WjwjlS5Y&si=r_E65YAgfrU_Xj86" },
-
-                { name: "Sin huella ni tumba", url: "https://music.youtube.com/watch?v=KRRoKmKOBvs&si=6M-gVLWQJ5C6P62t" },
-
-                { name: "Los que no regresan", url: "https://music.youtube.com/watch?v=3sQc4u4lUEk&si=eHFTBsEDfNSWXUir" },
-
-                { name: "Después del silencio", url: "https://music.youtube.com/watch?v=8q_OWMkcxII&si=dZaoIUraafTqCctM" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4&si=iXoy5FUZtsS5REQ6",
-
-                spotify: "https://open.spotify.com/album/62pJjPSFwZf4MuHT45izrV?si=0DRH5AomRryVSIeNBzyQ0g",
-
-                amazon: "https://music.amazon.com.mx/albums/B0FX1YYCBH?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_uW6qlIS9NuPZNvqC6D1ms2g3g",
-
-                apple: "https://music.apple.com/es/album/luz-entre-las-sombras/1847216698",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/luz-entre-las-sombras?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Tiempo y vida.webp",
-
-            title: "Tiempo y Vida",
-
-            tracks: [
-
-                { name: "Altar de vida", url: "https://music.youtube.com/watch?v=gYdqt7_QJ0k&si=hPp2KCxkHD_wf5Or" },
-
-                { name: "Quédate", url: "https://music.youtube.com/watch?v=BQKnAwFb_o8&si=_RRglwn_1-XF90ai" },
-
-                { name: "Renacer", url: "https://music.youtube.com/watch?v=714bu3KHxWc&si=X5T5b5dqyz3NIJ-d" },
-
-                { name: "Citlalli", url: "https://music.youtube.com/watch?v=-as0eRImLGg&si=cKHoOUSlw6rNqU24" },
-
-                { name: "Alizée", url: "https://music.youtube.com/watch?v=FtaQ6Yohz3c&si=pW_VxH09Jndh0xpk" },
-
-                { name: "Mientras compartamos el sol", url: "https://music.youtube.com/watch?v=J7shTwUOHbs&si=w7CJMHE0dZNiNjCI" },
-
-                { name: "Amigos del alma", url: "https://music.youtube.com/watch?v=MH8mKOGFkSE&si=-mKdtpcTX_m-6cAt" },
-
-                { name: "Aún despierto contigo", url: "https://music.youtube.com/watch?v=qwiNhLrHMoY&si=bV-D_vUYb6mOPJQt" },
-
-                { name: "A tu lado, mamá", url: "https://music.youtube.com/watch?v=6x42q3B70vg&si=v30S2MFSZVwMB6g_" },
-
-                { name: "Padre, mi raíz", url: "https://music.youtube.com/watch?v=T7Doj1_ypX8&si=6Q43d93UneYQ59Li" },
-
-                { name: "Abuela, mi Luz", url: "https://music.youtube.com/watch?v=B9be1hlyJBY&si=Aq-V527pVB_fXY9T" },
-
-                { name: "Abuelo, mi camino", url: "https://music.youtube.com/watch?v=5wOxIXSusCU&si=tSmlH5FQliEUnZ9i" },
-
-                { name: "Voces que siguen luchando", url: "https://music.youtube.com/watch?v=H6GP_OLTfxk&si=jAPHh97BHRa-vqjH" },
-
-                { name: "Hasta encontrarlos", url: "https://music.youtube.com/watch?v=uisyYixiL28&si=EvqbHikxYk9XW1Vw" },
-
-                { name: "Aún hay lugar", url: "https://music.youtube.com/watch?v=TH8yQles5TM&si=Hx_p5B8Psj3xigMq" },
-
-                { name: "Perdón y Gracias", url: "https://music.youtube.com/watch?v=fb_Sow-323w&si=GsTsiqq6paybuM60" },
-
-                { name: "Tiempo y vida", url: "https://music.youtube.com/watch?v=7KEbMITLb8w&si=NmAEReQ22gtxZq6W" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE&si=t6K1eboh-VHYlpm7",
-
-                spotify: "https://open.spotify.com/album/4OyMdNR6Ff9PX5KXJDs36E?si=OOhJll_gSo2UtOyU_6Pe3A",
-
-                amazon: "https://music.amazon.com.mx/albums/B0G16FLG5T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_QCGhFH3HUFAvYZ1S8LgvA12K0",
-
-                apple: "https://music.apple.com/es/album/tiempo-y-vida/1851277742",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/tiempo-y-vida-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/CHACALES OPORTUNISTAS.webp",
-
-            title: "Chacales oportunistas",
-
-            tracks: [
-
-                { name: "INTRODUCCIÓN (Chacales oportunistas)", url: "https://music.youtube.com/watch?v=lQPDsYS8LOc&si=iEtg__EWCQdn-tn6" },
-
-                { name: "Chacales oportunistas", url: "https://music.youtube.com/watch?v=2h_6xVUjaGo&si=n5MgnlGTwkG4bVgE" },
-
-                { name: "El oro verde", url: "https://music.youtube.com/watch?v=Ztu4ZzT2Heo&si=Bjm910B27ZZjcYEt" },
-
-                { name: "Los que cuidaban la tierra", url: "https://music.youtube.com/watch?v=9wvSdu3FMp8&si=kz52palEvL1NA2Ab" },
-
-                { name: "Huracanes con uniforme", url: "https://music.youtube.com/watch?v=SgUOrTMHz2E&si=NRk0a9VAEfR_u_yz" },
-
-                { name: "Lodo y promesas", url: "https://music.youtube.com/watch?v=YilIbGt2hb8&si=uYJBKLm9S1lPEfbN" },
-
-                { name: "La ley de fracaso", url: "https://music.youtube.com/watch?v=ql_JWZolL0w&si=tokLzRGTA-2kG8TD" },
-
-                { name: "Firma y olvida", url: "https://music.youtube.com/watch?v=y_nDWFUr40E&si=k4imOQ3TTDEAIA_d" },
-
-                { name: "Las madres no duermen", url: "https://music.youtube.com/watch?v=jkPzeA7kF1U&si=tCrAhFSYu_epHwWQ" },
-
-                { name: "Sin huella ni tumba II", url: "https://music.youtube.com/watch?v=L5MxcliEnkE&si=hXf4UAB6fb8KVcAB" },
-
-                { name: "Epílogo (Chacales oportunistas)", url: "https://music.youtube.com/watch?v=jHg7R2CljaE&si=dKOZdWGZXx3Yar60" },
-
-                { name: "Carlos Manzo, Luz En Uruapan", url: "https://music.youtube.com/watch?v=R6VQKVFn56Q&si=fMH3FOwBJroQqFcw" },
-
-                { name: "Chacales oportunistas V2", url: "https://music.youtube.com/watch?v=BtAKhDkT8Rg&si=pVIFb8w18TiOdBxP" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A&si=GKFSqmdUdijNoyWs",
-
-                spotify: "https://open.spotify.com/album/5XWwchDBL4G0kACbGBebet?si=zD2zM6GtTcC1vJ7Z04T0sw",
-
-                amazon: "https://music.amazon.com.mx/albums/B0G36KTQDS?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_LeFI1C8dDspsmwqxAleo2CQOL",
-
-                apple: "https://music.apple.com/es/album/chacales-oportunistas/1854564785",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/chacales-oportunistas?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Tejido vital.webp",
-
-            title: "Tejido Vital",
-
-            tracks: [
-
-                { name: "El Precio de la Mentira", url: "https://music.youtube.com/watch?v=JUoYhp5xPbU&si=Ep0olR73z8lLEh7Y" },
-
-                { name: "Cobardes", url: "https://music.youtube.com/watch?v=SfvXyhwFgu8&si=iHoljRn8SpFJOrBY" },
-
-                { name: "En la trinchera", url: "https://music.youtube.com/watch?v=PRBP4A2XBJI&si=XgDffrAvBSm3u-Bw" },
-
-                { name: "La primera trinchera", url: "https://music.youtube.com/watch?v=1J33HZ3OB_s&si=OpLvf0qHT2NuT3hn" },
-
-                { name: "Ni Ella sin Él ni El sin Ella", url: "https://music.youtube.com/watch?v=SClpcJJCOrg&si=yWNbIexRTpoUoq5c" },
-
-                { name: "Empoderar no es guerra", url: "https://music.youtube.com/watch?v=hZD3PjmUIe0&si=jEFQHhZzEQyR4yT0" },
-
-                { name: "Amor en tiempos de ideologías cancerígenas", url: "https://music.youtube.com/watch?v=fy3ko7Y3fR8&si=Vat4duftGjP8T_mk" },
-
-                { name: "Honra a tu pareja", url: "https://music.youtube.com/watch?v=wfjYiPzAmuk&si=MzGctBIFNbQzaJZ2" },
-
-                { name: "Juramento de dos", url: "https://music.youtube.com/watch?v=B8nBLs1Fbo4&si=RTY1KQjf2bvUESsB" },
-
-                { name: "Complemento eterno", url: "https://music.youtube.com/watch?v=27ulXc8Vopk&si=-QPYYUc4-B4DJX-p" },
-
-                { name: "Cuida y educa", url: "https://music.youtube.com/watch?v=iij2-wUhJ7Q&si=J250GvwWAbfbPBOK" },
-
-                { name: "Cuida y educa II", url: "https://music.youtube.com/watch?v=P338KqBK7kk&si=YLTLS_8M5NnpEI7m" },
-
-                { name: "Herencia que no se rompe", url: "https://music.youtube.com/watch?v=pL28P654UyQ&si=gxYVX-KrqK1Rm5TR" },
-
-                { name: "Ciudadanos del mundo", url: "https://music.youtube.com/watch?v=d0F8E5irhDM&si=4p2vRPfJBVo2FQxB" },
-
-                { name: "Ni Ella sin Él ni El sin Ella (Remix)", url: "https://music.youtube.com/watch?v=DRfgmHEjn3I&si=-9tYVUGvdCZqskdm" },
-
-                { name: "Ciudadanos del mundo II (Remix)", url: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs&si=IENzoXH5D1xv_xOn",
-
-                spotify: "https://open.spotify.com/album/2gSDQitygEjoVweX6PnqpK?si=0C-q47pmRJuUSIZ4OS2kQw",
-
-                amazon: "https://music.amazon.com.mx/albums/B0G3BCX2MK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_XlRB7X0aKfxly6dyzuXGdd1Q9",
-
-                apple: "https://music.apple.com/es/album/tejido-vital/1854794772",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/tejido-vital?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Revolucion mental.webp",
-
-            title: "Revolucion Mental",
-
-            tracks: [
-
-                { name: "Prólogo a Revolución Mental", url: "https://music.youtube.com/watch?v=DHCrMS5vpJc&si=8cx-sucf-kOIcxyz" },
-
-                { name: "Revolución Mental II", url: "https://music.youtube.com/watch?v=rrIsKIyRrPo&si=jkJnFkON7ypTiXIw" },
-
-                { name: "Manual para un pueblo dormido", url: "https://music.youtube.com/watch?v=neLq5M6QpZI&si=wys56537OMxWtevO" },
-
-                { name: "Neuronas en huelga", url: "https://music.youtube.com/watch?v=vM3TclD7KKI&si=o7koiYCob-i240wp" },
-
-                { name: "La caja idiota", url: "https://music.youtube.com/watch?v=-Ebj-oVfVds&si=2A1NrzdGrNK0U6Xi" },
-
-                { name: "Mi enemigo", url: "https://music.youtube.com/watch?v=rOExEb8CaGY&si=AHlEAY3Y_4Yj1K2T" },
-
-                { name: "México bipolar", url: "https://music.youtube.com/watch?v=bDsk3e30c1Y&si=iAzbF5kgvznxdmmJ" },
-
-                { name: "Sin Mesías", url: "https://music.youtube.com/watch?v=TdYQVXDQ8vg&si=5cOhmf8xDQO62SLd" },
-
-                { name: "Despierta carbón", url: "https://music.youtube.com/watch?v=uPUIA6OEMEs&si=5dk8MKJigVJfbOL7" },
-
-                { name: "Reinicio", url: "https://music.youtube.com/watch?v=WypkLLfJrZE&si=nDL8JpgZncK32vS9" },
-
-                { name: "Espejo", url: "https://music.youtube.com/watch?v=BEH5sHpfsXk&si=OWo_eHgH9s6IIQ0t" },
-
-                { name: "Conciencia colectiva", url: "https://music.youtube.com/watch?v=I-7I4i2Gnk8&si=6v3K7NSNRQbwlttK" },
-
-                { name: "Nuevo código", url: "https://music.youtube.com/watch?v=jWhsE1HsTG4&si=jr5scX9fp2evopeH" },
-
-                { name: "Epílogo a Revolución Mental", url: "https://music.youtube.com/watch?v=ebKUIjBw5Ng&si=HTLAf8jBobGEgkOE" },
-
-                { name: "Revolucion mental", url: "https://music.youtube.com/watch?v=t47ifQe_zCo&si=fmddtS3U-HHD4dn3" },
-
-                { name: "Revolución Mental II (Remix)", url: "https://music.youtube.com/watch?v=FH2va1wRxaU&si=EQ-SSldlXllIblv4" },
-
-                { name: "Revolución Mental (Remix)", url: "https://music.youtube.com/watch?v=6Hmt9QxXCd8&si=ZiVAKOMcLHOeHcYJ" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU&si=nt9eLCqBjl8_kKqz",
-
-                spotify: "https://open.spotify.com/album/5ZiW2nNJnJX9ZeuBpZW6DS?si=bHkMqhAGShSYicHuKgnFQg",
-
-                amazon: "https://music.amazon.com.mx/albums/B0G4NF14XV?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_HJ9XRJt8EsxWt9M0kEetBEkoW",
-
-                apple: "https://music.apple.com/es/album/revoluci%C3%B3n-mental/1857713061",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/revolucion-mental-4?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Eres lo que escuchas.webp",
-
-            title: "Eres lo que Escuchas",
-
-            tracks: [
-
-                { name: "Prologo Antes de darle Play", url: "https://music.youtube.com/watch?v=j-_y_Uzxq24&si=QE76YAwWxR-cHiyV" },
-
-                { name: "Eres lo que escuchas", url: "https://music.youtube.com/watch?v=ZUuT_4cPvlM&si=n17E-XXzyIqSzWGB" },
-
-                { name: "Empieza mal", url: "https://music.youtube.com/watch?v=oKKmyMUJc78&si=Ow_QEgXarl6iooUq" },
-
-                { name: "Solo sigue", url: "https://music.youtube.com/watch?v=k6a3Vkiyvuw&si=FvWtABC4AQxUAkxv" },
-
-                { name: "Dejalos ganar", url: "https://music.youtube.com/watch?v=xKKVXz3icfc&si=RLJnVV4TxdUVkkDx" },
-
-                { name: "Espejo", url: "https://music.youtube.com/watch?v=4UtmlmpCjFE&si=Y89Z3up6Uo27epcL" },
-
-                { name: "Cráter", url: "https://music.youtube.com/watch?v=Go-tdAjP528&si=JxqlIpLJW6SWsSVL" },
-
-                { name: "Luz que no se apaga", url: "https://music.youtube.com/watch?v=BM5PT10dCVs&si=FeZR44y2PYRTwJVF" },
-
-                { name: "Lo que soy", url: "https://music.youtube.com/watch?v=9Pm2qw2pKrk&si=HwHqwlfHG6EOZXwd" },
-
-                { name: "Mierdaton", url: "https://music.youtube.com/watch?v=8i8j8e0V6wM&si=Avlmd1SNjJcwCJL4" },
-
-                { name: "Anestesia barata", url: "https://music.youtube.com/watch?v=EEZaLwXZEAk&si=DBXDTGqcocXyQy_P" },
-
-                { name: "Hombre de verdad", url: "https://music.youtube.com/watch?v=DhHdfswUPus&si=7PSFEtACWWHQmM_K" },
-
-                { name: "Hombre que despierta", url: "https://music.youtube.com/watch?v=YAEdH_6qL-w&si=-iTwrRW55wdnUFXf" },
-
-                { name: "¿Qué es la moda?", url: "https://music.youtube.com/watch?v=LSfBWT3n2oo&si=o06bIStJQK_KLaM3" },
-
-                { name: "Payasos con coronas de humo", url: "https://music.youtube.com/watch?v=iWB-Kcadd9E&si=mBGYH3bxDX6zX8MF" },
-
-                { name: "El peso del silencio", url: "https://music.youtube.com/watch?v=cIGqbBqmyCs&si=CxjzlfEzAuM0jGJ1" },
-
-                { name: "Camino sobre el agua", url: "https://music.youtube.com/watch?v=mBY8bmADq-U&si=6Il_GzwJwJZ5YJ6s" },
-
-                { name: "Simple", url: "https://music.youtube.com/watch?v=j4MOYH8Zkdg&si=2JMQ1p6aw1DToLUg" },
-
-                { name: "Mente y corazón", url: "https://music.youtube.com/watch?v=LVRJB9iCiqw&si=WEnWqzomj4qsH35T" },
-
-                { name: "Combate interno", url: "https://music.youtube.com/watch?v=mbsIZ-cLreI&si=dZiWy0D0P9FQ0u3N" },
-
-                { name: "Mundo imperfecto", url: "https://music.youtube.com/watch?v=IxKqv51ldQQ&si=vPjj8MJUxhOtFF9_" },
-
-                { name: "Bucle", url: "https://music.youtube.com/watch?v=9G8sdnyG5lo&si=cv42Zl0FIgAG_c3k" },
-
-                { name: "Las venas abiertas", url: "https://music.youtube.com/watch?v=jHJl-i-J6qY&si=gbIQRmxXxqJ5MgOF" },
-
-                { name: "No todos son iguales", url: "https://music.youtube.com/watch?v=ygZSIkswHgE&si=HuCogPKEQXqTzLf4" },
-
-                { name: "Paraíso de sangre", url: "https://music.youtube.com/watch?v=UXk3cK9vMNc&si=LoIJLJsheBQ6GWmN" },
-
-                { name: "Hijos del olvido", url: "https://music.youtube.com/watch?v=T3AHw8KoCBQ&si=VJ7Lp0IlLQIl4rEV" },
-
-                { name: "Empieza mal (Remix)", url: "https://music.youtube.com/watch?v=GK8QS2UvPf4&si=hmOYLewOPpog7fgg" },
-
-                { name: "Del dolor al odio", url: "https://music.youtube.com/watch?v=bBBWyJnSAKM&si=ZDb2M29i4xDaQ6mN" },
-
-                { name: "¿A qué costo?", url: "https://music.youtube.com/watch?v=MZXhxnHKeYY&si=9z4OtJwVdhRH--f4" },
-
-                { name: "Eres lo que escuchas (Remix)", url: "https://music.youtube.com/watch?v=U6PSOAFjAjE&si=jToCVrccApjCx0kA" },
-
-                { name: "Epílogo a Eres lo que escucha", url: "https://music.youtube.com/watch?v=395VsEPLSvE&si=-OIHP1NPcgvlThb3" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I&si=exhKQkfdndW8x4yK",
-
-                spotify: "https://open.spotify.com/album/20FnT6FbnltmFm9PiRSSkt?si=OD37ewXkRzyxJLLibBXmvQ",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GD2PZZ1T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_7ZIn2KHO856UVHUJ4S8ut1WN3",
-
-                apple: "https://music.apple.com/es/album/eres-lo-que-escuchas/1865017257",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        },
-
-        {
-
-            img: "images/Amor en tiempos de ideologias cancerigenas.webp",
-
-            title: "Amor en tiempos de ideologías cancerígenas",
-
-            tracks: [
-
-                { name: "ANTES DE AMAR (Cumbia)", url: "https://music.youtube.com/watch?v=qe8Af7-_cfE&si=WQy-aZzFKlmuc4-v" },
-
-                { name: "AMOR EN TIEMPOS DE IDEOLOGÍAS CANCERÍGENAS (Cumbia)", url: "https://music.youtube.com/watch?v=ebLLFcU8htU&si=9u3Mo52kThMWhrsz" },
-
-                { name: "SILENCIO EN LA CAMA (Cumbia)", url: "https://music.youtube.com/watch?v=cxLABjafKuk&si=mhQfmTxXJKW2p8ha" },
-
-                { name: "AUN DESPIERTO CONTIGO (Cumbia)", url: "https://music.youtube.com/watch?v=xSWJAEoz8Wg&si=hf4Iv15V1nUsnxk3" },
-
-                { name: "PERDÓNAME (Cumbia)", url: "https://music.youtube.com/watch?v=lVd3Og0bNcU&si=0BYj1sE7WxdHN_0b" },
-
-                { name: "PERDÓN Y GRACIAS (Cumbia)", url: "https://music.youtube.com/watch?v=BY_D1atT_5I&si=bub2wa0MzAMkA0wC" },
-
-                { name: "JURAMENTO DE DOS (Cumbia)", url: "https://music.youtube.com/watch?v=VOxTWxkMVIA&si=ZXQ1xF8G3giCDZnE" },
-
-                { name: "JURAMENTO DE 2 (Cumbia)", url: "https://music.youtube.com/watch?v=FivFI19-twQ&si=t-w___KYIUxF8mYG" },
-
-                { name: "HONRA A TU PAREJA (Cumbia)", url: "https://music.youtube.com/watch?v=pfwZUQjKrLE&si=gB9QvCpa9B0cH7Qe" },
-
-                { name: "COMPLEMENTO ETERNO (Cumbia)", url: "https://music.youtube.com/watch?v=duoekcHr3gk&si=yINAQolU8eYYJfKB" },
-
-                { name: "AMOR CONSCIENTE (Cumbia)", url: "https://music.youtube.com/watch?v=swLq6J7akmk&si=7xUZiaK5latrcuUE" },
-
-                { name: "AFIRMACIÓN (Cumbia)", url: "https://music.youtube.com/watch?v=MuFkKc7PNBU&si=dta_NV2TQ615n8rA" },
-
-                { name: "TIEMPO DE CALIDAD (Cumbia)", url: "https://music.youtube.com/watch?v=CqCDxjs51Kk&si=OLbk3u2rOKfcwfMe" },
-
-                { name: "ACTOS DE SERVICIO (Cumbia)", url: "https://music.youtube.com/watch?v=vo6a1Zd73GA&si=2jDaee1iClq5eAXc" },
-
-                { name: "REGALOS (Cumbia)", url: "https://music.youtube.com/watch?v=q5pPgudo04o&si=gh8gZT2ZTiNV-Cj_" },
-
-                { name: "CONTACTO FÍSICO (Cumbia)", url: "https://music.youtube.com/watch?v=5f543XfAty4&si=si-CXFXji17Yby0X" },
-
-                { name: "AMOR MADURO (Cumbia)", url: "https://music.youtube.com/watch?v=gt_dftkZ5xY&si=Kb0MxpBFQFOt7l8g" },
-
-                { name: "MARTE I (Cumbia)", url: "https://music.youtube.com/watch?v=coIs_II1bZ4&si=mcwjayMzszalq60K" },
-
-                { name: "MARTE II (Cumbia)", url: "https://music.youtube.com/watch?v=RtAgXEsc28U&si=ztjd7WKvO8zz--sN" },
-
-                { name: "VENUS I (Cumbia)", url: "https://music.youtube.com/watch?v=M3q2__LAY7M&si=mb7xnOdLDcs_sH6x" },
-
-                { name: "VENUS II (Cumbia)", url: "https://music.youtube.com/watch?v=YJNI0hy807s&si=hrCwh5M7uHTRF3cN" },
-
-                { name: "APRENDER A ORBITAR (Cumbia)", url: "https://music.youtube.com/watch?v=YOCpoAJE4uY&si=2jKCcsEf6E2TT9Ly" },
-
-                { name: "PERDÓNAME (Bachata)", url: "https://music.youtube.com/watch?v=Vwvuryh_lLk&si=vhGfayMX8mOCdKrT" },
-
-                { name: "PERDÓN Y GRACIAS (Salsa)", url: "https://music.youtube.com/watch?v=n8HL7UIOnPY&si=z6ydltgwauIVqLix" },
-
-                { name: "AMOR EN TIEMPOS DE IDEOLOGÍAS CANCERÍGENAS (Merengue)", url: "https://music.youtube.com/watch?v=YjkDrhlxhuU&si=0b_5hxbkU0mEsLj6" },
-
-                { name: "COMPLEMENTO ETERNO (Vallenato)", url: "https://music.youtube.com/watch?v=8z1Ox2_QnVI&si=Mptn0QMG5KQ2JHp1" }
-
-            ],
-
-            links: {
-
-                youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA&si=ZB2a4jnRIkEyiJgK",
-
-                spotify: "https://open.spotify.com/album/5bouzliTlE1sm3qaIyEO8E?si=cs4bQlYESxiFc4mzFpsX6A",
-
-                amazon: "https://music.amazon.com.mx/albums/B0GM2D1VFK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_8xRPz4ErVSHRNOT6ItqsbSEaZ",
-
-                apple: "https://music.apple.com/es/album/amor-en-tiempos-de-ideolog%C3%ADas-cancer%C3%ADgenas/1875409405",
-
-                soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
-
-            }
-
-        }
-
-    ];
-
-
-
-    // --- FUNCIÓN PARA CREAR PLANETAS (INTEGRA EL MODAL CON TEXTO, LINKS Y VIDEO INDIVIDUAL) ---
-
-    function createOrbit(data,id,radius){
-
-        const orbit=document.getElementById(id)
-
-        if(!orbit) return;
-
-        
-
-        const fragment = document.createDocumentFragment();
-
-
-
-        data.forEach((item,i)=>{
-
-            const angle=(i/data.length)*Math.PI*2
-
-            const x=Math.cos(angle)*radius
-
-            const y=Math.sin(angle)*radius
-
-            const planet=document.createElement("div")
-
-            planet.className="planet"
-
-            planet.style.left=`calc(50% + ${x}px - 55px)`
-
-            planet.style.top=`calc(50% + ${y}px - 55px)`
-
-            
-
-            // EVENTO DE CLICK PARA ABRIR MODAL
-
-            planet.onclick = () => {
-
-                if(bioAudio && !bioAudio.paused) {
-
-                    bioAudio.pause();
-
-                    if(muteBtn) muteBtn.textContent = "🔇";
-
-                }
-
-
-
-                modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
-
+        // Crear Órbitas (Sencillos y Álbumes)
+        // Aquí usarías tus arrays 'singles' y 'albums'
+        window.createOrbit = function(data, containerId, radius) {
+            const container = document.getElementById(containerId);
+            data.forEach((item, i) => {
+                const angle = (i / data.length) * Math.PI * 2;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+
+                const p = document.createElement("div");
+                p.className = "planet";
+                p.style.left = `calc(50% + ${x}px - 50px)`;
+                p.style.top = `calc(50% + ${y}px - 50px)`;
                 
-
-                modalTracklist.innerHTML = "";
-
+                p.innerHTML = `<div class="counter"><img src="${item.img}"><div class="tooltip">${item.title}</div></div>`;
                 
+                p.onclick = () => {
+                    document.getElementById("modalAlbumTitle").innerText = item.title;
+                    const tracklist = document.getElementById("modalTracklist");
+                    tracklist.innerHTML = "";
+                    
+                    // Playlist inicial
+                    const listMatch = item.links.youtube.match(/[?&]list=([^&]+)/);
+                    const playlistId = listMatch ? listMatch[1] : "";
 
-                // EXTRAER ID DE PLAYLIST DE YOUTUBE PARA CARGA INICIAL
-
-                let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
-
-                let playlistId = "";
-
-                if (ytLink && ytLink !== "#") {
-
-                    const match = ytLink.match(/[?&]list=([^&]+)/);
-
-                    if (match && match[1]) {
-
-                        playlistId = match[1];
-
-                    }
-
-                }
-
-
-
-                const playerContainer = document.getElementById("modalPlayerContainer");
-
-                
-
-                // INYECTAR REPRODUCTOR INICIAL DE LA PLAYLIST AL ABRIR Y HACER QUE REPRODUZCA CONTINUO
-
-                if (playlistId) {
-
-                    playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
-
-                    playerContainer.style.display = "block";
-
-                } else {
-
-                    playerContainer.innerHTML = "";
-
-                    playerContainer.style.display = "none";
-
-                }
-
-
-
-                // INYECTAR LISTA DE CANCIONES Y CAPTURAR CLICS PARA REPRODUCIR INDIVIDUAL Y LUEGO CONTINUAR LA PLAYLIST
-
-                if(item.tracks && item.tracks.length > 0) {
-
-                    item.tracks.forEach((trackObj, index) => {
-
-                        let trackLink = document.createElement("a");
-
-                        trackLink.className = "track-item track-link";
-
-                        trackLink.href = "javascript:void(0);";
-
-                        trackLink.innerText = `${index + 1}. ${trackObj.name}`;
-
-                        
-
-                        trackLink.onclick = (e) => {
-
+                    item.tracks.forEach(t => {
+                        const link = document.createElement("a");
+                        link.className = "track-link";
+                        link.href = "#";
+                        link.innerText = t.name;
+                        link.onclick = (e) => {
                             e.preventDefault();
-
-                            
-
-                            // ILUMINAR PISTA ACTIVA
-
-                            document.querySelectorAll('.track-link').forEach(el => el.classList.remove('active-track'));
-
-                            trackLink.classList.add('active-track');
-
-
-
-                            let videoId = "";
-
-                            // Extraer el 'v=' ID de Youtube Music
-
-                            if(trackObj.url) {
-
-                                let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
-
-                                if(vMatch && vMatch[1]) videoId = vMatch[1];
-
-                            }
-
-                            
-
-                            // SI HAY VIDEO ID, CARGAR EN EL IFRAME FIJO
-
-                            // El truco para que no pare y siga reproduciendo la playlist es poner tanto el ID del video como la playlist
-
-                            if(videoId) {
-
-                                playerContainer.style.display = "block";
-
-                                let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-
-                                if(playlistId){
-
-                                    embedUrl += `&list=${playlistId}`;
-
-                                }
-
-                                playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
-
-                            } else {
-
-                                // Fallback por si la URL no es de Youtube
-
-                                window.open(trackObj.url, "_blank");
-
-                            }
-
+                            const vId = getYTId(t.url);
+                            let embed = `https://www.youtube.com/embed/${vId}?autoplay=1`;
+                            if(playlistId) embed += `&list=${playlistId}`;
+                            document.getElementById("modalPlayerContainer").innerHTML = `<iframe width="100%" height="250" src="${embed}" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
                         };
-
-
-
-                        modalTracklist.appendChild(trackLink);
-
+                        tracklist.appendChild(link);
                     });
-
-                } else {
-
-                    let trackDiv = document.createElement("div");
-
-                    trackDiv.className = "track-item";
-
-                    trackDiv.style.textAlign = "center";
-
-                    trackDiv.style.color = "gold";
-
-                    trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
-
-                    modalTracklist.appendChild(trackDiv);
-
-                }
-
-
-
-                modalPlatforms.innerHTML = "";
-
-                const globalPlatformsForModal = [
-
-                    { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
-
-                    { name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
-
-                    { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
-
-                    { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-
-                    { name: "SoundCloud", svg: `<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`, id: 'soundcloud' }
-
-                ];
-
-                globalPlatformsForModal.forEach(p => {
-
-                    let platLink = item.links && item.links[p.id] ? item.links[p.id] : "#";
-
-                    if (platLink && platLink !== "#") {
-
-                        let a = document.createElement("a");
-
-                        a.href = platLink;
-
-                        a.target = "_blank";
-
-                        a.innerHTML = p.svg;
-
-                        a.setAttribute('aria-label', `Escuchar en ${p.name}`);
-
-                        modalPlatforms.appendChild(a);
-
-                    }
-
-                });
-
-
-
-                albumModal.classList.add("show");
-
-            };
-
-            
-
-            const safeImgPath = encodeURI(item.img);
-
-            
-
-            // LA CLAVE: El nombre del archivo DEBE ser el que se use para enlazar los efectos
-
-            let albumName = item.img.split('/').pop().replace('.webp', '');
-
-            
-
-            planet.setAttribute('data-album', albumName.toUpperCase());
-
-            
-
-            let extraHTML = "";
-
-            
-
-            if(albumName.toUpperCase() === "TEJIDO VITAL") {
-
-                extraHTML = `
-
-                <div class="family-symbol-container">
-
-                    <div class="fam-fig"><div class="fam-head"></div><div class="fam-body-m"></div></div>
-
-                    <div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-m"></div></div>
-
-                    <div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-f"></div></div>
-
-                    <div class="fam-fig"><div class="fam-head"></div><div class="fam-body-f"></div></div>
-
-                </div>`;
-
-            }
-
-
-
-            // CARGA DE IMAGEN CON FALLBACK A LOGO SI AÚN NO EXISTE (Para los nuevos EP/Sencillos)
-
-            planet.innerHTML=`<div class="counter"><img src="${safeImgPath}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
-
-            
-
-            if(albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
-
-                let hTimer;
-
-                planet.onmouseenter = () => {
-
-                    hTimer = setInterval(() => {
-
-                        const h = document.createElement("div");
-
-                        h.className = "heart-bubble";
-
-                        h.innerHTML = "❤";
-
-                        const rect = planet.getBoundingClientRect();
-
-                        h.style.left = (rect.left + rect.width/2) + "px";
-
-                        h.style.top = (rect.top + rect.height/2) + "px";
-
-                        document.body.appendChild(h);
-
-
-
-                        const destX = window.innerWidth / 2;
-
-                        const destY = window.innerHeight / 2;
-
-
-
-                        h.animate([
-
-                            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1, offset: 0 },
-
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width/2}px), calc(-50% + ${destY - rect.top - rect.height/2}px)) scale(0.6)`, opacity: 1, offset: 0.95 },
-
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width/2}px), calc(-50% + ${destY - rect.top - rect.height/2}px)) scale(0)`, opacity: 0, offset: 1 }
-
-                        ], {duration: 2500, easing: 'linear'}).onfinish = () => h.remove();
-
-                    }, 400);
-
+                    albumModal.classList.add("show");
                 };
+                container.appendChild(p);
+            });
+        };
+    });
 
-                planet.onmouseleave = () => clearInterval(hTimer);
-
-            }
-
-
-
-            fragment.appendChild(planet);
-
-        });
-
-        
-
-        orbit.appendChild(fragment);
-
-    }
-
-
-
-    createOrbit(singles,"orbitSingles",210);
-
-    createOrbit(albums,"orbitAlbums",360);
-
-
-
-    const upcomingReleases = [
-
-        { text: "🎵 PRÓXIMO SENCILLO", link: "#" },
-
-        { text: "💿 NUEVO ÁLBUM", link: "#" },
-
-        { text: "📖 LIBRO: ALGO ESTÁ MAL", link: "#" }
-
-    ];
-
-
-
-    function createShootingStar(){
-
-        try {
-
-            const release = upcomingReleases[Math.floor(Math.random() * upcomingReleases.length)]; 
-
-            const star = document.createElement("div");
-
-            star.className = "shootingStar";
-
-            star.innerHTML = `
-
-                <div class="tail"></div>
-
-                <div class="starIconWrapper" style="width: auto; border-radius: 20px; padding: 5px 15px;">
-
-                    <span class="starIconText">${release.text}</span>
-
-                </div>`;
-
-            if(starContainer) starContainer.appendChild(star); 
-
-            let startX, startY, endX, endY;
-
-            const edge = Math.floor(Math.random() * 4); 
-
-            const offset = 100;
-
-            if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
-
-            else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
-
-            else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
-
-            else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
-
-            star.style.left = startX + "px";
-
-            star.style.top = startY + "px";
-
-            const dx = endX - startX; const dy = endY - startY;
-
-            const angleRad = Math.atan2(dy, dx);
-
-            const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
-
-            const tail = star.querySelector('.tail');
-
-            tail.style.width = (150 + Math.random() * 100) + "px";
-
-            tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
-
-            star.animate([{ transform: "translate(0, 0)", opacity: 1 }, { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }], { duration: 12000 + Math.random() * 6000, easing: "linear" });
-
-            star.onclick = () => { if (release.link !== "#") window.open(release.link, "_blank"); };
-
-            setTimeout(() => star.remove(), 19000);
-
-        } catch (e) { console.error(e); }
-
-    }
-
-    setInterval(createShootingStar, 6000);
-
-});
-
+    // Quitar Loader
+    window.onload = () => {
+        setTimeout(() => {
+            document.getElementById("loader").style.opacity = "0";
+            setTimeout(() => document.getElementById("loader").remove(), 800);
+        }, 1000);
+    };
 </script>
 
-
-
 </body>
-
 </html>
