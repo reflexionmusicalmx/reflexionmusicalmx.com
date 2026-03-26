@@ -14,469 +14,165 @@
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 /* BLOQUEO PARA MÓVILES */
-html, body {
-background:#000;
-color:#FFD700;
-font-family: 'Merriweather', serif;
-margin:0;
-padding:0;
-width: 100%;
-height: 100%;
-overflow:hidden;
-text-align:center;
-overscroll-behavior: none;
-touch-action: none;
-}
-/* CAJA DE CRISTAL PARA ESTRELLAS FUGACES */
-#starContainer {
-position: absolute;
-top: 0; left: 0;
-width: 100%;
-height: 100%;
-overflow: hidden; 
-pointer-events: none; 
-z-index: 1000;
-}
-/* PANTALLA DE CARGA */
-#loader {
-position: fixed;
-top: 0; left: 0;
-width: 100%; height: 100%;
-background: #000;
-z-index: 99999;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-transition: opacity 0.8s ease;
-will-change: opacity;
-}
-#loader img {
-width: 180px;
-animation: pulse 2s infinite;
-will-change: transform, filter;
-}
-#loader p {
-color: #FFD700;
-margin-top: 25px;
-font-weight: 700;
-letter-spacing: 3px;
-font-size: 14px;
-}
-/* FONDO ESTÁTICO */
-#bg{
-position:fixed;
-top:0; left:0;
-width:100%; height:100%;
-z-index:-1;
-pointer-events:none;
-}
-/* SISTEMA SOLAR (GPU ACCELERATED) */
-#solarSystem{
-position:absolute;
-top:0; left:0;
-width:100%; height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-transition: transform 0.3s ease; 
-will-change: transform;
-transform: translateZ(0);
-}
-/* LOGO CENTRAL (EL SOL) */
-#sun{
-position:absolute;
-width:200px;
-z-index:10;
-animation:pulse 5s infinite;
-cursor: pointer;
-transition: transform 0.3s ease;
-will-change: transform, filter;
-transform: translateZ(0);
-}
-#sun:hover {
-transform: scale(1.1) translateZ(0);
-}
-#sun img{
-width:100%;
-}
-@keyframes pulse{
-0%{filter:drop-shadow(0 0 15px gold);}
-50%{filter:drop-shadow(0 0 50px gold);}
-100%{filter:drop-shadow(0 0 15px gold);}
-}
+html, body { background:#000; color:#FFD700; font-family: 'Merriweather', serif; margin:0; padding:0; width: 100%; height: 100%; overflow:hidden; text-align:center; overscroll-behavior: none; touch-action: none; }
+#starContainer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: 1000; }
+#loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s ease; will-change: opacity; }
+#loader img { width: 180px; animation: pulse 2s infinite; will-change: transform, filter; }
+#loader p { color: #FFD700; margin-top: 25px; font-weight: 700; letter-spacing: 3px; font-size: 14px; }
+#bg{ position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none; }
+#solarSystem{ position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; transition: transform 0.3s ease; will-change: transform; transform: translateZ(0); }
+#sun{ position:absolute; width:200px; z-index:10; animation:pulse 5s infinite; cursor: pointer; transition: transform 0.3s ease; will-change: transform, filter; transform: translateZ(0); }
+#sun:hover { transform: scale(1.1) translateZ(0); }
+#sun img{ width:100%; }
+@keyframes pulse{ 0%{filter:drop-shadow(0 0 15px gold);} 50%{filter:drop-shadow(0 0 50px gold);} 100%{filter:drop-shadow(0 0 15px gold);} }
 /* MODALES BASE */
-.modal {
-display: none; 
-position: fixed; 
-z-index: 100000;
-left: 0; top: 0; 
-width: 100%; height: 100%;
-background-color: rgba(0,0,0,0.85);
-backdrop-filter: blur(5px);
-opacity: 0; 
-transition: opacity 0.4s ease;
-align-items: center; 
-justify-content: center;
--webkit-transform: translateZ(0);
-transform: translateZ(0);
-touch-action: auto;
-}
-.modal.show {
-display: flex; 
-opacity: 1;
-}
-.modal-content {
-background: #0a0a0a; 
-border: 1px solid #FFD700;
-padding: 40px; 
-border-radius: 15px;
-max-width: 650px; 
-width: 85%;
-max-height: 80vh;
-overflow-y: auto;
-overscroll-behavior: contain;
--webkit-overflow-scrolling: touch;
-text-align: left; 
-position: relative;
-box-shadow: 0 0 40px rgba(255,215,0,0.2);
-color: #ddd;
-line-height: 1.8;
-}
+.modal { display: none; position: fixed; z-index: 100000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.4s ease; align-items: center; justify-content: center; transform: translateZ(0); touch-action: auto; }
+.modal.show { display: flex; opacity: 1; }
+.modal-content { background: #0a0a0a; border: 1px solid #FFD700; padding: 40px; border-radius: 15px; max-width: 650px; width: 85%; max-height: 80vh; overflow-y: auto; overscroll-behavior: contain; text-align: left; position: relative; box-shadow: 0 0 40px rgba(255,215,0,0.2); color: #ddd; line-height: 1.8; }
 .modal-content::-webkit-scrollbar { width: 6px; }
 .modal-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
-.modal-content h2 { 
-color: #FFD700; 
-margin-top: 0; 
-font-weight: 700;
-font-size: 26px;
-border-bottom: 1px solid rgba(255,215,0,0.3);
-padding-bottom: 15px;
-margin-bottom: 25px;
-}
-.modal-content p {
-margin-bottom: 15px;
-font-size: 15px;
-}
-.close-modal {
-position: absolute; 
-right: 25px; top: 20px;
-color: #FFD700; font-size: 32px; font-weight: bold; 
-cursor: pointer; transition: 0.2s; z-index: 10;
-font-family: sans-serif;
-}
-.close-modal:hover {
-color: #fff;
-transform: scale(1.1);
-}
+.modal-content h2 { color: #FFD700; margin-top: 0; font-weight: 700; font-size: 26px; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 15px; margin-bottom: 25px; }
+.modal-content p { margin-bottom: 15px; font-size: 15px; }
+.close-modal { position: absolute; right: 25px; top: 20px; color: #FFD700; font-size: 32px; font-weight: bold; cursor: pointer; transition: 0.2s; z-index: 10; font-family: sans-serif; }
+.close-modal:hover { color: #fff; transform: scale(1.1); }
 /* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
-.album-modal-content {
-text-align: center;
-max-width: 500px;
-padding: 30px;
-}
-#modalAlbumTitle {
-text-align: center;
-font-size: 22px;
-margin-top: 5px;
-margin-bottom: 20px;
-text-transform: uppercase;
-}
-.tracklist-container {
-text-align: left;
-max-height: 200px; 
-overflow-y: auto;
-margin-bottom: 20px;
-padding-right: 10px;
-background: rgba(255, 215, 0, 0.05);
-border-radius: 10px;
-padding: 15px;
-border: 1px solid rgba(255,215,0,0.2);
-}
+.album-modal-content { text-align: center; max-width: 500px; padding: 30px; }
+#modalAlbumTitle { text-align: center; font-size: 22px; margin-top: 5px; margin-bottom: 20px; text-transform: uppercase; }
+.tracklist-container { text-align: left; max-height: 200px; overflow-y: auto; margin-bottom: 20px; padding-right: 10px; background: rgba(255, 215, 0, 0.05); border-radius: 10px; padding: 15px; border: 1px solid rgba(255,215,0,0.2); }
 .tracklist-container::-webkit-scrollbar { width: 4px; }
 .tracklist-container::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
-.track-item {
-padding: 8px 0;
-border-bottom: 1px solid rgba(255,215,0,0.15);
-font-size: 14px;
-color: #eee;
-}
-.track-item:last-child { border-bottom: none; }
-.track-link {
-display: block;
-text-decoration: none;
-color: #eee;
-transition: 0.2s;
-cursor: pointer;
-}
-.track-link:hover {
-color: #FFD700;
-background: rgba(255, 215, 0, 0.1);
-padding-left: 8px;
-}
-.active-track {
-color: #000;
-font-weight: bold;
-background: #FFD700;
-border-radius: 4px;
-padding-left: 12px;
-}
-.album-platforms {
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
-gap: 15px;
-margin-top: 15px;
-margin-bottom: 20px;
-}
-.album-platforms a {
-width: 45px; height: 45px;
-background: #111; border: 1px solid gold; border-radius: 12px;
-display: flex; align-items: center; justify-content: center;
-transition: 0.25s;
-}
-.album-platforms a:hover {
-background: gold; transform: scale(1.15);
-}
+.track-item-wrapper { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,215,0,0.15); padding: 8px 0; }
+.track-item-wrapper:last-child { border-bottom: none; }
+.track-link { display: block; text-decoration: none; color: #eee; transition: 0.2s; cursor: pointer; flex-grow: 1; font-size: 14px; }
+.track-link:hover { color: #FFD700; padding-left: 8px; }
+.share-track { cursor: pointer; font-size: 16px; margin-left: 10px; transition: 0.3s; opacity: 0.7; }
+.share-track:hover { opacity: 1; transform: scale(1.2); }
+.active-track { color: #000; font-weight: bold; background: #FFD700; border-radius: 4px; padding-left: 12px; }
+.album-platforms { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 15px; margin-bottom: 20px; }
+.album-platforms a { width: 45px; height: 45px; background: #111; border: 1px solid gold; border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: 0.25s; }
+.album-platforms a:hover { background: gold; transform: scale(1.15); }
 .album-platforms svg { fill: gold; width: 22px; transition: 0.25s; }
 .album-platforms a:hover svg { fill: #000; }
-.btn-volver {
-background: transparent;
-border: 1px solid #FFD700;
-color: #FFD700;
-padding: 12px 20px;
-border-radius: 8px;
-cursor: pointer;
-font-family: 'Merriweather', serif;
-font-weight: bold;
-font-size: 14px;
-width: 100%;
-transition: 0.3s;
-text-transform: uppercase;
-letter-spacing: 1px;
-}
-.btn-volver:hover {
-background: #FFD700;
-color: #000;
-}
-.audio-controls {
-background: #111; border: 1px solid #FFD700; border-radius: 10px;
-padding: 12px 20px; margin-top: 25px; display: flex; align-items: center;
-justify-content: space-between; gap: 15px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-}
+.btn-volver { background: transparent; border: 1px solid #FFD700; color: #FFD700; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-family: 'Merriweather', serif; font-weight: bold; font-size: 14px; width: 100%; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+.btn-volver:hover { background: #FFD700; color: #000; }
+/* CONTROLES DE AUDIO */
+.audio-controls { background: #111; border: 1px solid #FFD700; border-radius: 10px; padding: 12px 20px; margin-top: 25px; display: flex; align-items: center; justify-content: space-between; gap: 15px; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
 .audio-controls span { font-size: 22px; cursor: pointer; user-select: none; font-family: sans-serif; }
 .audio-controls .vol-label { font-size: 13px; font-weight: 700; color: #FFD700; letter-spacing: 1px; cursor: default; }
 #volumeSlider { flex-grow: 1; accent-color: #FFD700; height: 6px; background: #333; border-radius: 5px; outline: none; cursor: pointer; }
-.orbit{
-position:absolute;
-border-radius:50%;
-border:1px solid rgba(255,215,0,.15);
-pointer-events:none; 
-will-change: transform;
-transform: translateZ(0);
-}
+/* ORBITAS */
+.orbit{ position:absolute; border-radius:50%; border:1px solid rgba(255,215,0,.15); pointer-events:none; will-change: transform; transform: translateZ(0); }
 #orbitSingles{ width:420px; height:420px; animation:spin 45s linear infinite; }
 #orbitAlbums{ width:720px; height:720px; animation:spin 95s linear infinite; }
-#orbitSingles:hover, #orbitSingles:hover .counter,
-#orbitAlbums:hover, #orbitAlbums:hover .counter { animation-play-state: paused; }
-@keyframes spin{
-from{transform:rotate(0deg) translateZ(0);}
-to{transform:rotate(360deg) translateZ(0);}
-}
-.planet{
-position:absolute;
-width:110px; height:110px;
-border-radius:50%;
-cursor:pointer;
-transition:.3s;
-display:flex; align-items:center; justify-content:center;
-background:#000;
-box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4);
-pointer-events:auto; 
-will-change: transform;
-}
-.planet:hover{
-transform:scale(1.3) translateZ(0);
-box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
-z-index: 100;
-}
-.counter{
-width:100%; height:100%;
-animation:counterSpin 45s linear infinite;
-position: relative; 
-border-radius: 50%;
-will-change: transform;
-}
-.counter img{
-width:100%; height:100%;
-object-fit:cover;
-border-radius:50%;
-pointer-events:none;
-}
+#orbitSingles:hover, #orbitSingles:hover .counter, #orbitAlbums:hover, #orbitAlbums:hover .counter { animation-play-state: paused; }
+@keyframes spin{ from{transform:rotate(0deg) translateZ(0);} to{transform:rotate(360deg) translateZ(0);} }
+/* DISCOS */
+.planet{ position:absolute; width:110px; height:110px; border-radius:50%; cursor:pointer; transition:.3s; display:flex; align-items:center; justify-content:center; background:#000; box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4); pointer-events:auto; will-change: transform; }
+.planet:hover{ transform:scale(1.3) translateZ(0); box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8); z-index: 100; }
+.counter{ width:100%; height:100%; animation:counterSpin 45s linear infinite; position: relative; border-radius: 50%; will-change: transform; }
+.counter img{ width:100%; height:100%; object-fit:cover; border-radius:50%; pointer-events:none; }
 #orbitAlbums .counter{ animation-duration:95s; }
-@keyframes counterSpin{
-from{transform:rotate(0deg) translateZ(0);}
-to{transform:rotate(-360deg) translateZ(0);}
-}
-.tooltip {
-position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-background: rgba(0, 0, 0, 0.9); color: #FFD700;
-padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 700;
-white-space: nowrap; border: 1px solid rgba(255,215,0,0.5); opacity: 0;
-visibility: hidden; transition: all 0.3s ease; pointer-events: none;
-box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 1px;
-}
+@keyframes counterSpin{ from{transform:rotate(0deg) translateZ(0);} to{transform:rotate(-360deg) translateZ(0);} }
+/* TOOLTIPS */
+.tooltip { position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: #FFD700; padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 700; white-space: nowrap; border: 1px solid rgba(255,215,0,0.5); opacity: 0; visibility: hidden; transition: all 0.3s ease; pointer-events: none; box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 1px; }
 .planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
-.family-symbol-container {
-position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
-display: flex; align-items: flex-end; justify-content: center; gap: 5px;
-background: rgba(0,0,0,0.8); padding: 8px 12px; border: 1px solid gold; border-radius: 10px;
-opacity: 0; transition: 0.3s; pointer-events: none;
-}
+/* EFECTO FAMILIA */
+.family-symbol-container { position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); display: flex; align-items: flex-end; justify-content: center; gap: 5px; background: rgba(0,0,0,0.8); padding: 8px 12px; border: 1px solid gold; border-radius: 10px; opacity: 0; transition: 0.3s; pointer-events: none; }
 .planet:hover .family-symbol-container { opacity: 1; bottom: 125%; }
 .fam-fig { display: flex; flex-direction: column; align-items: center; }
 .fam-head { width: 10px; height: 10px; background: gold; border-radius: 50%; margin-bottom: 2px; }
 .fam-body-m { width: 16px; height: 24px; background: gold; border-radius: 4px 4px 0 0; }
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
+/* EFECTO CORAZONES */
 .heart-bubble { position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity; }
-.floating-social{
-position:absolute; top:50%; left:15px; transform:translateY(-50%);
-display:flex; flex-direction:column; gap:15px; z-index:999;
-}
-.floating-social a{
-background:#111; color:#FFD700; width:45px; height:45px;
-display:flex; align-items:center; justify-content:center;
-border-radius:10px; text-decoration:none; transition:.25s;
-padding: 10px; box-sizing: border-box; border: 1px solid gold;
-}
+/* REDES LATERALES (IZQUIERDA) */
+.floating-social{ position:absolute; top:50%; left:15px; transform:translateY(-50%); display:flex; flex-direction:column; gap:15px; z-index:999; }
+.floating-social a{ background:#111; color:#FFD700; width:45px; height:45px; display:flex; align-items:center; justify-content:center; border-radius:10px; text-decoration:none; transition:.25s; padding: 10px; box-sizing: border-box; border: 1px solid gold; }
 .floating-social svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
 .floating-social a:hover{ background:#FFD700; transform:scale(1.2); }
 .floating-social a:hover svg { fill: #000; }
-.floating-platforms{
-position:absolute; top:50%; right:15px; transform:translateY(-50%);
-display:flex; flex-direction:column; gap:15px; z-index:999;
-}
-.floating-platforms a{
-background:#111; color:#FFD700; width:45px; height:45px;
-display:flex; align-items:center; justify-content:center;
-border-radius:10px; text-decoration:none; transition:.25s;
-padding: 10px; box-sizing: border-box; border: 1px solid gold;
-}
+/* PLATAFORMAS DIGITALES GLOBALES (DERECHA) */
+.floating-platforms{ position:absolute; top:50%; right:15px; transform:translateY(-50%); display:flex; flex-direction:column; gap:15px; z-index:999; }
+.floating-platforms a{ background:#111; color:#FFD700; width:45px; height:45px; display:flex; align-items:center; justify-content:center; border-radius:10px; text-decoration:none; transition:.25s; padding: 10px; box-sizing: border-box; border: 1px solid gold; }
 .floating-platforms svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
 .floating-platforms a:hover{ background:#FFD700; transform:scale(1.2); }
 .floating-platforms a:hover svg { fill: #000; }
-.shootingStar {
-position: absolute; cursor: pointer; pointer-events: auto;
-display: flex; align-items: center; z-index: 1001; will-change: transform;
-}
-.starIconWrapper {
-background: #000; border: 1px solid gold; border-radius: 20px;
-padding: 6px 15px; filter: drop-shadow(0 0 10px gold);
-display: flex; align-items: center; justify-content: center;
-position: relative; z-index: 2;
-}
-.starIconText {
-color: #FFD700; font-size: 10px; font-weight: bold;
-white-space: nowrap; font-family: sans-serif; letter-spacing: 1px;
-}
-.tail {
-position: absolute; top: 50%; left: 50%; height: 3px;
-background: linear-gradient(to right, rgba(255,215,0,0.9), transparent);
-transform-origin: left center; filter: blur(1px); pointer-events: none; z-index: 1;
-}
-.supernova-hitbox {
-position: absolute; width: 50px; height: 50px; background: transparent;
-border-radius: 50%; z-index: 5000; pointer-events: auto; cursor: pointer;
-transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center;
-}
-.supernova {
-position: relative; width: 4px; height: 4px; background: #fff;
-border-radius: 50%; box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8);
-animation: burst 2.5s ease-in-out forwards; pointer-events: none;
-}
-.supernova::before, .supernova::after {
-content: ''; position: absolute; background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 50%; left: 50%; transform: translate(-50%, -50%);
-}
+/* ESTRELLAS FUGACES (PRÓXIMOS LANZAMIENTOS) */
+.shootingStar { position: absolute; cursor: pointer; pointer-events: auto; display: flex; align-items: center; z-index: 1001; will-change: transform; }
+.starIconWrapper { background: #000; border: 1px solid gold; border-radius: 20px; padding: 6px 15px; filter: drop-shadow(0 0 10px gold); display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+.starIconText { color: #FFD700; font-size: 10px; font-weight: bold; white-space: nowrap; font-family: sans-serif; letter-spacing: 1px; }
+.tail { position: absolute; top: 50%; left: 50%; height: 3px; background: linear-gradient(to right, rgba(255,215,0,0.9), transparent); transform-origin: left center; filter: blur(1px); pointer-events: none; z-index: 1; }
+/* DESTELLOS DE ESTRELLAS (SUPERNOVAS) TÁCTILES */
+.supernova-hitbox { position: absolute; width: 50px; height: 50px; background: transparent; border-radius: 50%; z-index: 5000; pointer-events: auto; cursor: pointer; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; }
+.supernova { position: relative; width: 4px; height: 4px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8); animation: burst 2.5s ease-in-out forwards; pointer-events: none; }
+.supernova::before, .supernova::after { content: ''; position: absolute; background: radial-gradient(circle, gold 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
 .supernova::before { width: 60px; height: 2px; }
 .supernova::after { width: 2px; height: 60px; }
-.ray-x {
-position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg);
-}
-.ray-x::after {
-content: ''; position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%);
-top: 0; left: 0; transform: rotate(90deg);
-}
+.ray-x { position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); }
+.ray-x::after { content: ''; position: absolute; width: 30px; height: 2px; background: radial-gradient(circle, gold 0%, transparent 70%); top: 0; left: 0; transform: rotate(90deg); }
 @keyframes burst { 0% { transform: scale(0); opacity: 0; } 40% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
-.floating-quote {
-position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-background: rgba(0, 0, 0, 0.9); color: #fff; border: 1px solid #FFD700;
-padding: 25px 35px; border-radius: 15px; font-size: 16px; font-weight: bold;
-font-style: italic; text-align: center; box-shadow: 0 0 35px rgba(255, 215, 0, 0.8);
-pointer-events: none; z-index: 100000; max-width: 80%; line-height: 1.5;
-will-change: transform, opacity;
-}
-.floating-quote span {
-font-size: 12px; color: #FFD700; margin-top: 10px; display: block;
-text-transform: uppercase; letter-spacing: 2px;
-}
-.spin-active {
-animation: fastSpin 2s linear infinite !important;
-box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-index: 5000 !important;
-}
+/* FRASES FLOTANTES EN EL CENTRO */
+.floating-quote { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.9); color: #fff; border: 1px solid #FFD700; padding: 25px 35px; border-radius: 15px; font-size: 16px; font-weight: bold; font-style: italic; text-align: center; box-shadow: 0 0 35px rgba(255, 215, 0, 0.8); pointer-events: none; z-index: 100000; max-width: 80%; line-height: 1.5; will-change: transform, opacity; }
+.floating-quote span { font-size: 12px; color: #FFD700; margin-top: 10px; display: block; text-transform: uppercase; letter-spacing: 2px; }
+/* GIRO LENTO DEL ÁLBUM */
+.spin-active { animation: fastSpin 2s linear infinite !important; box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-index: 5000 !important; }
 @keyframes fastSpin { 100% { transform: rotate(360deg) translateZ(0); } }
 .force-tooltip { opacity: 1 !important; visibility: visible !important; bottom: -35px !important; }
+/* RESPONSIVIDAD */
 @media (max-width: 768px) {
-#solarSystem { transform: scale(0.45); }
-.floating-social { transform: scale(0.8) translateY(-60%); left: 5px; }
-.floating-platforms { transform: scale(0.8) translateY(-60%); right: 5px; }
-.modal-content { padding: 25px; width: 90%; max-height: 85vh; }
-.close-modal { right: 15px; top: 10px; }
-.floating-quote { font-size: 14px; width: 90%; padding: 20px; }
+    #solarSystem { transform: scale(0.45); }
+    .floating-social { transform: scale(0.8) translateY(-60%); left: 5px; }
+    .floating-platforms { transform: scale(0.8) translateY(-60%); right: 5px; }
+    .modal-content { padding: 25px; width: 90%; max-height: 85vh; }
+    .close-modal { right: 15px; top: 10px; }
+    .floating-quote { font-size: 14px; width: 90%; padding: 20px; }
 }
 </style>
 </head>
 <body>
+
 <div id="loader">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high">
-<p>INICIANDO UNIVERSO...</p>
+    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high">
+    <p>INICIANDO UNIVERSO...</p>
 </div>
+
 <audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
+
 <div id="bioModal" class="modal" role="dialog" aria-modal="true">
-<div class="modal-content">
-<span class="close-modal close-bio" aria-label="Cerrar biografía" role="button" tabindex="0">×</span>
-<h2>Reflexión Musical MX</h2>
-<p>Reflexión Musical MX nace de una idea simple pero poderosa: la música también puede hacer pensar.</p>
-<p>En un mundo lleno de ruido, este proyecto utiliza canciones para hablar de lo que muchas veces se evita: la pérdida de valores, los conflictos sociales, la violencia, la desigualdad y las decisiones que están moldeando el futuro de la humanidad.</p>
-<p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
-<p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
-<p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
-<div class="audio-controls">
-<span id="muteBtn" aria-label="Silenciar o activar audio" role="button" tabindex="0">🔊</span>
-<input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
-<span class="vol-label">VOL</span>
+    <div class="modal-content">
+        <span class="close-modal close-bio" aria-label="Cerrar biografía" role="button" tabindex="0">×</span>
+        <h2>Reflexión Musical MX</h2>
+        <p>Reflexión Musical MX nace de una idea simple pero poderosa: la música también puede hacer pensar.</p>
+        <p>En un mundo lleno de ruido, este proyecto utiliza canciones para hablar de lo que muchas veces se evita: la pérdida de valores, los conflictos sociales, la violencia, la desigualdad y las decisiones que están moldeando el futuro de la humanidad.</p>
+        <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
+        <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
+        <p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
+        <div class="audio-controls">
+            <span id="muteBtn" aria-label="Silenciar o activar audio" role="button" tabindex="0">🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
+            <span class="vol-label">VOL</span>
+        </div>
+        <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
+        <p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">Próximamente: "Algo está mal" (Libro)</p>
+    </div>
 </div>
-<hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
-<p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
-Próximamente: "Algo está mal" (Libro)
-</p>
-</div>
-</div>
+
 <div id="albumModal" class="modal" role="dialog" aria-modal="true">
-<div class="modal-content album-modal-content">
-<span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
-<h2 id="modalAlbumTitle">Título del Álbum</h2>
-<div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
-<div class="tracklist-container" id="modalTracklist"></div>
-<p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
-<div class="album-platforms" id="modalPlatforms"></div>
-<button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
+    <div class="modal-content album-modal-content">
+        <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
+        <h2 id="modalAlbumTitle">Título del Álbum</h2>
+        <div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
+        <div class="tracklist-container" id="modalTracklist"></div>
+        <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
+        <div class="album-platforms" id="modalPlatforms"></div>
+        <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
+    </div>
 </div>
-</div>
+
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="starContainer" aria-hidden="true"></div>
+
 <div class="floating-social">
 <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
 <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg></a>
@@ -493,6 +189,7 @@ Próximamente: "Algo está mal" (Libro)
 <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud">
 <svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg></a>
 </div>
+
 <div class="floating-platforms">
 <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN" target="_blank" aria-label="Escuchar en Spotify">
 <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg></a>
@@ -505,10 +202,15 @@ Próximamente: "Algo está mal" (Libro)
 <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="Escuchar en SoundCloud">
 <svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg></a>
 </div>
+
 <div id="solarSystem">
-<div id="sun" aria-label="Abrir biografía" role="button" tabindex="0"><img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo"></div>
-<div id="orbitSingles" class="orbit"></div><div id="orbitAlbums" class="orbit"></div>
+<div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
+<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
 </div>
+<div id="orbitSingles" class="orbit"></div>
+<div id="orbitAlbums" class="orbit"></div>
+</div>
+
 <script>
 const quotesData = [
 { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -685,6 +387,246 @@ const quotesData = [
 { text: "No hay revolución sin transformación, primero en tu mente, después en acción.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
 { text: "¡La nación no se vende jamás!", song: "Himno a México", album: "Voces de Cambio 2" }
 ];
+
+let quoteOrder = [];
+let quoteIndex = 0;
+
+function shuffleArray(array) {
+for (let i = array.length - 1; i > 0; i--) {
+const j = Math.floor(Math.random() * (i + 1));
+[array[i], array[j]] = [array[j], array[i]];
+}
+}
+
+function generateDailyOrder() {
+quoteOrder = Array.from({ length: quotesData.length }, (_, i) => i);
+shuffleArray(quoteOrder);
+quoteIndex = 0;
+try {
+const today = new Date().toISOString().split('T')[0];
+localStorage.setItem('rmmx_quoteDate', today);
+localStorage.setItem('rmmx_quoteOrder', JSON.stringify(quoteOrder));
+localStorage.setItem('rmmx_quoteIndex', quoteIndex);
+} catch(e) {}
+}
+
+try {
+const today = new Date().toISOString().split('T')[0];
+const storedDate = localStorage.getItem('rmmx_quoteDate');
+if (storedDate === today) {
+quoteOrder = JSON.parse(localStorage.getItem('rmmx_quoteOrder'));
+quoteIndex = parseInt(localStorage.getItem('rmmx_quoteIndex'), 10);
+if (!quoteOrder || quoteOrder.length !== quotesData.length || isNaN(quoteIndex)) {
+generateDailyOrder();
+}
+} else {
+generateDailyOrder();
+}
+} catch(e) {
+generateDailyOrder();
+}
+
+function getNextQuote() {
+if (quoteIndex >= quoteOrder.length) {
+generateDailyOrder();
+}
+const q = quotesData[quoteOrder[quoteIndex]];
+quoteIndex++;
+try { localStorage.setItem('rmmx_quoteIndex', quoteIndex); } catch(e) {}
+return q;
+}
+
+window.addEventListener('load', () => {
+const loader = document.getElementById('loader');
+setTimeout(() => {
+loader.style.opacity = '0';
+setTimeout(() => loader.remove(), 800);
+}, 500); 
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+const modal = document.getElementById("bioModal");
+const sun = document.getElementById("sun");
+const closeBioModal = document.querySelector(".close-bio");
+const bioAudio = document.getElementById("bioAudio"); 
+const volumeSlider = document.getElementById("volumeSlider");
+const muteBtn = document.getElementById("muteBtn");
+const starContainer = document.getElementById("starContainer"); 
+const albumModal = document.getElementById("albumModal");
+const closeAlbumModal = document.querySelector(".close-album");
+const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
+const modalAlbumTitle = document.getElementById("modalAlbumTitle");
+const modalPlayerContainer = document.getElementById("modalPlayerContainer");
+const modalTracklist = document.getElementById("modalTracklist");
+const modalPlatforms = document.getElementById("modalPlatforms");
+
+if(volumeSlider && bioAudio) {
+bioAudio.volume = volumeSlider.value;
+volumeSlider.addEventListener("input", (e) => {
+bioAudio.volume = e.target.value;
+muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
+});
+}
+
+if(muteBtn && bioAudio) {
+muteBtn.addEventListener("click", () => {
+if (bioAudio.volume > 0) {
+bioAudio.dataset.lastVol = bioAudio.volume; 
+bioAudio.volume = 0;
+volumeSlider.value = 0;
+muteBtn.textContent = "🔇";
+} else {
+const lastVol = bioAudio.dataset.lastVol || 0.4;
+bioAudio.volume = lastVol;
+volumeSlider.value = lastVol;
+muteBtn.textContent = "🔊";
+}
+});
+}
+
+function closeAndStopAudio() {
+modal.classList.remove("show");
+if(bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
+}
+
+function closeAlbumPanel() {
+albumModal.classList.remove("show");
+setTimeout(() => {
+modalPlayerContainer.innerHTML = "";
+modalTracklist.innerHTML = "";
+}, 400);
+}
+
+if(sun) {
+sun.onclick = () => { 
+modal.classList.add("show"); 
+if(bioAudio) { bioAudio.play().catch(error => { console.log("Bloqueado:", error); }); }
+};
+}
+
+if(closeBioModal) closeBioModal.addEventListener('click', closeAndStopAudio);
+if(closeAlbumModal) closeAlbumModal.addEventListener('click', closeAlbumPanel);
+if(btnCerrarAlbum) btnCerrarAlbum.addEventListener('click', closeAlbumPanel);
+window.addEventListener('click', (event) => {
+if (event.target === modal) closeAndStopAudio();
+if (event.target === albumModal) closeAlbumPanel();
+});
+window.addEventListener('touchstart', (event) => {
+if (event.target === modal) closeAndStopAudio();
+if (event.target === albumModal) closeAlbumPanel();
+}, {passive: true});
+
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+const numStars = window.innerWidth < 768 ? 80 : 300; 
+let backgroundStars = [];
+
+function setCanvasSize() {
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+initStars();
+}
+
+function initStars() {
+backgroundStars = [];
+for (let i = 0; i < numStars; i++) {
+backgroundStars.push({
+x: Math.random() * canvas.width,
+y: Math.random() * canvas.height,
+r: Math.random() * 1.5,
+opacity: Math.random(),
+speed: 0.005 + Math.random() * 0.01
+});
+}
+}
+
+function drawCanvas() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+backgroundStars.forEach(s => {
+s.opacity += s.speed;
+if (s.opacity >= 1 || s.opacity <= 0.1) s.speed *= -1;
+ctx.fillStyle = `rgba(255, 215, 0, ${s.opacity})`;
+ctx.beginPath();
+ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+ctx.fill();
+});
+requestAnimationFrame(drawCanvas);
+}
+
+setCanvasSize();
+window.addEventListener('resize', setCanvasSize);
+drawCanvas();
+
+function showQuoteAndSpin() {
+const q = getNextQuote(); 
+const quoteEl = document.createElement("div");
+quoteEl.className = "floating-quote";
+quoteEl.innerHTML = `"${q.text}"<br><span>${q.song}</span>`;
+document.body.appendChild(quoteEl);
+quoteEl.animate([
+{ opacity: 0, transform: 'translate(-50%, -50%) scale(0)' },
+{ opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)', offset: 0.05 },
+{ opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.1 },
+{ opacity: 1, transform: 'translate(-50%, -50%) scale(1)', offset: 0.9 },
+{ opacity: 0, transform: 'translate(-50%, -50%) scale(0)' }
+], { duration: 8000, easing: 'ease-out' }).onfinish = () => quoteEl.remove();
+const planetImg = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter img`);
+const planetTooltip = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"] .counter .tooltip`);
+if(planetImg) {
+planetImg.classList.add("spin-active");
+if(planetTooltip) planetTooltip.classList.add("force-tooltip");
+setTimeout(() => {
+planetImg.classList.remove("spin-active");
+if(planetTooltip) planetTooltip.classList.remove("force-tooltip");
+}, 8000);
+}
+}
+
+let isQuoteActive = false;
+let currentSpawnTimeout = null;
+
+function removeAllSupernovas() {
+const supernovas = document.querySelectorAll('.supernova-hitbox');
+supernovas.forEach(sn => sn.remove());
+}
+
+function spawnSupernovaBatch() {
+if (isQuoteActive) {
+if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
+return;
+}
+removeAllSupernovas();
+for (let i = 0; i < 3; i++) {
+const hitbox = document.createElement("div");
+hitbox.className = "supernova-hitbox";
+hitbox.style.left = (Math.random() * window.innerWidth) + "px";
+hitbox.style.top = (Math.random() * window.innerHeight) + "px";
+const flash = document.createElement("div");
+flash.className = "supernova";
+flash.innerHTML = '<div class="ray-x"></div>'; 
+hitbox.appendChild(flash);
+hitbox.onclick = function() {
+if (isQuoteActive) return;
+isQuoteActive = true;
+showQuoteAndSpin(); 
+removeAllSupernovas(); 
+if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
+setTimeout(() => {
+isQuoteActive = false; 
+spawnSupernovaBatch(); 
+}, 8000);
+};
+if(starContainer) starContainer.appendChild(hitbox); 
+}
+currentSpawnTimeout = setTimeout(() => {
+if (!isQuoteActive) {
+removeAllSupernovas();
+currentSpawnTimeout = setTimeout(spawnSupernovaBatch, 1000);
+}
+}, 3500); 
+}
+spawnSupernovaBatch();
+
 const singles = [
 {
 img: "images/We rise as one.webp",
@@ -819,6 +761,7 @@ soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/antes-de-las-armas?
 }
 }
 ];
+
 const albums = [
 {
 img: "images/Voces de Cambio 1.webp",
@@ -1134,3 +1077,217 @@ soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/amor-en-tiempo
 }
 }
 ];
+
+function createOrbit(data, id, radius) {
+const orbit = document.getElementById(id);
+if(!orbit) return;
+
+data.forEach((item, i) => {
+const angle = (i / data.length) * Math.PI * 2;
+const x = Math.cos(angle) * radius;
+const y = Math.sin(angle) * radius;
+const planet = document.createElement("div");
+planet.className = "planet";
+planet.style.left = `calc(50% + ${x}px - 55px)`;
+planet.style.top = `calc(50% + ${y}px - 55px)`;
+
+planet.onclick = () => {
+if(bioAudio && !bioAudio.paused) {
+bioAudio.pause();
+if(muteBtn) muteBtn.textContent = "🔇";
+}
+modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
+modalTracklist.innerHTML = "";
+let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
+let playlistId = "";
+if (ytLink && ytLink !== "#") {
+const match = ytLink.match(/[?&]list=([^&]+)/);
+if (match && match[1]) { playlistId = match[1]; }
+}
+const playerContainer = document.getElementById("modalPlayerContainer");
+if (playlistId) {
+playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
+playerContainer.style.display = "block";
+} else {
+playerContainer.innerHTML = "";
+playerContainer.style.display = "none";
+}
+
+if(item.tracks && item.tracks.length > 0) {
+item.tracks.forEach((trackObj, index) => {
+let row = document.createElement("div");
+row.className = "track-item-wrapper";
+
+let trackLink = document.createElement("a");
+trackLink.className = "track-item track-link";
+trackLink.href = "javascript:void(0);";
+trackLink.innerText = `${index + 1}. ${trackObj.name}`;
+
+let shareBtn = document.createElement("span");
+shareBtn.className = "share-track";
+shareBtn.innerHTML = "🔗";
+shareBtn.title = "Compartir canción";
+shareBtn.onclick = (e) => {
+e.stopPropagation();
+if (navigator.share) {
+navigator.share({
+title: trackObj.name,
+text: `Escucha "${trackObj.name}" de Reflexión Musical MX`,
+url: trackObj.url
+}).catch(console.error);
+} else {
+navigator.clipboard.writeText(trackObj.url);
+alert("Enlace copiado al portapapeles");
+}
+};
+
+trackLink.onclick = (e) => {
+e.preventDefault();
+document.querySelectorAll('.track-link').forEach(el => el.classList.remove('active-track'));
+trackLink.classList.add('active-track');
+let videoId = "";
+if(trackObj.url) {
+let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
+if(vMatch && vMatch[1]) videoId = vMatch[1];
+}
+if(videoId) {
+playerContainer.style.display = "block";
+let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+if(playlistId) { embedUrl += `&list=${playlistId}`; }
+playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
+} else {
+window.open(trackObj.url, "_blank");
+}
+};
+
+row.appendChild(trackLink);
+row.appendChild(shareBtn);
+modalTracklist.appendChild(row);
+});
+} else {
+let trackDiv = document.createElement("div");
+trackDiv.className = "track-item";
+trackDiv.style.textAlign = "center";
+trackDiv.style.color = "gold";
+trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
+modalTracklist.appendChild(trackDiv);
+}
+
+modalPlatforms.innerHTML = "";
+const globalPlatformsForModal = [
+{ name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
+{ name: "Amazon Music", svg: `<svg viewBox="0 0 448 512"><path d="M257.2 162.7c-48.7 1.8-169.5 15.5-169.5 117.5 0 109.5 138.3 114 183.5 43.2 6.5 10.2 35.4 37.5 45.3 46.8l53.1-46c-32.1-39.8-38.1-60.6-38.1-92.4V155c0-137.5-141.1-140.9-201.9-105.8l47.6 57.2c57.4-23.7 79.9 8.6 80 43.1zM128 289.4c0-38.1 44.2-39.6 72.5-40.8 77.4-3.1 84.8 35.8 84.8 54 0 86.8-157.3 64.8-157.3-13.2zm243.2 108.3c-71.1 53.4-142 81.6-218.6 81.6-43.5 0-84.9-10.3-122.9-29.6-14-7.1-23.9-6.5-32.9 2.5l-33.8 33.8c-7.9 7.9-5.1 14.8 1.9 19.1 48 29.5 106.6 45 170.8 45 88.5 0 166.5-35.8 226.4-90 10.9-9.9 10.1-16.4 1.4-25.1l-36.5-36.5c-7.4-7.3-16.4-7-23.2 1.3-4.2 5.1-12.7 14.5-17.6 19.3-5-4.8-16.1-14.7-20.9-19.4zm-132.6 44.1c-19.3 19.3-54.3 22.3-66 11.2-12.2-11.6-8.5-47.5 10.8-66.9 19-19.1 55.4-22 67.2-10.7 11.8 11.4 7.6 47.1-12 66.4z"/></svg>`, id: 'amazon' },
+{ name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
+{ name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
+{ name: "SoundCloud", svg: `<svg viewBox="0 0 640 512"><path d="M116.3 318.8c-6-1.5-12.3-2.3-18.8-2.3-37.4 0-67.8 29.3-67.8 65.5 0 36.1 30.4 65.5 67.8 65.5h414.7c42.1 0 76.2-32.9 76.2-73.4 0-40.6-34.1-73.4-76.2-73.4-6.4 0-12.5.8-18.3 2.3-13.4-53.5-62-92.4-121-92.4-55.9 0-103.5 35.1-118.8 84.1l-25.7-18.1c-19.2-13.5-43.8-21.5-70.2-21.5-63.7 0-115.3 50.8-115.3 113.3 0 16.9 3.8 33 10.6 47.4h66.3c15-43.2 55.4-74.4 104-74.4 60.5 0 109.5 48.3 109.5 107.8h46.7V174.4c0-26.6-21.6-48.2-48.2-48.2-26.6 0-48.2 21.6-48.2 48.2v206.5l-84.5-84.5-55.9 55.9 84.5 84.5V174.4c0-62 50.4-112.4 112.4-112.4s112.4 50.4 112.4 112.4v220h44.4c17.5 0 31.8 14.3 31.8 31.8s-14.3 31.8-31.8 31.8H97.5c-17.5 0-31.8-14.3-31.8-31.8s14.3-31.8 31.8-31.8h18.8z"/></svg>`, id: 'soundcloud' }
+];
+Object.keys(item.links).forEach(k => {
+if(k !== 'youtube' && item.links[k] !== "#") {
+let a = document.createElement("a");
+a.href = item.links[k]; a.target = "_blank";
+a.innerHTML = `<svg viewBox="0 0 24 24"><path d="${globalPlatformsForModal.find(p => p.id === k)?.svg.match(/d="([^"]+)"/)[1] || ''}"/></svg>`;
+a.setAttribute('aria-label', `Escuchar en ${k}`);
+modalPlatforms.appendChild(a);
+}
+});
+
+albumModal.classList.add("show");
+};
+
+const safeImgPath = encodeURI(item.img);
+let albumName = item.img.split('/').pop().replace('.webp', '');
+planet.setAttribute('data-album', albumName.toUpperCase());
+
+let extraHTML = "";
+if(albumName.toUpperCase() === "TEJIDO VITAL") {
+extraHTML = `
+<div class="family-symbol-container">
+<div class="fam-fig"><div class="fam-head"></div><div class="fam-body-m"></div></div>
+<div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-m"></div></div>
+<div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-f"></div></div>
+<div class="fam-fig"><div class="fam-head"></div><div class="fam-body-f"></div></div>
+</div>`;
+}
+
+planet.innerHTML=`<div class="counter"><img src="${safeImgPath}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
+
+if(albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
+let hTimer;
+planet.onmouseenter = () => {
+hTimer = setInterval(() => {
+const h = document.createElement("div");
+h.className = "heart-bubble";
+h.innerHTML = "❤";
+const rect = planet.getBoundingClientRect();
+h.style.left = (rect.left + rect.width/2) + "px";
+h.style.top = (rect.top + rect.height/2) + "px";
+document.body.appendChild(h);
+
+const destX = window.innerWidth / 2;
+const destY = window.innerHeight / 2;
+
+h.animate([
+{ transform: 'translate(-50%, -50%) scale(1)', opacity: 1, offset: 0 },
+{ transform: `translate(calc(-50% + ${destX - rect.left - rect.width/2}px), calc(-50% + ${destY - rect.top - rect.height/2}px)) scale(0.6)`, opacity: 1, offset: 0.95 },
+{ transform: `translate(calc(-50% + ${destX - rect.left - rect.width/2}px), calc(-50% + ${destY - rect.top - rect.height/2}px)) scale(0)`, opacity: 0, offset: 1 }
+], {duration: 2500, easing: 'linear'}).onfinish = () => h.remove();
+}, 400);
+};
+planet.onmouseleave = () => clearInterval(hTimer);
+}
+
+orbit.appendChild(planet);
+});
+}
+
+createOrbit(singles,"orbitSingles",210);
+createOrbit(albums,"orbitAlbums",360);
+
+const upcomingReleases = [
+{ text: "🎵 PRÓXIMO SENCILLO", link: "#" },
+{ text: "💿 NUEVO ÁLBUM", link: "#" },
+{ text: "📖 LIBRO: ALGO ESTÁ MAL", link: "#" }
+];
+
+function createShootingStar(){
+try {
+const release = upcomingReleases[Math.floor(Math.random() * upcomingReleases.length)]; 
+const star = document.createElement("div");
+star.className = "shootingStar";
+star.innerHTML = `
+<div class="tail"></div>
+<div class="starIconWrapper" style="width: auto; border-radius: 20px; padding: 5px 15px;">
+<span class="starIconText">${release.text}</span>
+</div>`;
+if(starContainer) starContainer.appendChild(star); 
+
+let startX, startY, endX, endY;
+const edge = Math.floor(Math.random() * 4); 
+const offset = 100;
+if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
+else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
+else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
+else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
+
+star.style.left = startX + "px";
+star.style.top = startY + "px";
+
+const dx = endX - startX; const dy = endY - startY;
+const angleRad = Math.atan2(dy, dx);
+const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
+
+const tail = star.querySelector('.tail');
+tail.style.width = (150 + Math.random() * 100) + "px";
+tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
+
+star.animate([{ transform: "translate(0, 0)", opacity: 1 }, { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }], { duration: 12000 + Math.random() * 6000, easing: "linear" });
+star.onclick = () => { if (release.link !== "#") window.open(release.link, "_blank"); };
+setTimeout(() => star.remove(), 19000);
+} catch (e) { console.error(e); }
+}
+
+setInterval(createShootingStar, 6000);
+
+</script>
+</body>
+</html>
