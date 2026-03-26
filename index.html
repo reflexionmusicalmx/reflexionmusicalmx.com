@@ -169,7 +169,7 @@ font-family: sans-serif;
 color: #fff;
 transform: scale(1.1);
 }
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO (SIN IMAGEN, REPRODUCTOR FIJO Y SCROLL LISTA) */
+/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
 .album-modal-content {
 text-align: center;
 max-width: 500px;
@@ -184,7 +184,7 @@ text-transform: uppercase;
 }
 .tracklist-container {
 text-align: left;
-max-height: 200px; /* SCROLL SOLO PARA LAS CANCIONES */
+max-height: 200px;
 overflow-y: auto;
 margin-bottom: 20px;
 padding-right: 10px;
@@ -205,10 +205,6 @@ border-bottom: 1px solid rgba(255,215,0,0.15);
 padding: 8px 0;
 }
 .track-item-wrapper:last-child { border-bottom: none; }
-.track-item {
-font-size: 14px;
-color: #eee;
-}
 .track-link {
 display: block;
 text-decoration: none;
@@ -217,34 +213,36 @@ transition: 0.2s;
 cursor: pointer;
 flex-grow: 1;
 text-align: left;
+font-size: 14px;
+padding-right: 15px;
 }
 .track-link:hover {
 color: #FFD700;
 padding-left: 8px;
 }
-.track-actions {
-display: flex;
-gap: 12px;
-margin-left: 10px;
-}
-.action-btn {
-cursor: pointer;
-font-size: 16px;
-opacity: 0.6;
-transition: 0.3s;
-user-select: none;
-}
-.action-btn:hover {
-opacity: 1;
-transform: scale(1.2);
-}
-/* CLASE PARA LA PISTA QUE ESTÁ SONANDO */
 .active-track {
 color: #000;
 font-weight: bold;
 background: #FFD700;
 border-radius: 4px;
 padding-left: 12px;
+}
+.track-actions {
+display: flex;
+gap: 12px;
+align-items: center;
+}
+.action-btn {
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: 0.3s;
+user-select: none;
+}
+.action-btn:hover {
+transform: scale(1.15);
+filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
 }
 
 .album-platforms {
@@ -508,7 +506,7 @@ Próximamente: "Algo está mal" (Libro)
 <div class="modal-content album-modal-content">
 <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
 <h2 id="modalAlbumTitle">Título del Álbum</h2>
-<div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px; display:none;"></div>
+<div id="modalPlayerContainer" style="width:100%; transition: 0.3s; margin-bottom: 15px;"></div>
 <div class="tracklist-container" id="modalTracklist"></div>
 <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
 <div class="album-platforms" id="modalPlatforms"></div>
@@ -1441,11 +1439,11 @@ let actions = document.createElement("div");
 actions.className = "track-actions";
 let playBtn = document.createElement("span");
 playBtn.className = "action-btn";
-playBtn.innerHTML = "▶️";
+playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 7.5v9l6-4.5-6-4.5z" fill="#000"/></svg>`;
 playBtn.title = "Reproducir aquí";
 let shareBtn = document.createElement("span");
 shareBtn.className = "action-btn";
-shareBtn.innerHTML = "🔗";
+shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
 shareBtn.title = "Compartir canción";
 const playFunction = (e) => {
 if(e) e.preventDefault();
