@@ -184,7 +184,7 @@ text-transform: uppercase;
 }
 .tracklist-container {
 text-align: left;
-max-height: 200px;
+max-height: 200px; /* SCROLL SOLO PARA LAS CANCIONES */
 overflow-y: auto;
 margin-bottom: 20px;
 padding-right: 10px;
@@ -524,9 +524,7 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 <span class="vol-label">VOL</span>
 </div>
 <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
-<p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
-Próximamente: "Algo está mal" (Libro)
-</p>
+<p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">Próximamente: "Algo está mal" (Libro)</p>
 </div>
 </div>
 
@@ -584,6 +582,7 @@ Próximamente: "Algo está mal" (Libro)
 </div>
 
 <script>
+// FRASES DIARIAS INTACTAS
 const quotesData = [
 { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
 { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -874,20 +873,20 @@ const albums = [
 img: "images/Voces de Cambio 1.webp",
 title: "Voces de Cambio 1",
 tracks: [
-{ name: "Ciudad en silencio", url: "https://music.youtube.com/watch?v=Pes1UMLzo4k&si=YcgqK8zfBkm_gUIT" },
-{ name: "Raíces de fuego", url: "https://music.youtube.com/watch?v=dhfbqQ-eA4k&si=EczJLPwIrIIpfeIU" },
-{ name: "Sabes lo que haces", url: "https://music.youtube.com/watch?v=Q3S-VNSAapw&si=QgDPla23rzXIj0rT" },
-{ name: "Ecos del olvido", url: "https://music.youtube.com/watch?v=ph3wGjm-_ik&si=Yg2teMWmnLJamOdt" },
-{ name: "Sociedad cómplice", url: "https://music.youtube.com/watch?v=R9KMu-dwGe4&si=cqS_4pTMbmIWT0ek" },
-{ name: "Normal es veneno", url: "https://music.youtube.com/watch?v=PsQBC2vE0Dg&si=Lal0n1yAmZjsVCb2" },
-{ name: "El engaño del bien", url: "https://music.youtube.com/watch?v=9OJqY11gXYQ&si=Lc66U6wOvAANDHA-" },
-{ name: "¿Injusticia o consecuencia?", url: "https://music.youtube.com/watch?v=Jf2rcqHA2co&si=VAj2rF0xKIlMgwLO" },
-{ name: "Ciclos y deudas", url: "https://music.youtube.com/watch?v=3cgg-yS72aY&si=AqrLj9qT-ds6aHne" },
-{ name: "Veneno en la sangre", url: "https://music.youtube.com/watch?v=P5ze7xM8HYU&si=b0HgB4UsybG94y9T" },
-{ name: "Herencia de hierro", url: "https://music.youtube.com/watch?v=Y3QfelDKPfM&si=qKnYUE2JDyjgLd6h" },
-{ name: "Resistencia pequeña", url: "https://music.youtube.com/watch?v=bLkproBlzKk&si=cZ9MezEsycdhhcUa" },
-{ name: "El cambio esta en ti", url: "https://music.youtube.com/watch?v=LVcrBqw_3gc&si=8pXJ8bW2uSv1UpAS" },
-{ name: "No hay tirano eterno", url: "https://music.youtube.com/watch?v=UOtU-E1R9yw&si=8aT2H9bn1xA8fk8z" },
+{ name: "Ciudad en silencio", url: "https://on.soundcloud.com/Bhmq9L2M91NwRkc6no" },
+{ name: "Raíces de fuego", url: "https://on.soundcloud.com/U9I4Sv1QIQSqwyNvr7" },
+{ name: "Sabes lo que haces", url: "https://on.soundcloud.com/VVd0rUx4ShNpM9BzVa" },
+{ name: "Ecos del olvido", url: "https://on.soundcloud.com/2RKafGVm92N1ujUmN3" },
+{ name: "Sociedad cómplice", url: "https://on.soundcloud.com/Q7BOyzychaG5eZfdiz" },
+{ name: "Normal es veneno", url: "https://on.soundcloud.com/OT2w7pXdYx2FY2O6G1" },
+{ name: "El engaño del bien", url: "https://on.soundcloud.com/MYwkS59TjjzZZPpETM" },
+{ name: "¿Injusticia o consecuencia?", url: "https://on.soundcloud.com/HCBMVGnNE8xJg4pYZy" },
+{ name: "Ciclos y deudas", url: "https://on.soundcloud.com/8AejAjIteJHf4eMuk4" },
+{ name: "Veneno en la sangre", url: "https://on.soundcloud.com/9QXYq83xSByoh0VVlT" },
+{ name: "Herencia de hierro", url: "https://on.soundcloud.com/4aOsAqsjwzVu90wRjA" },
+{ name: "Resistencia pequeña", url: "https://on.soundcloud.com/CEykSmLLeLNmrjGvJ0" },
+{ name: "El cambio esta en ti", url: "https://on.soundcloud.com/YZuRC93ZifwVwOIaZ5" },
+{ name: "No hay tirano eterno", url: "https://on.soundcloud.com/MUfDhsjS4Gco2ROLoJ" },
 { name: "Hijos del olvido", url: "https://music.youtube.com/watch?v=n2GMzHW2NyQ&si=i3OviOjOPov5cBmf" }
 ],
 links: {
@@ -1540,18 +1539,26 @@ const playFunction = (e) => {
 if(e) e.preventDefault();
 document.querySelectorAll('.track-link').forEach(el => el.classList.remove('active-track'));
 trackLink.classList.add('active-track');
-let videoId = "";
-if(trackObj.url) {
-let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
-if(vMatch && vMatch[1]) videoId = vMatch[1];
-}
-if(videoId) {
-playerContainer.style.display = "block";
-let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-if(playlistId){ embedUrl += `&list=${playlistId}`; }
-playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
+
+if(trackObj.url.includes("soundcloud.com")) {
+    playerContainer.style.display = "block";
+    const encodedUrl = encodeURIComponent(trackObj.url);
+    const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23FFD700&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
+    playerContainer.innerHTML = `<iframe width="100%" height="250" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}" style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
 } else {
-window.open(trackObj.url, "_blank");
+    let videoId = "";
+    if(trackObj.url) {
+        let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
+        if(vMatch && vMatch[1]) videoId = vMatch[1];
+    }
+    if(videoId) {
+        playerContainer.style.display = "block";
+        let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        if(playlistId){ embedUrl += `&list=${playlistId}`; }
+        playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
+    } else {
+        window.open(trackObj.url, "_blank");
+    }
 }
 };
 
@@ -1660,26 +1667,22 @@ orbit.appendChild(fragment);
 createOrbit(singles,"orbitSingles",210);
 createOrbit(albums,"orbitAlbums",360);
 
-// COMETAS (ESTRELLAS FUGACES RE-DISEÑADAS)
 const upcomingReleases = [
-"📖 LIBRO: ALGO ESTÁ MAL",
-"💿 NUEVO ÁLBUM",
-"🎵 PRÓXIMO SENCILLO"
+{ text: "🎵 PRÓXIMO SENCILLO", link: "#" },
+{ text: "💿 NUEVO ÁLBUM", link: "#" },
+{ text: "📖 LIBRO: ALGO ESTÁ MAL", link: "#" }
 ];
-let currentCometIndex = 0;
 
-function spawnNextComet(){
+function createShootingStar(){
 try {
-const releaseText = upcomingReleases[currentCometIndex];
-currentCometIndex = (currentCometIndex + 1) % upcomingReleases.length;
-
+const release = upcomingReleases[Math.floor(Math.random() * upcomingReleases.length)]; 
 const star = document.createElement("div");
-star.className = "comet-container";
+star.className = "shootingStar";
 star.innerHTML = `
-<div class="comet-tail"></div>
-<div class="comet-head"></div>
-<div class="comet-text">${releaseText}</div>
-`;
+<div class="tail"></div>
+<div class="starIconWrapper" style="width: auto; border-radius: 20px; padding: 5px 15px;">
+<span class="starIconText">${release.text}</span>
+</div>`;
 if(starContainer) starContainer.appendChild(star); 
 
 let startX, startY, endX, endY;
@@ -1697,41 +1700,17 @@ const dx = endX - startX; const dy = endY - startY;
 const angleRad = Math.atan2(dy, dx);
 const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
 
-const tail = star.querySelector('.comet-tail');
+const tail = star.querySelector('.tail');
+tail.style.width = (150 + Math.random() * 100) + "px";
 tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
 
-const duration = 12000 + Math.random() * 4000;
-const anim = star.animate([
-{ transform: "translate(0px, 0px)" },
-{ transform: `translate(${dx}px, ${dy}px)` }
-], { duration: duration, easing: "linear" });
-
-let clicked = false;
-star.onclick = () => {
-if(clicked) return;
-clicked = true;
-anim.pause();
-star.classList.add("revealed");
-setTimeout(() => {
-star.style.opacity = '0';
-setTimeout(() => {
-star.remove();
-setTimeout(spawnNextComet, 2000);
-}, 500);
-}, 4000);
-};
-
-anim.onfinish = () => {
-if(!clicked) {
-star.remove();
-setTimeout(spawnNextComet, 1000);
-}
-};
-
+star.animate([{ transform: "translate(0, 0)", opacity: 1 }, { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }], { duration: 12000 + Math.random() * 6000, easing: "linear" });
+star.onclick = () => { if (release.link !== "#") window.open(release.link, "_blank"); };
+setTimeout(() => star.remove(), 19000);
 } catch (e) { console.error(e); }
 }
 
-setTimeout(spawnNextComet, 3000);
+setInterval(createShootingStar, 6000);
 
 });
 </script>
