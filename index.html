@@ -169,7 +169,7 @@ font-family: sans-serif;
 color: #fff;
 transform: scale(1.1);
 }
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO (SIN IMAGEN, REPRODUCTOR FIJO Y SCROLL LISTA) */
+/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
 .album-modal-content {
 text-align: center;
 max-width: 500px;
@@ -266,7 +266,7 @@ transition: 0.25s;
 .album-platforms a:hover {
 background: gold; transform: scale(1.15);
 }
-.album-platforms svg { fill: gold; width: 22px; transition: 0.25s; }
+.album-platforms svg { fill: gold; width: 22px; height: 22px; transition: 0.25s; }
 .album-platforms a:hover svg { fill: #000; }
 .btn-volver {
 background: transparent;
@@ -524,7 +524,9 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 <span class="vol-label">VOL</span>
 </div>
 <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
-<p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">Próximamente: "Algo está mal" (Libro)</p>
+<p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
+Próximamente: "Algo está mal" (Libro)
+</p>
 </div>
 </div>
 
@@ -582,7 +584,6 @@ box-shadow: 0 0 40px #FFD700 !important; border: 2px solid #fff !important; z-in
 </div>
 
 <script>
-// FRASES DIARIAS INTACTAS
 const quotesData = [
 { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
 { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
@@ -901,21 +902,21 @@ soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/voces-de-cambi
 img: "images/Voces de Cambio 2.webp",
 title: "Voces de Cambio 2",
 tracks: [
-{ name: "México despierta", url: "https://music.youtube.com/watch?v=a1czD9mZZ0I&si=ZuSpay1LacJEx1cp" },
-{ name: "Reflexión Musical MX", url: "https://music.youtube.com/watch?v=_jvqZKxJbuI&si=iQYQz8_UmvY9uTOW" },
-{ name: "Memoria viva", url: "https://music.youtube.com/watch?v=H31wXA4k90Q&si=dIYImN4EIG7H3GOd" },
-{ name: "Sombras y luz", url: "https://music.youtube.com/watch?v=RFK6Cdg8nNg&si=un_c4lheVFgTzU1X" },
-{ name: "Semillas para mañana", url: "https://music.youtube.com/watch?v=A_y7b7FCZzM&si=Qy2Tng-kVEsTkNCT" },
-{ name: "Lo que te espera", url: "https://music.youtube.com/watch?v=f-nQnl2cyh4&si=dvo0IdNr-aU0VhKn" },
-{ name: "El eco de los ancestros", url: "https://music.youtube.com/watch?v=SL1g2KNmsNU&si=7SCYljVW7jLGt7hL" },
-{ name: "Orgullo Mexicano", url: "https://music.youtube.com/watch?v=cWt-0UlxBiE&si=rKTfdVuH601c2z5s" },
-{ name: "En la unión esta la fuerza", url: "https://music.youtube.com/watch?v=aiIUuSsnceE&si=JQ-rATna_9ShR1Uo" },
-{ name: "No mas excusas", url: "https://music.youtube.com/watch?v=hZZHyZLnksc&si=EWKMGi-QJ5xQGkrK" },
-{ name: "Sé chingon", url: "https://music.youtube.com/watch?v=4wERhwa_OD8&si=Mdgeq9L6_3EZIgsN" },
-{ name: "México eres tú", url: "https://music.youtube.com/watch?v=8p5OR0U-dfg&si=LlXn94wCxJ3JHPl7" },
-{ name: "México lindo", url: "https://music.youtube.com/watch?v=8p5OR0U-dfg&si=LlXn94wCxJ3JHPl7" },
-{ name: "El cambio esta en ti V2", url: "https://music.youtube.com/watch?v=Kx5tCK_VTag&si=I2fott2b036dA1Gr" },
-{ name: "Himno a México", url: "https://music.youtube.com/watch?v=4y2QWiIFZbM&si=ty03qtEViIensnVf" }
+{ name: "México despierta", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-despierta?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Reflexión Musical MX", url: "https://soundcloud.com/reflexionmusicalmx-music/reflexion-musical-mx?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Memoria viva", url: "https://soundcloud.com/reflexionmusicalmx-music/memoria-viva?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Sombras y luz", url: "https://soundcloud.com/reflexionmusicalmx-music/sombras-y-luz?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Semillas para mañana", url: "https://soundcloud.com/reflexionmusicalmx-music/semillas-para-manana?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Lo que te espera", url: "https://soundcloud.com/reflexionmusicalmx-music/lo-que-te-espera?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "El eco de los ancestros", url: "https://soundcloud.com/reflexionmusicalmx-music/el-eco-de-los-ancestros?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Orgullo Mexicano", url: "https://soundcloud.com/reflexionmusicalmx-music/orgullo-mexicano?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "En la unión esta la fuerza", url: "https://soundcloud.com/reflexionmusicalmx-music/en-la-union-esta-la-fuerza?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "No mas excusas", url: "https://soundcloud.com/reflexionmusicalmx-music/no-mas-excusas?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Sé chingon", url: "https://soundcloud.com/reflexionmusicalmx-music/se-chingon?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "México eres tú", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-eres-tu?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "México lindo", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-lindo?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "El cambio esta en ti V2", url: "https://soundcloud.com/reflexionmusicalmx-music/el-cambio-esta-en-ti-v2?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Himno a México", url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-mexico?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
 ],
 links: {
 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE&si=HitHQ9h5vU6iSTv8",
@@ -1667,22 +1668,26 @@ orbit.appendChild(fragment);
 createOrbit(singles,"orbitSingles",210);
 createOrbit(albums,"orbitAlbums",360);
 
+// COMETAS (ESTRELLAS FUGACES RE-DISEÑADAS)
 const upcomingReleases = [
-{ text: "🎵 PRÓXIMO SENCILLO", link: "#" },
-{ text: "💿 NUEVO ÁLBUM", link: "#" },
-{ text: "📖 LIBRO: ALGO ESTÁ MAL", link: "#" }
+"📖 LIBRO: ALGO ESTÁ MAL",
+"💿 NUEVO ÁLBUM",
+"🎵 PRÓXIMO SENCILLO"
 ];
+let currentCometIndex = 0;
 
-function createShootingStar(){
+function spawnNextComet(){
 try {
-const release = upcomingReleases[Math.floor(Math.random() * upcomingReleases.length)]; 
+const releaseText = upcomingReleases[currentCometIndex];
+currentCometIndex = (currentCometIndex + 1) % upcomingReleases.length;
+
 const star = document.createElement("div");
-star.className = "shootingStar";
+star.className = "comet-container";
 star.innerHTML = `
-<div class="tail"></div>
-<div class="starIconWrapper" style="width: auto; border-radius: 20px; padding: 5px 15px;">
-<span class="starIconText">${release.text}</span>
-</div>`;
+<div class="comet-tail"></div>
+<div class="comet-head"></div>
+<div class="comet-text">${releaseText}</div>
+`;
 if(starContainer) starContainer.appendChild(star); 
 
 let startX, startY, endX, endY;
@@ -1700,17 +1705,41 @@ const dx = endX - startX; const dy = endY - startY;
 const angleRad = Math.atan2(dy, dx);
 const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
 
-const tail = star.querySelector('.tail');
-tail.style.width = (150 + Math.random() * 100) + "px";
+const tail = star.querySelector('.comet-tail');
 tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
 
-star.animate([{ transform: "translate(0, 0)", opacity: 1 }, { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }], { duration: 12000 + Math.random() * 6000, easing: "linear" });
-star.onclick = () => { if (release.link !== "#") window.open(release.link, "_blank"); };
-setTimeout(() => star.remove(), 19000);
+const duration = 12000 + Math.random() * 4000;
+const anim = star.animate([
+{ transform: "translate(0px, 0px)" },
+{ transform: `translate(${dx}px, ${dy}px)` }
+], { duration: duration, easing: "linear" });
+
+let clicked = false;
+star.onclick = () => {
+if(clicked) return;
+clicked = true;
+anim.pause();
+star.classList.add("revealed");
+setTimeout(() => {
+star.style.opacity = '0';
+setTimeout(() => {
+star.remove();
+setTimeout(spawnNextComet, 2000);
+}, 500);
+}, 4000);
+};
+
+anim.onfinish = () => {
+if(!clicked) {
+star.remove();
+setTimeout(spawnNextComet, 1000);
+}
+};
+
 } catch (e) { console.error(e); }
 }
 
-setInterval(createShootingStar, 6000);
+setTimeout(spawnNextComet, 3000);
 
 });
 </script>
