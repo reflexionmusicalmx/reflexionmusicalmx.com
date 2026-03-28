@@ -169,7 +169,7 @@ font-family: sans-serif;
 color: #fff;
 transform: scale(1.1);
 }
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO (SIN IMAGEN, REPRODUCTOR FIJO Y SCROLL LISTA) */
+/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
 .album-modal-content {
 text-align: center;
 max-width: 500px;
@@ -333,7 +333,6 @@ transform:scale(1.3) translateZ(0);
 box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
 z-index: 100;
 }
-/* CONTRA ROTACION Y TOOLTIPS */
 .counter{
 width:100%; height:100%;
 animation:counterSpin 45s linear infinite;
@@ -363,6 +362,7 @@ visibility: hidden; transition: all 0.3s ease; pointer-events: none;
 box-shadow: 0 4px 10px rgba(0,0,0,0.5); text-transform: uppercase; letter-spacing: 1px;
 }
 .planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
+
 /* EFECTO FAMILIA */
 .family-symbol-container {
 position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
@@ -376,6 +376,7 @@ opacity: 0; transition: 0.3s; pointer-events: none;
 .fam-body-m { width: 16px; height: 24px; background: gold; border-radius: 4px 4px 0 0; }
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
+
 /* EFECTO CORAZONES */
 .heart-bubble { position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity; }
 
@@ -889,7 +890,7 @@ tracks: [
 { name: "Resistencia pequeña", url: "https://soundcloud.com/reflexionmusicalmx-music/resistencia-pequena?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
 { name: "El cambio esta en ti", url: "https://soundcloud.com/reflexionmusicalmx-music/el-cambio-esta-en-ti?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
 { name: "No hay tirano eterno", url: "https://soundcloud.com/reflexionmusicalmx-music/no-hay-tirano-eterno?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-{ name: "Hijos del olvido", url: "https://soundcloud.com/reflexionmusicalmx-music/hijos-del-olvido?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+{ name: "Hijos del olvido", url: "https://music.youtube.com/watch?v=n2GMzHW2NyQ&si=i3OviOjOPov5cBmf" }
 ],
 links: {
 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ&si=V9AU17wGT6ErrJtY",
@@ -1497,22 +1498,10 @@ if(muteBtn) muteBtn.textContent = "🔇";
 }
 modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
 modalTracklist.innerHTML = "";
-let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
-let playlistId = "";
-if (ytLink && ytLink !== "#") {
-const match = ytLink.match(/[?&]list=([^&]+)/);
-if (match && match[1]) {
-playlistId = match[1];
-}
-}
+
 const playerContainer = document.getElementById("modalPlayerContainer");
-if (playlistId) {
-playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="https://www.youtube.com/embed/videoseries?list=${playlistId}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
-playerContainer.style.display = "block";
-} else {
 playerContainer.innerHTML = "";
 playerContainer.style.display = "none";
-}
 
 if(item.tracks && item.tracks.length > 0) {
 item.tracks.forEach((trackObj, index) => {
@@ -1561,7 +1550,6 @@ if(trackObj.url.includes("soundcloud.com")) {
     if(videoId) {
         playerContainer.style.display = "block";
         let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-        if(playlistId){ embedUrl += `&list=${playlistId}`; }
         playerContainer.innerHTML = `<iframe id="ytPlayer" width="100%" height="250" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
     } else {
         window.open(trackObj.url, "_blank");
