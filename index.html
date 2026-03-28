@@ -169,7 +169,7 @@ font-family: sans-serif;
 color: #fff;
 transform: scale(1.1);
 }
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
+/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO (SIN IMAGEN, REPRODUCTOR FIJO Y SCROLL LISTA) */
 .album-modal-content {
 text-align: center;
 max-width: 500px;
@@ -333,6 +333,7 @@ transform:scale(1.3) translateZ(0);
 box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
 z-index: 100;
 }
+/* CONTRA ROTACION Y TOOLTIPS */
 .counter{
 width:100%; height:100%;
 animation:counterSpin 45s linear infinite;
@@ -352,7 +353,7 @@ from{transform:rotate(0deg) translateZ(0);}
 to{transform:rotate(-360deg) translateZ(0);}
 }
 
-/* TOOLTIPS */
+/* TOOLTIPS CON MAYUSCULAS */
 .tooltip {
 position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
 background: rgba(0, 0, 0, 0.9); color: #FFD700;
@@ -782,8 +783,8 @@ soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/adultos-trastornado
 img: "images/Codigo rojo.webp",
 title: "Esto no empezó hoy",
 tracks: [
-{ name: "Esto no empezó hoy (Narrado)", url: "https://music.youtube.com/watch?v=PWf6RhJchKs&si=zE2lTHmnLQqcMrBS" },
-{ name: "Esto no empezó hoy (Rap)", url: "https://music.youtube.com/watch?v=i2oIbK6Ii9I&si=Wn_WP_snBIAjkbox" }
+{ name: "Esto no empezó hoy (Narrado)", url: "https://audiomack.com/reflexion-musical-mx/song/esto-no-empezo-hoy-narrado" },
+{ name: "Esto no empezó hoy (Rap)", url: "https://audiomack.com/reflexion-musical-mx/song/esto-no-empezo-hoy-rap" }
 ],
 links: {
 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0&si=gS8ZkpysgtpLzzLB",
@@ -874,21 +875,21 @@ const albums = [
 img: "images/Voces de Cambio 1.webp",
 title: "Voces de Cambio 1",
 tracks: [
-{ name: "Ciudad en silencio", url: "https://on.soundcloud.com/Bhmq9L2M91NwRkc6no" },
-{ name: "Raíces de fuego", url: "https://on.soundcloud.com/U9I4Sv1QIQSqwyNvr7" },
-{ name: "Sabes lo que haces", url: "https://on.soundcloud.com/VVd0rUx4ShNpM9BzVa" },
-{ name: "Ecos del olvido", url: "https://on.soundcloud.com/2RKafGVm92N1ujUmN3" },
-{ name: "Sociedad cómplice", url: "https://on.soundcloud.com/Q7BOyzychaG5eZfdiz" },
-{ name: "Normal es veneno", url: "https://on.soundcloud.com/OT2w7pXdYx2FY2O6G1" },
-{ name: "El engaño del bien", url: "https://on.soundcloud.com/MYwkS59TjjzZZPpETM" },
-{ name: "¿Injusticia o consecuencia?", url: "https://on.soundcloud.com/HCBMVGnNE8xJg4pYZy" },
-{ name: "Ciclos y deudas", url: "https://on.soundcloud.com/8AejAjIteJHf4eMuk4" },
-{ name: "Veneno en la sangre", url: "https://on.soundcloud.com/9QXYq83xSByoh0VVlT" },
-{ name: "Herencia de hierro", url: "https://on.soundcloud.com/4aOsAqsjwzVu90wRjA" },
-{ name: "Resistencia pequeña", url: "https://on.soundcloud.com/CEykSmLLeLNmrjGvJ0" },
-{ name: "El cambio esta en ti", url: "https://on.soundcloud.com/YZuRC93ZifwVwOIaZ5" },
-{ name: "No hay tirano eterno", url: "https://on.soundcloud.com/MUfDhsjS4Gco2ROLoJ" },
-{ name: "Hijos del olvido", url: "https://music.youtube.com/watch?v=n2GMzHW2NyQ&si=i3OviOjOPov5cBmf" }
+{ name: "Ciudad en silencio", url: "https://soundcloud.com/reflexionmusicalmx-music/ciudad-en-silencio?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Raíces de fuego", url: "https://soundcloud.com/reflexionmusicalmx-music/raices-de-fuego?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Sabes lo que haces", url: "https://soundcloud.com/reflexionmusicalmx-music/sabes-lo-que-haces?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Ecos del olvido", url: "https://soundcloud.com/reflexionmusicalmx-music/ecos-del-olvido?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Sociedad cómplice", url: "https://soundcloud.com/reflexionmusicalmx-music/sociedad-complice?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Normal es veneno", url: "https://soundcloud.com/reflexionmusicalmx-music/normal-es-veneno?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "El engaño del bien", url: "https://soundcloud.com/reflexionmusicalmx-music/el-engano-del-bien?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "¿Injusticia o consecuencia?", url: "https://soundcloud.com/reflexionmusicalmx-music/injusticia-o-consecuencia?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Ciclos y deudas", url: "https://soundcloud.com/reflexionmusicalmx-music/ciclos-y-deudas?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Veneno en la sangre", url: "https://soundcloud.com/reflexionmusicalmx-music/veneno-en-la-sangre?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Herencia de hierro", url: "https://soundcloud.com/reflexionmusicalmx-music/herencia-de-hierro?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Resistencia pequeña", url: "https://soundcloud.com/reflexionmusicalmx-music/resistencia-pequena?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "El cambio esta en ti", url: "https://soundcloud.com/reflexionmusicalmx-music/el-cambio-esta-en-ti?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "No hay tirano eterno", url: "https://soundcloud.com/reflexionmusicalmx-music/no-hay-tirano-eterno?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
+{ name: "Hijos del olvido", url: "https://soundcloud.com/reflexionmusicalmx-music/hijos-del-olvido?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
 ],
 links: {
 youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ&si=V9AU17wGT6ErrJtY",
@@ -1546,6 +1547,11 @@ if(trackObj.url.includes("soundcloud.com")) {
     const encodedUrl = encodeURIComponent(trackObj.url);
     const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23FFD700&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true`;
     playerContainer.innerHTML = `<iframe width="100%" height="250" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}" style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
+} else if(trackObj.url.includes("audiomack.com")) {
+    playerContainer.style.display = "block";
+    let pathParts = trackObj.url.split('audiomack.com/')[1].split('?')[0].split('/');
+    let embedUrl = `https://audiomack.com/embed/${pathParts[1]}/${pathParts[0]}/${pathParts[2]}?background=1&color=FFD700`;
+    playerContainer.innerHTML = `<iframe width="100%" height="252" scrolling="no" frameborder="0" allow="autoplay" src="${embedUrl}" style="border-radius: 8px; border: 1px solid gold;"></iframe>`;
 } else {
     let videoId = "";
     if(trackObj.url) {
