@@ -189,15 +189,22 @@ text-transform: uppercase;
 display: none;
 flex-direction: column;
 margin-bottom: 15px;
-background: #111;
+background: #000;
 border: 1px solid gold;
 border-radius: 8px;
 overflow: hidden;
+box-shadow: 0 0 15px rgba(255,215,0,0.1);
 }
 #playerIframeContainer {
 width: 100%;
-height: 160px; /* Alto ideal para mostrar portada y ondas completas */
+height: 140px;
 background: #000;
+position: relative;
+}
+/* EFECTO DARK MODE PARA SOUNDCLOUD */
+#sc-iframe {
+filter: invert(0.9) hue-rotate(180deg) brightness(1.5) contrast(1.2);
+border-radius: 8px 8px 0 0;
 }
 .custom-player-controls {
 display: flex;
@@ -205,7 +212,7 @@ align-items: center;
 justify-content: center;
 gap: 30px;
 padding: 12px 0;
-background: rgba(255, 215, 0, 0.05);
+background: #111;
 border-top: 1px solid rgba(255,215,0,0.2);
 }
 .ctrl-btn {
@@ -271,6 +278,9 @@ cursor: pointer;
 transition: 0.3s;
 opacity: 0.6;
 padding: 5px;
+display: flex;
+align-items: center;
+justify-content: center;
 }
 .share-btn:hover {
 opacity: 1;
@@ -326,7 +336,7 @@ justify-content: space-between; gap: 15px; box-shadow: 0 0 15px rgba(255, 215, 0
 .audio-controls .vol-label { font-size: 13px; font-weight: 700; color: #FFD700; letter-spacing: 1px; cursor: default; }
 #volumeSlider { flex-grow: 1; accent-color: #FFD700; height: 6px; background: #333; border-radius: 5px; outline: none; cursor: pointer; }
 
-/* ORBITAS */
+/* ORBITAS (GPU ACCELERATED) */
 .orbit{
 position:absolute;
 border-radius:50%;
@@ -406,6 +416,9 @@ opacity: 0; transition: 0.3s; pointer-events: none;
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
 
+/* EFECTO CORAZONES */
+.heart-bubble { position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity; }
+
 /* REDES LATERALES Y PLATAFORMAS GLOBALES */
 .floating-social, .floating-platforms {
 position:absolute; top:50%; transform:translateY(-50%);
@@ -452,7 +465,7 @@ box-shadow: 0 0 20px rgba(255,215,0,0.4); text-transform: uppercase; letter-spac
 .comet-container.revealed .comet-head { transform: scale(1.8); box-shadow: 0 0 25px 10px rgba(255,215,0,1); }
 .comet-container.revealed .comet-tail { opacity: 0; }
 
-/* SUPERNOVAS */
+/* DESTELLOS DE ESTRELLAS (SUPERNOVAS) */
 .supernova-hitbox {
 position: absolute; width: 50px; height: 50px; background: transparent;
 border-radius: 50%; z-index: 5000; pointer-events: auto; cursor: pointer;
@@ -581,9 +594,7 @@ Próximamente: "Algo está mal" (Libro)
 <a href="https://x.com/RMusicalMX" target="_blank" aria-label="Visitar X (Twitter)">
 <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
 <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
-<svg viewBox="0 0 24 24"><path d="M10.215 13.806c0-.615.295-1.593 2.59-1.593.704 0 1.137.051 1.719.182-.186 2.409-1.365 2.727-2.511 2.727-.627 0-1.8-.327-1.8-1.316ZM3.885 24h16.23A3.885 3.885 0 0 0 24 20.115V3.885A3.885 3.885 0 0 0 20.115 0H3.885A3.885 3.885 0 0 0 0 3.885v16.23A3.885 3.885 0 0 0 3.885 24ZM8.8 8.865c.85-1.215 1.972-1.689 3.525-1.689 1.095 0 2.026.369 2.692 1.066.665.699 1.044 1.698 1.131 2.975q.552.231 1.017.544c1.248.839 1.935 2.093 1.935 3.53 0 3.055-2.505 5.709-7.038 5.709-3.892 0-7.936-2.265-7.936-9.006C4.125 5.289 8.042 3 12.05 3c1.851 0 6.193.273 7.825 5.665l-1.53.396c-1.263-3.84-3.91-4.452-6.336-4.452-4.012 0-6.28 2.442-6.28 7.64 0 4.66 2.535 7.135 6.333 7.135 3.125 0 5.454-1.623 5.454-4 0-1.618-1.359-2.392-1.43-2.392-.265 1.388-.976 3.723-4.1 3.723-1.82 0-3.39-1.257-3.39-2.904 0-2.352 2.232-3.204 3.994-3.204.66 0 1.455.045 1.87.129 0-.717-.606-1.944-2.139-1.944-1.366 0-1.74.432-2.175.936l-.036.04c-.303-.202-1.312-.901-1.312-.901Z"/></svg></a>
-<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud">
-<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg></a>
+<svg viewBox="0 0 24 24"><path d="M12.186 24h-0.007c-3.581 -0.024 -6.334 -1.205 -8.184 -3.509C2.35 18.44 1.5 15.586 1.472 12.01v-0.017c0.03 -3.579 0.879 -6.43 2.525 -8.482C5.845 1.205 8.6 0.024 12.18 0h0.014c2.746 0.02 5.043 0.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04 0.569c-1.104 -3.96 -3.898 -5.984 -8.304 -6.015 -2.91 0.022 -5.11 0.936 -6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c0.027 3.086 0.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623 -0.02 4.358 -0.631 5.8 -2.045 1.647 -1.613 1.618 -3.593 1.09 -4.798 -0.31 -0.71 -0.873 -1.3 -1.634 -1.75 -0.192 1.352 -0.622 2.446 -1.284 3.272 -0.886 1.102 -2.14 1.704 -3.73 1.79 -1.202 0.065 -2.361 -0.218 -3.259 -0.801 -1.063 -0.689 -1.685 -1.74 -1.752 -2.964 -0.065 -1.19 0.408 -2.285 1.33 -3.082 0.88 -0.76 2.119 -1.207 3.583 -1.291a13.853 13.853 0 0 1 3.02 0.142c-0.126 -0.742 -0.375 -1.332 -0.75 -1.757 -0.513 -0.586 -1.308 -0.883 -2.359 -0.89h-0.029c-0.844 0 -1.992 0.232 -2.721 1.32l-1.757 -1.18c0.98 -1.454 2.568 -2.256 4.478 -2.256h0.044c3.194 0.02 5.097 1.975 5.287 5.388 0.108 0.046 0.216 0.094 0.321 0.142 1.49 0.7 2.58 1.761 3.154 3.07 0.797 1.82 0.871 4.79 -1.548 7.158 -1.85 1.81 -4.094 2.628 -7.277 2.65Zm1.003 -11.69c-0.242 0 -0.487 0.007 -0.739 0.021 -1.836 0.103 -2.98 0.946 -2.916 2.143 0.067 1.256 1.452 1.839 2.784 1.767 1.224 -0.065 2.818 -0.543 3.086 -3.71a10.5 10.5 0 0 0 -2.215 -0.221z"/></svg></a>
 </div>
 
 <div class="floating-platforms">
@@ -597,18 +608,12 @@ Próximamente: "Algo está mal" (Libro)
 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
 <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="Escuchar en SoundCloud">
 <svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg></a>
-</div>
-
-<div id="solarSystem">
-<div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
-</div>
-<div id="orbitSingles" class="orbit"></div>
-<div id="orbitAlbums" class="orbit"></div>
+<a href="https://audiomack.com/reflexion-musical-mx" target="_blank" aria-label="Visitar Audiomack">
+<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg></a>
 </div>
 
 <script>
-// ICONS FOR PLAY/PAUSE TOGGLE
+// ICONOS PLAY / PAUSA
 const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`;
 const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`;
 
@@ -763,6 +768,7 @@ const quotesData = [
 { text: "No hay revolución sin transformación, primero en tu mente, después en acción.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
 { text: "¡La nación no se vende jamás!", song: "Himno a México", album: "Voces de Cambio 2" }
 ];
+
 const singles = [
 {
 img: "images/We rise as one.webp",
@@ -771,7 +777,6 @@ tracks: [
 { name: "We rise as one", url: "https://music.youtube.com/watch?v=iD_3kV2LhaE&si=xcGnXratPfDPN-vh", shareUrl: "https://music.youtube.com/watch?v=iD_3kV2LhaE&si=xcGnXratPfDPN-vh" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs&si=6Nc2mOTytxGm18Nx",
 spotify: "https://open.spotify.com/album/1hx8kcmgYi0CMT25xiNyUz?si=l1oh9MgqTRqvVBETnPfLAw",
 amazon: "https://music.amazon.com.mx/albums/B0FZXWR7N7?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_1htG2t81fygJkZHqOaGTiGrt2",
 apple: "https://music.apple.com/es/album/we-rise-as-one-single/1851049433",
@@ -785,7 +790,6 @@ tracks: [
 { name: "Gracias 2025", url: "https://music.youtube.com/watch?v=v8Y2cvn9UjI&si=IO_De-68qamgjMUs", shareUrl: "https://music.youtube.com/watch?v=v8Y2cvn9UjI&si=IO_De-68qamgjMUs" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk&si=ElSlDGU7aDAoq09_",
 spotify: "https://open.spotify.com/album/3UUtgG1Lvn1zmTpY94PCmN?si=xylJPSN9QBywlTXl5wAfxg",
 amazon: "https://music.amazon.com.mx/albums/B0GGXJ3XG3?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_DaYoUDq5Q1wxw16NsSgzqxpUz",
 apple: "https://music.apple.com/es/album/gracias-2025-single/1869178508",
@@ -799,7 +803,6 @@ tracks: [
 { name: "Adultos TRASTORNADOS", url: "https://music.youtube.com/watch?v=3Fw4IKBMYY8&si=lw7nO19q_RrSP4Ho", shareUrl: "https://music.youtube.com/watch?v=3Fw4IKBMYY8&si=lw7nO19q_RrSP4Ho" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM&si=lC3CzdQTOHkxfKva",
 spotify: "https://open.spotify.com/album/64O12821a5VeL4CDsvFkhq?si=N_vPDU_9T1-girApegfDAg",
 amazon: "https://music.amazon.com.mx/albums/B0GNPGPNWP?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_g8XNcuz2b8BdsxH2UE3W2y8YV",
 apple: "https://music.apple.com/es/album/adultos-trastornados-single/1877753106",
@@ -814,7 +817,6 @@ tracks: [
 { name: "Esto no empezó hoy (Rap)", url: "https://music.youtube.com/watch?v=i2oIbK6Ii9I&si=Wn_WP_snBIAjkbox", shareUrl: "https://music.youtube.com/watch?v=i2oIbK6Ii9I&si=Wn_WP_snBIAjkbox" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0&si=gS8ZkpysgtpLzzLB",
 spotify: "https://open.spotify.com/album/0x1QYc6n54qlEAdsjo6sFu?si=Rrb6qFW4Tu-liIfSVU8Iig",
 amazon: "https://music.amazon.com.mx/albums/B0GQ588HLX?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_tytyNcoQHL2GRezLygimc3cnt",
 apple: "https://music.apple.com/es/album/esto-no-empez%C3%B3-hoy-single/1880118370",
@@ -829,7 +831,6 @@ tracks: [
 { name: "La fuerza de todos (Acustico)", url: "https://music.youtube.com/watch?v=8L9-p_73I2c&si=A7OhreCOAjqiJ_sZ", shareUrl: "https://music.youtube.com/watch?v=8L9-p_73I2c&si=A7OhreCOAjqiJ_sZ" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro",
 spotify: "https://open.spotify.com/album/5alJBFihx9EwKaQpX8cKPa?si=HpwcBOIYRHiM4Wwc1Lt0LA",
 amazon: "https://music.amazon.com.mx/albums/B0GQ6SGM4C?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_3D9YA3SH5TRRBK8EVIcsqdZVG",
 apple: "https://music.apple.com/es/album/la-fuerza-de-todos-single/1880182072",
@@ -844,7 +845,6 @@ tracks: [
 { name: "VOLVER A CASA (Balada)", url: "https://music.youtube.com/watch?v=IJNm0CCVGls&si=mgkhP7GbMfVM_7Ty", shareUrl: "https://music.youtube.com/watch?v=IJNm0CCVGls&si=mgkhP7GbMfVM_7Ty" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE&si=fTPomu5xyEVts_dA",
 spotify: "https://open.spotify.com/album/1Z3BWmi0DGxjMgslqZqokZ?si=BRAQZ80KT7OluuE7NI36SQ",
 amazon: "https://music.amazon.com.mx/albums/B0GQ5YYPTY?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_2x0KpXE2G0D6M94bkJuhnJK0a",
 apple: "https://music.apple.com/es/album/regresar-a-casa-single/1880183940",
@@ -858,7 +858,6 @@ tracks: [
 { name: "Tres Colores, Un Compromiso", url: "https://music.youtube.com/watch?v=CHiMyTyndHg&si=9O7sCkKh4LOSGlxY", shareUrl: "https://music.youtube.com/watch?v=CHiMyTyndHg&si=9O7sCkKh4LOSGlxY" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM",
 spotify: "https://open.spotify.com/album/1MJdvRWqcBXJrADcCuD4Ia?si=gV2aTyeCTW61CGityRKZLA",
 amazon: "https://music.amazon.com.mx/albums/B0GQD9LB1H?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_eDJdSeRaEBF3MdaI6m5Mg5J8G",
 apple: "https://music.apple.com/es/album/tres-colores-un-compromiso-single/1880483551",
@@ -875,7 +874,6 @@ tracks: [
 { name: "Del Dolor Al Odio", url: "https://music.youtube.com/watch?v=xvdzZnHEWUo&si=2DJEaChcx6iYNrXt", shareUrl: "https://music.youtube.com/watch?v=xvdzZnHEWUo&si=2DJEaChcx6iYNrXt" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lt7XMszm6gl_8v0BWGOrIA2MnNbmELfn0&si=pgFPSDrfN8vQ13XE",
 spotify: "https://open.spotify.com/album/7m7tt0KcHFbmg1JPDu2B2S?si=MFQRyAQ3RouFK3ICw_AW8A",
 amazon: "https://music.amazon.es/albums/B0GS3NCY9D?marketplaceId=A1RKKUPIHCS9HS&musicTerritory=ES&ref=dm_sh_Zs0K7UdhM6FlxoDfz1EkFzt8q",
 apple: "https://music.apple.com/pe/album/del-dolor-al-odio-ep/1884126596",
@@ -889,7 +887,6 @@ tracks: [
 { name: "Antes de las armas", url: "https://music.youtube.com/watch?v=RNW5v_36IJU&si=FzWM5VeM7c9FiKbd", shareUrl: "https://music.youtube.com/watch?v=RNW5v_36IJU&si=FzWM5VeM7c9FiKbd" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kydOEDIwMtIG24XfwEVvC5qRewXzTaEh0&si=oJh5SnxF2RKMQHEX",
 spotify: "https://open.spotify.com/album/4GGDQzH729FJvFz0f9bD9j?si=hiRR5JNsQZ-G6yAF9mh28A",
 amazon: "https://music.amazon.es/albums/B0GTDHLTNB?marketplaceId=A1RKKUPIHCS9HS&musicTerritory=ES&ref=dm_sh_bcbSenuHfOjqyOfw1ZkqvNKPR",
 apple: "https://music.apple.com/pe/album/antes-de-las-armas-single/1886860585",
@@ -976,7 +973,6 @@ tracks: [
 { name: "Los nadie", url: "https://music.youtube.com/watch?v=WRlhwVGo6y4&si=jbvwzIAhYRygDJxY", shareUrl: "https://music.youtube.com/watch?v=WRlhwVGo6y4&si=jbvwzIAhYRygDJxY" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow&si=OySd6YX-U8uHXnOV",
 spotify: "https://open.spotify.com/album/3L2ZAYytRTzDIChcwRkLdY?si=uGLv11StT1ykGm-CJ9-_Jw",
 amazon: "https://music.amazon.com.mx/albums/B0FVJB8H74?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_yYclccmQj3BzSNhOzxh6dLXGm",
 apple: "#",
@@ -1005,7 +1001,6 @@ tracks: [
 { name: "Después del silencio", url: "https://music.youtube.com/watch?v=8q_OWMkcxII&si=dZaoIUraafTqCctM", shareUrl: "https://music.youtube.com/watch?v=8q_OWMkcxII&si=dZaoIUraafTqCctM" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4&si=iXoy5FUZtsS5REQ6",
 spotify: "https://open.spotify.com/album/62pJjPSFwZf4MuHT45izrV?si=0DRH5AomRryVSIeNBzyQ0g",
 amazon: "https://music.amazon.com.mx/albums/B0FX1YYCBH?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_uW6qlIS9NuPZNvqC6D1ms2g3g",
 apple: "https://music.apple.com/es/album/luz-entre-las-sombras/1847216698",
@@ -1035,7 +1030,6 @@ tracks: [
 { name: "Tiempo y vida", url: "https://music.youtube.com/watch?v=7KEbMITLb8w&si=NmAEReQ22gtxZq6W", shareUrl: "https://music.youtube.com/watch?v=7KEbMITLb8w&si=NmAEReQ22gtxZq6W" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE&si=t6K1eboh-VHYlpm7",
 spotify: "https://open.spotify.com/album/4OyMdNR6Ff9PX5KXJDs36E?si=OOhJll_gSo2UtOyU_6Pe3A",
 amazon: "https://music.amazon.com.mx/albums/B0G16FLG5T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_QCGhFH3HUFAvYZ1S8LgvA12K0",
 apple: "https://music.apple.com/es/album/tiempo-y-vida/1851277742",
@@ -1061,7 +1055,6 @@ tracks: [
 { name: "Chacales oportunistas V2", url: "https://music.youtube.com/watch?v=BtAKhDkT8Rg&si=pVIFb8w18TiOdBxP", shareUrl: "https://music.youtube.com/watch?v=BtAKhDkT8Rg&si=pVIFb8w18TiOdBxP" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A&si=GKFSqmdUdijNoyWs",
 spotify: "https://open.spotify.com/album/5XWwchDBL4G0kACbGBebet?si=zD2zM6GtTcC1vJ7Z04T0sw",
 amazon: "https://music.amazon.com.mx/albums/B0G36KTQDS?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_LeFI1C8dDspsmwqxAleo2CQOL",
 apple: "https://music.apple.com/es/album/chacales-oportunistas/1854564785",
@@ -1090,7 +1083,6 @@ tracks: [
 { name: "Ciudadanos del mundo II (Remix)", url: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9", shareUrl: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs&si=IENzoXH5D1xv_xOn",
 spotify: "https://open.spotify.com/album/2gSDQitygEjoVweX6PnqpK?si=0C-q47pmRJuUSIZ4OS2kQw",
 amazon: "https://music.amazon.com.mx/albums/B0G3BCX2MK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_XlRB7X0aKfxly6dyzuXGdd1Q9",
 apple: "https://music.apple.com/es/album/tejido-vital/1854794772",
@@ -1120,7 +1112,6 @@ tracks: [
 { name: "Revolución Mental (Remix)", url: "https://music.youtube.com/watch?v=6Hmt9QxXCd8&si=ZiVAKOMcLHOeHcYJ", shareUrl: "https://music.youtube.com/watch?v=6Hmt9QxXCd8&si=ZiVAKOMcLHOeHcYJ" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU&si=nt9eLCqBjl8_kKqz",
 spotify: "https://open.spotify.com/album/5ZiW2nNJnJX9ZeuBpZW6DS?si=bHkMqhAGShSYicHuKgnFQg",
 amazon: "https://music.amazon.com.mx/albums/B0G4NF14XV?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_HJ9XRJt8EsxWt9M0kEetBEkoW",
 apple: "https://music.apple.com/es/album/revoluci%C3%B3n-mental/1857713061",
@@ -1164,7 +1155,6 @@ tracks: [
 { name: "Epílogo a Eres lo que escucha", url: "https://music.youtube.com/watch?v=395VsEPLSvE&si=-OIHP1NPcgvlThb3", shareUrl: "https://music.youtube.com/watch?v=395VsEPLSvE&si=-OIHP1NPcgvlThb3" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I&si=exhKQkfdndW8x4yK",
 spotify: "https://open.spotify.com/album/20FnT6FbnltmFm9PiRSSkt?si=OD37ewXkRzyxJLLibBXmvQ",
 amazon: "https://music.amazon.com.mx/albums/B0GD2PZZ1T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_7ZIn2KHO856UVHUJ4S8ut1WN3",
 apple: "https://music.apple.com/es/album/eres-lo-que-escuchas/1865017257",
@@ -1203,7 +1193,6 @@ tracks: [
 { name: "COMPLEMENTO ETERNO (Vallenato)", url: "https://music.youtube.com/watch?v=8z1Ox2_QnVI&si=Mptn0QMG5KQ2JHp1", shareUrl: "https://music.youtube.com/watch?v=8z1Ox2_QnVI&si=Mptn0QMG5KQ2JHp1" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA&si=ZB2a4jnRIkEyiJgK",
 spotify: "https://open.spotify.com/album/5bouzliTlE1sm3qaIyEO8E?si=cs4bQlYESxiFc4mzFpsX6A",
 amazon: "https://music.amazon.com.mx/albums/B0GM2D1VFK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_8xRPz4ErVSHRNOT6ItqsbSEaZ",
 apple: "https://music.apple.com/es/album/amor-en-tiempos-de-ideolog%C3%ADas-cancer%C3%ADgenas/1875409405",
@@ -1273,9 +1262,7 @@ let activePlaylistIdGlobal = "";
 function setPlayerState(isPlaying) {
     const btn = document.getElementById('btnPlayPause');
     if(btn) {
-        btn.innerHTML = isPlaying 
-            ? `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`
-            : `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`;
+        btn.innerHTML = isPlaying ? pauseIconSVG : playIconSVG;
     }
 }
 
@@ -1326,12 +1313,9 @@ if(bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
 
 function closeAlbumPanel() {
 albumModal.classList.remove("show");
-if (scWidgetGlobal) {
-    scWidgetGlobal.pause();
-}
-if (ytPlayerGlobal && typeof ytPlayerGlobal.pauseVideo === 'function') {
-    ytPlayerGlobal.pauseVideo();
-}
+if (scWidgetGlobal) scWidgetGlobal.pause();
+if (ytPlayerGlobal && typeof ytPlayerGlobal.pauseVideo === 'function') ytPlayerGlobal.pauseVideo();
+
 setTimeout(() => {
 customPlayerBox.style.display = "none";
 document.getElementById("playerIframeContainer").innerHTML = "";
@@ -1541,8 +1525,8 @@ window.renderTrack = function(index) {
 
     if (trackObj.url.includes("soundcloud.com")) {
         const encodedUrl = encodeURIComponent(trackObj.url);
-        const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23FFD700&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=true`;
-        playerIframe.innerHTML = `<iframe id="sc-iframe" width="100%" height="160" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`;
+        const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23FFD700&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+        playerIframe.innerHTML = `<iframe id="sc-iframe" width="100%" height="140" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`;
         
         setPlayerState(false);
 
@@ -1574,7 +1558,7 @@ window.renderTrack = function(index) {
             setPlayerState(false);
             let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
             if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
-            playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="160" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+            playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0;"></iframe>`;
             
             setTimeout(() => {
                 if (window.YT && window.YT.Player) {
@@ -1644,16 +1628,15 @@ modalTracklist.innerHTML = "";
 
 document.getElementById("customPlayerBox").style.display = "none";
 document.getElementById("playerIframeContainer").innerHTML = "";
-
-let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
-let playlistId = "";
-if (ytLink && ytLink !== "#") {
-const match = ytLink.match(/[?&]list=([^&]+)/);
-if (match && match[1]) { playlistId = match[1]; }
-}
+setPlayerState(false);
 
 activeTracksGlobal = item.tracks || [];
-activePlaylistIdGlobal = playlistId;
+activePlaylistIdGlobal = "";
+let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
+if (ytLink && ytLink !== "#") {
+const match = ytLink.match(/[?&]list=([^&]+)/);
+if (match && match[1]) { activePlaylistIdGlobal = match[1]; }
+}
 
 if(item.tracks && item.tracks.length > 0) {
 item.tracks.forEach((trackObj, index) => {
