@@ -242,26 +242,26 @@ html, body {
     position: relative;
 }
 
-/* CONFIGURACIÓN SOUNDCLOUD (RECORRIDO A LA DERECHA PARA NO TAPAR ONDAS) */
+/* CONFIGURACIÓN SOUNDCLOUD "MODO PRO" CON FILTRO SVG */
 #sc-iframe {
-    filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.5);
-    background-color: #ffffff;
+    filter: url(#gold-dark); /* Filtro mágico para colores perfectos */
+    background-color: transparent;
     border: none;
-    border-radius: 0 8px 0 0; /* Solo esquina derecha */
+    border-radius: 0 8px 0 0;
     position: absolute;
     top: 0;
-    left: 140px; /* Lo empujamos a la derecha */
-    width: calc(100% - 140px); /* Ocupa el espacio restante */
+    left: 140px; /* Empujamos a la derecha para no tapar con la portada */
+    width: calc(100% - 140px); /* Ajustamos el ancho exacto */
     height: 140px;
     z-index: 1;
 }
 
-/* SUPERPOSICIÓN DE LA PORTADA REAL (EN EL HUECO IZQUIERDO) */
+/* SUPERPOSICIÓN DE LA PORTADA REAL */
 .sc-cover-overlay {
     position: absolute;
     top: 0;
     left: 0;
-    width: 140px; /* Llena exactamente el hueco que dejamos */
+    width: 140px; /* Llena el hueco izquierdo exacto */
     height: 140px;
     object-fit: cover;
     border-radius: 8px 0 0 0;
@@ -269,10 +269,12 @@ html, body {
     z-index: 5;
 }
 
+/* CONTROLES CENTRADOS */
 .custom-player-controls {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* Centramos todo */
+    gap: 50px; /* Separación entre botones y volumen */
     padding: 12px 20px;
     background: rgba(255, 215, 0, 0.05);
     border-top: 1px solid rgba(255,215,0,0.2);
@@ -282,7 +284,6 @@ html, body {
     display: flex;
     gap: 30px;
     align-items: center;
-    margin-left: 15%;
 }
 
 .ctrl-btn {
@@ -817,11 +818,20 @@ html, body {
     .floating-platforms { transform: scale(0.8) translateY(-60%); right: 5px; }
     .modal-content { padding: 20px; width: 90%; max-height: 85vh; }
     .close-modal { right: 15px; top: 10px; }
-    .player-core-btns { margin-left: 5%; }
 }
 </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute; pointer-events:none;">
+    <filter id="gold-dark">
+        <feColorMatrix type="matrix" values="
+            -0.67 -0.165 -0.165 0 1
+            -0.51 -0.165 -0.165 0 0.84
+             0.33 -0.165 -0.165 0 0
+             0 0 0 1 0" />
+    </filter>
+</svg>
 
 <div id="loader">
     <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high">
@@ -904,13 +914,15 @@ html, body {
 </div>
 
 <div id="solarSystem">
-    <div id="sun"><img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo"></div>
+    <div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
+        <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
+    </div>
     <div id="orbitSingles" class="orbit"></div>
     <div id="orbitAlbums" class="orbit"></div>
 </div>
 
 <script>
-// ÍCONOS DE REPRODUCCIÓN
+    // ÍCONOS DE REPRODUCCIÓN
 const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`;
 const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`;
 
@@ -1134,7 +1146,7 @@ const albums = [
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow",
             spotify: "https://open.spotify.com/album/3L2ZAYytRTzDIChcwRkLdY?si=uGLv11StT1ykGm-CJ9-_Jw",
             amazon: "https://music.amazon.com.mx/albums/B0FVJB8H74",
-            apple: "#",
+            apple: "https://music.apple.com/es/album/estado-contra-estado/1841491477",
             soundcloud: "https://soundcloud.com/reflexionmusicalmx-music/sets/estado-contra-estado"
         }
     },
@@ -1367,7 +1379,7 @@ const albums = [
         }
     }
 ];
-// VARIABLES GLOBALES DEL REPRODUCTOR
+    // VARIABLES GLOBALES DEL REPRODUCTOR
 let scWidgetGlobal = null;
 let ytPlayerGlobal = null;
 let activeTracksGlobal = [];
@@ -1598,11 +1610,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (trackObj.url.includes("soundcloud.com")) {
             const encodedUrl = encodeURIComponent(trackObj.url);
             
-            // TRUCO MODO OSCURO:
-            // 1. color=%230000ff (Azul), que invertido por CSS se volverá dorado.
-            // 2. show_artwork=false para que la imagen en negativo de SC no exista.
-            // 3. Superponemos la imagen original encima para ocupar el hueco izquierdo exacto de 140px.
-            const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%230000ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+            // MODO PRO SOUNDCLOUD:
+            // 1. color=%23ff0000 (Rojo), que invertido por nuestro filtro SVG se volverá GRIS OSCURO.
+            // 2. show_artwork=false apaga la imagen nativa.
+            // 3. left: 140px (en CSS de Parte 1) deja el hueco exacto para tu portada original intacta.
+            const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff0000&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
             
             playerIframe.innerHTML = `
                 <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Portada">
@@ -1645,7 +1657,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
                 if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
                 
-                // YouTube iframe ocupa 100% de ancho sin el overlay ni trucos CSS de SoundCloud
+                // YouTube iframe ocupa 100% de ancho sin el overlay de SoundCloud
                 playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0;"></iframe>`;
                 
                 setTimeout(() => {
@@ -1736,7 +1748,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeTracksGlobal = item.tracks || [];
                 activePlaylistIdGlobal = playlistId;
                 
-                // Guardar imagen real para cuando se abra SoundCloud en el reproductor
+                // Guardar imagen real para cuando se abra SoundCloud
                 activeAlbumImgGlobal = encodeURI(item.img);
 
                 // LLENAR LISTA DE CANCIONES
@@ -1788,7 +1800,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     modalTracklist.appendChild(trackDiv);
                 }
 
-                // LLENAR PLATAFORMAS CON REGLA MAESTRA (Incluyendo SC y Audiomack)
+                // LLENAR PLATAFORMAS CON ICONOS (Spotify, Amazon, Apple, YT, SoundCloud, Audiomack)
                 modalPlatforms.innerHTML = "";
                 const globalPlatformsForModal = [
                     { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
@@ -1796,13 +1808,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
                     { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
                     { name: "SoundCloud", svg: `<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>`, id: 'soundcloud' },
-                    { name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>` }
+                    { name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>`, id: 'audiomack' }
                 ];
                 
                 globalPlatformsForModal.forEach(p => {
                     let platLink = item.links && item.links[p.id] ? item.links[p.id] : "";
                     
-                    // REGLA DE RESPALDO MAESTRA
+                    // REGLA DE RESPALDO MAESTRA: Si no hay link específico, va al perfil general
                     if (!platLink || platLink === "#") {
                         if (p.id === 'youtube') platLink = "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw";
                         if (p.id === 'audiomack') platLink = "https://audiomack.com/reflexion-musical-mx";
@@ -1951,4 +1963,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 </body>
-</html>    
+</html>
