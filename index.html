@@ -922,6 +922,7 @@ html, body {
 </div>
 
 <script>
+    <script>
 // NUEVOS ÍCONOS: CÍRCULO AMARILLO CON SÍMBOLO NEGRO
 const playIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
 const pauseIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
@@ -1379,17 +1380,13 @@ const albums = [
         }
     }
 ];
-// VARIABLES GLOBALES DEL REPRODUCTOR
+    // VARIABLES GLOBALES DEL REPRODUCTOR
 let scWidgetGlobal = null;
 let ytPlayerGlobal = null;
 let activeTracksGlobal = [];
 let activeTrackIndexGlobal = 0;
 let activePlaylistIdGlobal = "";
 let activeAlbumImgGlobal = ""; // Variable para superponer la portada real de SC
-
-// NUEVOS ÍCONOS: CÍRCULO AMARILLO CON SÍMBOLO NEGRO
-const playIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
-const pauseIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
 
 // FUNCIÓN PARA ACTUALIZAR ÍCONO PLAY/PAUSE
 function setPlayerState(isPlaying) {
@@ -1616,10 +1613,10 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // MODO PRO SOUNDCLOUD:
             // 1. color=%23ff0000 (Rojo), que invertido por nuestro filtro SVG se volverá GRIS OSCURO.
-            // 2. show_artwork=false apaga la imagen nativa.
-            // 3. left: 140px (en CSS de Parte 1) deja el hueco exacto para tu portada original intacta.
+            // 2. show_artwork=false apaga la imagen nativa para que no nos estorbe.
             const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff0000&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
             
+            // Inyectamos el iframe y la portada real encima
             playerIframe.innerHTML = `
                 <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Portada">
                 <iframe id="sc-iframe" scrolling="no" allow="autoplay" src="${embedUrl}"></iframe>
@@ -1697,7 +1694,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // INICIALIZACIÓN DE ÍCONO DE PLAY POR DEFECTO
+    // INICIALIZACIÓN DE ÍCONO DE PLAY POR DEFECTO AL ABRIR LA VENTANA
     setPlayerState(false);
 
     // BOTONERA DEL REPRODUCTOR
@@ -1971,4 +1968,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 </body>
-</html>    
+</html>
