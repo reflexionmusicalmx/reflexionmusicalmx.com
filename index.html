@@ -196,18 +196,21 @@ overflow: hidden;
 }
 #playerIframeContainer {
 width: 100%;
-height: 160px; /* Alto ideal para mostrar portada y ondas completas */
+height: 140px;
 background: #000;
 }
+/* INVERSIÓN SC PARA MODO OSCURO Y ONDAS DORADAS */
+#sc-iframe { filter: invert(0.92) hue-rotate(180deg) brightness(1.2) contrast(1.5); border-radius: 8px 8px 0 0; }
+
 .custom-player-controls {
 display: flex;
 align-items: center;
-justify-content: center;
-gap: 30px;
-padding: 12px 0;
+justify-content: space-between;
+padding: 12px 20px;
 background: rgba(255, 215, 0, 0.05);
 border-top: 1px solid rgba(255,215,0,0.2);
 }
+.player-core-btns { display: flex; gap: 30px; align-items: center; margin-left: 15%; }
 .ctrl-btn {
 cursor: pointer;
 display: flex;
@@ -222,9 +225,13 @@ transform: scale(1.2);
 filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
 }
 
+.player-volume-wrapper { display: flex; align-items: center; gap: 8px; opacity: 0.8; }
+.player-volume-wrapper svg { width: 18px; height: 18px; fill: #FFD700; }
+#playerVolSlider { width: 70px; accent-color: #FFD700; height: 4px; background: #333; border-radius: 5px; outline: none; cursor: pointer; }
+
 .tracklist-container {
 text-align: left;
-max-height: 180px; 
+max-height: 180px; 
 overflow-y: auto;
 margin-bottom: 15px;
 padding-right: 10px;
@@ -551,12 +558,18 @@ Próximamente: "Algo está mal" (Libro)
 <h2 id="modalAlbumTitle">Título del Álbum</h2>
 
 <div id="customPlayerBox">
-    <div id="playerIframeContainer"></div>
-    <div class="custom-player-controls">
-        <span class="ctrl-btn" id="btnPrev" title="Anterior"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></span>
-        <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"><svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></span>
-        <span class="ctrl-btn" id="btnNext" title="Siguiente"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></span>
-    </div>
+    <div id="playerIframeContainer"></div>
+    <div class="custom-player-controls">
+        <div class="player-core-btns">
+            <span class="ctrl-btn" id="btnPrev" title="Anterior"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></span>
+            <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"><svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></span>
+            <span class="ctrl-btn" id="btnNext" title="Siguiente"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></span>
+        </div>
+        <div class="player-volume-wrapper">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            <input type="range" id="playerVolSlider" min="0" max="100" value="100" title="Volumen">
+        </div>
+    </div>
 </div>
 
 <div class="tracklist-container" id="modalTracklist"></div>
@@ -582,8 +595,8 @@ Próximamente: "Algo está mal" (Libro)
 <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
 <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
 <svg viewBox="0 0 24 24"><path d="M10.215 13.806c0-.615.295-1.593 2.59-1.593.704 0 1.137.051 1.719.182-.186 2.409-1.365 2.727-2.511 2.727-.627 0-1.8-.327-1.8-1.316ZM3.885 24h16.23A3.885 3.885 0 0 0 24 20.115V3.885A3.885 3.885 0 0 0 20.115 0H3.885A3.885 3.885 0 0 0 0 3.885v16.23A3.885 3.885 0 0 0 3.885 24ZM8.8 8.865c.85-1.215 1.972-1.689 3.525-1.689 1.095 0 2.026.369 2.692 1.066.665.699 1.044 1.698 1.131 2.975q.552.231 1.017.544c1.248.839 1.935 2.093 1.935 3.53 0 3.055-2.505 5.709-7.038 5.709-3.892 0-7.936-2.265-7.936-9.006C4.125 5.289 8.042 3 12.05 3c1.851 0 6.193.273 7.825 5.665l-1.53.396c-1.263-3.84-3.91-4.452-6.336-4.452-4.012 0-6.28 2.442-6.28 7.64 0 4.66 2.535 7.135 6.333 7.135 3.125 0 5.454-1.623 5.454-4 0-1.618-1.359-2.392-1.43-2.392-.265 1.388-.976 3.723-4.1 3.723-1.82 0-3.39-1.257-3.39-2.904 0-2.352 2.232-3.204 3.994-3.204.66 0 1.455.045 1.87.129 0-.717-.606-1.944-2.139-1.944-1.366 0-1.74.432-2.175.936l-.036.04c-.303-.202-1.312-.901-1.312-.901Z"/></svg></a>
-<a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud">
-<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg></a>
+<a href="https://audiomack.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Audiomack">
+<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg></a>
 </div>
 
 <div class="floating-platforms">
@@ -595,16 +608,8 @@ Próximamente: "Algo está mal" (Libro)
 <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></a>
 <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="Escuchar en YouTube Music">
 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
-<a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="Escuchar en SoundCloud">
-<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg></a>
-</div>
-
-<div id="solarSystem">
-<div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
-<img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
-</div>
-<div id="orbitSingles" class="orbit"></div>
-<div id="orbitAlbums" class="orbit"></div>
+<a href="https://audiomack.com/reflexion-musical-mx" target="_blank" aria-label="Visitar Audiomack">
+<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg></a>
 </div>
 
 <script>
@@ -613,7 +618,7 @@ const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD7
 const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`;
 
 const quotesData = [
-{ text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
+  { text: "El silencio pesa más que las balas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
 { text: "Un pueblo que espera sentado milagros no sabe que el cambio está en sus propios pasos.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
 { text: "Rompe las cadenas… pero primero rompe las tuyas.", song: "Ciudad en silencio", album: "Voces de Cambio 1" },
 { text: "Lo que hoy te callas, mañana te ahoga.", song: "Sabes lo que haces", album: "Voces de Cambio 1" },
@@ -763,6 +768,7 @@ const quotesData = [
 { text: "No hay revolución sin transformación, primero en tu mente, después en acción.", song: "El cambio está en ti V2", album: "Voces de Cambio 2" },
 { text: "¡La nación no se vende jamás!", song: "Himno a México", album: "Voces de Cambio 2" }
 ];
+
 const singles = [
 {
 img: "images/We rise as one.webp",
@@ -920,6 +926,7 @@ tracks: [
 { name: "Hijos del olvido", url: "https://music.youtube.com/watch?v=n2GMzHW2NyQ&si=i3OviOjOPov5cBmf", shareUrl: "https://music.youtube.com/watch?v=n2GMzHW2NyQ&si=i3OviOjOPov5cBmf" }
 ],
 links: {
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ",
 spotify: "https://open.spotify.com/album/2UAHh2wV6ntXOvb4F4VVhg?si=Ec-XVA8XTCqihw-9HEHMlg",
 amazon: "https://music.amazon.com.mx/albums/B0FS3YS4NX?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_DwtYRuWH9A1rjZEvEyW5aZoIB",
 apple: "https://music.apple.com/es/album/voces-de-cambio/1841491477",
@@ -947,6 +954,7 @@ tracks: [
 { name: "Himno a México", url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-mexico", shareUrl: "https://music.youtube.com/watch?v=4y2QWiIFZbM&si=ty03qtEViIensnVf" }
 ],
 links: {
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE",
 spotify: "https://open.spotify.com/album/20FVaU0J8cPCszEj1tgsr6?si=S9WmVWrtTtGCwSAgsyzrDg",
 amazon: "https://music.amazon.com.mx/albums/B0FT7PQGKF?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_E0CCAEmpHKYAjyX4YbrBIIKWC",
 apple: "#",
@@ -976,7 +984,7 @@ tracks: [
 { name: "Los nadie", url: "https://music.youtube.com/watch?v=WRlhwVGo6y4&si=jbvwzIAhYRygDJxY", shareUrl: "https://music.youtube.com/watch?v=WRlhwVGo6y4&si=jbvwzIAhYRygDJxY" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow&si=OySd6YX-U8uHXnOV",
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow",
 spotify: "https://open.spotify.com/album/3L2ZAYytRTzDIChcwRkLdY?si=uGLv11StT1ykGm-CJ9-_Jw",
 amazon: "https://music.amazon.com.mx/albums/B0FVJB8H74?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_yYclccmQj3BzSNhOzxh6dLXGm",
 apple: "#",
@@ -1005,7 +1013,7 @@ tracks: [
 { name: "Después del silencio", url: "https://music.youtube.com/watch?v=8q_OWMkcxII&si=dZaoIUraafTqCctM", shareUrl: "https://music.youtube.com/watch?v=8q_OWMkcxII&si=dZaoIUraafTqCctM" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4&si=iXoy5FUZtsS5REQ6",
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4",
 spotify: "https://open.spotify.com/album/62pJjPSFwZf4MuHT45izrV?si=0DRH5AomRryVSIeNBzyQ0g",
 amazon: "https://music.amazon.com.mx/albums/B0FX1YYCBH?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_uW6qlIS9NuPZNvqC6D1ms2g3g",
 apple: "https://music.apple.com/es/album/luz-entre-las-sombras/1847216698",
@@ -1035,7 +1043,7 @@ tracks: [
 { name: "Tiempo y vida", url: "https://music.youtube.com/watch?v=7KEbMITLb8w&si=NmAEReQ22gtxZq6W", shareUrl: "https://music.youtube.com/watch?v=7KEbMITLb8w&si=NmAEReQ22gtxZq6W" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE&si=t6K1eboh-VHYlpm7",
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE",
 spotify: "https://open.spotify.com/album/4OyMdNR6Ff9PX5KXJDs36E?si=OOhJll_gSo2UtOyU_6Pe3A",
 amazon: "https://music.amazon.com.mx/albums/B0G16FLG5T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_QCGhFH3HUFAvYZ1S8LgvA12K0",
 apple: "https://music.apple.com/es/album/tiempo-y-vida/1851277742",
@@ -1061,7 +1069,7 @@ tracks: [
 { name: "Chacales oportunistas V2", url: "https://music.youtube.com/watch?v=BtAKhDkT8Rg&si=pVIFb8w18TiOdBxP", shareUrl: "https://music.youtube.com/watch?v=BtAKhDkT8Rg&si=pVIFb8w18TiOdBxP" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A&si=GKFSqmdUdijNoyWs",
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A",
 spotify: "https://open.spotify.com/album/5XWwchDBL4G0kACbGBebet?si=zD2zM6GtTcC1vJ7Z04T0sw",
 amazon: "https://music.amazon.com.mx/albums/B0G36KTQDS?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_LeFI1C8dDspsmwqxAleo2CQOL",
 apple: "https://music.apple.com/es/album/chacales-oportunistas/1854564785",
@@ -1090,7 +1098,7 @@ tracks: [
 { name: "Ciudadanos del mundo II (Remix)", url: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9", shareUrl: "https://music.youtube.com/watch?v=9s3r9Amp9wg&si=x9X2rJta9UNgOgF9" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs&si=IENzoXH5D1xv_xOn",
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs",
 spotify: "https://open.spotify.com/album/2gSDQitygEjoVweX6PnqpK?si=0C-q47pmRJuUSIZ4OS2kQw",
 amazon: "https://music.amazon.com.mx/albums/B0G3BCX2MK?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_XlRB7X0aKfxly6dyzuXGdd1Q9",
 apple: "https://music.apple.com/es/album/tejido-vital/1854794772",
@@ -1120,7 +1128,7 @@ tracks: [
 { name: "Revolución Mental (Remix)", url: "https://music.youtube.com/watch?v=6Hmt9QxXCd8&si=ZiVAKOMcLHOeHcYJ", shareUrl: "https://music.youtube.com/watch?v=6Hmt9QxXCd8&si=ZiVAKOMcLHOeHcYJ" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU&si=nt9eLCqBjl8_kKqz",
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU",
 spotify: "https://open.spotify.com/album/5ZiW2nNJnJX9ZeuBpZW6DS?si=bHkMqhAGShSYicHuKgnFQg",
 amazon: "https://music.amazon.com.mx/albums/B0G4NF14XV?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_HJ9XRJt8EsxWt9M0kEetBEkoW",
 apple: "https://music.apple.com/es/album/revoluci%C3%B3n-mental/1857713061",
@@ -1164,7 +1172,7 @@ tracks: [
 { name: "Epílogo a Eres lo que escucha", url: "https://music.youtube.com/watch?v=395VsEPLSvE&si=-OIHP1NPcgvlThb3", shareUrl: "https://music.youtube.com/watch?v=395VsEPLSvE&si=-OIHP1NPcgvlThb3" }
 ],
 links: {
-youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I&si=exhKQkfdndW8x4yK",
+youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I",
 spotify: "https://open.spotify.com/album/20FnT6FbnltmFm9PiRSSkt?si=OD37ewXkRzyxJLLibBXmvQ",
 amazon: "https://music.amazon.com.mx/albums/B0GD2PZZ1T?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_7ZIn2KHO856UVHUJ4S8ut1WN3",
 apple: "https://music.apple.com/es/album/eres-lo-que-escuchas/1865017257",
@@ -1261,7 +1269,7 @@ const loader = document.getElementById('loader');
 setTimeout(() => {
 loader.style.opacity = '0';
 setTimeout(() => loader.remove(), 800);
-}, 500); 
+}, 500); 
 });
 
 let scWidgetGlobal = null;
@@ -1271,22 +1279,22 @@ let activeTrackIndexGlobal = 0;
 let activePlaylistIdGlobal = "";
 
 function setPlayerState(isPlaying) {
-    const btn = document.getElementById('btnPlayPause');
-    if(btn) {
-        btn.innerHTML = isPlaying 
-            ? `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`
-            : `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`;
-    }
+    const btn = document.getElementById('btnPlayPause');
+    if(btn) {
+        btn.innerHTML = isPlaying 
+            ? `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`
+            : `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
 const modal = document.getElementById("bioModal");
 const sun = document.getElementById("sun");
 const closeBioModal = document.querySelector(".close-bio");
-const bioAudio = document.getElementById("bioAudio"); 
+const bioAudio = document.getElementById("bioAudio"); 
 const volumeSlider = document.getElementById("volumeSlider");
 const muteBtn = document.getElementById("muteBtn");
-const starContainer = document.getElementById("starContainer"); 
+const starContainer = document.getElementById("starContainer"); 
 const albumModal = document.getElementById("albumModal");
 const closeAlbumModal = document.querySelector(".close-album");
 const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
@@ -1295,6 +1303,9 @@ const modalPlayerContainer = document.getElementById("modalPlayerContainer");
 const modalTracklist = document.getElementById("modalTracklist");
 const modalPlatforms = document.getElementById("modalPlatforms");
 const customPlayerBox = document.getElementById("customPlayerBox");
+
+// CONTROL DE VOLUMEN PRINCIPAL DE MODAL
+const modalVolSlider = document.getElementById("modalVolSlider");
 
 if(volumeSlider && bioAudio) {
 bioAudio.volume = volumeSlider.value;
@@ -1306,7 +1317,7 @@ muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
 if(muteBtn && bioAudio) {
 muteBtn.addEventListener("click", () => {
 if (bioAudio.volume > 0) {
-bioAudio.dataset.lastVol = bioAudio.volume; 
+bioAudio.dataset.lastVol = bioAudio.volume; 
 bioAudio.volume = 0;
 volumeSlider.value = 0;
 muteBtn.textContent = "🔇";
@@ -1319,6 +1330,19 @@ muteBtn.textContent = "🔊";
 });
 }
 
+// SINCRONIZAR VOLUMEN CON LOS REPRODUCTORES
+if(modalVolSlider) {
+    modalVolSlider.addEventListener("input", (e) => {
+        let currentVol = parseInt(e.target.value, 10);
+        if(scWidgetGlobal) {
+            try { scWidgetGlobal.setVolume(currentVol); } catch(err) {}
+        }
+        if(ytPlayerGlobal && typeof ytPlayerGlobal.setVolume === 'function') {
+            try { ytPlayerGlobal.setVolume(currentVol); } catch(err) {}
+        }
+    });
+}
+
 function closeAndStopAudio() {
 modal.classList.remove("show");
 if(bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
@@ -1327,10 +1351,10 @@ if(bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
 function closeAlbumPanel() {
 albumModal.classList.remove("show");
 if (scWidgetGlobal) {
-    scWidgetGlobal.pause();
+    try { scWidgetGlobal.pause(); } catch(e) {}
 }
 if (ytPlayerGlobal && typeof ytPlayerGlobal.pauseVideo === 'function') {
-    ytPlayerGlobal.pauseVideo();
+    try { ytPlayerGlobal.pauseVideo(); } catch(e) {}
 }
 setTimeout(() => {
 customPlayerBox.style.display = "none";
@@ -1343,8 +1367,8 @@ setPlayerState(false);
 }
 
 if(sun) {
-sun.onclick = () => { 
-modal.classList.add("show"); 
+sun.onclick = () => { 
+modal.classList.add("show"); 
 if(bioAudio) { bioAudio.play().catch(error => { console.log("Bloqueado:", error); }); }
 };
 }
@@ -1364,7 +1388,7 @@ if (event.target === albumModal) closeAlbumPanel();
 
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
-const numStars = window.innerWidth < 768 ? 80 : 300; 
+const numStars = window.innerWidth < 768 ? 80 : 300; 
 let backgroundStars = [];
 
 function setCanvasSize() {
@@ -1407,20 +1431,20 @@ let isQuoteActive = false;
 let currentSpawnTimeout = null;
 
 function showQuoteAndSpin() {
-const q = getNextQuote(); 
+const q = getNextQuote(); 
 const quoteEl = document.createElement("div");
 quoteEl.className = "floating-quote";
 quoteEl.innerHTML = `"${q.text}"<br><span style="margin-bottom: 10px; display:block;">${q.song}</span>
 <div class="quote-actions">
-    <div class="quote-action-btn play-quote" title="Reproducir Canción">
-        <svg viewBox="0 0 24 24" width="35" height="35"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 7.5v9l6-4.5-6-4.5z" fill="#000"/></svg>
-    </div>
-    <div class="quote-action-btn share-quote" title="Compartir Frase">
-        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-    </div>
-    <div class="quote-action-btn close-quote" title="Cerrar">
-        <svg viewBox="0 0 24 24" width="35" height="35"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M15 9l-6 6M9 9l6 6" stroke="#000" stroke-width="2.5" stroke-linecap="round"/></svg>
-    </div>
+    <div class="quote-action-btn play-quote" title="Reproducir Canción">
+        <svg viewBox="0 0 24 24" width="35" height="35"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 7.5v9l6-4.5-6-4.5z" fill="#000"/></svg>
+    </div>
+    <div class="quote-action-btn share-quote" title="Compartir Frase">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+    </div>
+    <div class="quote-action-btn close-quote" title="Cerrar">
+        <svg viewBox="0 0 24 24" width="35" height="35"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M15 9l-6 6M9 9l6 6" stroke="#000" stroke-width="2.5" stroke-linecap="round"/></svg>
+    </div>
 </div>`;
 document.body.appendChild(quoteEl);
 
@@ -1438,52 +1462,52 @@ if(planetTooltip) planetTooltip.classList.add("force-tooltip");
 }
 
 const closeFunc = () => {
-    quoteEl.animate([
-        { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
-        { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' }
-    ], { duration: 400, easing: 'ease-in' }).onfinish = () => {
-        quoteEl.remove();
-        isQuoteActive = false;
-        if(planetImg) {
-            planetImg.classList.remove("spin-active");
-            if(planetTooltip) planetTooltip.classList.remove("force-tooltip");
-        }
-        spawnSupernovaBatch();
-    };
+    quoteEl.animate([
+        { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+        { opacity: 0, transform: 'translate(-50%, -50%) scale(0)' }
+    ], { duration: 400, easing: 'ease-in' }).onfinish = () => {
+        quoteEl.remove();
+        isQuoteActive = false;
+        if(planetImg) {
+            planetImg.classList.remove("spin-active");
+            if(planetTooltip) planetTooltip.classList.remove("force-tooltip");
+        }
+        spawnSupernovaBatch();
+    };
 };
 
 quoteEl.querySelector('.close-quote').onclick = closeFunc;
 
 quoteEl.querySelector('.share-quote').onclick = () => {
-    const shareText = `"${q.text}" - ${q.song} (${q.album}) | Reflexión Musical MX`;
-    if (navigator.share) {
-        navigator.share({ title: q.song, text: shareText }).catch(console.error);
-    } else {
-        navigator.clipboard.writeText(shareText);
-        alert("Frase copiada al portapapeles");
-    }
+    const shareText = `"${q.text}" - ${q.song} (${q.album}) | Reflexión Musical MX`;
+    if (navigator.share) {
+        navigator.share({ title: q.song, text: shareText }).catch(console.error);
+    } else {
+        navigator.clipboard.writeText(shareText);
+        alert("Frase copiada al portapapeles");
+    }
 };
 
 quoteEl.querySelector('.play-quote').onclick = () => {
-    const planetEl = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"]`);
-    if (planetEl) {
-        closeFunc();
-        setTimeout(() => {
-            planetEl.click();
-            setTimeout(() => {
-                const trackWrappers = document.querySelectorAll('.track-item-wrapper');
-                for (let [index, wrapper] of trackWrappers.entries()) {
-                    const link = wrapper.querySelector('.track-link');
-                    if (link && link.innerText.toLowerCase().includes(q.song.toLowerCase())) {
-                        window.renderTrack(index);
-                        break;
-                    }
-                }
-            }, 400);
-        }, 450);
-    } else {
-        alert("Álbum no encontrado para reproducción.");
-    }
+    const planetEl = document.querySelector(`.planet[data-album="${q.album.toUpperCase()}"]`);
+    if (planetEl) {
+        closeFunc();
+        setTimeout(() => {
+            planetEl.click();
+            setTimeout(() => {
+                const trackWrappers = document.querySelectorAll('.track-item-wrapper');
+                for (let [index, wrapper] of trackWrappers.entries()) {
+                    const link = wrapper.querySelector('.track-link');
+                    if (link && link.innerText.toLowerCase().includes(q.song.toLowerCase())) {
+                        window.renderTrack(index);
+                        break;
+                    }
+                }
+            }, 400);
+        }, 450);
+    } else {
+        alert("Álbum no encontrado para reproducción.");
+    }
 };
 }
 
@@ -1505,120 +1529,129 @@ hitbox.style.left = (Math.random() * window.innerWidth) + "px";
 hitbox.style.top = (Math.random() * window.innerHeight) + "px";
 const flash = document.createElement("div");
 flash.className = "supernova";
-flash.innerHTML = '<div class="ray-x"></div>'; 
+flash.innerHTML = '<div class="ray-x"></div>'; 
 hitbox.appendChild(flash);
 hitbox.onclick = function() {
 if (isQuoteActive) return;
 isQuoteActive = true;
-showQuoteAndSpin(); 
-removeAllSupernovas(); 
+showQuoteAndSpin(); 
+removeAllSupernovas(); 
 if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
 };
-if(starContainer) starContainer.appendChild(hitbox); 
+if(starContainer) starContainer.appendChild(hitbox); 
 }
 currentSpawnTimeout = setTimeout(() => {
 if (!isQuoteActive) {
 removeAllSupernovas();
 currentSpawnTimeout = setTimeout(spawnSupernovaBatch, 1000);
 }
-}, 3500); 
+}, 3500); 
 }
 
 spawnSupernovaBatch();
 
 window.renderTrack = function(index) {
-    activeTrackIndexGlobal = index;
-    const trackObj = activeTracksGlobal[index];
-    const playerIframe = document.getElementById("playerIframeContainer");
-    const customBox = document.getElementById("customPlayerBox");
-    
-    document.querySelectorAll('.track-link').forEach((el, i) => {
-        if (i === index) el.classList.add('active-track');
-        else el.classList.remove('active-track');
-    });
+    activeTrackIndexGlobal = index;
+    const trackObj = activeTracksGlobal[index];
+    const playerIframe = document.getElementById("playerIframeContainer");
+    const customBox = document.getElementById("customPlayerBox");
+    
+    document.querySelectorAll('.track-link').forEach((el, i) => {
+        if (i === index) el.classList.add('active-track');
+        else el.classList.remove('active-track');
+    });
 
-    customBox.style.display = "flex";
+    customBox.style.display = "flex";
 
-    if (trackObj.url.includes("soundcloud.com")) {
-        const encodedUrl = encodeURIComponent(trackObj.url);
-        const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23FFD700&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=true`;
-        playerIframe.innerHTML = `<iframe id="sc-iframe" width="100%" height="160" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`;
-        
-        setPlayerState(false);
+    if (trackObj.url.includes("soundcloud.com")) {
+        const encodedUrl = encodeURIComponent(trackObj.url);
+        const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=0000ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+        playerIframe.innerHTML = `<iframe id="sc-iframe" width="100%" height="140" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>`;
+        
+        setPlayerState(false);
 
-        setTimeout(() => {
-            const iframeEl = document.getElementById('sc-iframe');
-            if(iframeEl && window.SC) {
-                scWidgetGlobal = SC.Widget(iframeEl);
-                scWidgetGlobal.bind(SC.Widget.Events.READY, () => {
-                    scWidgetGlobal.play(); 
-                    
-                    scWidgetGlobal.bind(SC.Widget.Events.PLAY, () => setPlayerState(true));
-                    scWidgetGlobal.bind(SC.Widget.Events.PAUSE, () => setPlayerState(false));
-                    
-                    scWidgetGlobal.bind(SC.Widget.Events.FINISH, () => {
-                        setPlayerState(false);
-                        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
-                            window.renderTrack(activeTrackIndexGlobal + 1);
-                        }
-                    });
-                });
-            }
-        }, 500);
-    } else {
-        let videoId = "";
-        let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
-        if(vMatch && vMatch[1]) videoId = vMatch[1];
-        
-        if (videoId) {
-            setPlayerState(false);
-            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
-            if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
-            playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="160" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-            
-            setTimeout(() => {
-                if (window.YT && window.YT.Player) {
-                    ytPlayerGlobal = new YT.Player('yt-iframe', {
-                        events: {
-                            'onReady': (event) => {
-                                event.target.playVideo();
-                            },
-                            'onStateChange': (event) => {
-                                if (event.data === YT.PlayerState.PLAYING) {
-                                    setPlayerState(true);
-                                } else if (event.data === YT.PlayerState.PAUSED) {
-                                    setPlayerState(false);
-                                } else if (event.data === YT.PlayerState.ENDED) {
-                                    setPlayerState(false);
-                                    if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
-                                        window.renderTrack(activeTrackIndexGlobal + 1);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }, 1000);
-        } else {
-            window.open(trackObj.url, "_blank");
-        }
-    }
+        setTimeout(() => {
+            const iframeEl = document.getElementById('sc-iframe');
+            if(iframeEl && window.SC) {
+                scWidgetGlobal = SC.Widget(iframeEl);
+                scWidgetGlobal.bind(SC.Widget.Events.READY, () => {
+                    scWidgetGlobal.play(); 
+                    
+                    const modalVol = document.getElementById("modalVolSlider");
+                    if(modalVol) {
+                        scWidgetGlobal.setVolume(parseInt(modalVol.value, 10));
+                    }
+                    
+                    scWidgetGlobal.bind(SC.Widget.Events.PLAY, () => setPlayerState(true));
+                    scWidgetGlobal.bind(SC.Widget.Events.PAUSE, () => setPlayerState(false));
+                    
+                    scWidgetGlobal.bind(SC.Widget.Events.FINISH, () => {
+                        setPlayerState(false);
+                        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
+                            window.renderTrack(activeTrackIndexGlobal + 1);
+                        }
+                    });
+                });
+            }
+        }, 500);
+    } else {
+        let videoId = "";
+        let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
+        if(vMatch && vMatch[1]) videoId = vMatch[1];
+        
+        if (videoId) {
+            setPlayerState(false);
+            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
+            if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
+            playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0;"></iframe>`;
+            
+            setTimeout(() => {
+                if (window.YT && window.YT.Player) {
+                    ytPlayerGlobal = new YT.Player('yt-iframe', {
+                        events: {
+                            'onReady': (event) => {
+                                event.target.playVideo();
+                                const modalVol = document.getElementById("modalVolSlider");
+                                if(modalVol) {
+                                    event.target.setVolume(parseInt(modalVol.value, 10));
+                                }
+                            },
+                            'onStateChange': (event) => {
+                                if (event.data === YT.PlayerState.PLAYING) {
+                                    setPlayerState(true);
+                                } else if (event.data === YT.PlayerState.PAUSED) {
+                                    setPlayerState(false);
+                                } else if (event.data === YT.PlayerState.ENDED) {
+                                    setPlayerState(false);
+                                    if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
+                                        window.renderTrack(activeTrackIndexGlobal + 1);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }, 1000);
+        } else {
+            window.open(trackObj.url, "_blank");
+        }
+    }
 };
 
 document.getElementById('btnNext').onclick = () => {
-    if(activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
+    if(activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
 };
 document.getElementById('btnPrev').onclick = () => {
-    if(activeTrackIndexGlobal > 0) window.renderTrack(activeTrackIndexGlobal - 1);
+    if(activeTrackIndexGlobal > 0) window.renderTrack(activeTrackIndexGlobal - 1);
 };
 document.getElementById('btnPlayPause').onclick = () => {
-    if (activeTracksGlobal[activeTrackIndexGlobal].url.includes("soundcloud.com") && scWidgetGlobal) {
-        scWidgetGlobal.toggle();
-    } else if (ytPlayerGlobal && typeof ytPlayerGlobal.getPlayerState === 'function') {
-        const state = ytPlayerGlobal.getPlayerState();
-        if (state === 1 || state === 3) ytPlayerGlobal.pauseVideo();
-        else ytPlayerGlobal.playVideo();
-    }
+    if (activeTracksGlobal[activeTrackIndexGlobal].url.includes("soundcloud.com") && scWidgetGlobal) {
+        scWidgetGlobal.toggle();
+    } else if (ytPlayerGlobal && typeof ytPlayerGlobal.getPlayerState === 'function') {
+        const state = ytPlayerGlobal.getPlayerState();
+        if (state === 1 || state === 3) ytPlayerGlobal.pauseVideo();
+        else ytPlayerGlobal.playVideo();
+    }
 };
 
 function createOrbit(data,id,radius){
@@ -1671,8 +1704,8 @@ shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none
 shareBtn.title = "Compartir canción";
 
 trackLink.onclick = (e) => {
-    e.preventDefault();
-    window.renderTrack(index);
+    e.preventDefault();
+    window.renderTrack(index);
 };
 
 shareBtn.onclick = (e) => {
@@ -1709,7 +1742,8 @@ const globalPlatformsForModal = [
 { name: "Amazon Music", svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/><path d="M13.828 11.943c0.567 -0.07 1.468 -0.027 1.645 0.204 0.135 0.176 -0.004 0.966 -0.233 1.533 -0.23 0.563 -0.572 0.961 -0.762 1.115s-0.333 0.094 -0.23 -0.137c0.105 -0.23 0.684 -1.663 0.455 -1.963 -0.213 -0.278 -1.177 -0.177 -1.625 -0.13l-0.09 0.009q-0.142 0.013 -0.233 0.024c-0.193 0.021 -0.245 0.027 -0.274 -0.032 -0.074 -0.209 0.779 -0.556 1.347 -0.623"/></svg>`, id: 'amazon' },
 { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
 { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-{ name: "SoundCloud", svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z"/><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z"/><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z"/><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z"/><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z"/></svg>`, id: 'soundcloud' }
+{ name: "SoundCloud", svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z"/><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z"/><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z"/><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z"/><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z"/></svg>`, id: 'soundcloud' },
+{ name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>`, id: 'audiomack' }
 ];
 globalPlatformsForModal.forEach(p => {
 let platLink = item.links && item.links[p.id] ? item.links[p.id] : "#";
@@ -1796,10 +1830,10 @@ star.innerHTML = `
 <div class="comet-head"></div>
 <div class="comet-text">${releaseText}</div>
 `;
-if(starContainer) starContainer.appendChild(star); 
+if(starContainer) starContainer.appendChild(star); 
 
 let startX, startY, endX, endY;
-const edge = Math.floor(Math.random() * 4); 
+const edge = Math.floor(Math.random() * 4); 
 const offset = 100;
 if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
 else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
@@ -1811,7 +1845,7 @@ star.style.top = startY + "px";
 
 const dx = endX - startX; const dy = endY - startY;
 const angleRad = Math.atan2(dy, dx);
-const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
+const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
 
 const tail = star.querySelector('.comet-tail');
 tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
