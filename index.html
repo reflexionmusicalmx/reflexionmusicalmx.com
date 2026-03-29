@@ -150,7 +150,7 @@ html, body {
 }
 
 .modal-content {
-    background: #0a0a0a;
+    background: #000; /* Fondo Negro Puro */
     border: 1px solid #FFD700;
     padding: 30px 40px;
     border-radius: 15px;
@@ -163,7 +163,7 @@ html, body {
     text-align: left;
     position: relative;
     box-shadow: 0 0 40px rgba(255,215,0,0.2);
-    color: #ddd;
+    color: #eee; /* Texto casi blanco para lectura */
     line-height: 1.8;
 }
 
@@ -229,7 +229,7 @@ html, body {
     display: none;
     flex-direction: column;
     margin-bottom: 15px;
-    background: #111;
+    background: #000; /* Negro Puro */
     border: 1px solid gold;
     border-radius: 8px;
     overflow: hidden;
@@ -244,14 +244,14 @@ html, body {
 
 /* CONFIGURACIÓN SOUNDCLOUD "MODO PRO" CON FILTRO SVG */
 #sc-iframe {
-    filter: url(#gold-dark); /* Filtro mágico para colores perfectos */
+    filter: url(#gold-dark); /* Filtro mágico */
     background-color: transparent;
     border: none;
     border-radius: 0 8px 0 0;
     position: absolute;
     top: 0;
-    left: 140px; /* Empujamos a la derecha para no tapar con la portada */
-    width: calc(100% - 140px); /* Ajustamos el ancho exacto */
+    left: 140px; 
+    width: calc(100% - 140px); 
     height: 140px;
     z-index: 1;
 }
@@ -261,7 +261,7 @@ html, body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 140px; /* Llena el hueco izquierdo exacto */
+    width: 140px; 
     height: 140px;
     object-fit: cover;
     border-radius: 8px 0 0 0;
@@ -273,16 +273,16 @@ html, body {
 .custom-player-controls {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centramos todo */
-    gap: 50px; /* Separación entre botones y volumen */
+    justify-content: center; 
+    gap: 40px; 
     padding: 12px 20px;
-    background: rgba(255, 215, 0, 0.05);
+    background: rgba(255, 215, 0, 0.03); /* Apenas un tinte dorado */
     border-top: 1px solid rgba(255,215,0,0.2);
 }
 
 .player-core-btns {
     display: flex;
-    gap: 30px;
+    gap: 25px;
     align-items: center;
 }
 
@@ -292,13 +292,11 @@ html, body {
     align-items: center;
     justify-content: center;
     transition: 0.3s;
-    opacity: 0.8;
 }
 
 .ctrl-btn:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(255,215,0,0.5));
 }
 
 /* BARRA DE VOLUMEN REPRODUCTOR */
@@ -319,7 +317,7 @@ html, body {
     width: 70px;
     accent-color: #FFD700;
     height: 4px;
-    background: #333;
+    background: #1a1a1a; /* Negro muy oscuro */
     border-radius: 5px;
     outline: none;
     cursor: pointer;
@@ -332,10 +330,10 @@ html, body {
     overflow-y: auto;
     margin-bottom: 15px;
     padding-right: 10px;
-    background: rgba(255, 215, 0, 0.05);
+    background: rgba(0,0,0,0.5); /* Negro semi-transparente */
     border-radius: 10px;
     padding: 10px 15px;
-    border: 1px solid rgba(255,215,0,0.2);
+    border: 1px solid rgba(255,215,0,0.15);
 }
 
 .tracklist-container::-webkit-scrollbar { 
@@ -351,7 +349,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255,215,0,0.15);
+    border-bottom: 1px solid rgba(255,215,0,0.1);
     padding: 6px 0;
 }
 
@@ -362,7 +360,7 @@ html, body {
 .track-link {
     display: block;
     text-decoration: none;
-    color: #eee;
+    color: #ccc;
     transition: 0.2s;
     cursor: pointer;
     flex-grow: 1;
@@ -393,7 +391,7 @@ html, body {
 
 .share-btn:hover {
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.1);
     filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
 }
 
@@ -410,7 +408,7 @@ html, body {
 .album-platforms a {
     width: 40px;
     height: 40px;
-    background: #111;
+    background: #000;
     border: 1px solid gold;
     border-radius: 10px;
     display: flex;
@@ -421,7 +419,7 @@ html, body {
 
 .album-platforms a:hover {
     background: gold;
-    transform: scale(1.15);
+    transform: scale(1.1);
 }
 
 .album-platforms svg {
@@ -458,7 +456,7 @@ html, body {
 
 /* CONTROLES DE AUDIO BIO */
 .audio-controls {
-    background: #111;
+    background: #000;
     border: 1px solid #FFD700;
     border-radius: 10px;
     padding: 12px 20px;
@@ -489,7 +487,7 @@ html, body {
     flex-grow: 1;
     accent-color: #FFD700;
     height: 6px;
-    background: #333;
+    background: #1a1a1a;
     border-radius: 5px;
     outline: none;
     cursor: pointer;
@@ -545,7 +543,7 @@ html, body {
 }
 
 .planet:hover {
-    transform: scale(1.3) translateZ(0);
+    transform: scale(1.15) translateZ(0);
     box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
     z-index: 100;
 }
@@ -582,7 +580,7 @@ html, body {
     bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     color: #FFD700;
     padding: 6px 14px;
     border-radius: 6px;
@@ -615,7 +613,7 @@ html, body {
     align-items: flex-end;
     justify-content: center;
     gap: 5px;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     padding: 8px 12px;
     border: 1px solid gold;
     border-radius: 10px;
@@ -651,7 +649,7 @@ html, body {
 .floating-platforms { right: 15px; }
 
 .floating-social a, .floating-platforms a {
-    background: #111;
+    background: #000;
     color: #FFD700;
     width: 45px;
     height: 45px;
@@ -675,7 +673,7 @@ html, body {
 
 .floating-social a:hover, .floating-platforms a:hover {
     background: #FFD700;
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .floating-social a:hover svg, .floating-platforms a:hover svg {
@@ -873,7 +871,9 @@ html, body {
             <div class="custom-player-controls">
                 <div class="player-core-btns">
                     <span class="ctrl-btn" id="btnPrev" title="Anterior"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></span>
-                    <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"><svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></span>
+                    
+                    <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"></span>
+                    
                     <span class="ctrl-btn" id="btnNext" title="Siguiente"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></span>
                 </div>
                 <div class="player-volume-wrapper">
@@ -922,9 +922,9 @@ html, body {
 </div>
 
 <script>
-    // ÍCONOS DE REPRODUCCIÓN
-const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`;
-const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`;
+    // NUEVOS ÍCONOS: CÍRCULO AMARILLO CON SÍMBOLO NEGRO
+const playIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
+const pauseIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
 
 // BASE DE DATOS DE LANZAMIENTOS (SINGLES)
 const singles = [
@@ -1387,6 +1387,10 @@ let activeTrackIndexGlobal = 0;
 let activePlaylistIdGlobal = "";
 let activeAlbumImgGlobal = ""; // Variable para superponer la portada real de SC
 
+// NUEVOS ÍCONOS: CÍRCULO AMARILLO CON SÍMBOLO NEGRO
+const playIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
+const pauseIconSVG = `<svg viewBox="0 0 24 24" width="38" height="38"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
+
 // FUNCIÓN PARA ACTUALIZAR ÍCONO PLAY/PAUSE
 function setPlayerState(isPlaying) {
     const btn = document.getElementById('btnPlayPause');
@@ -1621,6 +1625,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <iframe id="sc-iframe" scrolling="no" allow="autoplay" src="${embedUrl}"></iframe>
             `;
             
+            // Inicializar botón en estado pausa y renderizar icono
             setPlayerState(false);
 
             setTimeout(() => {
@@ -1691,6 +1696,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     };
+
+    // INICIALIZACIÓN DE ÍCONO DE PLAY POR DEFECTO
+    setPlayerState(false);
 
     // BOTONERA DEL REPRODUCTOR
     document.getElementById('btnNext').onclick = () => {
@@ -1800,7 +1808,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     modalTracklist.appendChild(trackDiv);
                 }
 
-                // LLENAR PLATAFORMAS CON ICONOS (Spotify, Amazon, Apple, YT, SoundCloud, Audiomack)
+                // LLENAR PLATAFORMAS CON REGLA MAESTRA (Incluyendo SC y Audiomack)
                 modalPlatforms.innerHTML = "";
                 const globalPlatformsForModal = [
                     { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
@@ -1814,7 +1822,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 globalPlatformsForModal.forEach(p => {
                     let platLink = item.links && item.links[p.id] ? item.links[p.id] : "";
                     
-                    // REGLA DE RESPALDO MAESTRA: Si no hay link específico, va al perfil general
+                    // REGLA DE RESPALDO MAESTRA
                     if (!platLink || platLink === "#") {
                         if (p.id === 'youtube') platLink = "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw";
                         if (p.id === 'audiomack') platLink = "https://audiomack.com/reflexion-musical-mx";
