@@ -236,15 +236,15 @@ html, body {
 }
 
 #playerIframeContainer {
-    width: 100%;
-    height: 140px;
-    background: #000;
-    position: relative;
-}
+            width: 100%;
+            height: 140px;
+            background: #000;
+            position: relative;
+        }
 
-/* FILTRO REPRODUCTOR: PROGRESO DORADO EXACTO */
+        /* FILTRO REPRODUCTOR: INVIERTE BLANCO A NEGRO Y AZUL A DORADO */
         #sc-iframe {
-            filter: invert(1) contrast(1.1);
+            filter: invert(1);
             position: absolute;
             top: 0;
             left: 140px; 
@@ -253,20 +253,17 @@ html, body {
             border: none;
             z-index: 1;
         }
-}
 
-/* SUPERPOSICIÓN DE LA PORTADA REAL */
-.sc-cover-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 140px; 
-    height: 140px;
-    object-fit: cover;
-    border-radius: 8px 0 0 0;
-    pointer-events: none;
-    z-index: 5;
-}
+        .sc-cover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            z-index: 10;
+            border-right: 1px solid rgba(255, 215, 0, 0.45);
+        }
 
 /* CONTROLES CENTRADOS */
 .custom-player-controls {
