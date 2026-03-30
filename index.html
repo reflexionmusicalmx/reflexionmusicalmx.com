@@ -242,16 +242,16 @@ html, body {
     position: relative;
 }
 
-/* CONFIGURACIÓN SOUNDCLOUD "MODO PRO" CON FILTRO SVG */
+/* CONFIGURACIÓN SOUNDCLOUD MODO DORADO Y NEGRO */
 #sc-iframe {
-    filter: url(#gold-dark); /* Filtro mágico para colores perfectos */
+    filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.5);
     background-color: transparent;
     border: none;
     border-radius: 0 8px 0 0;
     position: absolute;
     top: 0;
-    left: 140px; /* Empujamos a la derecha para no tapar con la portada */
-    width: calc(100% - 140px); /* Ajustamos el ancho exacto */
+    left: 140px; 
+    width: calc(100% - 140px); 
     height: 140px;
     z-index: 1;
 }
@@ -261,7 +261,7 @@ html, body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 140px; /* Llena el hueco izquierdo exacto */
+    width: 140px; 
     height: 140px;
     object-fit: cover;
     border-radius: 8px 0 0 0;
@@ -273,8 +273,8 @@ html, body {
 .custom-player-controls {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centramos todo */
-    gap: 50px; /* Separación entre botones y volumen */
+    justify-content: center; 
+    gap: 50px; 
     padding: 12px 20px;
     background: rgba(255, 215, 0, 0.05);
     border-top: 1px solid rgba(255,215,0,0.2);
@@ -636,7 +636,7 @@ html, body {
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
 .heart-bubble { position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity; }
 
-/* REDES LATERALES GLOBALES */
+/* REDES LATERALES GLOBALES (PC POR DEFECTO) */
 .floating-social, .floating-platforms {
     position: absolute;
     top: 50%;
@@ -811,27 +811,46 @@ html, body {
 @keyframes fastSpin { 100% { transform: rotate(360deg) translateZ(0); } }
 .force-tooltip { opacity: 1 !important; visibility: visible !important; bottom: -35px !important; }
 
-/* RESPONSIVIDAD */
+/* RESPONSIVIDAD: EN MÓVILES BARRAS PASAN A ARRIBA (STREAMING) Y ABAJO (REDES) */
 @media (max-width: 768px) {
     #solarSystem { transform: scale(0.45); }
-    .floating-social { transform: scale(0.8) translateY(-60%); left: 5px; }
-    .floating-platforms { transform: scale(0.8) translateY(-60%); right: 5px; }
+    
+    /* Plataformas Streaming (Derecha en PC -> Arriba en Móvil) */
+    .floating-platforms {
+        top: 15px;
+        bottom: auto;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Redes Sociales (Izquierda en PC -> Abajo en Móvil) */
+    .floating-social {
+        top: auto;
+        bottom: 15px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .floating-social a, .floating-platforms a {
+        width: 36px;
+        height: 36px;
+        padding: 6px;
+    }
+
     .modal-content { padding: 20px; width: 90%; max-height: 85vh; }
     .close-modal { right: 15px; top: 10px; }
 }
 </style>
 </head>
 <body>
-
-<svg width="0" height="0" style="position:absolute; pointer-events:none;">
-    <filter id="gold-dark">
-        <feColorMatrix type="matrix" values="
-            -0.67 -0.165 -0.165 0 1
-            -0.51 -0.165 -0.165 0 0.84
-             0.33 -0.165 -0.165 0 0
-             0 0 0 1 0" />
-    </filter>
-</svg>
 
 <div id="loader">
     <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high">
@@ -873,7 +892,7 @@ html, body {
             <div class="custom-player-controls">
                 <div class="player-core-btns">
                     <span class="ctrl-btn" id="btnPrev" title="Anterior"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></span>
-                    <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"><svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></span>
+                    <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"></span>
                     <span class="ctrl-btn" id="btnNext" title="Siguiente"><svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></span>
                 </div>
                 <div class="player-volume-wrapper">
@@ -899,14 +918,17 @@ html, body {
     <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Facebook"><svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
     <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Instagram"><svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
     <a href="https://x.com/RMusicalMX" target="_blank" aria-label="Visitar X (Twitter)"><svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
-    <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads"><svg viewBox="0 0 24 24"><path d="M10.215 13.806c0-.615.295-1.593 2.59-1.593.704 0 1.137.051 1.719.182-.186 2.409-1.365 2.727-2.511 2.727-.627 0-1.8-.327-1.8-1.316ZM3.885 24h16.23A3.885 3.885 0 0 0 24 20.115V3.885A3.885 3.885 0 0 0 20.115 0H3.885A3.885 3.885 0 0 0 0 3.885v16.23A3.885 3.885 0 0 0 3.885 24ZM8.8 8.865c.85-1.215 1.972-1.689 3.525-1.689 1.095 0 2.026.369 2.692 1.066.665.699 1.044 1.698 1.131 2.975q.552.231 1.017.544c1.248.839 1.935 2.093 1.935 3.53 0 3.055-2.505 5.709-7.038 5.709-3.892 0-7.936-2.265-7.936-9.006C4.125 5.289 8.042 3 12.05 3c1.851 0 6.193.273 7.825 5.665l-1.53.396c-1.263-3.84-3.91-4.452-6.336-4.452-4.012 0-6.28 2.442-6.28 7.64 0 4.66 2.535 7.135 6.333 7.135 3.125 0 5.454-1.623 5.454-4 0-1.618-1.359-2.392-1.43-2.392-.265 1.388-.976 3.723-4.1 3.723-1.82 0-3.39-1.257-3.39-2.904 0-2.352 2.232-3.204 3.994-3.204.66 0 1.455.045 1.87.129 0-.717-.606-1.944-2.139-1.944-1.366 0-1.74.432-2.175.936l-.036.04c-.303-.202-1.312-.901-1.312-.901Z"/></svg></a>
-    <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud"><svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg></a>
-    <a href="https://audiomack.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Audiomack"><svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg></a>
+    <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="Threads--Streamline-Simple-Icons" height="24" width="24">
+            <title>Threads</title>
+            <path d="M12.186 24h-0.007c-3.581 -0.024 -6.334 -1.205 -8.184 -3.509C2.35 18.44 1.5 15.586 1.472 12.01v-0.017c0.03 -3.579 0.879 -6.43 2.525 -8.482C5.845 1.205 8.6 0.024 12.18 0h0.014c2.746 0.02 5.043 0.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04 0.569c-1.104 -3.96 -3.898 -5.984 -8.304 -6.015 -2.91 0.022 -5.11 0.936 -6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c0.027 3.086 0.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623 -0.02 4.358 -0.631 5.8 -2.045 1.647 -1.613 1.618 -3.593 1.09 -4.798 -0.31 -0.71 -0.873 -1.3 -1.634 -1.75 -0.192 1.352 -0.622 2.446 -1.284 3.272 -0.886 1.102 -2.14 1.704 -3.73 1.79 -1.202 0.065 -2.361 -0.218 -3.259 -0.801 -1.063 -0.689 -1.685 -1.74 -1.752 -2.964 -0.065 -1.19 0.408 -2.285 1.33 -3.082 0.88 -0.76 2.119 -1.207 3.583 -1.291a13.853 13.853 0 0 1 3.02 0.142c-0.126 -0.742 -0.375 -1.332 -0.75 -1.757 -0.513 -0.586 -1.308 -0.883 -2.359 -0.89h-0.029c-0.844 0 -1.992 0.232 -2.721 1.32l-1.757 -1.18c0.98 -1.454 2.568 -2.256 4.478 -2.256h0.044c3.194 0.02 5.097 1.975 5.287 5.388 0.108 0.046 0.216 0.094 0.321 0.142 1.49 0.7 2.58 1.761 3.154 3.07 0.797 1.82 0.871 4.79 -1.548 7.158 -1.85 1.81 -4.094 2.628 -7.277 2.65Zm1.003 -11.69c-0.242 0 -0.487 0.007 -0.739 0.021 -1.836 0.103 -2.98 0.946 -2.916 2.143 0.067 1.256 1.452 1.839 2.784 1.767 1.224 -0.065 2.818 -0.543 3.086 -3.71a10.5 10.5 0 0 0 -2.215 -0.221z" fill="gold" stroke-width="1"></path>
+        </svg>
+    </a>
 </div>
 
 <div class="floating-platforms">
     <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c?uid=toptrack3siBQ3pehhsTrJjHuxAaNN&uri=spotify:track:3siBQ3pehhsTrJjHuxAaNN" target="_blank" aria-label="Escuchar en Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg></a>
-    <a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" aria-label="Escuchar en Amazon Music"><svg viewBox="0 0 24 24"><path d="M16.22 17.95c.235.125.54.111.75-.075l.008.008a135 135 0 0 1 2.434-2.108c.26-.214.215-.558.01-.844l-.188-.255c-.517-.697-1.01-1.359-1.01-2.686v-4.95l.002-.503c.012-1.897.02-3.631-1.4-4.957C15.606.411 13.59 0 12.045 0c-3.02 0-6.39 1.125-7.104 4.86-.07.396.215.606.474.664l3.081.33c.285-.013.495-.294.549-.58.264-1.285 1.344-1.906 2.554-1.906.653 0 1.394.24 1.782.825.396.585.39 1.365.386 2.064v.648q-.45.05-.932.097c-1.67.171-3.595.369-5.04 1.005-2.222.955-3.62 2.71-3.62 5.287 0 3.3 2.08 4.947 4.752 4.947 2.26 0 3.492-.531 5.234-2.31l.25.369c.411.607.684 1.012 1.57 1.749ZM9.045 12.646c0-2.706 2.425-3.2 4.72-3.2v.855c.002 1.164.003 2.15-.594 3.2-.504.892-1.305 1.441-2.198 1.441-1.218 0-1.928-.928-1.928-2.296M.653 18.261c3.943 2.404 10.047 6.126 19.774 1.495.42-.174.713.117.299.646C18.307 23.94 14.968 27 9.355 27 3.748 27-.552 23.169-1.864 21.58c-.36-.413.054-.6.299-.449z"/><path d="M20.742 17.915c.85-.105 2.202-.04 2.467.306.203.264-.006 1.449-.35 2.3-.345.844-.858 1.441-1.143 1.672s-.5.141-.345-.205c.158-.345 1.026-2.494.683-2.944-.32-.417-1.766-.266-2.438-.195l-.135.013q-.213.02-.35.036c-.289.031-.367.04-.41-.048-.111-.313 1.168-.834 2.02-.934"/></svg></a>
+    <a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" aria-label="Escuchar en Amazon Music"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/><path d="M13.828 11.943c0.567 -0.07 1.468 -0.027 1.645 0.204 0.135 0.176 -0.004 0.966 -0.233 1.533 -0.23 0.563 -0.572 0.961 -0.762 1.115s-0.333 0.094 -0.23 -0.137c0.105 -0.23 0.684 -1.663 0.455 -1.963 -0.213 -0.278 -1.177 -0.177 -1.625 -0.13l-0.09 0.009q-0.142 0.013 -0.233 0.024c-0.193 0.021 -0.245 0.027 -0.274 -0.032 -0.074 -0.209 0.779 -0.556 1.347 -0.623"/></svg></a>
     <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Escuchar en Apple Music"><svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></a>
     <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="Escuchar en YouTube Music"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
     <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="Escuchar en SoundCloud"><svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg></a>
@@ -920,11 +942,19 @@ html, body {
     <div id="orbitSingles" class="orbit"></div>
     <div id="orbitAlbums" class="orbit"></div>
 </div>
-
 <script>
-    // ÍCONOS DE REPRODUCCIÓN
-const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`;
-const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34" fill="#FFD700"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>`;
+// ÍCONOS DINÁMICOS: CÍRCULO AMARILLO CON SÍMBOLO NEGRO
+const playIconSVG = `
+<svg viewBox="0 0 24 24" width="38" height="38">
+    <circle cx="12" cy="12" r="12" fill="#FFD700"/>
+    <path d="M10 8l6 4-6 4V8z" fill="#000"/>
+</svg>`;
+
+const pauseIconSVG = `
+<svg viewBox="0 0 24 24" width="38" height="38">
+    <circle cx="12" cy="12" r="12" fill="#FFD700"/>
+    <path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/>
+</svg>`;
 
 // BASE DE DATOS DE LANZAMIENTOS (SINGLES)
 const singles = [
@@ -932,7 +962,10 @@ const singles = [
         img: "images/We rise as one.webp",
         title: "We rise as one",
         tracks: [
-            { name: "We rise as one", url: "https://soundcloud.com/reflexionmusicalmx-music/we-rise-as-one?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "We rise as one",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/we-rise-as-one?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs",
@@ -946,7 +979,10 @@ const singles = [
         img: "images/Gracias 2025.webp",
         title: "Gracias 2025",
         tracks: [
-            { name: "Gracias 2025", url: "https://soundcloud.com/reflexionmusicalmx-music/gracias-2025?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Gracias 2025",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/gracias-2025?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_l_KUB_Wa8uMY1p1Sd-DoF71MrNJqvyIXk",
@@ -960,7 +996,10 @@ const singles = [
         img: "images/Adultos TRASTORNADOS.webp",
         title: "Adultos TRASTORNADOS",
         tracks: [
-            { name: "Adultos TRASTORNADOS", url: "https://soundcloud.com/reflexionmusicalmx-music/adultos-trastornados?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Adultos TRASTORNADOS",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/adultos-trastornados?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_k1huRyG7m9Zmd9ZUUgtTYbZpf2hqMDdNM",
@@ -974,8 +1013,14 @@ const singles = [
         img: "images/Codigo rojo.webp",
         title: "Esto no empezó hoy",
         tracks: [
-            { name: "Esto no empezó hoy (Narrado)", url: "https://soundcloud.com/reflexionmusicalmx-music/esto-no-empezo-hoy-narrado?in=reflexionmusicalmx-music/sets/esto-no-empezo-hoy&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Esto no empezó hoy (Rap)", url: "https://soundcloud.com/reflexionmusicalmx-music/esto-no-empezo-hoy-rap?in=reflexionmusicalmx-music/sets/esto-no-empezo-hoy&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Esto no empezó hoy (Narrado)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/esto-no-empezo-hoy-narrado?in=reflexionmusicalmx-music/sets/esto-no-empezo-hoy&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Esto no empezó hoy (Rap)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/esto-no-empezo-hoy-rap?in=reflexionmusicalmx-music/sets/esto-no-empezo-hoy&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lrXeL1b_pWMQU5tSLv8CyouYZrDfkj1o0",
@@ -989,8 +1034,14 @@ const singles = [
         img: "images/La fuerza de todos.webp",
         title: "La fuerza de todos",
         tracks: [
-            { name: "La fuerza de todos (Rap)", url: "https://soundcloud.com/reflexionmusicalmx-music/la-fuerza-de-todos-rap?in=reflexionmusicalmx-music/sets/la-fuerza-de-todos-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "La fuerza de todos (Acústico)", url: "https://soundcloud.com/reflexionmusicalmx-music/la-fuerza-de-todos-acustico?in=reflexionmusicalmx-music/sets/la-fuerza-de-todos-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "La fuerza de todos (Rap)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/la-fuerza-de-todos-rap?in=reflexionmusicalmx-music/sets/la-fuerza-de-todos-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "La fuerza de todos (Acústico)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/la-fuerza-de-todos-acustico?in=reflexionmusicalmx-music/sets/la-fuerza-de-todos-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mAVvrpFVf6aFPjow3z-a3rxnZC6IHlLro",
@@ -1004,8 +1055,14 @@ const singles = [
         img: "images/Regresar a casa.webp",
         title: "Regresar a casa",
         tracks: [
-            { name: "VOLVER A CASA (Rap)", url: "https://soundcloud.com/reflexionmusicalmx-music/volver-a-casa-rap?in=reflexionmusicalmx-music/sets/regresar-a-casa-2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "VOLVER A CASA (Balada)", url: "https://soundcloud.com/reflexionmusicalmx-music/volver-a-casa-balada?in=reflexionmusicalmx-music/sets/regresar-a-casa-2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "VOLVER A CASA (Rap)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/volver-a-casa-rap?in=reflexionmusicalmx-music/sets/regresar-a-casa-2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "VOLVER A CASA (Balada)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/volver-a-casa-balada?in=reflexionmusicalmx-music/sets/regresar-a-casa-2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kNqvtfEhlByZLZFQjKdD5JXx-yyWLK7XE",
@@ -1019,7 +1076,10 @@ const singles = [
         img: "images/Tres colores, un compromiso.webp",
         title: "Tres colores, un compromiso",
         tracks: [
-            { name: "Tres Colores, Un Compromiso", url: "https://soundcloud.com/reflexionmusicalmx-music/tres-colores-un-compromiso?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Tres Colores, Un Compromiso",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/tres-colores-un-compromiso?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM",
@@ -1033,10 +1093,22 @@ const singles = [
         img: "images/Del dolor al odio.webp",
         title: "Del dolor al odio",
         tracks: [
-            { name: "Del dolor al Odio (Acústico)", url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio-acustico?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Del Dolor al Odio II (Rap)", url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio-ii-rap?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Del Dolor Al Odio III (Rap)", url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio-iii-rap?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Del Dolor Al Odio", url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Del dolor al Odio (Acústico)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio-acustico?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Del Dolor al Odio II (Rap)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio-ii-rap?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Del Dolor Al Odio III (Rap)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio-iii-rap?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Del Dolor Al Odio",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio?in=reflexionmusicalmx-music/sets/del-dolor-al-odio-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lt7XMszm6gl_8v0BWGOrIA2MnNbmELfn0",
@@ -1050,7 +1122,10 @@ const singles = [
         img: "images/Antes de las armas.webp",
         title: "Antes de las armas",
         tracks: [
-            { name: "Antes de las armas", url: "https://soundcloud.com/reflexionmusicalmx-music/antes-de-las-armas?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Antes de las armas",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/antes-de-las-armas?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kydOEDIwMtIG24XfwEVvC5qRewXzTaEh0",
@@ -1068,21 +1143,66 @@ const albums = [
         img: "images/Voces de Cambio 1.webp",
         title: "Voces de Cambio 1",
         tracks: [
-            { name: "Ciudad en silencio", url: "https://soundcloud.com/reflexionmusicalmx-music/ciudad-en-silencio?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Raíces de fuego", url: "https://soundcloud.com/reflexionmusicalmx-music/raices-de-fuego?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Sabes lo que haces", url: "https://soundcloud.com/reflexionmusicalmx-music/sabes-lo-que-haces?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Ecos del olvido", url: "https://soundcloud.com/reflexionmusicalmx-music/ecos-del-olvido?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Sociedad cómplice", url: "https://soundcloud.com/reflexionmusicalmx-music/sociedad-complice?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Normal es veneno", url: "https://soundcloud.com/reflexionmusicalmx-music/normal-es-veneno?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "El engaño del bien", url: "https://soundcloud.com/reflexionmusicalmx-music/el-engano-del-bien?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "¿Injusticia o consecuencia?", url: "https://soundcloud.com/reflexionmusicalmx-music/injusticia-o-consecuencia?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Ciclos y deudas", url: "https://soundcloud.com/reflexionmusicalmx-music/ciclos-y-deudas?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Veneno en la sangre", url: "https://soundcloud.com/reflexionmusicalmx-music/veneno-en-la-sangre?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Herencia de hierro", url: "https://soundcloud.com/reflexionmusicalmx-music/herencia-de-hierro?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Resistencia pequeña", url: "https://soundcloud.com/reflexionmusicalmx-music/resistencia-pequena?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "El cambio esta en ti", url: "https://soundcloud.com/reflexionmusicalmx-music/el-cambio-esta-en-ti?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "No hay tirano eterno", url: "https://soundcloud.com/reflexionmusicalmx-music/no-hay-tirano-eterno?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Hijos del olvido", url: "https://soundcloud.com/reflexionmusicalmx-music/hijos-del-olvido?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Ciudad en silencio",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ciudad-en-silencio?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Raíces de fuego",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/raices-de-fuego?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Sabes lo que haces",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/sabes-lo-que-haces?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Ecos del olvido",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ecos-del-olvido?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Sociedad cómplice",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/sociedad-complice?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Normal es veneno",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/normal-es-veneno?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "El engaño del bien",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-engano-del-bien?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "¿Injusticia o consecuencia?",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/injusticia-o-consecuencia?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Ciclos y deudas",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ciclos-y-deudas?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Veneno en la sangre",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/veneno-en-la-sangre?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Herencia de hierro",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/herencia-de-hierro?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Resistencia pequeña",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/resistencia-pequena?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "El cambio esta en ti",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-cambio-esta-en-ti?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "No hay tirano eterno",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/no-hay-tirano-eterno?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Hijos del olvido",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/hijos-del-olvido?in=reflexionmusicalmx-music/sets/voces-de-cambio&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kDigM39j6m-rN6Kuf42_rGx5FNLp1IKKQ",
@@ -1096,21 +1216,66 @@ const albums = [
         img: "images/Voces de Cambio 2.webp",
         title: "Voces de Cambio 2",
         tracks: [
-            { name: "México despierta", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-despierta?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Reflexión Musical MX", url: "https://soundcloud.com/reflexionmusicalmx-music/reflexion-musical-mx?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Memoria viva", url: "https://soundcloud.com/reflexionmusicalmx-music/memoria-viva?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Sombras y luz", url: "https://soundcloud.com/reflexionmusicalmx-music/sombras-y-luz?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Semillas para mañana", url: "https://soundcloud.com/reflexionmusicalmx-music/semillas-para-manana?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Lo que te espera", url: "https://soundcloud.com/reflexionmusicalmx-music/lo-que-te-espera?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "El eco de los ancestros", url: "https://soundcloud.com/reflexionmusicalmx-music/el-eco-de-los-ancestros?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Orgullo Mexicano", url: "https://soundcloud.com/reflexionmusicalmx-music/orgullo-mexicano?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "En la unión esta la fuerza", url: "https://soundcloud.com/reflexionmusicalmx-music/en-la-union-esta-la-fuerza?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "No mas excusas", url: "https://soundcloud.com/reflexionmusicalmx-music/no-mas-excusas?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Sé chingón", url: "https://soundcloud.com/reflexionmusicalmx-music/se-chingon?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "México eres tú", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-eres-tu?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "México lindo", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-lindo?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "El cambio esta en ti V2", url: "https://soundcloud.com/reflexionmusicalmx-music/el-cambio-esta-en-ti-v2?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Himno a México", url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-mexico?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "México despierta",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-despierta?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Reflexión Musical MX",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/reflexion-musical-mx?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Memoria viva",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/memoria-viva?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Sombras y luz",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/sombras-y-luz?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Semillas para mañana",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/semillas-para-manana?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Lo que te espera",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/lo-que-te-espera?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "El eco de los ancestros",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-eco-de-los-ancestros?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Orgullo Mexicano",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/orgullo-mexicano?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "En la unión esta la fuerza",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/en-la-union-esta-la-fuerza?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "No mas excusas",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/no-mas-excusas?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Sé chingón",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/se-chingon?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "México eres tú",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-eres-tu?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "México lindo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-lindo?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "El cambio esta en ti V2",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-cambio-esta-en-ti-v2?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Himno a México",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-mexico?in=reflexionmusicalmx-music/sets/voces-de-cambio-v2&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_lbF4Fqr8ou3iExKf4vfky7PZitsEQJ3qE",
@@ -1124,23 +1289,74 @@ const albums = [
         img: "images/Estado contra estado.webp",
         title: "Estado contra Estado",
         tracks: [
-            { name: "Tierra de fuego y aguacate", url: "https://soundcloud.com/reflexionmusicalmx-music/tierra-de-fuego-y-aguacate?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Pacto original", url: "https://soundcloud.com/reflexionmusicalmx-music/pacto-original?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Dos caminos", url: "https://soundcloud.com/reflexionmusicalmx-music/dos-caminos?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Importado desde U.S.A", url: "https://soundcloud.com/reflexionmusicalmx-music/importado-desde-u-s-a?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Burocracia blindada", url: "https://soundcloud.com/reflexionmusicalmx-music/burocracia-blindada?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "No me callo", url: "https://soundcloud.com/reflexionmusicalmx-music/no-me-callo?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Con sombrero o sin sombrero", url: "https://soundcloud.com/reflexionmusicalmx-music/con-sombrero-o-sin-sombrero?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Octubre negro", url: "https://soundcloud.com/reflexionmusicalmx-music/octubre-negro?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "El pueblo también falla", url: "https://soundcloud.com/reflexionmusicalmx-music/el-pueblo-tambien-falla?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Narcoseries y narcocorridos", url: "https://soundcloud.com/reflexionmusicalmx-music/narcoseries-y-narcocorridos?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Revolucion mental", url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Estado contra Estado", url: "https://soundcloud.com/reflexionmusicalmx-music/estado-contra-estado?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Himno a la Revolución Mental (Mariachi)", url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-la-revolucion-mental-1?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Himno a la Revolución Mental (Dance)", url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-la-revolucion-mental?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "México despierta V2", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-despierta-v2?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Memoria de fuego", url: "https://soundcloud.com/reflexionmusicalmx-music/memoria-de-fuego?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Los nadie", url: "https://soundcloud.com/reflexionmusicalmx-music/los-nadie?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Tierra de fuego y aguacate",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/tierra-de-fuego-y-aguacate?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Pacto original",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/pacto-original?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Dos caminos",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/dos-caminos?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Importado desde U.S.A",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/importado-desde-u-s-a?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Burocracia blindada",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/burocracia-blindada?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "No me callo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/no-me-callo?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Con sombrero o sin sombrero",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/con-sombrero-o-sin-sombrero?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Octubre negro",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/octubre-negro?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "El pueblo también falla",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-pueblo-tambien-falla?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Narcoseries y narcocorridos",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/narcoseries-y-narcocorridos?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Revolucion mental",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Estado contra Estado",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/estado-contra-estado?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Himno a la Revolución Mental (Mariachi)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-la-revolucion-mental-1?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Himno a la Revolución Mental (Dance)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/himno-a-la-revolucion-mental?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "México despierta V2",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-despierta-v2?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Memoria de fuego",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/memoria-de-fuego?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Los nadie",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/los-nadie?in=reflexionmusicalmx-music/sets/estado-contra-estado&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nlsQfZZHP2bR8HfV6_N5uSvGHuFr4lEow",
@@ -1154,22 +1370,70 @@ const albums = [
         img: "images/Luz entre las Sombras.webp",
         title: "Luz entre las sombras",
         tracks: [
-            { name: "Altar de los recuerdos", url: "https://soundcloud.com/reflexionmusicalmx-music/altar-de-los-recuerdos?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Hasta que volvamos a correr", url: "https://soundcloud.com/reflexionmusicalmx-music/hasta-que-volvamos-a-correr?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "28 de Octubre", url: "https://soundcloud.com/reflexionmusicalmx-music/28-de-octubre?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Pequeña luz", url: "https://soundcloud.com/reflexionmusicalmx-music/pequena-luz?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "A los que se fueron antes", url: "https://soundcloud.com/reflexionmusicalmx-music/a-los-que-se-fueron-antes?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Hermano del alma", url: "https://soundcloud.com/reflexionmusicalmx-music/hermano-del-alma?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Silencio en la cama", url: "https://soundcloud.com/reflexionmusicalmx-music/silencio-en-la-cama?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Lo que me enseñaste", url: "https://soundcloud.com/reflexionmusicalmx-music/lo-que-me-ensenaste?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Siempre en mi corazón", url: "https://soundcloud.com/reflexionmusicalmx-music/siempre-en-mi-corazon?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Recuerdo tu voz", url: "https://soundcloud.com/reflexionmusicalmx-music/recuerdo-tu-voz?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Los que abrieron el camino", url: "https://soundcloud.com/reflexionmusicalmx-music/los-que-abrieron-el-camino?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Voces que no callaron", url: "https://soundcloud.com/reflexionmusicalmx-music/voces-que-no-callaron?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Perdóname", url: "https://soundcloud.com/reflexionmusicalmx-music/perdoname?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Sin huella ni tumba", url: "https://soundcloud.com/reflexionmusicalmx-music/sin-huella-ni-tumba?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Los que no regresan", url: "https://soundcloud.com/reflexionmusicalmx-music/los-que-no-regresan?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Después del silencio", url: "https://soundcloud.com/reflexionmusicalmx-music/despues-del-silencio?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Altar de los recuerdos",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/altar-de-los-recuerdos?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Hasta que volvamos a correr",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/hasta-que-volvamos-a-correr?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "28 de Octubre",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/28-de-octubre?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Pequeña luz",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/pequena-luz?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "A los que se fueron antes",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/a-los-que-se-fueron-antes?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Hermano del alma",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/hermano-del-alma?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Silencio en la cama",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/silencio-en-la-cama?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Lo que me enseñaste",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/lo-que-me-ensenaste?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Siempre en mi corazón",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/siempre-en-mi-corazon?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Recuerdo tu voz",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/recuerdo-tu-voz?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Los que abrieron el camino",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/los-que-abrieron-el-camino?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Voces que no callaron",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/voces-que-no-callaron?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Perdóname",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/perdoname?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Sin huella ni tumba",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/sin-huella-ni-tumba?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Los que no regresan",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/los-que-no-regresan?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Después del silencio",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/despues-del-silencio?in=reflexionmusicalmx-music/sets/luz-entre-las-sombras&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mmneexiID3nIV0Vez7QaWoE0i0PwM6S_4",
@@ -1183,23 +1447,74 @@ const albums = [
         img: "images/Tiempo y vida.webp",
         title: "Tiempo y Vida",
         tracks: [
-            { name: "Altar de vida", url: "https://soundcloud.com/reflexionmusicalmx-music/altar-de-vida?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Quédate", url: "https://soundcloud.com/reflexionmusicalmx-music/quedate?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Renacer", url: "https://soundcloud.com/reflexionmusicalmx-music/renacer?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Citlalli", url: "https://soundcloud.com/reflexionmusicalmx-music/citlalli?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Alizée", url: "https://soundcloud.com/reflexionmusicalmx-music/alizee?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Mientras compartamos el sol", url: "https://soundcloud.com/reflexionmusicalmx-music/mientras-compartamos-el-sol?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Amigos del alma", url: "https://soundcloud.com/reflexionmusicalmx-music/amigos-del-alma?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Aún despierto contigo", url: "https://soundcloud.com/reflexionmusicalmx-music/aun-despierto-contigo?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "A tu lado, mamá", url: "https://soundcloud.com/reflexionmusicalmx-music/a-tu-lado-mama?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Padre, mi raíz", url: "https://soundcloud.com/reflexionmusicalmx-music/padre-mi-raiz?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Abuela, mi Luz", url: "https://soundcloud.com/reflexionmusicalmx-music/abuela-mi-luz?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Abuelo, mi camino", url: "https://soundcloud.com/reflexionmusicalmx-music/abuelo-mi-camino?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Voces que siguen luchando", url: "https://soundcloud.com/reflexionmusicalmx-music/voces-que-siguen-luchando?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Hasta encontrarlos", url: "https://soundcloud.com/reflexionmusicalmx-music/hasta-encontrarlos?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Aún hay lugar", url: "https://soundcloud.com/reflexionmusicalmx-music/aun-hay-lugar?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Perdón y Gracias", url: "https://soundcloud.com/reflexionmusicalmx-music/perdon-y-gracias?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Tiempo y vida", url: "https://soundcloud.com/reflexionmusicalmx-music/tiempo-y-vida?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Altar de vida",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/altar-de-vida?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Quédate",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/quedate?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Renacer",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/renacer?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Citlalli",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/citlalli?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Alizée",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/alizee?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Mientras compartamos el sol",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mientras-compartamos-el-sol?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Amigos del alma",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/amigos-del-alma?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Aún despierto contigo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/aun-despierto-contigo?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "A tu lado, mamá",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/a-tu-lado-mama?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Padre, mi raíz",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/padre-mi-raiz?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Abuela, mi Luz",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/abuela-mi-luz?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Abuelo, mi camino",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/abuelo-mi-camino?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Voces que siguen luchando",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/voces-que-siguen-luchando?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Hasta encontrarlos",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/hasta-encontrarlos?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Aún hay lugar",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/aun-hay-lugar?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Perdón y Gracias",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/perdon-y-gracias?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Tiempo y vida",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/tiempo-y-vida?in=reflexionmusicalmx-music/sets/tiempo-y-vida-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mp8-UwTfhLNjECvuY7vjR8-0v3mmPr8rE",
@@ -1213,19 +1528,58 @@ const albums = [
         img: "images/CHACALES OPORTUNISTAS.webp",
         title: "Chacales oportunistas",
         tracks: [
-            { name: "INTRODUCCIÓN", url: "https://soundcloud.com/reflexionmusicalmx-music/introduccion-chacales?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Chacales oportunistas", url: "https://soundcloud.com/reflexionmusicalmx-music/chacales-oportunistas?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "El oro verde", url: "https://soundcloud.com/reflexionmusicalmx-music/el-oro-verde?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Los que cuidaban la tierra", url: "https://soundcloud.com/reflexionmusicalmx-music/los-que-cuidaban-la-tierra?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Huracanes con uniforme", url: "https://soundcloud.com/reflexionmusicalmx-music/huracanes-con-uniforme?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Lodo y promesas", url: "https://soundcloud.com/reflexionmusicalmx-music/lodo-y-promesas?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "La ley de fracaso", url: "https://soundcloud.com/reflexionmusicalmx-music/la-ley-de-fracaso?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Firma y olvida", url: "https://soundcloud.com/reflexionmusicalmx-music/firma-y-olvida?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Las madres no duermen", url: "https://soundcloud.com/reflexionmusicalmx-music/las-madres-no-duermen?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Sin huella ni tumba II", url: "https://soundcloud.com/reflexionmusicalmx-music/sin-huella-ni-tumba-ii?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Epílogo", url: "https://soundcloud.com/reflexionmusicalmx-music/epilogo-chacales-oportunistas?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Carlos Manzo, Luz En Uruapan", url: "https://soundcloud.com/reflexionmusicalmx-music/carlos-manzo-luz-en-uruapan?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Chacales oportunistas V2", url: "https://soundcloud.com/reflexionmusicalmx-music/chacales-oportunistas-v2?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "INTRODUCCIÓN",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/introduccion-chacales?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Chacales oportunistas",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/chacales-oportunistas?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "El oro verde",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-oro-verde?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Los que cuidaban la tierra",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/los-que-cuidaban-la-tierra?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Huracanes con uniforme",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/huracanes-con-uniforme?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Lodo y promesas",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/lodo-y-promesas?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "La ley de fracaso",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/la-ley-de-fracaso?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Firma y olvida",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/firma-y-olvida?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Las madres no duermen",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/las-madres-no-duermen?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Sin huella ni tumba II",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/sin-huella-ni-tumba-ii?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Epílogo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/epilogo-chacales-oportunistas?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Carlos Manzo, Luz En Uruapan",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/carlos-manzo-luz-en-uruapan?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Chacales oportunistas V2",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/chacales-oportunistas-v2?in=reflexionmusicalmx-music/sets/chacales-oportunistas&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mHwHl-hoc9G9E6GHULqSQgO2itU2bBH_A",
@@ -1239,23 +1593,74 @@ const albums = [
         img: "images/Tejido vital.webp",
         title: "Tejido Vital",
         tracks: [
-            { name: "El Precio de la Mentira", url: "https://soundcloud.com/reflexionmusicalmx-music/el-precio-de-la-mentira?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Cobardes", url: "https://soundcloud.com/reflexionmusicalmx-music/cobardes?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "En la trinchera", url: "https://soundcloud.com/reflexionmusicalmx-music/en-la-trinchera?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "La primera trinchera", url: "https://soundcloud.com/reflexionmusicalmx-music/la-primera-trinchera?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Ni Ella sin Él ni El sin Ella", url: "https://soundcloud.com/reflexionmusicalmx-music/ni-ella-sin-el-ni-el-sin-ella?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Empoderar no es guerra", url: "https://soundcloud.com/reflexionmusicalmx-music/empoderar-no-es-guerra?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Amor en tiempos de ideologías", url: "https://soundcloud.com/reflexionmusicalmx-music/amor-en-tiempos-de-ideologias?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Honra a tu pareja", url: "https://soundcloud.com/reflexionmusicalmx-music/honra-a-tu-pareja?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Juramento de dos", url: "https://soundcloud.com/reflexionmusicalmx-music/juramento-de-dos?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Complemento eterno", url: "https://soundcloud.com/reflexionmusicalmx-music/complemento-eterno?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Cuida y educa", url: "https://soundcloud.com/reflexionmusicalmx-music/cuida-y-educa?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Cuida y educa II", url: "https://soundcloud.com/reflexionmusicalmx-music/cuida-y-educa-ii?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Herencia que no se rompe", url: "https://soundcloud.com/reflexionmusicalmx-music/herencia-que-no-se-rompe?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Enséñales", url: "https://soundcloud.com/reflexionmusicalmx-music/ensenales?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Ciudadanos del mundo", url: "https://soundcloud.com/reflexionmusicalmx-music/ciudadanos-del-mundo?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Ni Ella sin Él... (Remix)", url: "https://soundcloud.com/reflexionmusicalmx-music/ni-ella-sin-el-ni-el-sin-1?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Ciudadanos del mundo II (Remix)", url: "https://soundcloud.com/reflexionmusicalmx-music/ciudadanos-del-mundo-remix?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "El Precio de la Mentira",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-precio-de-la-mentira?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Cobardes",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/cobardes?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "En la trinchera",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/en-la-trinchera?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "La primera trinchera",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/la-primera-trinchera?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Ni Ella sin Él ni El sin Ella",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ni-ella-sin-el-ni-el-sin-ella?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Empoderar no es guerra",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/empoderar-no-es-guerra?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Amor en tiempos de ideologías",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/amor-en-tiempos-de-ideologias?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Honra a tu pareja",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/honra-a-tu-pareja?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Juramento de dos",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/juramento-de-dos?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Complemento eterno",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/complemento-eterno?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Cuida y educa",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/cuida-y-educa?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Cuida y educa II",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/cuida-y-educa-ii?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Herencia que no se rompe",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/herencia-que-no-se-rompe?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Enséñales",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ensenales?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Ciudadanos del mundo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ciudadanos-del-mundo?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Ni Ella sin Él... (Remix)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ni-ella-sin-el-ni-el-sin-1?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Ciudadanos del mundo II (Remix)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/ciudadanos-del-mundo-remix?in=reflexionmusicalmx-music/sets/tejido-vital&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kUdxSJ5oZ8bZjO_p6TmdjaI_5tV0inJKs",
@@ -1269,23 +1674,74 @@ const albums = [
         img: "images/Revolucion mental.webp",
         title: "Revolución Mental",
         tracks: [
-            { name: "Prólogo a Revolución Mental", url: "https://soundcloud.com/reflexionmusicalmx-music/prologo-a-revolucion-mental?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Revolución Mental II", url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental-ii?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Manual para un pueblo dormido", url: "https://soundcloud.com/reflexionmusicalmx-music/manual-para-un-pueblo-dormido?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Neuronas en huelga", url: "https://soundcloud.com/reflexionmusicalmx-music/neuronas-en-huelga?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "La caja idiota", url: "https://soundcloud.com/reflexionmusicalmx-music/la-caja-idiota?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Mi enemigo", url: "https://soundcloud.com/reflexionmusicalmx-music/mi-enemigo?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "México bipolar", url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-bipolar?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Sin Mesías", url: "https://soundcloud.com/reflexionmusicalmx-music/sin-mesias?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Despierta carbón", url: "https://soundcloud.com/reflexionmusicalmx-music/despierta-carbon?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Reinicio", url: "https://soundcloud.com/reflexionmusicalmx-music/reinicio?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Espejo", url: "https://soundcloud.com/reflexionmusicalmx-music/espejo?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Conciencia colectiva", url: "https://soundcloud.com/reflexionmusicalmx-music/conciencia-colectiva?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Nuevo código", url: "https://soundcloud.com/reflexionmusicalmx-music/nuevo-codigo?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Epílogo a Revolución Mental", url: "https://soundcloud.com/reflexionmusicalmx-music/epilogo-a-revolucion-mental?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Revolución mental", url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Revolución Mental II (Remix)", url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental-ii-remix?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Revolución Mental (Remix)", url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental-remix?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Prólogo a Revolución Mental",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/prologo-a-revolucion-mental?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Revolución Mental II",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental-ii?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Manual para un pueblo dormido",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/manual-para-un-pueblo-dormido?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Neuronas en huelga",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/neuronas-en-huelga?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "La caja idiota",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/la-caja-idiota?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Mi enemigo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mi-enemigo?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "México bipolar",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mexico-bipolar?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Sin Mesías",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/sin-mesias?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Despierta carbón",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/despierta-carbon?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Reinicio",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/reinicio?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Espejo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/espejo?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Conciencia colectiva",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/conciencia-colectiva?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Nuevo código",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/nuevo-codigo?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Epílogo a Revolución Mental",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/epilogo-a-revolucion-mental?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Revolución mental",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Revolución Mental II (Remix)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental-ii-remix?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Revolución Mental (Remix)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/revolucion-mental-remix?in=reflexionmusicalmx-music/sets/revolucion-mental-4&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nnIdZwheNvoqdMGQwSzFUo_6W3Vxr4nbU",
@@ -1299,37 +1755,130 @@ const albums = [
         img: "images/Eres lo que escuchas.webp",
         title: "Eres lo que Escuchas",
         tracks: [
-            { name: "Prologo Antes de darle Play", url: "https://soundcloud.com/reflexionmusicalmx-music/prologo-antes-de-darle-play?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Eres lo que escuchas", url: "https://soundcloud.com/reflexionmusicalmx-music/eres-lo-que-escuchas?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Empieza mal", url: "https://soundcloud.com/reflexionmusicalmx-music/empieza-mal?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Solo sigue", url: "https://soundcloud.com/reflexionmusicalmx-music/solo-sigue?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Déjalos ganar", url: "https://soundcloud.com/reflexionmusicalmx-music/dejalos-ganar?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Espejo", url: "https://soundcloud.com/reflexionmusicalmx-music/espejo-1?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Cráter", url: "https://soundcloud.com/reflexionmusicalmx-music/crater?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Luz que no se apaga", url: "https://soundcloud.com/reflexionmusicalmx-music/luz-que-no-se-apaga?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Lo que soy", url: "https://soundcloud.com/reflexionmusicalmx-music/lo-que-soy?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Mierdatón", url: "https://soundcloud.com/reflexionmusicalmx-music/mierdaton?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Anestesia barata", url: "https://soundcloud.com/reflexionmusicalmx-music/anestesia-barata?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Hombre de verdad", url: "https://soundcloud.com/reflexionmusicalmx-music/hombre-de-verdad?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Hombre que despierta", url: "https://soundcloud.com/reflexionmusicalmx-music/hombre-que-despierta?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "¿Qué es la moda?", url: "https://soundcloud.com/reflexionmusicalmx-music/qu-es-la-moda?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Payasos con coronas de humo", url: "https://soundcloud.com/reflexionmusicalmx-music/payasos-con-coronas-de-humo?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "El peso del silencio", url: "https://soundcloud.com/reflexionmusicalmx-music/el-peso-del-silencio?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Camino sobre el agua", url: "https://soundcloud.com/reflexionmusicalmx-music/camino-sobre-el-agua?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Simple", url: "https://soundcloud.com/reflexionmusicalmx-music/simple?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Mente y corazón", url: "https://soundcloud.com/reflexionmusicalmx-music/mente-y-corazon?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Combate interno", url: "https://soundcloud.com/reflexionmusicalmx-music/combate-interno?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Mundo imperfecto", url: "https://soundcloud.com/reflexionmusicalmx-music/mundo-imperfecto?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Bucle", url: "https://soundcloud.com/reflexionmusicalmx-music/bucle?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Las venas abiertas", url: "https://soundcloud.com/reflexionmusicalmx-music/las-venas-abiertas?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "No todos son iguales", url: "https://soundcloud.com/reflexionmusicalmx-music/no-todos-son-iguales?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Paraíso de sangre", url: "https://soundcloud.com/reflexionmusicalmx-music/paraiso-de-sangre?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Hijos del olvido", url: "https://soundcloud.com/reflexionmusicalmx-music/hijos-del-olvido-1?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Empieza mal (Remix)", url: "https://soundcloud.com/reflexionmusicalmx-music/empieza-mal-remix?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Del dolor al odio", url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "¿A qué costo?", url: "https://soundcloud.com/reflexionmusicalmx-music/a-qu-costo?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Eres lo que escuchas (Remix)", url: "https://soundcloud.com/reflexionmusicalmx-music/eres-lo-que-escuchas-remix?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "Epílogo", url: "https://soundcloud.com/reflexionmusicalmx-music/epilogo-a-eres-lo-que-escuchas?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "Prologo Antes de darle Play",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/prologo-antes-de-darle-play?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Eres lo que escuchas",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/eres-lo-que-escuchas?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Empieza mal",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/empieza-mal?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Solo sigue",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/solo-sigue?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Déjalos ganar",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/dejalos-ganar?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Espejo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/espejo-1?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Cráter",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/crater?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Luz que no se apaga",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/luz-que-no-se-apaga?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Lo que soy",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/lo-que-soy?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Mierdatón",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mierdaton?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Anestesia barata",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/anestesia-barata?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Hombre de verdad",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/hombre-de-verdad?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Hombre que despierta",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/hombre-que-despierta?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "¿Qué es la moda?",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/qu-es-la-moda?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Payasos con coronas de humo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/payasos-con-coronas-de-humo?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "El peso del silencio",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/el-peso-del-silencio?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Camino sobre el agua",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/camino-sobre-el-agua?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Simple",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/simple?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Mente y corazón",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mente-y-corazon?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Combate interno",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/combate-interno?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Mundo imperfecto",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/mundo-imperfecto?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Bucle",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/bucle?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Las venas abiertas",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/las-venas-abiertas?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "No todos son iguales",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/no-todos-son-iguales?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Paraíso de sangre",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/paraiso-de-sangre?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Hijos del olvido",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/hijos-del-olvido-1?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Empieza mal (Remix)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/empieza-mal-remix?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Del dolor al odio",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/del-dolor-al-odio?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "¿A qué costo?",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/a-qu-costo?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Eres lo que escuchas (Remix)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/eres-lo-que-escuchas-remix?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "Epílogo",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/epilogo-a-eres-lo-que-escuchas?in=reflexionmusicalmx-music/sets/eres-lo-que-escuchas-1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_mRcy2Ln9I292iseBRcoyBCjedzlTS4X9I",
@@ -1343,32 +1892,110 @@ const albums = [
         img: "images/Amor en tiempos de ideologias cancerigenas.webp",
         title: "Amor en tiempos de ideologías cancerígenas",
         tracks: [
-            { name: "ANTES DE AMAR", url: "https://soundcloud.com/reflexionmusicalmx-music/antes-de-amar-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "AMOR EN TIEMPOS DE IDEOLOGÍAS...", url: "https://soundcloud.com/reflexionmusicalmx-music/amor-en-tiempos-de-1?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "SILENCIO EN LA CAMA", url: "https://soundcloud.com/reflexionmusicalmx-music/silencio-en-la-cama-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "AUN DESPIERTO CONTIGO", url: "https://soundcloud.com/reflexionmusicalmx-music/aun-despierto-contigo-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "PERDÓNAME", url: "https://soundcloud.com/reflexionmusicalmx-music/perdoname-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "PERDÓN Y GRACIAS", url: "https://soundcloud.com/reflexionmusicalmx-music/perdon-y-gracias-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "JURAMENTO DE DOS", url: "https://soundcloud.com/reflexionmusicalmx-music/juramento-de-dos-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "JURAMENTO DE 2", url: "https://soundcloud.com/reflexionmusicalmx-music/juramento-de-2-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "HONRA A TU PAREJA", url: "https://soundcloud.com/reflexionmusicalmx-music/honra-a-tu-pareja-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "COMPLEMENTO ETERNO", url: "https://soundcloud.com/reflexionmusicalmx-music/complemento-eterno-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "AMOR CONSCIENTE", url: "https://soundcloud.com/reflexionmusicalmx-music/amor-consciente-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "AFIRMACIÓN", url: "https://soundcloud.com/reflexionmusicalmx-music/afirmacion-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "TIEMPO DE CALIDAD", url: "https://soundcloud.com/reflexionmusicalmx-music/tiempo-de-calidad-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "ACTOS DE SERVICIO", url: "https://soundcloud.com/reflexionmusicalmx-music/actos-de-servicio-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "REGALOS", url: "https://soundcloud.com/reflexionmusicalmx-music/regalos-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "CONTACTO FÍSICO", url: "https://soundcloud.com/reflexionmusicalmx-music/contacto-fisico-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "AMOR MADURO", url: "https://soundcloud.com/reflexionmusicalmx-music/amor-maduro-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "MARTE I", url: "https://soundcloud.com/reflexionmusicalmx-music/marte-i-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "MARTE II", url: "https://soundcloud.com/reflexionmusicalmx-music/marte-ii-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "VENUS I", url: "https://soundcloud.com/reflexionmusicalmx-music/venus-i-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "VENUS II", url: "https://soundcloud.com/reflexionmusicalmx-music/venus-ii-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "APRENDER A ORBITAR", url: "https://soundcloud.com/reflexionmusicalmx-music/aprender-a-orbitar-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "PERDONENME (Bachata)", url: "https://soundcloud.com/reflexionmusicalmx-music/perdonenme-bachata?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "PERDON Y GRACIAS (Salsa)", url: "https://soundcloud.com/reflexionmusicalmx-music/perdon-y-gracias-salsa?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "AMOR EN TIEMPOS DE 2", url: "https://soundcloud.com/reflexionmusicalmx-music/amor-en-tiempos-de-2?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" },
-            { name: "COMPLEMENTO ETERNO (Vallenato)", url: "https://soundcloud.com/reflexionmusicalmx-music/complemento-eterno-vallenato?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            {
+                name: "ANTES DE AMAR",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/antes-de-amar-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "AMOR EN TIEMPOS DE IDEOLOGÍAS...",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/amor-en-tiempos-de-1?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "SILENCIO EN LA CAMA",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/silencio-en-la-cama-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "AUN DESPIERTO CONTIGO",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/aun-despierto-contigo-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "PERDÓNAME",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/perdoname-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "PERDÓN Y GRACIAS",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/perdon-y-gracias-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "JURAMENTO DE DOS",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/juramento-de-dos-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "JURAMENTO DE 2",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/juramento-de-2-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "HONRA A TU PAREJA",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/honra-a-tu-pareja-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "COMPLEMENTO ETERNO",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/complemento-eterno-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "AMOR CONSCIENTE",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/amor-consciente-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "AFIRMACIÓN",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/afirmacion-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "TIEMPO DE CALIDAD",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/tiempo-de-calidad-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "ACTOS DE SERVICIO",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/actos-de-servicio-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "REGALOS",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/regalos-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "CONTACTO FÍSICO",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/contacto-fisico-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "AMOR MADURO",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/amor-maduro-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "MARTE I",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/marte-i-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "MARTE II",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/marte-ii-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "VENUS I",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/venus-i-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "VENUS II",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/venus-ii-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "APRENDER A ORBITAR",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/aprender-a-orbitar-cumbia?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "PERDONENME (Bachata)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/perdonenme-bachata?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "PERDON Y GRACIAS (Salsa)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/perdon-y-gracias-salsa?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "AMOR EN TIEMPOS DE 2",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/amor-en-tiempos-de-2?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            },
+            {
+                name: "COMPLEMENTO ETERNO (Vallenato)",
+                url: "https://soundcloud.com/reflexionmusicalmx-music/complemento-eterno-vallenato?in=reflexionmusicalmx-music/sets/amor-en-tiempos-de-ideologias&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
+            }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kP7_3VPWPlsoggwsXy0gQ6ZFFmv9drSIA",
@@ -1611,10 +2238,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const encodedUrl = encodeURIComponent(trackObj.url);
             
             // MODO PRO SOUNDCLOUD:
-            // 1. color=%23ff0000 (Rojo), que invertido por nuestro filtro SVG se volverá GRIS OSCURO.
-            // 2. show_artwork=false apaga la imagen nativa.
-            // 3. left: 140px (en CSS de Parte 1) deja el hueco exacto para tu portada original intacta.
-            const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff0000&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+            // Cambio solicitado: El parámetro %23ff0000 (rojo) ha sido reemplazado por %23FFD700 (dorado)
+            const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23FFD700&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
             
             playerIframe.innerHTML = `
                 <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Portada">
