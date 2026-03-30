@@ -2369,8 +2369,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeTracksGlobal = item.tracks || [];
                 activePlaylistIdGlobal = playlistId;
                 
-                // Guardar imagen real para cuando se abra SoundCloud
-                activeAlbumImgGlobal = encodeURI(item.img);
+            /**
+             * TRUCO MAESTRO:
+             * Pasamos el color AZUL (%230028ff). Al aplicarle el filtro invert(1) en el CSS de arriba,
+             * el azul se invierte matemáticamente al DORADO EXACTO (#FFD700) y el fondo blanco se hace negro.
+             */
+            const scEmbedParams = `https://w.soundcloud.com/player/?url=${scEncodedUrl}&color=%230028ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+            
+            iframeBox.innerHTML = `
+                <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Reflexión Musical MX">
+                <iframe id="sc-iframe" scrolling="no" allow="autoplay" src="${scEmbedParams}"></iframe>
+            `;
 
                 // LLENAR LISTA DE CANCIONES
                 if(item.tracks && item.tracks.length > 0) {
