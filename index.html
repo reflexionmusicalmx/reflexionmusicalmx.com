@@ -242,17 +242,18 @@ html, body {
     position: relative;
 }
 
-/* FILTRO REPRODUCTOR: PROGRESO DORADO EXACTO */
-        #sc-iframe {
-            filter: invert(1) contrast(1.1);
-            position: absolute;
-            top: 0;
-            left: 140px; 
-            width: calc(100% - 140px);
-            height: 140px;
-            border: none;
-            z-index: 1;
-        }
+/* CONFIGURACIÓN SOUNDCLOUD MODO DORADO Y NEGRO */
+#sc-iframe {
+    filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.5);
+    background-color: transparent;
+    border: none;
+    border-radius: 0 8px 0 0;
+    position: absolute;
+    top: 0;
+    left: 140px; 
+    width: calc(100% - 140px); 
+    height: 140px;
+    z-index: 1;
 }
 
 /* SUPERPOSICIÓN DE LA PORTADA REAL */
