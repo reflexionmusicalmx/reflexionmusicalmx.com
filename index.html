@@ -2369,7 +2369,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeTracksGlobal = item.tracks || [];
                 activePlaylistIdGlobal = playlistId;
                 
-            /**
+             // Guardar imagen real para cuando se abra SoundCloud
+                activeAlbumImgGlobal = encodeURI(item.img);
+                
+                /**
              * TRUCO MAESTRO:
              * Pasamos el color AZUL (%230028ff). Al aplicarle el filtro invert(1) en el CSS de arriba,
              * el azul se invierte matemáticamente al DORADO EXACTO (#FFD700) y el fondo blanco se hace negro.
