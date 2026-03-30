@@ -236,15 +236,15 @@ html, body {
 }
 
 #playerIframeContainer {
-            width: 100%;
-            height: 140px;
-            background: #000;
-            position: relative;
-        }
+    width: 100%;
+    height: 140px;
+    background: #000;
+    position: relative;
+}
 
-        /* FILTRO REPRODUCTOR: INVIERTE BLANCO A NEGRO Y AZUL A DORADO */
+/* FILTRO REPRODUCTOR: PROGRESO DORADO EXACTO */
         #sc-iframe {
-            filter: invert(1);
+            filter: invert(1) contrast(1.1);
             position: absolute;
             top: 0;
             left: 140px; 
@@ -253,17 +253,20 @@ html, body {
             border: none;
             z-index: 1;
         }
+}
 
-        .sc-cover-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            z-index: 10;
-            border-right: 1px solid rgba(255, 215, 0, 0.45);
-        }
+/* SUPERPOSICIÓN DE LA PORTADA REAL */
+.sc-cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 140px; 
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px 0 0 0;
+    pointer-events: none;
+    z-index: 5;
+}
 
 /* CONTROLES CENTRADOS */
 .custom-player-controls {
@@ -2369,20 +2372,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 activeTracksGlobal = item.tracks || [];
                 activePlaylistIdGlobal = playlistId;
                 
-             // Guardar imagen real para cuando se abra SoundCloud
+                // Guardar imagen real para cuando se abra SoundCloud
                 activeAlbumImgGlobal = encodeURI(item.img);
-                
-                /**
-             * TRUCO MAESTRO:
-             * Pasamos el color AZUL (%230028ff). Al aplicarle el filtro invert(1) en el CSS de arriba,
-             * el azul se invierte matemáticamente al DORADO EXACTO (#FFD700) y el fondo blanco se hace negro.
-             */
-            const scEmbedParams = `https://w.soundcloud.com/player/?url=${scEncodedUrl}&color=%230028ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
-            
-            iframeBox.innerHTML = `
-                <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Reflexión Musical MX">
-                <iframe id="sc-iframe" scrolling="no" allow="autoplay" src="${scEmbedParams}"></iframe>
-            `;
 
                 // LLENAR LISTA DE CANCIONES
                 if(item.tracks && item.tracks.length > 0) {
