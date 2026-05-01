@@ -961,6 +961,65 @@ html, body {
     }
 }
 </style>
+    /* ESTILOS DEL BUZÓN DE REFLEXIÓN */
+.floating-tu-voz {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    background: #FFD700;
+    color: #000;
+    border-radius: 30px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    z-index: 1005;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    transition: 0.3s;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+.floating-tu-voz:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+}
+.reflection-content {
+    max-width: 500px;
+}
+#reflectionForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+#reflectionMsg {
+    background: #111;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 8px;
+    color: #fff;
+    padding: 15px;
+    font-family: 'Merriweather', serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    transition: 0.3s;
+}
+#reflectionMsg:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+@media (max-width: 768px) {
+    .floating-tu-voz {
+        bottom: 80px; 
+        right: 15px;
+        padding: 12px;
+        border-radius: 50%;
+    }
+    .tu-voz-text {
+        display: none; 
+    }
+}
 </head>
 <body>
 
@@ -2684,6 +2743,65 @@ document.addEventListener("DOMContentLoaded", () => {
     createOrbit(singles, "orbitSingles", 210);
     createOrbit(albums, "orbitAlbums", 360);
 
+    /* ESTILOS DEL BUZÓN DE REFLEXIÓN */
+.floating-tu-voz {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    background: #FFD700;
+    color: #000;
+    border-radius: 30px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    z-index: 1005;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    transition: 0.3s;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+.floating-tu-voz:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+}
+.reflection-content {
+    max-width: 500px;
+}
+#reflectionForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+#reflectionMsg {
+    background: #111;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 8px;
+    color: #fff;
+    padding: 15px;
+    font-family: 'Merriweather', serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    transition: 0.3s;
+}
+#reflectionMsg:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+@media (max-width: 768px) {
+    .floating-tu-voz {
+        bottom: 80px; 
+        right: 15px;
+        padding: 12px;
+        border-radius: 50%;
+    }
+    .tu-voz-text {
+        display: none; 
+    }
+}
     // LÓGICA DE COMETAS (TOTALMENTE RESTAURADA)
     const upcomingReleases = [
         "📖 LIBRO: ALGO ESTÁ MAL",
