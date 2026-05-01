@@ -1025,6 +1025,35 @@ html, body {
     </div>
 </div>
 
+    <!-- BUZÓN DE REFLEXIÓN -->
+<div id="btnTuVoz" class="floating-tu-voz" aria-label="Buzón de Reflexión" role="button" tabindex="0">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span class="tu-voz-text">TU VOZ</span>
+</div>
+
+<div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content reflection-content">
+        <span class="close-modal close-reflection" aria-label="Cerrar buzón" role="button" tabindex="0">×</span>
+        <h2 style="text-align: center;">EL BUZÓN</h2>
+        <p style="text-align: center; font-size: 14px; opacity: 0.9;">En este universo nadie te juzga. Si una canción te movió algo, o simplemente quieres desahogar lo que ves mal en el mundo, escríbelo aquí. Es 100% anónimo y solo yo lo leeré.</p>
+        
+        <form id="reflectionForm" action="https://formspree.io/f/xvzlodyj" method="POST">
+            <textarea name="mensaje" id="reflectionMsg" rows="6" placeholder="Escribe tu reflexión aquí..." required></textarea>
+            <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top: 15px;">ENVIAR MENSAJE</button>
+        </form>
+        <div id="reflectionStatus" style="display: none; text-align: center; color: #FFD700; margin-top: 25px; font-weight: bold; font-size: 18px;">¡Gracias por compartir tu voz!</div>
+    </div>
+</div>
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="starContainer" aria-hidden="true"></div>
+
+<div class="floating-social">
+    <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
+        <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
+    </a>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="starContainer" aria-hidden="true"></div>
 
