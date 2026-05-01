@@ -1193,124 +1193,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
     spawnSupernovaBatch();
 
-    // REPRODUCTOR MAESTRO ESTABLE Y CON FILTRO
+    // REPRODUCTOR MAESTRO (IFRAME BÁSICO SIN API PARA SOUNDCLOUD)
     window.renderTrack = function(index) {
         activeTrackIndexGlobal = index;
         const trackObj = activeTracksGlobal[index];
         const playerIframe = document.getElementById("playerIframeContainer");
         const customBox = document.getElementById("customPlayerBox");
-        
+
         document.querySelectorAll('.track-link').forEach((el, i) => {
             if (i === index) el.classList.add('active-track');
             else el.classList.remove('active-track');
         });
 
         customBox.style.display = "flex";
-        setPlayerState(false); 
-
-        let scIframe = document.getElementById('sc-iframe-persistent');
-        let scCover = document.getElementById('sc-cover-persistent');
-        let ytIframe = document.getElementById('yt-iframe-persistent');
         
-        if(scIframe) scIframe.style.display = "none";
-        if(scCover) scCover.style.display = "none";
-        if(ytIframe) ytIframe.style.display = "none";
+        // Limpiamos el contenedor por completo para destruir lo que hubiera antes
+        playerIframe.innerHTML = "";
+        scWidgetGlobal = null; // Apagamos la API de SC para que no interfiera
 
         if (trackObj.url.includes("soundcloud.com")) {
-            // EL FILTRO MÁGICO: Corta la URL para evitar que SC colapse con las listas
+            setPlayerState(true); // Ponemos el icono en pausa asumiendo que arrancará
+            
+            // Filtro para quitarle la "basura" al link
             const cleanUrl = trackObj.url.split('?')[0];
             const encodedUrl = encodeURIComponent(cleanUrl);
             
-            if (!scIframe) {
-                const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%230028ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
-                
-                playerIframe.insertAdjacentHTML('beforeend', `
-                    <img src="${activeAlbumImgGlobal}" id="sc-cover-persistent" class="sc-cover-overlay" alt="Portada">
-                    <iframe id="sc-iframe-persistent" scrolling="no" allow="autoplay" src="${embedUrl}" style="filter: invert(1); background-color: transparent; border: none; border-radius: 0 8px 0 0; position: absolute; top: 0; left: 140px; width: calc(100% - 140px); height: 140px; z-index: 1;"></iframe>
-                `);
-                
-                scIframe = document.getElementById('sc-iframe-persistent');
-                scCover = document.getElementById('sc-cover-persistent');
-                
-                setTimeout(() => {
-                    if(window.SC) {
-                        scWidgetGlobal = SC.Widget(scIframe);
-                        scWidgetGlobal.bind(SC.Widget.Events.READY, () => {
-                            if(playerVolSlider) scWidgetGlobal.setVolume(parseInt(playerVolSlider.value, 10));
-                            scWidgetGlobal.bind(SC.Widget.Events.PLAY, () => setPlayerState(true));
-                            scWidgetGlobal.bind(SC.Widget.Events.PAUSE, () => setPlayerState(false));
-                            scWidgetGlobal.bind(SC.Widget.Events.FINISH, () => {
-                                setPlayerState(false);
-                                if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
-                                    window.renderTrack(activeTrackIndexGlobal + 1);
-                                }
-                            });
-                        });
-                    }
-                }, 500);
-            } else {
-                scIframe.style.display = "block";
-                scCover.style.display = "block";
-                scCover.src = activeAlbumImgGlobal;
-                
-                if(scWidgetGlobal) {
-                    scWidgetGlobal.load(cleanUrl, {
-                        auto_play: true,
-                        color: '%230028ff',
-                        hide_related: true,
-                        show_comments: false,
-                        show_user: false,
-                        show_reposts: false,
-                        show_teaser: false,
-                        visual: false,
-                        show_artwork: false
-                    });
-                }
-            }
+            // Iframe "tonto" nativo de SC. Le dejamos el auto_play=true
+            const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%230028ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+            
+            playerIframe.innerHTML = `
+                <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Portada">
+                <iframe width="100%" height="140" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}" style="filter: invert(1); background-color: transparent; border: none; border-radius: 0 8px 0 0; position: absolute; top: 0; left: 140px; width: calc(100% - 140px); height: 140px; z-index: 1;"></iframe>
+            `;
 
         } else {
+            // LÓGICA YOUTUBE MUSIC (INTACTA Y CON API AVANZADA)
             let videoId = "";
             let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
             if(vMatch && vMatch[1]) videoId = vMatch[1];
             
             if (videoId) {
-                if (!ytIframe) {
-                    let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
-                    if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
-                    
-                    playerIframe.insertAdjacentHTML('beforeend', `<iframe id="yt-iframe-persistent" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position:absolute; top:0; left:0; z-index:2;"></iframe>`);
-                    
-                    setTimeout(() => {
-                        if (window.YT && window.YT.Player) {
-                            ytPlayerGlobal = new YT.Player('yt-iframe-persistent', {
-                                events: {
-                                    'onReady': (event) => {
-                                        if(playerVolSlider) event.target.setVolume(parseInt(playerVolSlider.value, 10));
-                                    },
-                                    'onStateChange': (event) => {
-                                        if (event.data === YT.PlayerState.PLAYING) setPlayerState(true);
-                                        else if (event.data === YT.PlayerState.PAUSED) setPlayerState(false);
-                                        else if (event.data === YT.PlayerState.ENDED) {
-                                            setPlayerState(false);
-                                            if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
-                                                window.renderTrack(activeTrackIndexGlobal + 1);
-                                            }
+                setPlayerState(false);
+                let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
+                if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
+                
+                playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position:relative; z-index:2;"></iframe>`;
+                
+                setTimeout(() => {
+                    if (window.YT && window.YT.Player) {
+                        ytPlayerGlobal = new YT.Player('yt-iframe', {
+                            events: {
+                                'onReady': (event) => {
+                                    if(playerVolSlider) event.target.setVolume(parseInt(playerVolSlider.value, 10));
+                                },
+                                'onStateChange': (event) => {
+                                    if (event.data === YT.PlayerState.PLAYING) setPlayerState(true);
+                                    else if (event.data === YT.PlayerState.PAUSED) setPlayerState(false);
+                                    else if (event.data === YT.PlayerState.ENDED) {
+                                        setPlayerState(false);
+                                        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
+                                            window.renderTrack(activeTrackIndexGlobal + 1);
                                         }
                                     }
                                 }
-                            });
-                        }
-                    }, 500);
-                } else {
-                    ytIframe.style.display = "block";
-                    if (ytPlayerGlobal && typeof ytPlayerGlobal.loadVideoById === 'function') {
-                        ytPlayerGlobal.loadVideoById(videoId);
-                    } else {
-                        let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
-                        if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
-                        ytIframe.src = embedUrl;
+                            }
+                        });
                     }
-                }
+                }, 500);
             } else {
                 window.open(trackObj.url, "_blank");
             }
@@ -1326,15 +1275,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     
     document.getElementById('btnPlayPause').onclick = () => {
-        if (activeTracksGlobal[activeTrackIndexGlobal] && activeTracksGlobal[activeTrackIndexGlobal].url.includes("soundcloud.com") && scWidgetGlobal) {
-            scWidgetGlobal.toggle();
-        } else if (ytPlayerGlobal && typeof ytPlayerGlobal.getPlayerState === 'function') {
+        if (ytPlayerGlobal && typeof ytPlayerGlobal.getPlayerState === 'function') {
             const state = ytPlayerGlobal.getPlayerState();
             if (state === 1 || state === 3) ytPlayerGlobal.pauseVideo();
             else ytPlayerGlobal.playVideo();
+        } else if (activeTracksGlobal[activeTrackIndexGlobal] && activeTracksGlobal[activeTrackIndexGlobal].url.includes("soundcloud.com")) {
+            // Como le quitamos la API a SoundCloud, avisamos al usuario
+            alert("Para SoundCloud, usa el botón de pausa directo en la barra gris del reproductor.");
         }
     };
-
     function createOrbit(data, id, radius) {
         const orbit = document.getElementById(id);
         if(!orbit || !data) return; 
