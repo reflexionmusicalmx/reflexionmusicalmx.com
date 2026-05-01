@@ -1219,7 +1219,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const customPlayerBox = document.getElementById("customPlayerBox");
     const playerVolSlider = document.getElementById("playerVolSlider");
 
-    // OCULTAR PANTALLA DE CARGA
     if(loader) {
         setTimeout(() => {
             loader.style.opacity = '0';
@@ -1227,7 +1226,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500); 
     }
 
-    // CONTROL DE VOLUMEN BIOGRAFÍA
     if(volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
         volumeSlider.addEventListener("input", (e) => {
@@ -1252,7 +1250,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // SINCRONIZAR VOLUMEN REPRODUCTOR MAESTRO
     if(playerVolSlider) {
         playerVolSlider.addEventListener("input", (e) => {
             let currentVol = parseInt(e.target.value, 10);
@@ -1265,7 +1262,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // FUNCIONES PARA CERRAR MODALES
     function closeAndStopAudio() {
         modal.classList.remove("show");
         if(bioAudio) {
@@ -1274,6 +1270,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // CORRECCIÓN 1: No destruimos el reproductor al cerrar el modal, solo lo pausamos.
     function closeAlbumPanel() {
         albumModal.classList.remove("show");
         if (scWidgetGlobal) {
@@ -1284,15 +1281,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         setTimeout(() => {
             customPlayerBox.style.display = "none";
-            document.getElementById("playerIframeContainer").innerHTML = "";
             modalTracklist.innerHTML = "";
-            scWidgetGlobal = null;
-            ytPlayerGlobal = null;
             setPlayerState(false);
         }, 400);
     }
 
-    // EVENTOS DE CLICK
     if(sun) {
         sun.onclick = () => { 
             modal.classList.add("show"); 
@@ -1313,7 +1306,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.target === albumModal) closeAlbumPanel();
     }, {passive: true});
 
-    // FONDO DE ESTRELLAS EN CANVAS
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
     const numStars = window.innerWidth < 768 ? 80 : 300; 
@@ -1355,7 +1347,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('resize', setCanvasSize);
     drawCanvas();
 
-    // LÓGICA DE SUPERNOVAS ESTÉTICAS
     let currentSpawnTimeout = null;
 
     function removeAllSupernovas() {
@@ -1398,7 +1389,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     spawnSupernovaBatch();
 
-    // RENDERIZAR PISTA EN REPRODUCTOR (LÓGICA MAESTRA)
+    // CORRECCIÓN 2: LÓGICA MAESTRA ESTABILIZADA. No borra el iframe, lo reutiliza.
     window.renderTrack = function(index) {
         activeTrackIndexGlobal = index;
         const trackObj = activeTracksGlobal[index];
@@ -1414,29 +1405,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (trackObj.url.includes("soundcloud.com")) {
             const encodedUrl = encodeURIComponent(trackObj.url);
-            // Mantenemos auto_play=true en la URL para que arranque pero permitimos que Soundcloud decida
-            const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%230028ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+            let scIframe = document.getElementById('sc-iframe-persistent');
             
-            playerIframe.innerHTML = `
-                <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Portada">
-                <iframe id="sc-iframe" scrolling="no" allow="autoplay" src="${embedUrl}"></iframe>
-            `;
-            
-            setPlayerState(false);
-
-            setTimeout(() => {
-                const iframeEl = document.getElementById('sc-iframe');
-                if(iframeEl && window.SC) {
-                    scWidgetGlobal = SC.Widget(iframeEl);
+            if (!scIframe) {
+                // Se crea solo la primera vez en la sesión
+                const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%230028ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
+                
+                playerIframe.innerHTML = `
+                    <img src="${activeAlbumImgGlobal}" id="sc-cover-persistent" class="sc-cover-overlay" alt="Portada">
+                    <iframe id="sc-iframe-persistent" scrolling="no" allow="autoplay" src="${embedUrl}" style="filter: invert(1); background-color: transparent; border: none; border-radius: 0 8px 0 0; position: absolute; top: 0; left: 140px; width: calc(100% - 140px); height: 140px; z-index: 1;"></iframe>
+                `;
+                
+                setPlayerState(false);
+                scIframe = document.getElementById('sc-iframe-persistent');
+                
+                if(window.SC) {
+                    scWidgetGlobal = SC.Widget(scIframe);
                     scWidgetGlobal.bind(SC.Widget.Events.READY, () => {
-                        
                         if(playerVolSlider) {
                             scWidgetGlobal.setVolume(parseInt(playerVolSlider.value, 10));
                         }
-                        
                         scWidgetGlobal.bind(SC.Widget.Events.PLAY, () => setPlayerState(true));
                         scWidgetGlobal.bind(SC.Widget.Events.PAUSE, () => setPlayerState(false));
-                        
                         scWidgetGlobal.bind(SC.Widget.Events.FINISH, () => {
                             setPlayerState(false);
                             if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
@@ -1445,9 +1435,40 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                     });
                 }
-            }, 500);
-
+            } else {
+                // Si ya existe, le cargamos la nueva canción (Esto soluciona el bloqueo)
+                scIframe.style.display = "block";
+                const cover = document.getElementById('sc-cover-persistent');
+                if(cover) {
+                    cover.style.display = "block";
+                    cover.src = activeAlbumImgGlobal;
+                }
+                
+                if(scWidgetGlobal) {
+                    scWidgetGlobal.load(trackObj.url, {
+                        auto_play: true,
+                        color: '%230028ff',
+                        hide_related: true,
+                        show_comments: false,
+                        show_user: false,
+                        show_reposts: false,
+                        show_teaser: false,
+                        visual: false,
+                        show_artwork: false
+                    });
+                    
+                    setTimeout(() => {
+                        if(playerVolSlider) scWidgetGlobal.setVolume(parseInt(playerVolSlider.value, 10));
+                    }, 500);
+                }
+            }
         } else {
+            // Lógica para enlaces ajenos a SC (ej. YouTube)
+            let scIframe = document.getElementById('sc-iframe-persistent');
+            let cover = document.getElementById('sc-cover-persistent');
+            if(scIframe) scIframe.style.display = "none";
+            if(cover) cover.style.display = "none";
+            
             let videoId = "";
             let vMatch = trackObj.url.match(/[?&]v=([^&]+)/);
             if(vMatch && vMatch[1]) videoId = vMatch[1];
@@ -1457,23 +1478,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
                 if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
                 
-                playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0;"></iframe>`;
+                playerIframe.insertAdjacentHTML('beforeend', `<iframe id="yt-iframe-persistent" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0;"></iframe>`);
                 
                 setTimeout(() => {
                     if (window.YT && window.YT.Player) {
-                        ytPlayerGlobal = new YT.Player('yt-iframe', {
+                        ytPlayerGlobal = new YT.Player('yt-iframe-persistent', {
                             events: {
                                 'onReady': (event) => {
-                                    if(playerVolSlider) {
-                                        event.target.setVolume(parseInt(playerVolSlider.value, 10));
-                                    }
+                                    if(playerVolSlider) event.target.setVolume(parseInt(playerVolSlider.value, 10));
                                 },
                                 'onStateChange': (event) => {
-                                    if (event.data === YT.PlayerState.PLAYING) {
-                                        setPlayerState(true);
-                                    } else if (event.data === YT.PlayerState.PAUSED) {
-                                        setPlayerState(false);
-                                    } else if (event.data === YT.PlayerState.ENDED) {
+                                    if (event.data === YT.PlayerState.PLAYING) setPlayerState(true);
+                                    else if (event.data === YT.PlayerState.PAUSED) setPlayerState(false);
+                                    else if (event.data === YT.PlayerState.ENDED) {
                                         setPlayerState(false);
                                         if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
                                             window.renderTrack(activeTrackIndexGlobal + 1);
@@ -1490,7 +1507,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // BOTONERA DEL REPRODUCTOR
     document.getElementById('btnNext').onclick = () => {
         if(activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
     };
@@ -1509,10 +1525,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // CREACIÓN DEL SISTEMA SOLAR
     function createOrbit(data, id, radius) {
         const orbit = document.getElementById(id);
-        if(!orbit || !data) return;
+        if(!orbit || !data) return; 
         const fragment = document.createDocumentFragment();
         
         data.forEach((item, i) => {
@@ -1534,7 +1549,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
                 modalTracklist.innerHTML = "";
                 document.getElementById("customPlayerBox").style.display = "none";
-                document.getElementById("playerIframeContainer").innerHTML = "";
+                // CORRECCIÓN 3: Al abrir otro disco no borramos el iframe de memoria.
 
                 let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
                 let playlistId = "";
@@ -1676,11 +1691,9 @@ document.addEventListener("DOMContentLoaded", () => {
         orbit.appendChild(fragment);
     }
 
-    // AQUÍ EL CÓDIGO LEE LOS DATOS QUE PUSIMOS EN DATOS.JS
     if (typeof singles !== 'undefined') createOrbit(singles, "orbitSingles", 210);
     if (typeof albums !== 'undefined') createOrbit(albums, "orbitAlbums", 360);
 
-    // LÓGICA DEL BUZÓN DE REFLEXIÓN
     const reflectionModal = document.getElementById("reflectionModal");
     const btnTuVoz = document.getElementById("btnTuVoz");
     const closeReflection = document.querySelector(".close-reflection");
@@ -1735,7 +1748,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // LÓGICA DE COMETAS
     const upcomingReleases = [
         "📖 LIBRO: ALGO ESTÁ MAL",
         "💿 NUEVO ÁLBUM",
