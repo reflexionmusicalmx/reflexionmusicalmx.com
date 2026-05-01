@@ -91,7 +91,7 @@ const singles = [
         img: "images/Tres colores, un compromiso.webp",
         title: "Tres colores, un compromiso",
         tracks: [
-            { name: "Tres Colores, Un Compromiso", url: "https://soundcloud.com/reflexionmusicalmx-music/tres-colores-un-compromiso?si=c0ba026c5d504922b5071291b069b1fe&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
+            { name: "Tres Colores, Un Compromiso", url: "https://soundcloud.com/reflexionmusicalmx-music/tres-colores-un-compromiso?si=744953329f6c4b6aadfe300e640ce689&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM",
