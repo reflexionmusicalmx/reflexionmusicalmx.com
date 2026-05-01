@@ -91,7 +91,7 @@ const singles = [
         img: "images/Tres colores, un compromiso.webp",
         title: "Tres colores, un compromiso",
         tracks: [
-            { name: "Tres Colores, Un Compromiso", url: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM&si=4BFABelqyBhDfQSg" }
+            { name: "Tres Colores, Un Compromiso", url: "https://music.youtube.com/watch?v=CHiMyTyndHg&si=owyjoNwnmr2Mwb-i" }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_nXLlYBO_bLe8jo9vqm2rw1JPGwIxTw9uM",
