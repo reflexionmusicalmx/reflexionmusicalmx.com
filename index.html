@@ -1396,8 +1396,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     spawnSupernovaBatch();
-
-    // RENDERIZAR PISTA EN REPRODUCTOR (LÓGICA MAESTRA)
+// RENDERIZAR PISTA EN REPRODUCTOR (LÓGICA MAESTRA)
     window.renderTrack = function(index) {
         activeTrackIndexGlobal = index;
         const trackObj = activeTracksGlobal[index];
@@ -1413,6 +1412,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (trackObj.url.includes("soundcloud.com")) {
             const encodedUrl = encodeURIComponent(trackObj.url);
+            // Mantenemos auto_play=true en la URL para que arranque al instante
             const embedUrl = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%230028ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false`;
             
             playerIframe.innerHTML = `
@@ -1427,7 +1427,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(iframeEl && window.SC) {
                     scWidgetGlobal = SC.Widget(iframeEl);
                     scWidgetGlobal.bind(SC.Widget.Events.READY, () => {
-                        scWidgetGlobal.play(); 
+                        // ELIMINAMOS la orden doble de play() aquí.
                         
                         if(playerVolSlider) {
                             scWidgetGlobal.setVolume(parseInt(playerVolSlider.value, 10));
@@ -1463,7 +1463,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ytPlayerGlobal = new YT.Player('yt-iframe', {
                             events: {
                                 'onReady': (event) => {
-                                    event.target.playVideo();
+                                    // ELIMINAMOS la orden doble de playVideo() aquí.
                                     if(playerVolSlider) {
                                         event.target.setVolume(parseInt(playerVolSlider.value, 10));
                                     }
@@ -1489,7 +1489,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     };
-
+    
     // BOTONERA DEL REPRODUCTOR
     document.getElementById('btnNext').onclick = () => {
         if(activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
