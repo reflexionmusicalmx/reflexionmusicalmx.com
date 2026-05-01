@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GYLX6LJKQS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-GYLX6LJKQS');
-</script>
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GYLX6LJKQS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-GYLX6LJKQS');
+    </script>
+    
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
@@ -960,8 +961,8 @@ html, body {
         top: 10px; 
     }
 }
-</style>
-    /* ESTILOS DEL BUZÓN DE REFLEXIÓN */
+
+/* ESTILOS DEL BUZÓN DE REFLEXIÓN */
 .floating-tu-voz {
     position: absolute;
     bottom: 25px;
@@ -1020,6 +1021,7 @@ html, body {
         display: none; 
     }
 }
+</style>
 </head>
 <body>
 
@@ -1057,7 +1059,6 @@ html, body {
     <div class="modal-content album-modal-content">
         <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
         <h2 id="modalAlbumTitle">Título del Álbum</h2>
-
         <div id="customPlayerBox">
             <div id="playerIframeContainer"></div>
             <div class="custom-player-controls">
@@ -1106,13 +1107,6 @@ html, body {
     </div>
 </div>
 
-<canvas id="bg" aria-hidden="true"></canvas>
-<div id="starContainer" aria-hidden="true"></div>
-
-<div class="floating-social">
-    <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
-        <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
-    </a>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="starContainer" aria-hidden="true"></div>
 
@@ -2237,7 +2231,8 @@ const albums = [
         }
     }
 ];
-    // VARIABLES GLOBALES DEL REPRODUCTOR
+
+// VARIABLES GLOBALES DEL REPRODUCTOR
 let scWidgetGlobal = null;
 let ytPlayerGlobal = null;
 let activeTracksGlobal = [];
@@ -2743,65 +2738,61 @@ document.addEventListener("DOMContentLoaded", () => {
     createOrbit(singles, "orbitSingles", 210);
     createOrbit(albums, "orbitAlbums", 360);
 
-    /* ESTILOS DEL BUZÓN DE REFLEXIÓN */
-.floating-tu-voz {
-    position: absolute;
-    bottom: 25px;
-    right: 25px;
-    background: #FFD700;
-    color: #000;
-    border-radius: 30px;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    z-index: 1005;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-    transition: 0.3s;
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 1px;
-}
-.floating-tu-voz:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
-}
-.reflection-content {
-    max-width: 500px;
-}
-#reflectionForm {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-#reflectionMsg {
-    background: #111;
-    border: 1px solid rgba(255, 215, 0, 0.5);
-    border-radius: 8px;
-    color: #fff;
-    padding: 15px;
-    font-family: 'Merriweather', serif;
-    font-size: 14px;
-    resize: none;
-    outline: none;
-    transition: 0.3s;
-}
-#reflectionMsg:focus {
-    border-color: #FFD700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-}
-@media (max-width: 768px) {
-    .floating-tu-voz {
-        bottom: 80px; 
-        right: 15px;
-        padding: 12px;
-        border-radius: 50%;
+    // LÓGICA DEL BUZÓN DE REFLEXIÓN
+    const reflectionModal = document.getElementById("reflectionModal");
+    const btnTuVoz = document.getElementById("btnTuVoz");
+    const closeReflection = document.querySelector(".close-reflection");
+    const reflectionForm = document.getElementById("reflectionForm");
+    const reflectionStatus = document.getElementById("reflectionStatus");
+    const btnSubmitReflection = document.getElementById("btnSubmitReflection");
+
+    if(btnTuVoz) {
+        btnTuVoz.onclick = () => {
+            reflectionModal.classList.add("show");
+            reflectionStatus.style.display = "none";
+            reflectionForm.style.display = "flex";
+            document.getElementById("reflectionMsg").value = "";
+        };
     }
-    .tu-voz-text {
-        display: none; 
+
+    if(closeReflection) {
+        closeReflection.onclick = () => reflectionModal.classList.remove("show");
     }
-}
+
+    window.addEventListener('click', (event) => {
+        if (event.target === reflectionModal) reflectionModal.classList.remove("show");
+    });
+    window.addEventListener('touchstart', (event) => {
+        if (event.target === reflectionModal) reflectionModal.classList.remove("show");
+    }, {passive: true});
+
+    if(reflectionForm) {
+        reflectionForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+            btnSubmitReflection.innerText = "ENVIANDO...";
+            btnSubmitReflection.disabled = true;
+
+            const data = new FormData(event.target);
+            fetch(event.target.action, {
+                method: reflectionForm.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    reflectionForm.style.display = "none";
+                    reflectionStatus.style.display = "block";
+                } else {
+                    alert("Hubo un error al enviar el mensaje. Intenta de nuevo.");
+                }
+            }).catch(error => {
+                alert("Error de conexión. Intenta de nuevo.");
+            }).finally(() => {
+                btnSubmitReflection.innerText = "ENVIAR MENSAJE";
+                btnSubmitReflection.disabled = false;
+            });
+        });
+    }
+
     // LÓGICA DE COMETAS (TOTALMENTE RESTAURADA)
     const upcomingReleases = [
         "📖 LIBRO: ALGO ESTÁ MAL",
