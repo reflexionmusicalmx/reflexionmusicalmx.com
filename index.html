@@ -914,16 +914,26 @@ html, body {
 @media (max-width: 768px) {
     /* La ventana del buzón emerge desde abajo en móviles */
     #reflectionModal .reflection-content { 
-        width: 95% !important; 
-        left: 2.5% !important; 
+        width: 90% !important; /* Un poco más angosto para que respire */
+        left: 5% !important; /* Centrado perfecto */
         right: auto !important; 
         top: auto !important;
         bottom: 20px !important;
-        transform: translateY(100px) !important; /* Inicia oculta abajo */
+        transform: translateY(100px) !important; 
+        box-sizing: border-box !important; /* ESTA ES LA MAGIA: El relleno se va hacia adentro */
+        padding: 20px 15px !important; /* Más espacio interior */
     }
     
     #reflectionModal.show .reflection-content {
-        transform: translateY(0) !important; /* Sube elegantemente */
+        transform: translateY(0) !important; 
+    }
+
+    /* Aseguramos que la X sea súper visible y fácil de presionar en celular */
+    #reflectionModal .close-reflection {
+        top: 10px !important;
+        right: 15px !important;
+        font-size: 32px !important; /* Más grande para el pulgar */
+        z-index: 100;
     }
 
     /* Transformación dinámica del Universo en móvil */
@@ -932,10 +942,10 @@ html, body {
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), margin-top 0.5s ease;
     }
 
-    /* Esta clase la inyectará Javascript cuando se abra el buzón en celular */
+    /* Esta clase la inyectará Javascript cuando se abra el buzón */
     #solarSystem.mobile-focus {
-        transform: scale(0.35) !important; /* Se hace más chiquito */
-        margin-top: -30vh !important; /* Se sube para dejar espacio al formulario */
+        transform: scale(0.35) !important; 
+        margin-top: -30vh !important; 
     }
 }
 </style>
