@@ -1263,8 +1263,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
             
             playerIframe.innerHTML = `
-                <img src="${activeAlbumImgGlobal}" class="sc-cover-overlay" alt="Portada" style="width: 140px; height: 140px; object-fit: cover; border-radius: 8px 0 0 0; position: absolute; top: 0; left: 0; z-index: 5; pointer-events: none;">
-                <iframe id="yt-iframe" width="calc(100% - 140px)" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 140px; border-radius: 0 8px 0 0; z-index: 1;"></iframe>
+                <iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position: relative; z-index: 1;"></iframe>
             `;
             
             setTimeout(() => {
