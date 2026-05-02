@@ -1640,7 +1640,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
-    
+    if(closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
     function resumeUniverse() {
         if (isUniversePaused) {
             document.getAnimations().forEach(anim => anim.play());
