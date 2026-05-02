@@ -1044,6 +1044,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("bioModal");
     const sun = document.getElementById("sun");
     const closeBioModal = document.querySelector(".close-bio");
+    const closeLyricsModal = document.querySelector(".close-lyrics"); // NUEVO
+    const lyricsModal = document.getElementById("lyricsModal"); // NUEVO
     const bioAudio = document.getElementById("bioAudio"); 
     const volumeSlider = document.getElementById("volumeSlider");
     const muteBtn = document.getElementById("muteBtn");
@@ -1134,9 +1136,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if(closeAlbumModal) closeAlbumModal.addEventListener('click', closeAlbumPanel);
     if(btnCerrarAlbum) btnCerrarAlbum.addEventListener('click', closeAlbumPanel);
 
+    if(closeLyricsModal) closeLyricsModal.onclick = () => lyricsModal.classList.remove("show");
+    
+    // Y en los eventos generales de cerrar al tocar fuera:
     window.addEventListener('click', (event) => {
         if (event.target === modal) closeAndStopAudio();
         if (event.target === albumModal) closeAlbumPanel();
+        if (event.target === lyricsModal) lyricsModal.classList.remove("show"); // NUEVO
     });
     window.addEventListener('touchstart', (event) => {
         if (event.target === modal) closeAndStopAudio();
