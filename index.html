@@ -868,26 +868,57 @@ html, body {
 
 #reflectionModal .reflection-content {
     position: absolute;
-    bottom: 25px;
-    right: 25px;
     margin: 0;
     width: 350px;
-    pointer-events: auto; /* El cuadrito del buzón sí recibe clics */
-    transform: translateY(50px);
+    pointer-events: auto; 
     opacity: 0;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    transition: opacity 0.4s ease;
     box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
     background: rgba(10, 10, 10, 0.95); 
     border: 1px solid #FFD700;
+    /* Las posiciones left, right, top y transform ahora las controla Javascript */
 }
 
 #reflectionModal.show .reflection-content {
-    transform: translateY(0);
     opacity: 1;
 }
 
+/* RESTAURACIÓN DEL FORMULARIO Y CAJA DE TEXTO */
+#reflectionForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+#reflectionMsg {
+    background: #111;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    border-radius: 8px;
+    color: #fff;
+    padding: 15px;
+    font-family: 'Merriweather', serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    transition: 0.3s;
+    width: 100%;
+    box-sizing: border-box; /* Esto evita que el texto se desborde */
+}
+
+#reflectionMsg:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* MÓVILES: LA VENTANA SE CENTRA AUTOMÁTICAMENTE */
 @media (max-width: 768px) {
-    #reflectionModal .reflection-content { width: 90%; right: 5%; bottom: 15px; }
+    #reflectionModal .reflection-content { 
+        width: 90% !important; 
+        left: 5% !important; 
+        right: 5% !important; 
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
 }
 </style>
 </head>
@@ -1568,6 +1599,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof albums !== 'undefined') createOrbit(albums, "orbitAlbums", 360);
 
     const reflectionModal = document.getElementById("reflectionModal");
+    const reflectionContentBox = document.querySelector("#reflectionModal .reflection-content");
     const btnTuVoz = document.getElementById("btnTuVoz");
     const closeReflection = document.querySelector(".close-reflection");
     const reflectionForm = document.getElementById("reflectionForm");
@@ -1576,6 +1608,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnSendToSun = document.getElementById("btnSendToSun");
 
     let isUniversePaused = false;
+    let isMessageLoadedInShip = false; // Memoria para saber si la nave ya tiene el mensaje
 
     // FUNCIONES PARA CONGELAR Y REANUDAR EL UNIVERSO
     function pauseUniverse() {
@@ -1592,26 +1625,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function closeBuzonAndResume() {
+    // CIERRE INTELIGENTE (LA "X" O EL BOTÓN)
+    function closeBuzonAndHandleLaser() {
         reflectionModal.classList.remove("show");
-        btnTuVoz.classList.remove("ship-waiting"); // Si cierran la ventana, se apaga el parpadeo de la nave
-        resumeUniverse();
+        btnTuVoz.classList.remove("ship-waiting");
+        
+        if (isMessageLoadedInShip) {
+            fireLaserToSun(); // Si hay mensaje cargado, dispara
+        } else {
+            resumeUniverse(); // Si no hay nada, solo sigue girando
+        }
     }
 
     if(btnTuVoz) {
         btnTuVoz.onclick = () => {
-            pauseUniverse(); // Congela el universo
-            btnTuVoz.classList.add("ship-waiting"); // ENCIENDE EL DESTELLO MODO ESPERA
+            pauseUniverse(); 
+            btnTuVoz.classList.add("ship-waiting"); 
             
+            // POSICIONAMIENTO INTELIGENTE DEL MODAL (RADAR)
+            const shipRect = btnTuVoz.getBoundingClientRect();
+            const screenCenter = window.innerWidth / 2;
+            
+            // Si la nave está a la derecha, ventana a la izquierda (y viceversa)
+            if (shipRect.left > screenCenter) {
+                reflectionContentBox.style.left = "40px";
+                reflectionContentBox.style.right = "auto";
+            } else {
+                reflectionContentBox.style.left = "auto";
+                reflectionContentBox.style.right = "40px";
+            }
+
+            // Centrado vertical perfecto
+            reflectionContentBox.style.top = "50%";
+            reflectionContentBox.style.transform = "translateY(-50%)";
+
             reflectionModal.classList.add("show");
             reflectionStatus.style.display = "none";
             reflectionForm.style.display = "flex";
             closeReflection.style.display = "block"; 
             document.getElementById("reflectionMsg").value = "";
+            isMessageLoadedInShip = false; // Se resetea la memoria de la nave
         };
     }
 
-    if(closeReflection) closeReflection.onclick = closeBuzonAndResume;
+    if(closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
 
     // FASE 1: DEL BUZÓN A LA NAVE
     if(reflectionForm) {
@@ -1628,10 +1685,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }).then(response => {
                 if (response.ok) {
                     reflectionForm.style.display = "none";
-                    closeReflection.style.display = "none"; 
                     
-                    // DISPARO 1: Láser del formulario hacia la nave
-                    const box = document.querySelector("#reflectionModal .reflection-content").getBoundingClientRect();
+                    const box = reflectionContentBox.getBoundingClientRect();
                     const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
 
                     const pulse = document.createElement("div");
@@ -1656,11 +1711,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     anim.onfinish = () => {
                         pulse.remove();
                         reflectionStatus.style.display = "block"; 
+                        isMessageLoadedInShip = true; // MARCADO COMO LISTO PARA EL SOL
                         
-                        // APAGA EL DESTELLO PORQUE YA RECIBIÓ EL MENSAJE
                         btnTuVoz.classList.remove("ship-waiting"); 
 
-                        // Efecto final de que la nave absorbió la luz
                         const shipSvg = document.querySelector("#btnTuVoz svg");
                         shipSvg.style.filter = "drop-shadow(0 0 25px #fff)";
                         shipSvg.style.stroke = "#fff";
@@ -1682,49 +1736,47 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // FASE 2: DE LA NAVE AL SOL (AL PRESIONAR CERRAR Y ENVIAR)
-    if(btnSendToSun) {
-        btnSendToSun.onclick = () => {
-            reflectionModal.classList.remove("show"); 
+    // FASE 2: DE LA NAVE AL SOL
+    function fireLaserToSun() {
+        const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
+        const sunRect = document.getElementById("sun").getBoundingClientRect();
+
+        const pulse = document.createElement("div");
+        pulse.className = "energy-pulse";
+        
+        pulse.style.left = (ship.left + ship.width / 2) + "px";
+        pulse.style.top = (ship.top + ship.height / 2) + "px";
+        document.body.appendChild(pulse);
+
+        const destX = (sunRect.left + sunRect.width / 2) - (ship.left + ship.width / 2);
+        const destY = (sunRect.top + sunRect.height / 2) - (ship.top + ship.height / 2);
+
+        const angleRad = Math.atan2(destY, destX);
+        const angleDeg = (angleRad * 180) / Math.PI;
+
+        const anim = pulse.animate([
+            { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
+            { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(3)`, opacity: 0.8 },
+            { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(0.5)`, opacity: 0 }
+        ], { duration: 800, easing: "cubic-bezier(0.25, 1, 0.5, 1)" });
+
+        anim.onfinish = () => {
+            pulse.remove();
             
-            const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
-            const sunRect = document.getElementById("sun").getBoundingClientRect();
-
-            const pulse = document.createElement("div");
-            pulse.className = "energy-pulse";
+            const sunEl = document.getElementById("sun");
+            sunEl.style.transform = "scale(1.2)";
+            sunEl.style.filter = "drop-shadow(0 0 80px #fff) brightness(1.5)";
             
-            pulse.style.left = (ship.left + ship.width / 2) + "px";
-            pulse.style.top = (ship.top + ship.height / 2) + "px";
-            document.body.appendChild(pulse);
-
-            const destX = (sunRect.left + sunRect.width / 2) - (ship.left + ship.width / 2);
-            const destY = (sunRect.top + sunRect.height / 2) - (ship.top + ship.height / 2);
-
-            const angleRad = Math.atan2(destY, destX);
-            const angleDeg = (angleRad * 180) / Math.PI;
-
-            const anim = pulse.animate([
-                { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
-                { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(3)`, opacity: 0.8 },
-                { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(0.5)`, opacity: 0 }
-            ], { duration: 800, easing: "cubic-bezier(0.25, 1, 0.5, 1)" });
-
-            anim.onfinish = () => {
-                pulse.remove();
-                
-                const sunEl = document.getElementById("sun");
-                sunEl.style.transform = "scale(1.2)";
-                sunEl.style.filter = "drop-shadow(0 0 80px #fff) brightness(1.5)";
-                
-                setTimeout(() => {
-                    sunEl.style.transform = "scale(1)";
-                    sunEl.style.filter = "";
-                    resumeUniverse(); // EL UNIVERSO VUELVE A REANUDAR SU CURSO
-                }, 400);
-            };
+            setTimeout(() => {
+                sunEl.style.transform = "scale(1)";
+                sunEl.style.filter = "";
+                resumeUniverse(); // REANUDA TODO
+                isMessageLoadedInShip = false; // Limpia la nave
+            }, 400);
         };
     }
 
+    if(btnSendToSun) btnSendToSun.onclick = closeBuzonAndHandleLaser;
     const upcomingReleases = [
         "📖 LIBRO: ALGO ESTÁ MAL",
         "💿 NUEVO ÁLBUM",
