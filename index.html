@@ -912,12 +912,30 @@ html, body {
 
 /* MÓVILES: LA VENTANA SE CENTRA AUTOMÁTICAMENTE */
 @media (max-width: 768px) {
+    /* La ventana del buzón emerge desde abajo en móviles */
     #reflectionModal .reflection-content { 
-        width: 90% !important; 
-        left: 5% !important; 
-        right: 5% !important; 
-        top: 50% !important;
-        transform: translateY(-50%) !important;
+        width: 95% !important; 
+        left: 2.5% !important; 
+        right: auto !important; 
+        top: auto !important;
+        bottom: 20px !important;
+        transform: translateY(100px) !important; /* Inicia oculta abajo */
+    }
+    
+    #reflectionModal.show .reflection-content {
+        transform: translateY(0) !important; /* Sube elegantemente */
+    }
+
+    /* Transformación dinámica del Universo en móvil */
+    #solarSystem { 
+        transform: scale(0.45); 
+        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), margin-top 0.5s ease;
+    }
+
+    /* Esta clase la inyectará Javascript cuando se abra el buzón en celular */
+    #solarSystem.mobile-focus {
+        transform: scale(0.35) !important; /* Se hace más chiquito */
+        margin-top: -30vh !important; /* Se sube para dejar espacio al formulario */
     }
 }
 </style>
@@ -1607,14 +1625,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnSubmitReflection = document.getElementById("btnSubmitReflection");
     const btnSendToSun = document.getElementById("btnSendToSun");
 
+    const solarSystemBox = document.getElementById("solarSystem"); // Declaramos el contenedor del Universo para controlarlo
     let isUniversePaused = false;
     let isMessageLoadedInShip = false; // Memoria para saber si la nave ya tiene el mensaje
 
-    // FUNCIONES PARA CONGELAR Y REANUDAR EL UNIVERSO
+    // FUNCIONES PARA CONGELAR Y REANUDAR EL UNIVERSO (CON CÁMARA DINÁMICA MÓVIL)
     function pauseUniverse() {
         if (!isUniversePaused) {
             document.getAnimations().forEach(anim => anim.pause());
             isUniversePaused = true;
+            // Si es pantalla de celular, activamos el "Focus Móvil"
+            if (window.innerWidth <= 768) {
+                solarSystemBox.classList.add("mobile-focus");
+            }
         }
     }
     
@@ -1622,6 +1645,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isUniversePaused) {
             document.getAnimations().forEach(anim => anim.play());
             isUniversePaused = false;
+            // Quitamos el "Focus Móvil" si estaba activo
+            if (window.innerWidth <= 768) {
+                solarSystemBox.classList.remove("mobile-focus");
+            }
         }
     }
 
@@ -1631,33 +1658,39 @@ document.addEventListener("DOMContentLoaded", () => {
         btnTuVoz.classList.remove("ship-waiting");
         
         if (isMessageLoadedInShip) {
-            fireLaserToSun(); // Si hay mensaje cargado, dispara
+            fireLaserToSun(); // Si hay mensaje cargado, dispara (y el láser reanuda el universo al final)
         } else {
-            resumeUniverse(); // Si no hay nada, solo sigue girando
+            resumeUniverse(); // Si no hay nada, solo reanuda el giro
         }
     }
 
+    // LÓGICA AL DAR CLIC A LA NAVE
     if(btnTuVoz) {
         btnTuVoz.onclick = () => {
             pauseUniverse(); 
             btnTuVoz.classList.add("ship-waiting"); 
             
-            // POSICIONAMIENTO INTELIGENTE DEL MODAL (RADAR)
-            const shipRect = btnTuVoz.getBoundingClientRect();
-            const screenCenter = window.innerWidth / 2;
-            
-            // Si la nave está a la derecha, ventana a la izquierda (y viceversa)
-            if (shipRect.left > screenCenter) {
-                reflectionContentBox.style.left = "40px";
-                reflectionContentBox.style.right = "auto";
+            if (window.innerWidth > 768) {
+                // POSICIONAMIENTO RADAR (SOLO PARA PC)
+                const shipRect = btnTuVoz.getBoundingClientRect();
+                const screenCenter = window.innerWidth / 2;
+                
+                if (shipRect.left > screenCenter) {
+                    reflectionContentBox.style.left = "40px";
+                    reflectionContentBox.style.right = "auto";
+                } else {
+                    reflectionContentBox.style.left = "auto";
+                    reflectionContentBox.style.right = "40px";
+                }
+                reflectionContentBox.style.top = "50%";
+                reflectionContentBox.style.transform = "translateY(-50%)";
             } else {
-                reflectionContentBox.style.left = "auto";
-                reflectionContentBox.style.right = "40px";
+                // EN MÓVIL, LIMPIAMOS ESTILOS EN LÍNEA PARA QUE EL CSS LO EMPUJE DESDE ABAJO
+                reflectionContentBox.style.left = "";
+                reflectionContentBox.style.right = "";
+                reflectionContentBox.style.top = "";
+                reflectionContentBox.style.transform = "";
             }
-
-            // Centrado vertical perfecto
-            reflectionContentBox.style.top = "50%";
-            reflectionContentBox.style.transform = "translateY(-50%)";
 
             reflectionModal.classList.add("show");
             reflectionStatus.style.display = "none";
@@ -1667,8 +1700,6 @@ document.addEventListener("DOMContentLoaded", () => {
             isMessageLoadedInShip = false; // Se resetea la memoria de la nave
         };
     }
-
-    if(closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
 
     // FASE 1: DEL BUZÓN A LA NAVE
     if(reflectionForm) {
