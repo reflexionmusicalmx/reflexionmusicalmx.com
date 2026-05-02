@@ -4,7 +4,7 @@ const singles = [
         img: "images/We rise as one.webp",
         title: "We rise as one",
         tracks: [
-            { name: "We rise as one", url: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs" }
+            { name: "We rise as one", url: "https://music.youtube.com/watch?v=iD_3kV2LhaE&si=4CvOaR5_1OgkIWAH" }
         ],
         links: {
             youtube: "https://music.youtube.com/playlist?list=OLAK5uy_kyLAJmShtPgqFTl1qZk8pYP-jWBFG6xJs",
