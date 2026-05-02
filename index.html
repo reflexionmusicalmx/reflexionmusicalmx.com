@@ -901,6 +901,8 @@ html, body {
                     <input type="range" id="playerVolSlider" min="0" max="100" value="100" title="Volumen">
                 </div>
             </div>
+            <!-- PANTALLA DE LETRA AUTOMÁTICA -->
+            <div id="nowPlayingLyrics" style="display: none; max-height: 180px; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 15px; border-top: 1px solid rgba(255,215,0,0.2); font-size: 13px; color: #ddd; white-space: pre-wrap; text-align: center; line-height: 1.6;"></div>
         </div>
 
         <div class="tracklist-container" id="modalTracklist"></div>
@@ -1213,22 +1215,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     spawnSupernovaBatch();
 
-    // REPRODUCTOR MAESTRO (IFRAME BÁSICO SIN API PARA SOUNDCLOUD)
+  // REPRODUCTOR MAESTRO (OPTIMIZADO EXCLUSIVAMENTE PARA YOUTUBE)
     window.renderTrack = function(index) {
         activeTrackIndexGlobal = index;
         const trackObj = activeTracksGlobal[index];
         const playerIframe = document.getElementById("playerIframeContainer");
         const customBox = document.getElementById("customPlayerBox");
+        const lyricsBox = document.getElementById("nowPlayingLyrics"); // Llamamos a la caja de texto
 
         document.querySelectorAll('.track-link').forEach((el, i) => {
             if (i === index) el.classList.add('active-track');
             else el.classList.remove('active-track');
         });
 
+        // Hacemos visible el reproductor
         customBox.style.display = "flex";
+        setPlayerState(false); 
+        playerIframe.innerHTML = ""; // Limpiamos iframe anterior
         
-        // Limpiamos el contenedor por completo para destruir lo que hubiera antes
-        playerIframe.innerHTML = "";
+        // LÓGICA AUTOMÁTICA DE LETRAS
+        if (typeof letras !== 'undefined' && letras[trackObj.name]) {
+            lyricsBox.innerText = letras[trackObj.name];
+            lyricsBox.style.display = "block"; // Mostramos la letra si existe
+        } else {
+            lyricsBox.innerText = "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
+            lyricsBox.style.display = "block"; // Mostramos el aviso
+        }
+
+        let videoId = "";
         scWidgetGlobal = null; // Apagamos la API de SC para que no interfiera
 
         if (trackObj.url.includes("soundcloud.com")) {
