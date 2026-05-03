@@ -1739,7 +1739,7 @@ document.addEventListener("DOMContentLoaded", () => {
             isMessageLoadedInShip = false; 
         };
     }
-    // FASE 1: DEL BUZÓN A LA NAVE
+   // FASE 1: DEL BUZÓN A LA NAVE
     if(reflectionForm) {
         reflectionForm.addEventListener("submit", async function(event) {
             event.preventDefault();
@@ -1758,52 +1758,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem('lastReflectionTime', Date.now());
 
                 reflectionForm.style.display = "none";
-
-                    reflectionForm.style.display = "none";
                     
-                    // DISPARO 1: Láser del formulario hacia la nave
+                // DISPARO 1: Láser del formulario hacia la nave
+                const box = reflectionContentBox.getBoundingClientRect();
+                const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
+
+                const pulse = document.createElement("div");
+                pulse.className = "energy-pulse";
+                
+                pulse.style.left = (box.left + box.width / 2) + "px";
+                pulse.style.top = (box.top + box.height / 2) + "px";
+                document.body.appendChild(pulse);
+
+                const destX = (ship.left + ship.width / 2) - (box.left + box.width / 2);
+                const destY = (ship.top + ship.height / 2) - (box.top + box.height / 2);
+
+                const angleRad = Math.atan2(destY, destX);
+                const angleDeg = (angleRad * 180) / Math.PI;
+
+                const anim = pulse.animate([
+                    { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
+                    { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(3)`, opacity: 0.8 },
+                    { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(0.5)`, opacity: 0 }
+                ], { duration: 600, easing: "ease-in" });
+
+                anim.onfinish = () => {
+                    pulse.remove();
+                    reflectionStatus.style.display = "block"; 
+                    isMessageLoadedInShip = true; // MARCADO COMO LISTO PARA EL SOL
                     
-                    const box = reflectionContentBox.getBoundingClientRect();
-                    const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
+                    btnTuVoz.classList.remove("ship-waiting"); 
 
-                    const pulse = document.createElement("div");
-                    pulse.className = "energy-pulse";
-                    
-                    pulse.style.left = (box.left + box.width / 2) + "px";
-                    pulse.style.top = (box.top + box.height / 2) + "px";
-                    document.body.appendChild(pulse);
+                    const shipSvg = document.querySelector("#btnTuVoz svg");
+                    shipSvg.style.filter = "drop-shadow(0 0 25px #fff)";
+                    shipSvg.style.stroke = "#fff";
+                    setTimeout(() => {
+                        shipSvg.style.filter = "drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))";
+                        shipSvg.style.stroke = "#FFD700";
+                    }, 500);
+                };
 
-                    const destX = (ship.left + ship.width / 2) - (box.left + box.width / 2);
-                    const destY = (ship.top + ship.height / 2) - (box.top + box.height / 2);
-
-                    const angleRad = Math.atan2(destY, destX);
-                    const angleDeg = (angleRad * 180) / Math.PI;
-
-                    const anim = pulse.animate([
-                        { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
-                        { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(3)`, opacity: 0.8 },
-                        { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(0.5)`, opacity: 0 }
-                    ], { duration: 600, easing: "ease-in" });
-
-                    anim.onfinish = () => {
-                        pulse.remove();
-                        reflectionStatus.style.display = "block"; 
-                        isMessageLoadedInShip = true; // MARCADO COMO LISTO PARA EL SOL
-                        
-                        btnTuVoz.classList.remove("ship-waiting"); 
-
-                        const shipSvg = document.querySelector("#btnTuVoz svg");
-                        shipSvg.style.filter = "drop-shadow(0 0 25px #fff)";
-                        shipSvg.style.stroke = "#fff";
-                        setTimeout(() => {
-                            shipSvg.style.filter = "drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))";
-                            shipSvg.style.stroke = "#FFD700";
-                        }, 500);
-                    };
-
-                } else {
-                    alert("Interferencia en la señal. Intenta de nuevo.");
-                }
             }).catch(error => {
                 alert("Error de conexión. Intenta de nuevo.");
             }).finally(() => {
@@ -1812,7 +1806,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-
     // FASE 2: DE LA NAVE AL SOL
     function fireLaserToSun() {
         const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
