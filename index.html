@@ -2353,6 +2353,24 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       });
   }
+    // === GIRO 3D DE LA TARJETA DE COORDENADAS ===
+    const btnShowCrypto = document.getElementById("btnShowCrypto");
+    const btnHideCrypto = document.getElementById("btnHideCrypto");
+    const cryptoCardInner = document.getElementById("cryptoCardInner");
+
+    if (btnShowCrypto && cryptoCardInner) {
+        // Al dar clic en Ver Coordenadas, la tarjeta gira
+        btnShowCrypto.addEventListener("click", (e) => {
+            e.preventDefault(); // Evita que la página brinque
+            cryptoCardInner.classList.add("is-flipped");
+        });
+        
+        // Al dar clic en Volver, la tarjeta regresa a la normalidad
+        btnHideCrypto.addEventListener("click", (e) => {
+            e.preventDefault();
+            cryptoCardInner.classList.remove("is-flipped");
+        });
+    }
 
 });
 </script>
