@@ -1194,51 +1194,82 @@ html, body {
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
 }
 
-/* Diseño de los QRs y el Deslizador */
-.qr-container {
+/* === DISEÑO DEL CARRUSEL DE QRs === */
+.qr-carousel-wrapper {
     display: flex;
-    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
     margin-bottom: 15px;
-    width: 100%; /* Toma el ancho de la tarjeta */
-    max-width: 250px; /* IMPORTANTE: Esto le pone el freno al desborde */
-    overflow-x: auto; /* IMPORTANTE: Activa el scroll horizontal */
-    padding-bottom: 12px;
-    justify-content: flex-start;
-    box-sizing: border-box;
 }
 
-/* Y asegúrate de que el qr-box no se encoja */
+.qr-nav-btn {
+    background: transparent;
+    border: none;
+    color: #FFD700;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: 0.3s;
+    outline: none;
+}
+
+.qr-nav-btn:hover {
+    color: #fff;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px #FFD700;
+}
+
+.qr-container {
+    display: flex;
+    width: 150px; /* Ancho exacto para mostrar un solo QR a la vez */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; /* Fuerza a que el giro se "enganche" en el centro */
+    scroll-behavior: smooth;
+    
+    /* Ocultamos la antiestética barra de desplazamiento en todos los navegadores */
+    -ms-overflow-style: none;  /* IE y Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.qr-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
+}
+
 .qr-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    min-width: 85px; /* IMPORTANTE: Evita que se aplasten */
-    flex-shrink: 0; /* IMPORTANTE: Les prohíbe hacerse pequeños */
+    min-width: 100%; /* Cada caja ocupa el 100% de los 150px disponibles */
+    scroll-snap-align: center; /* Lo centra perfectamente al detenerse */
+    flex-shrink: 0;
 }
+
 .qr-img {
-    width: 80px; 
-    height: 80px;
+    width: 120px; /* Mucho más grande, fácil de escanear */
+    height: 120px;
     border: 1px solid #FFD700;
     border-radius: 8px;
-    padding: 3px;
-    background: #fff; /* Fondo blanco para asegurar lectura del QR */
+    padding: 5px;
+    background: #fff;
 }
 
 .qr-box span {
-    font-size: 10px;
+    font-size: 11px;
     color: #aaa;
     letter-spacing: 1px;
+    text-align: center;
+    white-space: nowrap;
 }
-    /* Etiqueta de advertencia de Red */
+
 .net-badge {
     color: #FFD700 !important;
-    font-size: 8px !important;
+    font-size: 9px !important;
     background: rgba(255, 215, 0, 0.1);
     border: 1px solid rgba(255, 215, 0, 0.3);
-    padding: 2px 6px;
+    padding: 3px 8px;
     border-radius: 4px;
-    margin-top: -3px; /* Lo acerca un poco al nombre principal */
+    margin-top: -3px;
     text-transform: uppercase;
 }
 
