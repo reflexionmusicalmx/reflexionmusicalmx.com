@@ -1779,11 +1779,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 const angleRad = Math.atan2(destY, destX);
                 const angleDeg = (angleRad * 180) / Math.PI;
 
+                // MATEMÁTICA DE PRECISIÓN: Restamos 50px (la mitad del láser) para que la punta frene exacto
+                const offsetX = Math.cos(angleRad) * 50;
+                const offsetY = Math.sin(angleRad) * 50;
+                const finalX = destX - offsetX;
+                const finalY = destY - offsetY;
+
                 const anim = pulse.animate([
                     { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-                    { transform: `translate(calc(-50% + ${destX * 0.6}px), calc(-50% + ${destY * 0.6}px)) rotate(${angleDeg}deg) scaleX(1.5)`, opacity: 1 },
-                    { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 } /* Impacto al 100% visible */
-                ], { duration: 1000, easing: "ease-in" });
+                    { transform: `translate(calc(-50% + ${finalX * 0.5}px), calc(-50% + ${finalY * 0.5}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
+                    { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 } // Se encoge al chocar
+                ], { duration: 800, easing: "ease-in" });
 
                 anim.onfinish = () => {
                     pulse.remove();
@@ -1828,11 +1834,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const angleRad = Math.atan2(destY, destX);
         const angleDeg = (angleRad * 180) / Math.PI;
 
+        // MATEMÁTICA DE PRECISIÓN para el impacto en el Sol
+        const offsetX = Math.cos(angleRad) * 50;
+        const offsetY = Math.sin(angleRad) * 50;
+        const finalX = destX - offsetX;
+        const finalY = destY - offsetY;
+
         const anim = pulse.animate([
             { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-            { transform: `translate(calc(-50% + ${destX * 0.6}px), calc(-50% + ${destY * 0.6}px)) rotate(${angleDeg}deg) scaleX(2)`, opacity: 1 },
-            { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 } /* Impacto al 100% visible */
-        ], { duration: 1200, easing: "ease-in" });
+            { transform: `translate(calc(-50% + ${finalX * 0.5}px), calc(-50% + ${finalY * 0.5}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
+            { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 } // Se absorbe en el Sol
+        ], { duration: 1000, easing: "ease-in" });
         anim.onfinish = () => {
             pulse.remove();
             
