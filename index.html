@@ -668,11 +668,28 @@ html, body {
 }
 
 .comet-head {
-    width: 10px; height: 10px; background: #fff; border-radius: 50%; box-shadow: 0 0 15px 5px rgba(255,215,0,0.8), 0 0 30px 10px rgba(255,215,0,0.4); position: relative; z-index: 2; transition: 0.4s;
+    width: 14px; /* Lo aumenté a 14px para que coincida perfecto con la imagen que me mandaste */
+    height: 14px; 
+    background: #fff; 
+    border-radius: 50%; 
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.9), 0 0 30px 10px rgba(255, 215, 0, 0.8); 
+    position: relative; 
+    z-index: 2; 
+    transition: 0.4s;
 }
 
 .comet-tail {
-    position: absolute; top: 50%; left: 20px; width: 180px; height: 3px; background: linear-gradient(to right, rgba(255,215,0,0.9), transparent); transform-origin: left center; filter: blur(1px); z-index: 1; pointer-events: none; transition: 0.4s;
+    position: absolute; 
+    /* LA MATEMÁTICA EXACTA: 50% menos la mitad de su propio grosor (1.5px) */
+    top: calc(50% - 1.5px); 
+    left: 50%; /* Nace desde el centro exacto de la cabeza */
+    width: 150px; 
+    height: 3px; 
+    background: linear-gradient(to right, #FFD700 0%, rgba(255,215,0,0.3) 40%, transparent 100%); 
+    transform-origin: left center; 
+    z-index: 1; 
+    pointer-events: none; 
+    transition: 0.4s;
 }
 
 .comet-text {
