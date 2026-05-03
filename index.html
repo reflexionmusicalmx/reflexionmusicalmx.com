@@ -1223,6 +1223,17 @@ html, body {
     color: #aaa;
     letter-spacing: 1px;
 }
+    /* Etiqueta de advertencia de Red */
+.net-badge {
+    color: #FFD700 !important;
+    font-size: 8px !important;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: -3px; /* Lo acerca un poco al nombre principal */
+    text-transform: uppercase;
+}
 
 .btn-volver-crypto {
     margin-top: auto;
@@ -1428,22 +1439,53 @@ html, body {
 
                     <!-- CARA TRASERA (LOS CÓDIGOS QR) -->
                     <div class="flip-card-back">
-                        <h3 style="color: #FFD700; margin-bottom: 15px; font-size: 14px;">COORDENADAS WEB3</h3>
+                        <h3 style="color: #FFD700; margin-bottom: 10px; font-size: 14px;">COORDENADAS WEB3</h3>
                         
-                        <div class="qr-container">
-                            <!-- Código QR 1 (Ej. Bitcoin) -->
+                        <!-- Contenedor con deslizador horizontal -->
+                        <div class="qr-container qr-scroll">
+                            
+                            <!-- 1. Bitcoin -->
                             <div class="qr-box">
-                                <!-- OJO: Cambia la ruta por la imagen real de tu código QR -->
                                 <img src="images/qr-btc.png" alt="QR Bitcoin" class="qr-img">
                                 <span>BITCOIN (BTC)</span>
+                                <span class="net-badge">Red: Bitcoin</span>
                             </div>
                             
-                            <!-- Código QR 2 (Ej. USDT) -->
+                            <!-- 2. USDT (Red Tron) -->
                             <div class="qr-box">
-                                <!-- OJO: Cambia la ruta por la imagen real de tu código QR -->
-                                <img src="images/qr-usdt.png" alt="QR USDT TRC20" class="qr-img">
-                                <span>USDT (TRC20)</span>
+                                <img src="images/qr-usdt-trc20.png" alt="QR USDT TRC20" class="qr-img">
+                                <span>USDT</span>
+                                <span class="net-badge">Red: TRC20</span>
                             </div>
+
+                            <!-- 3. USDT (Red BSC) -->
+                            <div class="qr-box">
+                                <img src="images/qr-usdt-bep20.png" alt="QR USDT BEP20" class="qr-img">
+                                <span>USDT</span>
+                                <span class="net-badge">Red: BEP20</span>
+                            </div>
+
+                            <!-- 4. Ripple -->
+                            <div class="qr-box">
+                                <img src="images/qr-xrp.png" alt="QR Ripple" class="qr-img">
+                                <span>RIPPLE (XRP)</span>
+                                <span class="net-badge">Red: Ripple</span>
+                            </div>
+
+                            <!-- 5. Litecoin -->
+                            <div class="qr-box">
+                                <img src="images/qr-ltc.png" alt="QR Litecoin" class="qr-img">
+                                <span>LITECOIN (LTC)</span>
+                                <span class="net-badge">Red: Litecoin</span>
+                            </div>
+
+                            <!-- 6. Solana -->
+                            <div class="qr-box">
+                                <img src="images/qr-sol.png" alt="QR Solana" class="qr-img">
+                                <span>SOLANA (SOL)</span>
+                                <span class="net-badge">Red: Solana</span>
+                            </div>
+
                         </div>
 
                         <button class="holo-btn btn-volver-crypto" id="btnHideCrypto">VOLVER</button>
