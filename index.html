@@ -1664,9 +1664,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const lastSent = localStorage.getItem('lastReflectionTime');
         const cooldown = 24 * 60 * 60 * 1000;
         if (lastSent && (Date.now() - lastSent < cooldown)) {
-            // Si el sistema sigue en enfriamiento, la nave amanece gris y apagada
-            btnTuVoz.style.opacity = "0.3";
-            btnTuVoz.style.filter = "grayscale(100%)";
+            // La nave desaparece por completo del universo
+            btnTuVoz.style.display = "none";
         }
     }
 
@@ -1902,10 +1901,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 resumeUniverse(); 
                 isMessageLoadedInShip = false; 
                 
-                // LA NAVE VUELVE, PERO "DESCARGADA" (Gris y transparente)
-                shipBtn.style.opacity = "0.3";
-                shipBtn.style.filter = "grayscale(100%)";
-                shipBtn.style.pointerEvents = "auto"; // Se puede clickear para leer el aviso
+                // LA NAVE SE DESINTEGRA Y DESAPARECE POR 24 HORAS
+                shipBtn.style.display = "none";
             }, 700);
         };
     }
