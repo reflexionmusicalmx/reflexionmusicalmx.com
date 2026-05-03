@@ -992,6 +992,150 @@ html, body {
     line-height: 1 !important;
     text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
+    /* === SATÉLITE EN ÓRBITA === */
+.satelite-wrapper {
+    position: absolute;
+    top: 15%; 
+    right: 20%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    animation: floatSatellite 4s ease-in-out infinite;
+}
+
+.satelite-wrapper svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+}
+
+.satelite-wrapper:hover {
+    transform: scale(1.2);
+}
+
+.satelite-wrapper:hover svg {
+    stroke: #FFD700; 
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes floatSatellite {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+/* === PANEL HOLOGRÁFICO === */
+.hologram-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); 
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.hologram-content {
+    background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(0,0,0,0.95) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3); 
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.15), inset 0 0 20px rgba(255, 215, 0, 0.05);
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    color: #fff;
+}
+
+.close-hologram {
+    position: absolute;
+    top: 15px; right: 20px;
+    background: none; border: none;
+    color: #FFD700;
+    font-size: 28px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-hologram:hover {
+    color: #fff;
+    text-shadow: 0 0 10px #FFD700;
+}
+
+.hologram-header h2 {
+    color: #FFD700;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.hologram-header p {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.support-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 25px 15px;
+    transition: 0.3s ease;
+}
+
+.support-card:hover {
+    background: rgba(255, 215, 0, 0.05);
+    border-color: rgba(255, 215, 0, 0.5);
+    transform: translateY(-5px);
+}
+
+.card-icon {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.support-card h3 {
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.support-card p {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.holo-btn {
+    background: transparent;
+    color: #FFD700;
+    border: 1px solid #FFD700;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+}
+
+.holo-btn:hover {
+    background: #FFD700;
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
 </style>
 </head>
 <body>
@@ -1157,6 +1301,44 @@ html, body {
     </div>
 
 </div> <!-- Aquí se cierra el solarSystem -->
+
+<!-- === PANEL HOLOGRÁFICO: CENTRO DE ENERGÍA === -->
+<div id="hologramPanel" class="hologram-modal">
+    <div class="hologram-content">
+        <button class="close-hologram">&times;</button>
+        
+        <div class="hologram-header">
+            <h2>CENTRO DE ENERGÍA</h2>
+            <p>Súmate a la misión de Reflexión Musical MX</p>
+        </div>
+
+        <div class="support-grid">
+            <!-- Opción 1: Dinero / Crypto -->
+            <div class="support-card">
+                <div class="card-icon">⚡</div>
+                <h3>FINANCIAR LA SONDA</h3>
+                <p>Aportaciones directas para mantener la producción independiente.</p>
+                <button class="holo-btn">VER COORDENADAS</button>
+            </div>
+
+            <!-- Opción 2: Co-creación -->
+            <div class="support-card">
+                <div class="card-icon">📡</div>
+                <h3>PROPAGAR LA SEÑAL</h3>
+                <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
+                <button class="holo-btn">DESCARGAR MATERIAL</button>
+            </div>
+
+            <!-- Opción 3: Playlists -->
+            <div class="support-card">
+                <div class="card-icon">🎶</div>
+                <h3>AMPLIFICAR FRECUENCIA</h3>
+                <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
+                <button class="holo-btn">IR A PLATAFORMAS</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- MODAL DEL BUZÓN FLOTANTE -->
 <div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
@@ -2012,7 +2194,34 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (e) { console.error(e); }
     }
 
-    setTimeout(spawnNextComet, 3000);
+ setTimeout(spawnNextComet, 3000);
+
+  // === CONTROL DEL SATÉLITE Y EL PANEL HOLOGRÁFICO ===
+  const btnSatelite = document.getElementById("btnSatelite");
+  const hologramPanel = document.getElementById("hologramPanel");
+  const closeHologramBtn = document.querySelector(".close-hologram");
+
+  if (btnSatelite && hologramPanel) {
+      // Abrir panel
+      btnSatelite.addEventListener("click", () => {
+          hologramPanel.style.display = "flex";
+          pauseUniverse(); // Congela los planetas de fondo
+      });
+
+      // Cerrar panel en la X
+      closeHologramBtn.addEventListener("click", () => {
+          hologramPanel.style.display = "none";
+          resumeUniverse(); // Descongela los planetas
+      });
+
+      // Cerrar panel si hacen clic fuera del cuadro
+      window.addEventListener("click", (e) => {
+          if (e.target === hologramPanel) {
+              hologramPanel.style.display = "none";
+              resumeUniverse();
+          }
+      });
+  }
 
 });
 </script>
