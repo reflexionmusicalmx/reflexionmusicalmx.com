@@ -847,14 +847,14 @@ html, body {
     animation: shipWaiting 1.5s infinite ease-in-out !important;
 }
 
-/* EL PROYECTIL DE LÁSER (DOBLE FASE) - MEJORADO */
+/* EL PROYECTIL DE LÁSER (DOBLE FASE) - ORO PURO */
 .energy-pulse {
     position: fixed;
-    width: 60px; /* Más largo para parecer un rayo */
+    width: 80px; /* Más largo y visible */
     height: 6px;
-    /* Efecto cometa: Cabeza blanca, cuerpo dorado, cola transparente */
-    background: linear-gradient(to right, transparent 0%, #FFD700 50%, #ffffff 100%);
-    box-shadow: 0 0 25px 8px rgba(255,215,0,0.9), 0 0 10px 2px rgba(255,255,255,0.8);
+    /* Colores sólidos: cabeza ultra blanca, cuerpo oro intenso */
+    background: linear-gradient(to right, transparent 0%, #FFB300 40%, #FFD700 80%, #ffffff 100%);
+    box-shadow: 0 0 35px 12px rgba(255, 215, 0, 1), 0 0 15px 5px rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     pointer-events: none;
     z-index: 999999;
@@ -1766,9 +1766,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const anim = pulse.animate([
                     { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-                    { transform: `translate(calc(-50% + ${destX * 0.4}px), calc(-50% + ${destY * 0.4}px)) rotate(${angleDeg}deg) scaleX(1.5)`, opacity: 1 },
-                    { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(0.5)`, opacity: 0 }
-                ], { duration: 1200, easing: "ease-in-out" });
+                    { transform: `translate(calc(-50% + ${destX * 0.6}px), calc(-50% + ${destY * 0.6}px)) rotate(${angleDeg}deg) scaleX(1.5)`, opacity: 1 },
+                    { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 } /* Impacto al 100% visible */
+                ], { duration: 1000, easing: "ease-in" });
 
                 anim.onfinish = () => {
                     pulse.remove();
@@ -1815,10 +1815,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const anim = pulse.animate([
             { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-            { transform: `translate(calc(-50% + ${destX * 0.5}px), calc(-50% + ${destY * 0.5}px)) rotate(${angleDeg}deg) scaleX(2)`, opacity: 1 },
-            { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(0.5)`, opacity: 0 }
-        ], { duration: 1500, easing: "ease-in" });
-
+            { transform: `translate(calc(-50% + ${destX * 0.6}px), calc(-50% + ${destY * 0.6}px)) rotate(${angleDeg}deg) scaleX(2)`, opacity: 1 },
+            { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 } /* Impacto al 100% visible */
+        ], { duration: 1200, easing: "ease-in" });
         anim.onfinish = () => {
             pulse.remove();
             
