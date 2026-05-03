@@ -1779,17 +1779,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const angleRad = Math.atan2(destY, destX);
                 const angleDeg = (angleRad * 180) / Math.PI;
 
-                // MATEMÁTICA DE PRECISIÓN: El láser se encoge al 20% (scaleX 0.2).
-                // 100px * 20% = 20px totales. Del centro a la punta hay exactamente 10px.
-                // Frenamos a 10px para que la punta "bese" la nave al comprimirse.
-                const offsetX = Math.cos(angleRad) * 50;
-                const offsetY = Math.sin(angleRad) * 50;
-                const finalX = destX - offsetX;
-                const finalY = destY - offsetY;
+                // SIN FRENOS: Como la nave es pequeñita, mandamos la energía directo a su centro exacto.
+                const finalX = destX;
+                const finalY = destY;
 
                 const anim = pulse.animate([
                     { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-                    { transform: `translate(calc(-50% + ${finalX * 0.5}px), calc(-50% + ${finalY * 0.5}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
+                    { transform: `translate(calc(-50% + ${finalX * 0.6}px), calc(-50% + ${finalY * 0.6}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
                     { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 } 
                 ], { duration: 1000, easing: "ease-in" });
 
