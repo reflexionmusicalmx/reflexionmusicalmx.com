@@ -1325,12 +1325,42 @@ html, body {
         </div>
 
         <div class="support-grid">
-            <!-- Opción 1: Dinero / Crypto -->
-            <div class="support-card">
-                <div class="card-icon">⚡</div>
-                <h3>FINANCIAR LA SONDA</h3>
-                <p>Aportaciones directas para mantener la producción independiente.</p>
-                <button class="holo-btn">VER COORDENADAS</button>
+            <!-- Opción 1: Dinero / Crypto (TARJETA CON GIRO 3D) -->
+            <div class="support-card flip-card">
+                <div class="flip-card-inner" id="cryptoCardInner">
+                    
+                    <!-- CARA FRONTAL -->
+                    <div class="flip-card-front">
+                        <div class="card-icon">⚡</div>
+                        <h3>FINANCIAR LA SONDA</h3>
+                        <p>Aportaciones directas para mantener la producción independiente.</p>
+                        <button class="holo-btn" id="btnShowCrypto">VER COORDENADAS</button>
+                    </div>
+
+                    <!-- CARA TRASERA (LOS CÓDIGOS QR) -->
+                    <div class="flip-card-back">
+                        <h3 style="color: #FFD700; margin-bottom: 15px; font-size: 14px;">COORDENADAS WEB3</h3>
+                        
+                        <div class="qr-container">
+                            <!-- Código QR 1 (Ej. Bitcoin) -->
+                            <div class="qr-box">
+                                <!-- OJO: Cambia la ruta por la imagen real de tu código QR -->
+                                <img src="images/qr-btc.png" alt="QR Bitcoin" class="qr-img">
+                                <span>BITCOIN (BTC)</span>
+                            </div>
+                            
+                            <!-- Código QR 2 (Ej. USDT) -->
+                            <div class="qr-box">
+                                <!-- OJO: Cambia la ruta por la imagen real de tu código QR -->
+                                <img src="images/qr-usdt.png" alt="QR USDT TRC20" class="qr-img">
+                                <span>USDT (TRC20)</span>
+                            </div>
+                        </div>
+
+                        <button class="holo-btn btn-volver-crypto" id="btnHideCrypto">VOLVER</button>
+                    </div>
+
+                </div>
             </div>
 
             <!-- Opción 2: Co-creación -->
