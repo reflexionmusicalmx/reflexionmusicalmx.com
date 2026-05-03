@@ -1123,6 +1123,16 @@ html, body {
             <textarea name="mensaje" id="reflectionMsg" rows="5" placeholder="Escribe tu reflexión aquí..." required></textarea>
             <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top: 15px;">CARGAR MENSAJE EN NAVE</button>
         </form>
+        <form id="reflectionForm" action="https://formspree.io/f/xvzlodyj" method="POST">
+            <textarea name="mensaje" id="reflectionMsg" rows="5" placeholder="Escribe tu reflexión aquí..." required></textarea>
+            <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top: 15px;">CARGAR MENSAJE EN NAVE</button>
+        </form>
+
+        <!-- MENSAJE ANTI-SPAM (NUEVO) -->
+        <div id="cooldownStatus" style="display: none; text-align: center; margin-top: 15px;">
+            <p style="color: #ff4d4d; font-weight: bold; font-size: 14px; margin-bottom: 5px;">SISTEMA EN ENFRIAMIENTO</p>
+            <p style="font-size: 13px; opacity: 0.9;">La sonda necesita recargar energía tras tu último envío. Por favor, intenta de nuevo mañana.</p>
+        </div>
         
         <!-- Estado Fase 2 (Oculto al inicio) -->
         <div id="reflectionStatus" style="display: none; text-align: center; margin-top: 15px;">
