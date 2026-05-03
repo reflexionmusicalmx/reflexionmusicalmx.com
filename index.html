@@ -1691,7 +1691,6 @@ document.addEventListener("DOMContentLoaded", () => {
             btnTuVoz.classList.add("ship-waiting"); 
             
             if (window.innerWidth > 768) {
-                // POSICIONAMIENTO RADAR (SOLO PARA PC)
                 const shipRect = btnTuVoz.getBoundingClientRect();
                 const screenCenter = window.innerWidth / 2;
                 
@@ -1705,7 +1704,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 reflectionContentBox.style.top = "50%";
                 reflectionContentBox.style.transform = "translateY(-50%)";
             } else {
-                // EN MÓVIL, LIMPIAMOS ESTILOS EN LÍNEA PARA QUE EL CSS LO EMPUJE DESDE ABAJO
                 reflectionContentBox.style.left = "";
                 reflectionContentBox.style.right = "";
                 reflectionContentBox.style.top = "";
@@ -1713,14 +1711,27 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             reflectionModal.classList.add("show");
-            reflectionStatus.style.display = "none";
-            reflectionForm.style.display = "flex";
             closeReflection.style.display = "block"; 
-            document.getElementById("reflectionMsg").value = "";
-            isMessageLoadedInShip = false; // Se resetea la memoria de la nave
+            reflectionStatus.style.display = "none";
+
+            // === LÓGICA ANTI-SPAM ===
+            const lastSent = localStorage.getItem('lastReflectionTime');
+            const cooldown = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
+
+            if (lastSent && (Date.now() - lastSent < cooldown)) {
+                // Si aún no pasan 24 horas, ocultamos form y mostramos mensaje de recarga
+                reflectionForm.style.display = "none";
+                document.getElementById("cooldownStatus").style.display = "block";
+            } else {
+                // Si todo está bien, mostramos el form limpio
+                reflectionForm.style.display = "flex";
+                document.getElementById("cooldownStatus").style.display = "none";
+                document.getElementById("reflectionMsg").value = "";
+            }
+            
+            isMessageLoadedInShip = false; 
         };
     }
-
     // FASE 1: DEL BUZÓN A LA NAVE
     if(reflectionForm) {
         reflectionForm.addEventListener("submit", async function(event) {
@@ -1735,7 +1746,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: { 'Accept': 'application/json' }
             }).then(response => {
                 if (response.ok) {
+                    // GUARDAR EN MEMORIA QUE ACABA DE ENVIAR UN MENSAJE
+                    localStorage.setItem('lastReflectionTime', Date.now());
+
                     reflectionForm.style.display = "none";
+                    closeReflection.style.display = "none";
                     
                     const box = reflectionContentBox.getBoundingClientRect();
                     const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
