@@ -1194,21 +1194,28 @@ html, body {
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
 }
 
-/* Diseño de los QRs */
+/* Diseño de los QRs y el Deslizador */
 .qr-container {
     display: flex;
     gap: 15px;
     margin-bottom: 15px;
-    justify-content: center;
+    width: 100%; /* Toma el ancho de la tarjeta */
+    max-width: 250px; /* IMPORTANTE: Esto le pone el freno al desborde */
+    overflow-x: auto; /* IMPORTANTE: Activa el scroll horizontal */
+    padding-bottom: 12px;
+    justify-content: flex-start;
+    box-sizing: border-box;
 }
 
+/* Y asegúrate de que el qr-box no se encoja */
 .qr-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    min-width: 85px; /* IMPORTANTE: Evita que se aplasten */
+    flex-shrink: 0; /* IMPORTANTE: Les prohíbe hacerse pequeños */
 }
-
 .qr-img {
     width: 80px; 
     height: 80px;
