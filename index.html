@@ -1114,7 +1114,7 @@ html, body {
     <div class="modal-content reflection-content">
         <span class="close-modal close-reflection" aria-label="Cerrar buzón" role="button" tabindex="0">×</span>
         <h2 style="text-align: center; font-size: 20px; border-bottom: none; margin-bottom: 5px;">CONEXIÓN SEGURA</h2>
-        <p style="text-align: center; font-size: 13px; opacity: 0.9;">El universo se ha detenido para escucharte. Escribe tu mensaje y cárgalo en la sonda.</p>
+        <p id="buzonSubtitle" style="text-align: center; font-size: 13px; opacity: 0.9;">El universo se ha detenido para escucharte. Escribe tu mensaje y cárgalo en la sonda.</p>
         
         <form id="reflectionForm" action="https://script.google.com/macros/s/AKfycbw-iMGBj0r8nZbhZPfwniPA1KzOC_elObAC5kN14EFeUaK0Dx7ZzD2bCOJcYw_o3xWhHQ/exec" method="POST">
             <textarea name="mensaje" id="reflectionMsg" rows="5" placeholder="Escribe tu reflexión aquí..." required></textarea>
@@ -1719,6 +1719,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Si todo está bien, mostramos el form limpio
                 reflectionForm.style.display = "flex";
                 document.getElementById("cooldownStatus").style.display = "none";
+                document.getElementById("buzonSubtitle").style.display = "block"; // <--- AGREGAR ESTO
                 document.getElementById("reflectionMsg").value = "";
             }
             
@@ -1771,6 +1772,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 anim.onfinish = () => {
                     pulse.remove();
                     reflectionStatus.style.display = "block"; 
+                    document.getElementById("buzonSubtitle").style.display = "none"; // <--- AGREGAR ESTO
                     isMessageLoadedInShip = true; // MARCADO COMO LISTO PARA EL SOL
                     
                     btnTuVoz.classList.remove("ship-waiting"); 
