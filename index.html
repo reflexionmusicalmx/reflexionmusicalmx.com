@@ -1745,7 +1745,7 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             btnSubmitReflection.innerText = "SINTONIZANDO...";
             btnSubmitReflection.disabled = true;
-
+            
             const data = new FormData(event.target);
             // El modo 'no-cors' le permite mandar los datos a Google de forma invisible
             fetch(event.target.action, {
@@ -1753,7 +1753,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 mode: 'no-cors',
                 body: data
             }).then(() => {
-                // Al usar Google Sheets, asumimos éxito directo si no salta error
                 
                 // GUARDAR EN MEMORIA QUE ACABA DE ENVIAR UN MENSAJE (ANTI-SPAM)
                 localStorage.setItem('lastReflectionTime', Date.now());
