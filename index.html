@@ -847,17 +847,32 @@ html, body {
     animation: shipWaiting 1.5s infinite ease-in-out !important;
 }
 
-/* EL PROYECTIL DE LÁSER (DOBLE FASE) - ORO PURO */
+/* EL PROYECTIL DE LÁSER - EFECTO PLASMA Y NÚCLEO BRILLANTE */
 .energy-pulse {
     position: fixed;
-    width: 80px; /* Más largo y visible */
-    height: 6px;
-    /* Colores sólidos: cabeza ultra blanca, cuerpo oro intenso */
-    background: linear-gradient(to right, transparent 0%, #FFB300 40%, #FFD700 80%, #ffffff 100%);
-    box-shadow: 0 0 35px 12px rgba(255, 215, 0, 1), 0 0 15px 5px rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    width: 100px;
+    height: 2px; /* Mucho más delgado, ya no es un palo */
+    background: linear-gradient(to right, transparent 0%, rgba(255, 215, 0, 0.6) 50%, #ffffff 100%);
+    box-shadow: 0 0 20px 4px rgba(255, 215, 0, 0.6);
+    border-radius: 50px;
     pointer-events: none;
     z-index: 999999;
+}
+
+/* La "Chispa" o núcleo de energía en la punta del láser */
+.energy-pulse::after {
+    content: '';
+    position: absolute;
+    right: -2px; /* Se ancla exactamente en la punta delantera */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 15px 5px #ffffff, 
+        0 0 35px 15px #FFD700; /* Un resplandor enorme alrededor de la punta */
 }
 
 /* VENTANA INVISIBLE QUE DEJA VER EL UNIVERSO CONGELADO */
