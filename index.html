@@ -2452,6 +2452,22 @@ document.addEventListener("DOMContentLoaded", () => {
             cryptoCardInner.classList.remove("is-flipped");
         });
     }
+    // === FUNCIONALIDAD DE LAS FLECHAS DEL CARRUSEL QR ===
+    const qrContainer = document.getElementById('qrContainer');
+    const prevQr = document.getElementById('prevQr');
+    const nextQr = document.getElementById('nextQr');
+
+    if(prevQr && nextQr && qrContainer) {
+        // Mueve 150px a la izquierda
+        prevQr.addEventListener('click', () => {
+            qrContainer.scrollBy({ left: -150, behavior: 'smooth' });
+        });
+        
+        // Mueve 150px a la derecha
+        nextQr.addEventListener('click', () => {
+            qrContainer.scrollBy({ left: 150, behavior: 'smooth' });
+        });
+    }
 
 });
 </script>
