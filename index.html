@@ -1659,6 +1659,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let isUniversePaused = false;
     let isMessageLoadedInShip = false; // Memoria para saber si la nave ya tiene el mensaje
 
+    // === REVISIÓN VISUAL DE ENFRIAMIENTO AL CARGAR LA PÁGINA ===
+    if (btnTuVoz) {
+        const lastSent = localStorage.getItem('lastReflectionTime');
+        const cooldown = 24 * 60 * 60 * 1000;
+        if (lastSent && (Date.now() - lastSent < cooldown)) {
+            // Si el sistema sigue en enfriamiento, la nave amanece gris y apagada
+            btnTuVoz.style.opacity = "0.3";
+            btnTuVoz.style.filter = "grayscale(100%)";
+        }
+    }
+
     // FUNCIONES PARA CONGELAR Y REANUDAR EL UNIVERSO (CON CÁMARA DINÁMICA MÓVIL)
     function pauseUniverse() {
         if (!isUniversePaused) {
@@ -1817,68 +1828,87 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-    // FASE 2: DE LA NAVE AL SOL
+    // FASE 2: DE LA NAVE AL SOL (VIAJE DE ENTREGA)
     function fireLaserToSun() {
-        const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
+        const shipBtn = document.getElementById("btnTuVoz");
+        const shipRect = shipBtn.getBoundingClientRect();
         const sunRect = document.getElementById("sun").getBoundingClientRect();
 
-        const pulse = document.createElement("div");
-        pulse.className = "energy-pulse";
-        
-        pulse.style.left = (ship.left + ship.width / 2) + "px";
-        pulse.style.top = (ship.top + ship.height / 2) + "px";
-        document.body.appendChild(pulse);
+        // 1. Apagar la nave original temporalmente para ocultarla
+        shipBtn.style.opacity = "0";
+        shipBtn.style.pointerEvents = "none";
 
-        const destX = (sunRect.left + sunRect.width / 2) - (ship.left + ship.width / 2);
-        const destY = (sunRect.top + sunRect.height / 2) - (ship.top + ship.height / 2);
+        // 2. Crear un "clon" de la nave para animar su vuelo libre
+        const shipClone = document.createElement("div");
+        shipClone.innerHTML = shipBtn.innerHTML; 
+        shipClone.style.position = "fixed";
+        shipClone.style.left = shipRect.left + "px";
+        shipClone.style.top = shipRect.top + "px";
+        shipClone.style.width = shipRect.width + "px";
+        shipClone.style.height = shipRect.height + "px";
+        shipClone.style.zIndex = "999999";
+        shipClone.style.display = "flex";
+        shipClone.style.alignItems = "center";
+        shipClone.style.justifyContent = "center";
+        
+        // Encender los propulsores del clon a tope
+        const cloneSvg = shipClone.querySelector("svg");
+        if(cloneSvg) {
+            cloneSvg.style.stroke = "#fff";
+            cloneSvg.style.filter = "drop-shadow(0 0 25px #FFD700)";
+        }
+        document.body.appendChild(shipClone);
+
+        // 3. Calcular la ruta y el ángulo hacia el Sol
+        const destX = (sunRect.left + sunRect.width / 2) - (shipRect.left + shipRect.width / 2);
+        const destY = (sunRect.top + sunRect.height / 2) - (shipRect.top + shipRect.height / 2);
 
         const angleRad = Math.atan2(destY, destX);
         const angleDeg = (angleRad * 180) / Math.PI;
 
-        // MATEMÁTICA DE PRECISIÓN para el impacto en el Sol
-        const offsetX = Math.cos(angleRad) * 50;
-        const offsetY = Math.sin(angleRad) * 50;
-        const finalX = destX - offsetX;
-        const finalY = destY - offsetY;
+        // 4. Animar el vuelo hacia el núcleo del Sol
+        const anim = shipClone.animate([
+            { transform: `translate(0px, 0px) rotate(${angleDeg + 45}deg) scale(1)` }, // +45 para alinear la punta del ícono
+            { transform: `translate(${destX * 0.5}px, ${destY * 0.5}px) rotate(${angleDeg + 45}deg) scale(1.5)` },
+            { transform: `translate(${destX}px, ${destY}px) rotate(${angleDeg + 45}deg) scale(0)` } // Desaparece absorbida en el Sol
+        ], { duration: 1800, easing: "cubic-bezier(0.5, 0, 0.5, 1)" }); // Acelera progresivamente
 
-        const anim = pulse.animate([
-            { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-            { transform: `translate(calc(-50% + ${finalX * 0.5}px), calc(-50% + ${finalY * 0.5}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
-            { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 } // Se absorbe en el Sol
-        ], { duration: 1000, easing: "ease-in" });
         anim.onfinish = () => {
-            pulse.remove();
+            shipClone.remove();
             
             // IMPACTO ÉPICO EN EL SOL
             const sunEl = document.getElementById("sun");
-            sunEl.style.transform = "scale(1.5)"; // Crece mucho más
-            sunEl.style.filter = "drop-shadow(0 0 100px #fff) brightness(2.5)"; // Brillo enceguecedor
+            sunEl.style.transform = "scale(1.5)";
+            sunEl.style.filter = "drop-shadow(0 0 100px #fff) brightness(2.5)";
             
-            // DESTELLO (FLASH) EN TODA LA PANTALLA
+            // DESTELLO SOLAR EN TODA LA PANTALLA
             const flash = document.createElement("div");
             flash.style.position = "fixed";
             flash.style.top = "0"; flash.style.left = "0";
             flash.style.width = "100%"; flash.style.height = "100%";
-            flash.style.background = "rgba(255, 215, 0, 0.35)"; // Un flash dorado tenue
+            flash.style.background = "rgba(255, 215, 0, 0.35)";
             flash.style.zIndex = "99998";
             flash.style.pointerEvents = "none";
             flash.style.transition = "opacity 0.8s ease-out";
             document.body.appendChild(flash);
             
-            // Desvanecer el flash inmediatamente para dar el efecto de relámpago
             setTimeout(() => flash.style.opacity = "0", 50);
             setTimeout(() => flash.remove(), 850);
             
-            // El Sol se calma y el Universo reanuda
+            // El universo vuelve a la normalidad
             setTimeout(() => {
                 sunEl.style.transform = "scale(1)";
                 sunEl.style.filter = "";
                 resumeUniverse(); 
                 isMessageLoadedInShip = false; 
+                
+                // LA NAVE VUELVE, PERO "DESCARGADA" (Gris y transparente)
+                shipBtn.style.opacity = "0.3";
+                shipBtn.style.filter = "grayscale(100%)";
+                shipBtn.style.pointerEvents = "auto"; // Se puede clickear para leer el aviso
             }, 700);
         };
     }
-
     if(btnSendToSun) btnSendToSun.onclick = closeBuzonAndHandleLaser;
     const upcomingReleases = [
         "📖 LIBRO: ALGO ESTÁ MAL",
