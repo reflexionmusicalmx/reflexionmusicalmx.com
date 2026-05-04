@@ -1343,52 +1343,30 @@ html, body {
 .qr-box span {
     color: #FFD700 !important;
 }
-    /* Animación de Órbita para el Centro de Energía */
-@keyframes orbitaEnergia {
-    from { transform: rotate(0deg) translateX(250px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(250px) rotate(-360deg); }
+
+/* =========================================
+   ÓRBITA DIRECCIONADA Y SÓLIDA (SATÉLITE)
+========================================= */
+
+/* Animación: La punta mira hacia el frente de la órbita */
+@keyframes orbitaSateliteProa {
+    from { transform: rotate(0deg) translateX(280px) rotate(90deg); }
+    to { transform: rotate(360deg) translateX(280px) rotate(90deg); }
 }
 
-/* Aplicar la órbita al contenedor del satélite */
-#energyCenter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -25px; /* Mitad de su altura */
-    margin-left: -25px; /* Mitad de su ancho */
-    z-index: 10;
-    cursor: pointer;
-    animation: orbitaEnergia 40s linear infinite; /* 40 segundos para una vuelta lenta y elegante */
-}
-
-/* Evitar que el satélite se vea de cabeza mientras gira */
-#energyCenter img {
-    display: block;
-    width: 50px;
-    height: 50px;
-}
-    /* 1. Definición de la órbita exterior */
-@keyframes orbitaEnergia {
-    from { transform: rotate(0deg) translateX(280px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(280px) rotate(-360deg); }
-}
-
-/* 2. Aplicamos la animación al ID correcto: btnSatelite */
 #btnSatelite {
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
-    width: 50px;
-    height: 50px;
-    margin-top: -25px;
-    margin-left: -25px;
-    z-index: 1000; /* Prioridad para que sea siempre clickeable */
+    width: 45px;
+    height: 45px;
+    margin-top: -22.5px;
+    margin-left: -22.5px;
+    z-index: 1000;
     cursor: pointer;
-    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
-    
-    /* Motor de la animación */
     display: block !important;
-    animation: orbitaEnergia 45s linear infinite !important;
+    animation: orbitaSateliteProa 40s linear infinite !important;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     transition: filter 0.3s ease;
 }
 
@@ -1397,13 +1375,16 @@ html, body {
     scale: 1.1;
 }
 
-/* 3. Aseguramos que el diseño del satélite se mantenga perfecto */
 #btnSatelite svg {
     width: 100%;
     height: 100%;
     display: block;
 }
 
+/* Clases de Relleno para que se vea sólido como la nave */
+#btnSatelite .sat-cuerpo { fill: #FFD700 !important; }
+#btnSatelite .sat-paneles { fill: rgba(255, 215, 0, 0.4) !important; }
+#btnSatelite .sat-antena { fill: rgba(255, 215, 0, 0.2) !important; }
 </style>
 </head>
 <body>
@@ -1556,24 +1537,23 @@ html, body {
     <!-- === SATÉLITE DE COMUNICACIONES (CENTRO DE ENERGÍA) === -->
 <div id="btnSatelite" class="satelite-wrapper" title="Centro de Energía">
     <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Antena Parabólica superior -->
-        <path d="M8 6a4 4 0 0 1 8 0H8z" />
+        <!-- Antena Parabólica (Con Relleno Tenue) -->
+        <path d="M8 6a4 4 0 0 1 8 0H8z" fill="rgba(255, 215, 0, 0.2)" />
         <line x1="12" y1="2" x2="12" y2="6" />
         <circle cx="12" cy="2" r="1" fill="#FFD700" />
         
-        <!-- Cuerpo central -->
-        <rect x="9" y="6" width="6" height="10" rx="1" />
+        <!-- Cuerpo central (Sólido) -->
+        <rect x="9" y="6" width="6" height="10" rx="1" fill="#FFD700" />
         
-        <!-- Paneles Solares Izquierdos -->
-        <rect x="2" y="7" width="4" height="8" rx="0.5" />
+        <!-- Paneles Solares (Sólidos con bordes) -->
+        <rect x="2" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.4)" stroke="#FFD700" />
         <line x1="6" y1="11" x2="9" y2="11" />
         
-        <!-- Paneles Solares Derechos -->
-        <rect x="18" y="7" width="4" height="8" rx="0.5" />
+        <rect x="18" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.4)" stroke="#FFD700" />
         <line x1="15" y1="11" x2="18" y2="11" />
         
-        <!-- Propulsores inferiores -->
-        <path d="M10 16v2l-1.5 2.5h7L14 18v-2" />
+        <!-- Propulsores -->
+        <path d="M10 16v2l-1.5 2.5h7L14 18v-2" fill="#FFD700" />
     </svg>
 </div>
 
