@@ -1276,6 +1276,36 @@ html, body {
 .btn-volver-crypto {
     margin-top: auto;
     width: 80%;
+    /* === ESTILOS DEL CARRUSEL QR (Tarjeta 1) === */
+.qr-carousel-wrapper { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 15px; }
+.qr-nav-btn { background: transparent; border: none; color: #FFD700; font-size: 22px; cursor: pointer; padding: 5px 10px; transition: 0.3s; outline: none; }
+.qr-nav-btn:hover { color: #fff; transform: scale(1.2); text-shadow: 0 0 10px #FFD700; }
+.qr-container { display: flex; width: 150px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+.qr-container::-webkit-scrollbar { display: none; }
+.qr-box { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 100%; scroll-snap-align: center; flex-shrink: 0; }
+.qr-img { width: 120px; height: 120px; border: 1px solid #FFD700; border-radius: 8px; padding: 5px; background: #fff; }
+.qr-box span { font-size: 11px; color: #aaa; letter-spacing: 1px; white-space: nowrap; }
+.net-badge { color: #FFD700 !important; font-size: 9px !important; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 3px 8px; border-radius: 4px; margin-top: -3px; text-transform: uppercase; }
+.btn-volver { width: 80%; border-color: #555; color: #aaa; }
+
+/* === ESTILOS TARJETA 3 (Estructura de 3 columnas) === */
+.layout-3-cols { display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; padding: 10px; width: 100%; box-sizing: border-box; }
+.icon-col { display: flex; flex-direction: column; justify-content: space-around; align-items: center; width: 30px; gap: 8px; }
+.mini-icon { width: 24px; height: 24px; filter: grayscale(100%) sepia(100%) hue-rotate(5deg) saturate(500%) brightness(1.2); transition: 0.3s; }
+.mini-icon:hover { filter: none; transform: scale(1.2); drop-shadow: 0 0 5px #FFD700; }
+.center-col { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 10px; text-align: center; }
+
+/* === ESTILOS MODAL Y FORMULARIO (Tarjeta 2) === */
+.boveda-info { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); border-left: 4px solid #FFD700; padding: 15px; border-radius: 5px; text-align: left; margin-bottom: 20px; }
+.hologram-content::-webkit-scrollbar { width: 6px; }
+.hologram-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 10px; }
+.holo-form { display: flex; flex-direction: column; gap: 15px; text-align: left; }
+.input-group input { width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 15px; border-radius: 5px; font-family: inherit; font-size: 13px; box-sizing: border-box; }
+.input-group input:focus { outline: none; border-color: #FFD700; background: rgba(255, 215, 0, 0.05); }
+.checkbox-group { display: flex; align-items: flex-start; gap: 10px; background: rgba(255, 215, 0, 0.05); padding: 12px; border: 1px dashed rgba(255, 215, 0, 0.3); border-radius: 5px; }
+.checkbox-group input { margin-top: 3px; }
+.checkbox-group label { font-size: 11px; color: #aaa; line-height: 1.4; }
+.submit-btn { margin-top: 10px; padding: 15px; font-weight: bold; }
 }
 </style>
 </head>
