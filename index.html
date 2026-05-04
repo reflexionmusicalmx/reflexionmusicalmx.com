@@ -1381,10 +1381,36 @@ html, body {
     display: block;
 }
 
-/* Clases de Relleno para que se vea sólido como la nave */
-#btnSatelite .sat-cuerpo { fill: #FFD700 !important; }
-#btnSatelite .sat-paneles { fill: rgba(255, 215, 0, 0.4) !important; }
-#btnSatelite .sat-antena { fill: rgba(255, 215, 0, 0.2) !important; }
+/* =========================================
+   RESCATE DEL DISEÑO DEL SATÉLITE
+========================================= */
+#btnSatelite svg path,
+#btnSatelite svg rect,
+#btnSatelite svg circle,
+#btnSatelite svg line {
+    fill: #000 !important; /* Relleno negro sólido */
+    stroke: #FFD700 !important; /* Contorno dorado */
+    stroke-width: 1.5 !important; /* Grosor de la línea */
+}
+
+/* =========================================
+   ACTIVAR DESLIZAMIENTO EN PANELES (MÓVIL)
+========================================= */
+.hologram-content {
+    max-height: 85vh !important; 
+    overflow-y: auto !important; 
+    -webkit-overflow-scrolling: touch; 
+    padding-bottom: 30px !important; 
+}
+
+/* Ocultar la barra de scroll estética para que se vea limpio */
+.hologram-content::-webkit-scrollbar {
+    width: 6px;
+}
+.hologram-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 215, 0, 0.4);
+    border-radius: 10px;
+}
 </style>
 </head>
 <body>
