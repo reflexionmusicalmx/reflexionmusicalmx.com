@@ -1411,6 +1411,18 @@ html, body {
     background: rgba(255, 215, 0, 0.4);
     border-radius: 10px;
 }
+    /* =========================================
+   ALINEACIÓN PERFECTA DE TARJETAS
+========================================= */
+.support-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100%; /* Asegura que las 3 tarjetas midan lo mismo */
+}
+
+.support-card .holo-btn {
+    margin-top: auto !important; /* Esta es la magia: empuja el botón hasta abajo */
+}
 </style>
 </head>
 <body>
