@@ -2602,6 +2602,94 @@ document.addEventListener("DOMContentLoaded", () => {
             qrContainer.scrollBy({ left: 150, behavior: 'smooth' });
         });
     }
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // === 1. LÓGICA DE GIRO PARA LAS 3 TARJETAS ===
+    const setupFlip = (btnShowId, btnHideId, cardInnerId) => {
+        const btnShow = document.getElementById(btnShowId);
+        const btnHide = document.getElementById(btnHideId);
+        const cardInner = document.getElementById(cardInnerId);
+
+        if (btnShow && btnHide && cardInner) {
+            btnShow.addEventListener("click", (e) => {
+                e.preventDefault();
+                cardInner.classList.add("is-flipped");
+            });
+            btnHide.addEventListener("click", (e) => {
+                e.preventDefault();
+                cardInner.classList.remove("is-flipped");
+            });
+        }
+    };
+
+    // Activamos los giros
+    setupFlip("btnShowCrypto", "btnHideCrypto", "cryptoCardInner");
+    setupFlip("btnShowPropagar", "btnHidePropagar", "propagarCardInner");
+    setupFlip("btnShowAmplificar", "btnHideAmplificar", "amplificarCardInner");
+
+    // === 2. CARRUSEL DE CÓDIGOS QR (TARJETA 1) ===
+    const qrContainer = document.getElementById('qrContainer');
+    const prevQr = document.getElementById('prevQr');
+    const nextQr = document.getElementById('nextQr');
+
+    if(prevQr && nextQr && qrContainer) {
+        prevQr.addEventListener('click', () => { qrContainer.scrollBy({ left: -150, behavior: 'smooth' }); });
+        nextQr.addEventListener('click', () => { qrContainer.scrollBy({ left: 150, behavior: 'smooth' }); });
+    }
+
+    // === 3. MODAL DE LA BÓVEDA Y CONEXIÓN CON GOOGLE SHEETS (TARJETA 2) ===
+    const btnAbrirProtocolo = document.getElementById("btnAbrirProtocolo");
+    const protocoloModal = document.getElementById("protocoloModal");
+    const closeProtocoloBtn = document.querySelector(".close-protocolo");
+    const formProtocolo = document.getElementById("formProtocolo");
+    const btnEnviarForm = document.getElementById("btnEnviarForm");
+
+    // REEMPLAZA ESTA URL CON LA QUE TE DARÁ GOOGLE APPS SCRIPT
+    const GOOGLE_SCRIPT_URL = "AQUI_PEGA_LA_URL_DE_TU_APLICACION_WEB"; 
+
+    if (btnAbrirProtocolo && protocoloModal) {
+        btnAbrirProtocolo.addEventListener("click", (e) => {
+            e.preventDefault();
+            protocoloModal.style.display = "flex";
+        });
+
+        closeProtocoloBtn.addEventListener("click", () => { protocoloModal.style.display = "none"; });
+        window.addEventListener("click", (e) => { if (e.target === protocoloModal) protocoloModal.style.display = "none"; });
+
+        formProtocolo.addEventListener("submit", (e) => {
+            e.preventDefault(); 
+            btnEnviarForm.textContent = "TRANSMITIENDO...";
+            btnEnviarForm.style.opacity = "0.7";
+            
+            const formData = new FormData(formProtocolo);
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                body: formData,
+                mode: "no-cors"
+            }).then(() => {
+                btnEnviarForm.textContent = "¡TRANSMISIÓN RECIBIDA!";
+                btnEnviarForm.style.background = "#FFD700";
+                btnEnviarForm.style.color = "#000";
+                
+                setTimeout(() => {
+                    formProtocolo.reset();
+                    protocoloModal.style.display = "none";
+                    btnEnviarForm.textContent = "ENVIAR SOLICITUD DE ACCESO";
+                    btnEnviarForm.style.background = "transparent";
+                    btnEnviarForm.style.color = "#FFD700";
+                    btnEnviarForm.style.opacity = "1";
+                    
+                    // Opcional: Cerrar la tarjeta al enviar
+                    document.getElementById("propagarCardInner").classList.remove("is-flipped");
+                }, 2500);
+            }).catch(error => {
+                console.error("Error:", error);
+                btnEnviarForm.textContent = "ERROR AL CONECTAR";
+            });
+        });
+    }
+});
 
 });
 </script>
