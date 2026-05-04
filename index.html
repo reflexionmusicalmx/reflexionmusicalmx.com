@@ -1367,35 +1367,41 @@ html, body {
     width: 50px;
     height: 50px;
 }
-    /* Definición de la órbita exterior */
+    /* 1. Definición de la órbita exterior */
 @keyframes orbitaEnergia {
     from { transform: rotate(0deg) translateX(280px) rotate(0deg); }
     to { transform: rotate(360deg) translateX(280px) rotate(-360deg); }
 }
 
-#energyCenter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 45px;
-    height: 45px;
-    margin-top: -22.5px;
-    margin-left: -22.5px;
-    z-index: 100; /* Asegura que esté por encima de las órbitas visuales */
+/* 2. Aplicamos la animación al ID correcto: btnSatelite */
+#btnSatelite {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    margin-left: -25px;
+    z-index: 1000; /* Prioridad para que sea siempre clickeable */
     cursor: pointer;
     filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
-    animation: orbitaEnergia 45s linear infinite; /* Órbita lenta y majestuosa */
-    transition: transform 0.3s ease;
+    
+    /* Motor de la animación */
+    display: block !important;
+    animation: orbitaEnergia 45s linear infinite !important;
+    transition: filter 0.3s ease;
 }
 
-#energyCenter:hover {
-    filter: drop-shadow(0 0 12px #FFD700);
+#btnSatelite:hover {
+    filter: drop-shadow(0 0 15px #FFD700);
     scale: 1.1;
 }
 
-#energyCenter svg {
+/* 3. Aseguramos que el diseño del satélite se mantenga perfecto */
+#btnSatelite svg {
     width: 100%;
     height: 100%;
+    display: block;
 }
 
 </style>
