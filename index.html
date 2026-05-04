@@ -1412,16 +1412,21 @@ html, body {
     border-radius: 10px;
 }
     /* =========================================
-   ALINEACIÓN PERFECTA DE TARJETAS
+   ALINEACIÓN PERFECTA DE TARJETAS (CORREGIDO)
 ========================================= */
 .support-card {
     display: flex !important;
     flex-direction: column !important;
-    height: 100%; /* Asegura que las 3 tarjetas midan lo mismo */
+    padding-bottom: 25px !important; /* Le da el "colchón" al botón dorado para que no toque el borde */
 }
 
 .support-card .holo-btn {
-    margin-top: auto !important; /* Esta es la magia: empuja el botón hasta abajo */
+    margin-top: auto !important; /* Mantiene los botones perfectamente alineados abajo */
+}
+
+/* Evita que las tarjetas se encimen con el botón de "Volver al Universo" */
+.support-grid {
+    margin-bottom: 30px !important; 
 }
 </style>
 </head>
