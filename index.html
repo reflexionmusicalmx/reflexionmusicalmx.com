@@ -1533,24 +1533,79 @@ html, body {
                 </div>
             </div>
 
-            <!-- Opción 2: Co-creación -->
-            <div class="support-card">
-                <div class="card-icon">📡</div>
-                <h3>PROPAGAR LA SEÑAL</h3>
-                <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
-                <button class="holo-btn">DESCARGAR MATERIAL</button>
+            <!-- Opción 2: Co-creación (NUEVA TARJETA 3D) -->
+            <div class="support-card flip-card">
+                <div class="flip-card-inner" id="propagarCardInner">
+                    
+                    <!-- CARA FRONTAL -->
+                    <div class="flip-card-front">
+                        <div class="card-icon">📡</div>
+                        <h3>PROPAGAR LA SEÑAL</h3>
+                        <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
+                        <button class="holo-btn" id="btnShowPropagar">VER INSTRUCCIONES</button>
+                    </div>
+
+                    <!-- CARA TRASERA -->
+                    <div class="flip-card-back" style="justify-content: center;">
+                        <h3 style="color: #FFD700; margin-bottom: 15px; font-size: 14px;">PROTOCOLOS DE ACCESO</h3>
+                        <p style="font-size: 12px; color: #ccc; line-height: 1.6; margin-bottom: 20px; padding: 0 10px;">
+                            Nuestros audios, vocales y logotipos están resguardados en una bóveda digital. Para obtener la llave, necesitamos conocer tu frecuencia.
+                        </p>
+                        <button class="holo-btn" id="btnAbrirProtocolo" style="width: 80%; margin-bottom: 10px; background: rgba(255, 215, 0, 0.1);">VER REGLAS Y APLICAR</button>
+                        <button class="holo-btn btn-volver" id="btnHidePropagar" style="width: 80%; border-color: #555; color: #aaa;">VOLVER</button>
+                    </div>
+                </div>
             </div>
 
-            <!-- Opción 3: Playlists -->
-            <div class="support-card">
-                <div class="card-icon">🎶</div>
-                <h3>AMPLIFICAR FRECUENCIA</h3>
-                <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
-                <button class="holo-btn">IR A PLATAFORMAS</button>
+            <!-- Opción 3: Playlists (NUEVA TARJETA 3D) -->
+            <div class="support-card flip-card">
+                <div class="flip-card-inner" id="amplificarCardInner">
+                    
+                    <!-- CARA FRONTAL -->
+                    <div class="flip-card-front">
+                        <div class="card-icon">🎶</div>
+                        <h3>AMPLIFICAR FRECUENCIA</h3>
+                        <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
+                        <button class="holo-btn" id="btnShowAmplificar">IR A PLATAFORMAS</button>
+                    </div>
+
+                    <!-- CARA TRASERA (Diseño a 3 Columnas) -->
+                    <div class="flip-card-back layout-3-cols">
+                        
+                        <!-- Columna Izquierda: Plataformas Musicales -->
+                        <div class="icon-col">
+                            <a href="TU_LINK_SPOTIFY" target="_blank"><img src="images/tu-icono-spotify.png" alt="Spotify" class="mini-icon"></a>
+                            <a href="TU_LINK_APPLE" target="_blank"><img src="images/tu-icono-apple.png" alt="Apple Music" class="mini-icon"></a>
+                            <a href="TU_LINK_AMAZON" target="_blank"><img src="images/tu-icono-amazon.png" alt="Amazon" class="mini-icon"></a>
+                            <a href="TU_LINK_SOUNDCLOUD" target="_blank"><img src="images/tu-icono-soundcloud.png" alt="SoundCloud" class="mini-icon"></a>
+                            <a href="TU_LINK_AUDIOMACK" target="_blank"><img src="images/tu-icono-audiomack.png" alt="Audiomack" class="mini-icon"></a>
+                        </div>
+
+                        <!-- Columna Central: Manifiesto -->
+                        <div class="center-col">
+                            <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 5px; text-shadow: 0 0 5px rgba(255,215,0,0.5);">EXPANDE LA SEÑAL</h3>
+                            <div style="font-size: 9px; color: #ccc; line-height: 1.4; text-align: left; margin-bottom: 10px;">
+                                <p>Cada acción tuya es el motor de esta nave. Ayúdanos a vencer los algoritmos:</p>
+                                <ul style="padding-left: 10px; margin-top: 5px;">
+                                    <li>🎧 <b>Integra:</b> Guarda y haz playlists.</li>
+                                    <li>🔄 <b>Transmite:</b> Comparte la nave.</li>
+                                    <li>💬 <b>Interactúa:</b> Comenta y suscríbete.</li>
+                                </ul>
+                            </div>
+                            <button class="holo-btn btn-volver" id="btnHideAmplificar" style="padding: 5px 10px; font-size: 10px; width: 100%;">VOLVER</button>
+                        </div>
+
+                        <!-- Columna Derecha: Redes Sociales -->
+                        <div class="icon-col">
+                            <a href="TU_LINK_YOUTUBE" target="_blank"><img src="images/tu-icono-youtube.png" alt="YouTube" class="mini-icon"></a>
+                            <a href="TU_LINK_TIKTOK" target="_blank"><img src="images/tu-icono-tiktok.png" alt="TikTok" class="mini-icon"></a>
+                            <a href="TU_LINK_INSTAGRAM" target="_blank"><img src="images/tu-icono-instagram.png" alt="Instagram" class="mini-icon"></a>
+                            <a href="TU_LINK_FACEBOOK" target="_blank"><img src="images/tu-icono-facebook.png" alt="Facebook" class="mini-icon"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 <!-- MODAL DEL BUZÓN FLOTANTE -->
 <div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
@@ -1576,6 +1631,55 @@ html, body {
             <p style="color: #FFD700; font-weight: bold; font-size: 14px; margin-bottom: 15px;">¡Mensaje cargado en la sonda!</p>
             <button id="btnSendToSun" class="btn-volver" style="background: #FFD700; color: #000;">CERRAR Y ENVIAR AL SOL</button>
         </div>
+    </div>
+</div>
+        <!-- === MODAL DE PROTOCOLO DE ACCESO A BÓVEDA (Flotante) === -->
+<div id="protocoloModal" class="hologram-modal">
+    <div class="hologram-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+        <button class="close-protocolo">&times;</button>
+        
+        <div class="hologram-header">
+            <h2>BÓVEDA DE DATOS</h2>
+            <p>Protocolo de acceso para Co-creadores</p>
+        </div>
+
+        <div class="boveda-info">
+            <div class="info-seccion">
+                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">MATERIAL DISPONIBLE:</h4>
+                <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
+                    <li><strong>Acceso Restringido:</strong> Se otorgará únicamente la pista oficial (WAV/MP3), instrumental, acapella y letra de la <em>canción específica</em> solicitada. El catálogo completo permanece bloqueado.</li>
+                    <li>Logotipos oficiales (Nuestras 3 variantes visuales).</li>
+                    <li><strong style="color: #fff;">Nivel 2 (Colaboradores verificados):</strong> Acceso a versiones alternativas y maquetas de Reflexión Musical MX.</li>
+                </ul>
+            </div>
+            <div class="info-seccion">
+                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">REGLAS DE TRANSMISIÓN:</h4>
+                <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
+                    <li><strong>Mención:</strong> Todo contenido generado debe etiquetar a Reflexión Musical MX.</li>
+                    <li>Nos reservamos el derecho de pedir la eliminación del contenido si se usa para discursos de odio o se monetiza sin autorización.</li>
+                </ul>
+            </div>
+            <div class="info-seccion" style="background: rgba(255, 215, 0, 0.1); padding: 10px; border-radius: 4px; border-left: 3px solid #FFD700;">
+                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">PASOS (DOBLE CONFIRMACIÓN):</h4>
+                <ol style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 0;">
+                    <li>Indica la canción (ej. track de <em>Raíces y Frutos</em>) y llena tus datos.</li>
+                    <li>Ve a nuestro último video en YouTube o TikTok y comenta: <strong>"Solicitando enlace a la sonda 📡"</strong>.</li>
+                    <li>El escaneo manual tardará 48 a 72 horas. Si eres aprobado, recibirás la llave de la bóveda exclusiva en tu correo.</li>
+                </ol>
+            </div>
+        </div>
+
+        <form id="formProtocolo" class="holo-form">
+            <div class="input-group"><input type="text" name="nombre" required placeholder="Nombre / Alias del Creador"></div>
+            <div class="input-group"><input type="email" name="email" required placeholder="Correo de Contacto (Cero spam)"></div>
+            <div class="input-group"><input type="url" name="canal" required placeholder="Enlace a tu canal principal"></div>
+            <div class="input-group"><input type="text" name="cancion_solicitada" required placeholder="¿Qué canción específica deseas utilizar?"></div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="aceptoReglas" name="aceptoReglas" required>
+                <label for="aceptoReglas">He leído las reglas, entiendo que el acceso es unitario y confirmo que dejaré el comentario de verificación.</label>
+            </div>
+            <button type="submit" class="holo-btn submit-btn" id="btnEnviarForm">ENVIAR SOLICITUD DE ACCESO</button>
+        </form>
     </div>
 </div>
 
