@@ -1218,17 +1218,71 @@ html, body {
 .mini-icon:hover { filter: none; transform: scale(1.2); drop-shadow: 0 0 5px #FFD700; }
 .center-col { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 0 5px; text-align: center; }
 
-/* 4. ESTILOS MODAL Y FORMULARIO (La Bóveda) */
-.boveda-info { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); border-left: 4px solid #FFD700; padding: 15px; border-radius: 5px; text-align: left; margin-bottom: 20px; }
+/* 4. ESTILOS MODAL Y FORMULARIO (La Bóveda) MEJORADOS */
+.boveda-info { 
+    background: rgba(0, 0, 0, 0.6); 
+    border: 1px solid rgba(255, 215, 0, 0.2); 
+    border-left: 4px solid #FFD700; 
+    padding: 20px; /* Más espacio interno */
+    border-radius: 5px; 
+    text-align: left; 
+    margin-bottom: 25px; 
+}
 .hologram-content::-webkit-scrollbar { width: 6px; }
 .hologram-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 10px; }
-.holo-form { display: flex; flex-direction: column; gap: 15px; text-align: left; }
-.input-group input { width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 10px 15px; border-radius: 5px; font-family: inherit; font-size: 13px; box-sizing: border-box; }
+.holo-form { display: flex; flex-direction: column; gap: 20px; text-align: left; }
+
+/* Títulos y textos dentro de la bóveda más grandes */
+.info-seccion h4 { font-size: 15px !important; margin-bottom: 8px !important; }
+.info-seccion ul, .info-seccion ol { font-size: 14px !important; line-height: 1.7 !important; margin-bottom: 20px !important; }
+
+/* Inputs del formulario más grandes y legibles */
+.input-group input { 
+    width: 100%; 
+    background: rgba(0, 0, 0, 0.5); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    color: #fff; 
+    padding: 15px; /* Más alto el campo de texto */
+    border-radius: 5px; 
+    font-family: inherit; 
+    font-size: 15px; /* Letra mucho más legible al escribir */
+    box-sizing: border-box; 
+}
 .input-group input:focus { outline: none; border-color: #FFD700; background: rgba(255, 215, 0, 0.05); }
-.checkbox-group { display: flex; align-items: flex-start; gap: 10px; background: rgba(255, 215, 0, 0.05); padding: 12px; border: 1px dashed rgba(255, 215, 0, 0.3); border-radius: 5px; }
-.checkbox-group input { margin-top: 3px; }
-.checkbox-group label { font-size: 11px; color: #aaa; line-height: 1.4; }
-.submit-btn { margin-top: 10px; padding: 15px; font-weight: bold; }
+
+/* Caja de aceptación de reglas más visible */
+.checkbox-group { 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 15px; 
+    background: rgba(255, 215, 0, 0.05); 
+    padding: 15px; 
+    border: 1px dashed rgba(255, 215, 0, 0.5); /* Borde más visible */
+    border-radius: 5px; 
+}
+.checkbox-group input { margin-top: 5px; transform: scale(1.3); /* Checkbox más grande */ cursor: pointer; }
+.checkbox-group label { 
+    font-size: 14px; /* Letra legible */
+    color: #FFD700; /* Letra dorada brillante por defecto */
+    line-height: 1.5; 
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Efecto al pasar el mouse por las letras de "Acepto las reglas" */
+.checkbox-group:hover label {
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+}
+
+/* Botón de enviar */
+.submit-btn { 
+    margin-top: 15px; 
+    padding: 18px; 
+    font-size: 15px;
+    font-weight: bold; 
+    letter-spacing: 1px;
+}
     
 </style>
 </head>
