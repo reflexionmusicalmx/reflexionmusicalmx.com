@@ -1416,150 +1416,30 @@ html, body {
         </div>
 
         <div class="support-grid">
-            <!-- Opción 1: Dinero / Crypto (TARJETA CON GIRO 3D) -->
-            <div class="support-card flip-card">
-                <div class="flip-card-inner" id="cryptoCardInner">
-                    
-                    <!-- CARA FRONTAL -->
-                    <div class="flip-card-front">
-                        <div class="card-icon">⚡</div>
-                        <h3>FINANCIAR LA SONDA</h3>
-                        <p>Aportaciones directas para mantener la producción independiente.</p>
-                        <button class="holo-btn" id="btnShowCrypto">VER COORDENADAS</button>
-                    </div>
-
-                    <!-- CARA TRASERA (LOS CÓDIGOS QR) -->
-                    <div class="flip-card-back">
-                        <h3 style="color: #FFD700; margin-bottom: 10px; font-size: 14px;">COORDENADAS WEB3</h3>
-                        
-                        <!-- Carrusel de QRs -->
-                        <div class="qr-carousel-wrapper">
-                            <!-- Flecha Izquierda -->
-                            <button class="qr-nav-btn" id="prevQr">&#10094;</button>
-                            
-                            <div class="qr-container" id="qrContainer">
-                                <!-- 1. Bitcoin -->
-                                <div class="qr-box">
-                                    <img src="images/qr-btc.png" alt="QR Bitcoin" class="qr-img">
-                                    <span>BITCOIN (BTC)</span>
-                                    <span class="net-badge">Red: Bitcoin</span>
-                                </div>
-                                <!-- 2. USDT TRC20 -->
-                                <div class="qr-box">
-                                    <img src="images/qr-usdt-trc20.png" alt="QR USDT TRC20" class="qr-img">
-                                    <span>USDT</span>
-                                    <span class="net-badge">Red: TRC20</span>
-                                </div>
-                                <!-- 3. USDT BEP20 -->
-                                <div class="qr-box">
-                                    <img src="images/qr-usdt-bep20.png" alt="QR USDT BEP20" class="qr-img">
-                                    <span>USDT</span>
-                                    <span class="net-badge">Red: BEP20</span>
-                                </div>
-                                <!-- 4. Ripple -->
-                                <div class="qr-box">
-                                    <img src="images/qr-xrp.png" alt="QR Ripple" class="qr-img">
-                                    <span>RIPPLE (XRP)</span>
-                                    <span class="net-badge">Red: Ripple</span>
-                                </div>
-                                <!-- 5. Litecoin -->
-                                <div class="qr-box">
-                                    <img src="images/qr-ltc.png" alt="QR Litecoin" class="qr-img">
-                                    <span>LITECOIN (LTC)</span>
-                                    <span class="net-badge">Red: Litecoin</span>
-                                </div>
-                                <!-- 6. Solana -->
-                                <div class="qr-box">
-                                    <img src="images/qr-sol.png" alt="QR Solana" class="qr-img">
-                                    <span>SOLANA (SOL)</span>
-                                    <span class="net-badge">Red: Solana</span>
-                                </div>
-                            </div>
-
-                            <!-- Flecha Derecha -->
-                            <button class="qr-nav-btn" id="nextQr">&#10095;</button>
-                        </div>
-
-                        <button class="holo-btn btn-volver-crypto" id="btnHideCrypto">VOLVER</button>
-                    </div>
-
-                </div>
+            <!-- Opción 1: Dinero / Crypto -->
+            <div class="support-card">
+                <div class="card-icon">⚡</div>
+                <h3>FINANCIAR LA SONDA</h3>
+                <p>Aportaciones directas para mantener la producción independiente.</p>
+                <button class="holo-btn" id="btnOpenCrypto">VER COORDENADAS</button>
             </div>
 
-            <!-- Opción 2: Co-creación (NUEVA TARJETA 3D) -->
-            <div class="support-card flip-card">
-                <div class="flip-card-inner" id="propagarCardInner">
-                    
-                    <!-- CARA FRONTAL -->
-                    <div class="flip-card-front">
-                        <div class="card-icon">📡</div>
-                        <h3>PROPAGAR LA SEÑAL</h3>
-                        <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
-                        <button class="holo-btn" id="btnShowPropagar">VER INSTRUCCIONES</button>
-                    </div>
-
-                    <!-- CARA TRASERA -->
-                    <div class="flip-card-back" style="justify-content: center;">
-                        <h3 style="color: #FFD700; margin-bottom: 15px; font-size: 14px;">PROTOCOLOS DE ACCESO</h3>
-                        <p style="font-size: 12px; color: #ccc; line-height: 1.6; margin-bottom: 20px; padding: 0 10px;">
-                            Nuestros audios, vocales y logotipos están resguardados en una bóveda digital. Para obtener la llave, necesitamos conocer tu frecuencia.
-                        </p>
-                        <button class="holo-btn" id="btnAbrirProtocolo" style="width: 80%; margin-bottom: 10px; background: rgba(255, 215, 0, 0.1);">VER REGLAS Y APLICAR</button>
-                        <button class="holo-btn btn-volver" id="btnHidePropagar" style="width: 80%; border-color: #555; color: #aaa;">VOLVER</button>
-                    </div>
-                </div>
+            <!-- Opción 2: Co-creación -->
+            <div class="support-card">
+                <div class="card-icon">📡</div>
+                <h3>PROPAGAR LA SEÑAL</h3>
+                <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
+                <button class="holo-btn" id="btnOpenPropagar">VER INSTRUCCIONES</button>
             </div>
 
-            <!-- Opción 3: Playlists (NUEVA TARJETA 3D) -->
-            <div class="support-card flip-card">
-                <div class="flip-card-inner" id="amplificarCardInner">
-                    
-                    <!-- CARA FRONTAL -->
-                    <div class="flip-card-front">
-                        <div class="card-icon">🎶</div>
-                        <h3>AMPLIFICAR FRECUENCIA</h3>
-                        <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
-                        <button class="holo-btn" id="btnShowAmplificar">IR A PLATAFORMAS</button>
-                    </div>
-
-                    <!-- CARA TRASERA (Diseño a 3 Columnas) -->
-                    <div class="flip-card-back layout-3-cols">
-                        
-                        <!-- Columna Izquierda: Plataformas Musicales -->
-                        <div class="icon-col">
-                            <a href="TU_LINK_SPOTIFY" target="_blank"><img src="images/tu-icono-spotify.png" alt="Spotify" class="mini-icon"></a>
-                            <a href="TU_LINK_APPLE" target="_blank"><img src="images/tu-icono-apple.png" alt="Apple Music" class="mini-icon"></a>
-                            <a href="TU_LINK_AMAZON" target="_blank"><img src="images/tu-icono-amazon.png" alt="Amazon" class="mini-icon"></a>
-                            <a href="TU_LINK_SOUNDCLOUD" target="_blank"><img src="images/tu-icono-soundcloud.png" alt="SoundCloud" class="mini-icon"></a>
-                            <a href="TU_LINK_AUDIOMACK" target="_blank"><img src="images/tu-icono-audiomack.png" alt="Audiomack" class="mini-icon"></a>
-                        </div>
-
-                        <!-- Columna Central: Manifiesto -->
-                        <div class="center-col">
-                            <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 5px; text-shadow: 0 0 5px rgba(255,215,0,0.5);">EXPANDE LA SEÑAL</h3>
-                            <div style="font-size: 9px; color: #ccc; line-height: 1.4; text-align: left; margin-bottom: 10px;">
-                                <p>Cada acción tuya es el motor de esta nave. Ayúdanos a vencer los algoritmos:</p>
-                                <ul style="padding-left: 10px; margin-top: 5px;">
-                                    <li>🎧 <b>Integra:</b> Guarda y haz playlists.</li>
-                                    <li>🔄 <b>Transmite:</b> Comparte la nave.</li>
-                                    <li>💬 <b>Interactúa:</b> Comenta y suscríbete.</li>
-                                </ul>
-                            </div>
-                            <button class="holo-btn btn-volver" id="btnHideAmplificar" style="padding: 5px 10px; font-size: 10px; width: 100%;">VOLVER</button>
-                        </div>
-
-                        <!-- Columna Derecha: Redes Sociales -->
-                        <div class="icon-col">
-                            <a href="TU_LINK_YOUTUBE" target="_blank"><img src="images/tu-icono-youtube.png" alt="YouTube" class="mini-icon"></a>
-                            <a href="TU_LINK_TIKTOK" target="_blank"><img src="images/tu-icono-tiktok.png" alt="TikTok" class="mini-icon"></a>
-                            <a href="TU_LINK_INSTAGRAM" target="_blank"><img src="images/tu-icono-instagram.png" alt="Instagram" class="mini-icon"></a>
-                            <a href="TU_LINK_FACEBOOK" target="_blank"><img src="images/tu-icono-facebook.png" alt="Facebook" class="mini-icon"></a>
-                        </div>
-                    </div>
-                </div>
+            <!-- Opción 3: Playlists -->
+            <div class="support-card">
+                <div class="card-icon">🎶</div>
+                <h3>AMPLIFICAR FRECUENCIA</h3>
+                <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
+                <button class="holo-btn" id="btnOpenAmplificar">IR A PLATAFORMAS</button>
             </div>
         </div>
-
 <!-- MODAL DEL BUZÓN FLOTANTE -->
 <div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content reflection-content">
@@ -1585,6 +1465,20 @@ html, body {
             <button id="btnSendToSun" class="btn-volver" style="background: #FFD700; color: #000;">CERRAR Y ENVIAR AL SOL</button>
         </div>
     </div>
+</div>
+        <!-- === MODAL 1: COORDENADAS WEB3 === -->
+<div id="cryptoModal" class="modal" role="dialog" aria-modal="true">
+    ... (todo el código del modal de crypto) ...
+</div>
+
+<!-- === MODAL 2: INSTRUCCIONES DE PROPAGACIÓN === -->
+<div id="propagarModal" class="modal" role="dialog" aria-modal="true">
+    ... (todo el código del modal de propagar) ...
+</div>
+
+<!-- === MODAL 3: AMPLIFICAR (PLATAFORMAS Y REDES GRANDES) === -->
+<div id="amplificarModal" class="modal" role="dialog" aria-modal="true">
+    ... (todo el código del modal de amplificar) ...
 </div>
         <!-- === MODAL DE PROTOCOLO DE ACCESO A BÓVEDA (Flotante) === -->
 <div id="protocoloModal" class="hologram-modal">
@@ -2491,99 +2385,101 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       });
   }
-    // === 1. LÓGICA DE GIRO PARA LAS 3 TARJETAS ===
-  const setupFlip = (btnShowId, btnHideId, cardInnerId) => {
-      const btnShow = document.getElementById(btnShowId);
-      const btnHide = document.getElementById(btnHideId);
-      const cardInner = document.getElementById(cardInnerId);
+    // === LÓGICA PARA ABRIR Y CERRAR LOS MODALS DEL CENTRO DE ENERGÍA ===
+  
+  // Función maestra para abrir y cerrar Modals genéricos
+  const setupModal = (btnOpenId, modalId, closeClass) => {
+      const btnOpen = document.getElementById(btnOpenId);
+      const modal = document.getElementById(modalId);
+      const closeBtn = document.querySelector(closeClass);
 
-      if (btnShow && btnHide && cardInner) {
-          btnShow.addEventListener("click", (e) => {
+      if (btnOpen && modal) {
+          btnOpen.addEventListener("click", (e) => {
               e.preventDefault();
-              cardInner.classList.add("is-flipped");
+              modal.style.display = "flex";
           });
-          btnHide.addEventListener("click", (e) => {
-              e.preventDefault();
-              cardInner.classList.remove("is-flipped");
+          if (closeBtn) {
+              closeBtn.addEventListener("click", () => {
+                  modal.style.display = "none";
+              });
+          }
+          window.addEventListener("click", (e) => {
+              if (e.target === modal) modal.style.display = "none";
           });
       }
   };
 
-  // Activamos los giros de Financiar, Propagar y Amplificar
-  setupFlip("btnShowCrypto", "btnHideCrypto", "cryptoCardInner");
-  setupFlip("btnShowPropagar", "btnHidePropagar", "propagarCardInner");
-  setupFlip("btnShowAmplificar", "btnHideAmplificar", "amplificarCardInner");
+  // 1. Conectamos los botones a los nuevos Modals
+  setupModal("btnOpenCrypto", "cryptoModal", ".close-crypto");
+  setupModal("btnOpenPropagar", "propagarModal", ".close-propagar");
+  setupModal("btnOpenAmplificar", "amplificarModal", ".close-amplificar");
 
-  // === 2. CARRUSEL DE CÓDIGOS QR (TARJETA 1) ===
+  // 2. Lógica especial: Botón que lleva de "Propagar" hacia "La Bóveda"
+  const btnIrABoveda = document.getElementById("btnIrABoveda");
+  const propagarModal = document.getElementById("propagarModal");
+  const protocoloModal = document.getElementById("protocoloModal");
+  const closeProtocoloBtn = document.querySelector(".close-protocolo");
+
+  if (btnIrABoveda && protocoloModal && propagarModal) {
+      btnIrABoveda.addEventListener("click", () => {
+          propagarModal.style.display = "none"; // Cerramos las instrucciones
+          protocoloModal.style.display = "flex"; // Abrimos el formulario
+      });
+      
+      closeProtocoloBtn.addEventListener("click", () => { protocoloModal.style.display = "none"; });
+      window.addEventListener("click", (e) => { if (e.target === protocoloModal) protocoloModal.style.display = "none"; });
+  }
+
+  // 3. CARRUSEL DE CÓDIGOS QR
   const qrContainer = document.getElementById('qrContainer');
   const prevQr = document.getElementById('prevQr');
   const nextQr = document.getElementById('nextQr');
 
   if(prevQr && nextQr && qrContainer) {
-      prevQr.addEventListener('click', () => { qrContainer.scrollBy({ left: -150, behavior: 'smooth' }); });
-      nextQr.addEventListener('click', () => { qrContainer.scrollBy({ left: 150, behavior: 'smooth' }); });
+      prevQr.addEventListener('click', () => { qrContainer.scrollBy({ left: -200, behavior: 'smooth' }); });
+      nextQr.addEventListener('click', () => { qrContainer.scrollBy({ left: 200, behavior: 'smooth' }); });
   }
 
-  // === 3. MODAL DE LA BÓVEDA Y CONEXIÓN CON GOOGLE SHEETS (TARJETA 2) ===
-  const btnAbrirProtocolo = document.getElementById("btnAbrirProtocolo");
-  const protocoloModal = document.getElementById("protocoloModal");
-  const closeProtocoloBtn = document.querySelector(".close-protocolo");
+  // 4. FORMULARIO DE LA BÓVEDA (Conexión silenciosa a Google)
   const formProtocolo = document.getElementById("formProtocolo");
   const btnEnviarForm = document.getElementById("btnEnviarForm");
-
-  // OJO: REEMPLAZA ESTA URL CON LA QUE TE DARÁ GOOGLE APPS SCRIPT
+  
+  // OJO: REEMPLAZA ESTA URL CON LA TUYA
   const GOOGLE_SCRIPT_URL = "AQUI_PEGA_LA_URL_DE_TU_APLICACION_WEB"; 
 
-  if (btnAbrirProtocolo && protocoloModal) {
-      btnAbrirProtocolo.addEventListener("click", (e) => {
-          e.preventDefault();
-          protocoloModal.style.display = "flex";
-      });
+  if (formProtocolo) {
+      formProtocolo.addEventListener("submit", (e) => {
+          e.preventDefault(); 
+          btnEnviarForm.textContent = "TRANSMITIENDO...";
+          btnEnviarForm.style.opacity = "0.7";
+          
+          const formData = new FormData(formProtocolo);
 
-      closeProtocoloBtn.addEventListener("click", () => { protocoloModal.style.display = "none"; });
-      
-      window.addEventListener("click", (e) => { 
-          if (e.target === protocoloModal) protocoloModal.style.display = "none"; 
-      });
-
-      if (formProtocolo) {
-          formProtocolo.addEventListener("submit", (e) => {
-              e.preventDefault(); 
-              btnEnviarForm.textContent = "TRANSMITIENDO...";
-              btnEnviarForm.style.opacity = "0.7";
+          fetch(GOOGLE_SCRIPT_URL, {
+              method: "POST",
+              body: formData,
+              mode: "no-cors"
+          }).then(() => {
+              btnEnviarForm.textContent = "¡TRANSMISIÓN RECIBIDA!";
+              btnEnviarForm.style.background = "#FFD700";
+              btnEnviarForm.style.color = "#000";
               
-              const formData = new FormData(formProtocolo);
-
-              fetch(GOOGLE_SCRIPT_URL, {
-                  method: "POST",
-                  body: formData,
-                  mode: "no-cors"
-              }).then(() => {
-                  btnEnviarForm.textContent = "¡TRANSMISIÓN RECIBIDA!";
-                  btnEnviarForm.style.background = "#FFD700";
-                  btnEnviarForm.style.color = "#000";
-                  
-                  setTimeout(() => {
-                      formProtocolo.reset();
-                      protocoloModal.style.display = "none";
-                      btnEnviarForm.textContent = "ENVIAR SOLICITUD DE ACCESO";
-                      btnEnviarForm.style.background = "transparent";
-                      btnEnviarForm.style.color = "#FFD700";
-                      btnEnviarForm.style.opacity = "1";
-                      
-                      // Cierra la tarjeta de propagar automáticamente
-                      const propagarCard = document.getElementById("propagarCardInner");
-                      if(propagarCard) propagarCard.classList.remove("is-flipped");
-                  }, 2500);
-              }).catch(error => {
-                  console.error("Error:", error);
-                  btnEnviarForm.textContent = "ERROR AL CONECTAR";
-              });
+              setTimeout(() => {
+                  formProtocolo.reset();
+                  protocoloModal.style.display = "none";
+                  btnEnviarForm.textContent = "ENVIAR SOLICITUD DE ACCESO";
+                  btnEnviarForm.style.background = "transparent";
+                  btnEnviarForm.style.color = "#FFD700";
+                  btnEnviarForm.style.opacity = "1";
+              }, 2500);
+          }).catch(error => {
+              console.error("Error:", error);
+              btnEnviarForm.textContent = "ERROR AL CONECTAR";
           });
-      }
+      });
   }
 
-}); // <-- ESTA LLAVE CIERRA EL DOMContentLoaded PRINCIPAL (NO LA BORRES)
+}); // CIERRA EL DOMContentLoaded PRINCIPAL
 </script>
 </body>
 </html>
