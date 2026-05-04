@@ -1343,6 +1343,60 @@ html, body {
 .qr-box span {
     color: #FFD700 !important;
 }
+    /* Animación de Órbita para el Centro de Energía */
+@keyframes orbitaEnergia {
+    from { transform: rotate(0deg) translateX(250px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(250px) rotate(-360deg); }
+}
+
+/* Aplicar la órbita al contenedor del satélite */
+#energyCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -25px; /* Mitad de su altura */
+    margin-left: -25px; /* Mitad de su ancho */
+    z-index: 10;
+    cursor: pointer;
+    animation: orbitaEnergia 40s linear infinite; /* 40 segundos para una vuelta lenta y elegante */
+}
+
+/* Evitar que el satélite se vea de cabeza mientras gira */
+#energyCenter img {
+    display: block;
+    width: 50px;
+    height: 50px;
+}
+    /* Definición de la órbita exterior */
+@keyframes orbitaEnergia {
+    from { transform: rotate(0deg) translateX(280px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(280px) rotate(-360deg); }
+}
+
+#energyCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 45px;
+    height: 45px;
+    margin-top: -22.5px;
+    margin-left: -22.5px;
+    z-index: 100; /* Asegura que esté por encima de las órbitas visuales */
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
+    animation: orbitaEnergia 45s linear infinite; /* Órbita lenta y majestuosa */
+    transition: transform 0.3s ease;
+}
+
+#energyCenter:hover {
+    filter: drop-shadow(0 0 12px #FFD700);
+    scale: 1.1;
+}
+
+#energyCenter svg {
+    width: 100%;
+    height: 100%;
+}
 
 </style>
 </head>
