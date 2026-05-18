@@ -7,10 +7,9 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-GYLX6LJKQS');
     </script>
-    
+ 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
@@ -37,9 +36,10 @@ html, body {
     overflow: hidden;
     text-align: center;
     overscroll-behavior: none;
-    touch-action: none;
+    /* CORRECCIÓN BUG #6: touch-action:none bloqueaba scroll en modales móvil.
+       Se quitó de body y se aplica solo donde se necesita vía JS. */
 }
-
+ 
 /* CAJA DE CRISTAL PARA COMETAS Y SUPERNOVAS */
 #starContainer {
     position: absolute;
@@ -51,7 +51,7 @@ html, body {
     pointer-events: none;
     z-index: 1000;
 }
-
+ 
 /* PANTALLA DE CARGA */
 #loader {
     position: fixed;
@@ -65,16 +65,18 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* CORRECCIÓN BUG #1: La transición de opacidad ahora funciona porque
+       el loader siempre tiene display:flex y se anima opacity. */
     transition: opacity 0.8s ease;
     will-change: opacity;
 }
-
+ 
 #loader img {
     width: 180px;
     animation: pulse 2s infinite;
     will-change: transform, filter;
 }
-
+ 
 #loader p {
     color: #FFD700;
     margin-top: 25px;
@@ -82,7 +84,7 @@ html, body {
     letter-spacing: 3px;
     font-size: 14px;
 }
-
+ 
 /* FONDO ESTÁTICO */
 #bg {
     position: fixed;
@@ -93,7 +95,7 @@ html, body {
     z-index: -1;
     pointer-events: none;
 }
-
+ 
 /* SISTEMA SOLAR (GPU ACCELERATED) */
 #solarSystem {
     position: absolute;
@@ -108,7 +110,7 @@ html, body {
     will-change: transform;
     transform: translateZ(0);
 }
-
+ 
 /* LOGO CENTRAL (EL SOL) */
 #sun {
     position: absolute;
@@ -120,24 +122,30 @@ html, body {
     will-change: transform, filter;
     transform: translateZ(0);
 }
-
+ 
 #sun:hover {
     transform: scale(1.1) translateZ(0);
 }
-
+ 
 #sun img {
     width: 100%;
 }
-
+ 
 @keyframes pulse {
     0% { filter: drop-shadow(0 0 15px gold); }
     50% { filter: drop-shadow(0 0 50px gold); }
     100% { filter: drop-shadow(0 0 15px gold); }
 }
-
-/* MODALES BASE */
+ 
+/* =====================================================
+   CORRECCIÓN BUG #1: SISTEMA DE MODALES CORREGIDO
+   Antes: display:none → display:flex causaba que la
+   transición de opacidad nunca se ejecutara.
+   Ahora: siempre display:flex, se controla con
+   visibility + opacity para que el fade-in funcione.
+   ===================================================== */
 .modal {
-    display: none;
+    display: flex; /* Siempre flex, nunca none */
     position: fixed;
     z-index: 100000;
     left: 0;
@@ -147,18 +155,22 @@ html, body {
     background-color: rgba(0,0,0,0.85);
     backdrop-filter: blur(5px);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    visibility: hidden; /* En vez de display:none */
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     align-items: center;
     justify-content: center;
     transform: translateZ(0);
+    /* CORRECCIÓN BUG #6: touch-action auto para permitir scroll en modales */
     touch-action: auto;
+    pointer-events: none; /* Bloquea interacción cuando invisible */
 }
-
+ 
 .modal.show {
-    display: flex;
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto; /* Reactiva interacción al mostrar */
 }
-
+ 
 .modal-content {
     background: #0a0a0a;
     border: 1px solid #FFD700;
@@ -170,16 +182,18 @@ html, body {
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    /* CORRECCIÓN BUG #6: touch-action auto en el contenido del modal */
+    touch-action: auto;
     text-align: left;
     position: relative;
     box-shadow: 0 0 40px rgba(255,215,0,0.2);
     color: #ddd;
     line-height: 1.8;
 }
-
+ 
 .modal-content::-webkit-scrollbar { width: 6px; }
 .modal-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
-
+ 
 .modal-content h2 {
     color: #FFD700;
     margin-top: 0;
@@ -189,12 +203,12 @@ html, body {
     padding-bottom: 15px;
     margin-bottom: 25px;
 }
-
+ 
 .modal-content p {
     margin-bottom: 15px;
     font-size: 15px;
 }
-
+ 
 .close-modal {
     position: absolute;
     right: 25px;
@@ -207,19 +221,19 @@ html, body {
     z-index: 10;
     font-family: sans-serif;
 }
-
+ 
 .close-modal:hover {
     color: #fff;
     transform: scale(1.1);
 }
-
+ 
 /* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
 .album-modal-content {
     text-align: center;
     max-width: 500px;
     padding: 25px;
 }
-
+ 
 #modalAlbumTitle {
     text-align: center;
     font-size: 20px;
@@ -227,7 +241,7 @@ html, body {
     margin-bottom: 15px;
     text-transform: uppercase;
 }
-
+ 
 /* REPRODUCTOR PERSONALIZADO Y BOTONERA */
 #customPlayerBox {
     display: none;
@@ -238,15 +252,14 @@ html, body {
     border-radius: 8px;
     overflow: hidden;
 }
-
+ 
 #playerIframeContainer {
     width: 100%;
     height: 140px;
     background: #000;
     position: relative;
 }
-
-/* CONFIGURACIÓN SOUNDCLOUD MODO DORADO Y NEGRO */
+ 
 #sc-iframe {
     filter: invert(1);
     background-color: transparent;
@@ -254,42 +267,40 @@ html, body {
     border-radius: 0 8px 0 0;
     position: absolute;
     top: 0;
-    left: 140px; 
-    width: calc(100% - 140px); 
+    left: 140px;
+    width: calc(100% - 140px);
     height: 140px;
     z-index: 1;
 }
-
-/* SUPERPOSICIÓN DE LA PORTADA REAL */
+ 
 .sc-cover-overlay {
     position: absolute;
     top: 0;
     left: 0;
-    width: 140px; 
+    width: 140px;
     height: 140px;
     object-fit: cover;
     border-radius: 8px 0 0 0;
     pointer-events: none;
     z-index: 5;
 }
-
-/* CONTROLES CENTRADOS */
+ 
 .custom-player-controls {
     display: flex;
     align-items: center;
-    justify-content: center; 
-    gap: 50px; 
+    justify-content: center;
+    gap: 50px;
     padding: 12px 20px;
     background: rgba(255, 215, 0, 0.05);
     border-top: 1px solid rgba(255,215,0,0.2);
 }
-
+ 
 .player-core-btns {
     display: flex;
     gap: 30px;
     align-items: center;
 }
-
+ 
 .ctrl-btn {
     cursor: pointer;
     display: flex;
@@ -298,27 +309,26 @@ html, body {
     transition: 0.3s;
     opacity: 0.8;
 }
-
+ 
 .ctrl-btn:hover {
     opacity: 1;
     transform: scale(1.2);
     filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
 }
-
-/* BARRA DE VOLUMEN REPRODUCTOR */
+ 
 .player-volume-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
     opacity: 0.8;
 }
-
+ 
 .player-volume-wrapper svg {
     width: 18px;
     height: 18px;
     fill: #FFD700;
 }
-
+ 
 #playerVolSlider {
     width: 70px;
     accent-color: #FFD700;
@@ -328,11 +338,11 @@ html, body {
     outline: none;
     cursor: pointer;
 }
-
+ 
 /* LISTA DE CANCIONES */
 .tracklist-container {
     text-align: left;
-    max-height: 180px; 
+    max-height: 180px;
     overflow-y: auto;
     margin-bottom: 15px;
     padding-right: 10px;
@@ -340,11 +350,13 @@ html, body {
     border-radius: 10px;
     padding: 10px 15px;
     border: 1px solid rgba(255,215,0,0.2);
+    /* CORRECCIÓN BUG #6: touch-action auto para scroll en móvil */
+    touch-action: auto;
 }
-
+ 
 .tracklist-container::-webkit-scrollbar { width: 4px; }
 .tracklist-container::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
-
+ 
 .track-item-wrapper {
     display: flex;
     align-items: center;
@@ -352,11 +364,11 @@ html, body {
     border-bottom: 1px solid rgba(255,215,0,0.15);
     padding: 6px 0;
 }
-
+ 
 .track-item-wrapper:last-child {
     border-bottom: none;
 }
-
+ 
 .track-link {
     display: block;
     text-decoration: none;
@@ -368,12 +380,12 @@ html, body {
     font-size: 14px;
     padding: 5px 0;
 }
-
+ 
 .track-link:hover {
     color: #FFD700;
     padding-left: 8px;
 }
-
+ 
 .active-track {
     color: #000;
     font-weight: bold;
@@ -381,20 +393,20 @@ html, body {
     border-radius: 4px;
     padding-left: 12px;
 }
-
+ 
 .share-btn {
     cursor: pointer;
     transition: 0.3s;
     opacity: 0.6;
     padding: 5px;
 }
-
+ 
 .share-btn:hover {
     opacity: 1;
     transform: scale(1.2);
     filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
 }
-
+ 
 /* PLATAFORMAS DEL ÁLBUM */
 .album-platforms {
     display: flex;
@@ -404,7 +416,7 @@ html, body {
     margin-top: 10px;
     margin-bottom: 15px;
 }
-
+ 
 .album-platforms a {
     width: 40px;
     height: 40px;
@@ -416,23 +428,23 @@ html, body {
     justify-content: center;
     transition: 0.25s;
 }
-
+ 
 .album-platforms a:hover {
     background: gold;
     transform: scale(1.15);
 }
-
+ 
 .album-platforms svg {
     fill: gold;
     width: 20px;
     height: 20px;
     transition: 0.25s;
 }
-
+ 
 .album-platforms a:hover svg {
     fill: #000;
 }
-
+ 
 .btn-volver {
     background: transparent;
     border: 1px solid #FFD700;
@@ -448,12 +460,12 @@ html, body {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
+ 
 .btn-volver:hover {
     background: #FFD700;
     color: #000;
 }
-
+ 
 /* CONTROLES DE AUDIO BIO */
 .audio-controls {
     background: #111;
@@ -467,14 +479,14 @@ html, body {
     gap: 15px;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
 }
-
+ 
 .audio-controls span {
     font-size: 22px;
     cursor: pointer;
     user-select: none;
     font-family: sans-serif;
 }
-
+ 
 .audio-controls .vol-label {
     font-size: 13px;
     font-weight: 700;
@@ -482,7 +494,7 @@ html, body {
     letter-spacing: 1px;
     cursor: default;
 }
-
+ 
 #volumeSlider {
     flex-grow: 1;
     accent-color: #FFD700;
@@ -492,7 +504,7 @@ html, body {
     outline: none;
     cursor: pointer;
 }
-
+ 
 /* ORBITAS */
 .orbit {
     position: absolute;
@@ -502,20 +514,20 @@ html, body {
     will-change: transform;
     transform: translateZ(0);
 }
-
+ 
 #orbitSingles { width: 420px; height: 420px; animation: spin 45s linear infinite; }
 #orbitAlbums { width: 720px; height: 720px; animation: spin 95s linear infinite; }
-
+ 
 #orbitSingles:hover, #orbitSingles:hover .counter,
 #orbitAlbums:hover, #orbitAlbums:hover .counter {
     animation-play-state: paused;
 }
-
+ 
 @keyframes spin {
     from { transform: rotate(0deg) translateZ(0); }
     to { transform: rotate(360deg) translateZ(0); }
 }
-
+ 
 /* DISCOS */
 .planet {
     position: absolute;
@@ -532,13 +544,13 @@ html, body {
     pointer-events: auto;
     will-change: transform;
 }
-
+ 
 .planet:hover {
     transform: scale(1.3) translateZ(0);
     box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
     z-index: 100;
 }
-
+ 
 .counter {
     width: 100%;
     height: 100%;
@@ -547,7 +559,7 @@ html, body {
     border-radius: 50%;
     will-change: transform;
 }
-
+ 
 .counter img {
     width: 100%;
     height: 100%;
@@ -555,14 +567,14 @@ html, body {
     border-radius: 50%;
     pointer-events: none;
 }
-
+ 
 #orbitAlbums .counter { animation-duration: 95s; }
-
+ 
 @keyframes counterSpin {
     from { transform: rotate(0deg) translateZ(0); }
     to { transform: rotate(-360deg) translateZ(0); }
 }
-
+ 
 /* TOOLTIPS */
 .tooltip {
     position: absolute;
@@ -585,9 +597,9 @@ html, body {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
+ 
 .planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
-
+ 
 /* EFECTO FAMILIA */
 .family-symbol-container {
     position: absolute;
@@ -606,19 +618,19 @@ html, body {
     transition: 0.3s;
     pointer-events: none;
 }
-
+ 
 .planet:hover .family-symbol-container { opacity: 1; bottom: 125%; }
-
+ 
 .fam-fig { display: flex; flex-direction: column; align-items: center; }
 .fam-head { width: 10px; height: 10px; background: gold; border-radius: 50%; margin-bottom: 2px; }
 .fam-body-m { width: 16px; height: 24px; background: gold; border-radius: 4px 4px 0 0; }
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
-
+ 
 .heart-bubble {
     position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity;
 }
-
+ 
 /* REDES LATERALES GLOBALES */
 .floating-social, .floating-platforms {
     position: absolute;
@@ -629,10 +641,10 @@ html, body {
     gap: 15px;
     z-index: 999;
 }
-
+ 
 .floating-social { left: 15px; }
 .floating-platforms { right: 15px; }
-
+ 
 .floating-social a, .floating-platforms a {
     background: #111;
     color: #FFD700;
@@ -648,11 +660,11 @@ html, body {
     box-sizing: border-box;
     border: 1px solid gold;
 }
-
+ 
 .floating-social svg, .floating-platforms svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
 .floating-social a:hover, .floating-platforms a:hover { background: #FFD700; transform: scale(1.2); }
 .floating-social a:hover svg, .floating-platforms a:hover svg { fill: #000; }
-
+ 
 /* COMETAS Y SUPERNOVAS ESTÉTICAS */
 .comet-container {
     position: absolute;
@@ -666,40 +678,39 @@ html, body {
     margin: -20px;
     transition: opacity 0.5s ease;
 }
-
+ 
 .comet-head {
-    width: 14px; /* Lo aumenté a 14px para que coincida perfecto con la imagen que me mandaste */
-    height: 14px; 
-    background: #fff; 
-    border-radius: 50%; 
-    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.9), 0 0 30px 10px rgba(255, 215, 0, 0.8); 
-    position: relative; 
-    z-index: 2; 
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.9), 0 0 30px 10px rgba(255, 215, 0, 0.8);
+    position: relative;
+    z-index: 2;
     transition: 0.4s;
 }
-
+ 
 .comet-tail {
-    position: absolute; 
-    /* LA MATEMÁTICA EXACTA: 50% menos la mitad de su propio grosor (1.5px) */
-    top: calc(50% - 1.5px); 
-    left: 50%; /* Nace desde el centro exacto de la cabeza */
-    width: 150px; 
-    height: 3px; 
-    background: linear-gradient(to right, #FFD700 0%, rgba(255,215,0,0.3) 40%, transparent 100%); 
-    transform-origin: left center; 
-    z-index: 1; 
-    pointer-events: none; 
+    position: absolute;
+    top: calc(50% - 1.5px);
+    left: 50%;
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(to right, #FFD700 0%, rgba(255,215,0,0.3) 40%, transparent 100%);
+    transform-origin: left center;
+    z-index: 1;
+    pointer-events: none;
     transition: 0.4s;
 }
-
+ 
 .comet-text {
     position: absolute; top: 35px; left: 50%; transform: translateX(-50%) scale(0); background: rgba(0, 0, 0, 0.95); border: 1px solid #FFD700; color: #FFD700; padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: bold; white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 0 20px rgba(255,215,0,0.4); text-transform: uppercase; letter-spacing: 1px;
 }
-
+ 
 .comet-container.revealed .comet-text { transform: translateX(-50%) scale(1); opacity: 1; }
 .comet-container.revealed .comet-head { transform: scale(1.8); box-shadow: 0 0 25px 10px rgba(255,215,0,1); }
 .comet-container.revealed .comet-tail { opacity: 0; }
-
+ 
 .supernova-hitbox {
     position: absolute;
     width: 50px;
@@ -714,7 +725,7 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-
+ 
 .supernova {
     position: relative;
     width: 4px;
@@ -725,7 +736,7 @@ html, body {
     animation: burst 2.5s ease-in-out forwards;
     pointer-events: none;
 }
-
+ 
 .supernova::before, .supernova::after {
     content: '';
     position: absolute;
@@ -734,10 +745,10 @@ html, body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
+ 
 .supernova::before { width: 60px; height: 2px; }
 .supernova::after { width: 2px; height: 60px; }
-
+ 
 .ray-x {
     position: absolute;
     width: 30px;
@@ -747,7 +758,7 @@ html, body {
     left: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
 }
-
+ 
 .ray-x::after {
     content: '';
     position: absolute;
@@ -758,72 +769,72 @@ html, body {
     left: 0;
     transform: rotate(90deg);
 }
-
-@keyframes burst { 
-    0% { transform: scale(0); opacity: 0; } 
-    40% { transform: scale(1.2); opacity: 1; } 
-    100% { transform: scale(0); opacity: 0; } 
+ 
+@keyframes burst {
+    0% { transform: scale(0); opacity: 0; }
+    40% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
 }
-
-.spin-active { 
-    animation: fastSpin 2s linear infinite !important; 
-    box-shadow: 0 0 40px #FFD700 !important; 
-    border: 2px solid #fff !important; 
-    z-index: 5000 !important; 
+ 
+.spin-active {
+    animation: fastSpin 2s linear infinite !important;
+    box-shadow: 0 0 40px #FFD700 !important;
+    border: 2px solid #fff !important;
+    z-index: 5000 !important;
 }
-
-@keyframes fastSpin { 
-    100% { transform: rotate(360deg) translateZ(0); } 
+ 
+@keyframes fastSpin {
+    100% { transform: rotate(360deg) translateZ(0); }
 }
-
-.force-tooltip { 
-    opacity: 1 !important; 
-    visibility: visible !important; 
-    bottom: -35px !important; 
+ 
+.force-tooltip {
+    opacity: 1 !important;
+    visibility: visible !important;
+    bottom: -35px !important;
 }
-
+ 
 /* RESPONSIVIDAD: EN MÓVILES BARRAS PASAN A ARRIBA Y ABAJO */
 @media (max-width: 768px) {
     #solarSystem { transform: scale(0.45); }
-    
+ 
     .floating-platforms {
         top: 15px; bottom: auto; right: auto; left: 50%;
         transform: translateX(-50%); flex-direction: row;
         width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px;
     }
-
+ 
     .floating-social {
         top: auto; bottom: 15px; right: auto; left: 50%;
         transform: translateX(-50%); flex-direction: row;
         width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px;
     }
-
+ 
     .floating-social a, .floating-platforms a {
         width: 36px; height: 36px; padding: 6px; margin: 0;
     }
-
+ 
     .modal-content { padding: 20px; width: 90%; max-height: 85vh; }
     .close-modal { right: 15px; top: 10px; }
 }
-
+ 
 /* ÓRBITA Y ESTILO DE LA NAVE ESPACIAL */
 .orbit-ship {
-    width: 570px; /* Órbita intermedia (entre 420px de sencillos y 720px de álbumes) */
+    width: 570px;
     height: 570px;
-    animation: spin 55s linear infinite; /* Viaja a su propia velocidad */
-    z-index: 1005; 
-    pointer-events: none; /* Para no bloquear clics al universo */
+    animation: spin 55s linear infinite;
+    z-index: 1005;
+    pointer-events: none;
 }
-
+ 
 .ship-wrapper {
     position: absolute;
-    left: calc(50% + 285px - 16px); /* 285 es el radio exacto de la órbita */
+    left: calc(50% + 285px - 16px);
     top: calc(50% - 16px);
-    transform: rotate(135deg); /* Alinea el cohete para que apunte hacia donde viaja */
-    pointer-events: auto; /* La nave sí recibe clics */
+    transform: rotate(135deg);
+    pointer-events: auto;
     will-change: transform;
 }
-
+ 
 .floating-tu-voz {
     background: transparent;
     border: none;
@@ -834,7 +845,7 @@ html, body {
     cursor: pointer;
     transition: 0.3s;
 }
-
+ 
 .floating-tu-voz svg {
     stroke: #FFD700;
     fill: rgba(0, 0, 0, 0.8);
@@ -843,86 +854,80 @@ html, body {
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
     transition: 0.3s;
 }
-
+ 
 .floating-tu-voz:hover {
     transform: scale(1.4);
 }
-
+ 
 .floating-tu-voz:hover svg {
     stroke: #fff;
     filter: drop-shadow(0 0 15px #FFD700);
 }
-
-/* ESTADO DE ESPERA DE LA NAVE (PARPADEO) */
+ 
 @keyframes shipWaiting {
     0% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: #FFD700; }
     50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)); transform: scale(1.3); stroke: #fff; }
     100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: #FFD700; }
 }
-
+ 
 .ship-waiting svg {
     animation: shipWaiting 1.5s infinite ease-in-out !important;
 }
-
-/* EL PROYECTIL DE LÁSER - EFECTO PLASMA Y NÚCLEO BRILLANTE */
+ 
 .energy-pulse {
     position: fixed;
     width: 100px;
-    height: 2px; /* Mucho más delgado, ya no es un palo */
+    height: 2px;
     background: linear-gradient(to right, transparent 0%, rgba(255, 215, 0, 0.6) 50%, #ffffff 100%);
     box-shadow: 0 0 20px 4px rgba(255, 215, 0, 0.6);
     border-radius: 50px;
     pointer-events: none;
     z-index: 999999;
 }
-
-/* La "Chispa" o núcleo de energía en la punta del láser */
+ 
 .energy-pulse::after {
     content: '';
     position: absolute;
-    right: -2px; /* Se ancla exactamente en la punta delantera */
+    right: -2px;
     top: 50%;
     transform: translateY(-50%);
     width: 12px;
     height: 12px;
     background: #ffffff;
     border-radius: 50%;
-    box-shadow: 
-        0 0 15px 5px #ffffff, 
-        0 0 35px 15px #FFD700; /* Un resplandor enorme alrededor de la punta */
+    box-shadow:
+        0 0 15px 5px #ffffff,
+        0 0 35px 15px #FFD700;
 }
-
-/* VENTANA INVISIBLE QUE DEJA VER EL UNIVERSO CONGELADO */
+ 
+/* VENTANA DEL BUZÓN */
 #reflectionModal {
-    background-color: transparent !important; 
-    backdrop-filter: none !important; 
-    pointer-events: none; 
+    background-color: transparent !important;
+    backdrop-filter: none !important;
 }
-
+ 
 #reflectionModal .reflection-content {
     position: absolute;
     margin: 0;
     width: 350px;
-    pointer-events: auto; 
+    pointer-events: auto;
     opacity: 0;
     transition: opacity 0.4s ease;
     box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
-    background: rgba(10, 10, 10, 0.95); 
+    background: rgba(10, 10, 10, 0.95);
     border: 1px solid #FFD700;
-    /* Las posiciones left, right, top y transform ahora las controla Javascript */
 }
-
+ 
 #reflectionModal.show .reflection-content {
     opacity: 1;
 }
-
-/* RESTAURACIÓN DEL FORMULARIO Y CAJA DE TEXTO */
+ 
 #reflectionForm {
     display: flex;
     flex-direction: column;
     margin-top: 15px;
 }
-
+ 
 #reflectionMsg {
     background: #111;
     border: 1px solid rgba(255, 215, 0, 0.5);
@@ -935,53 +940,48 @@ html, body {
     outline: none;
     transition: 0.3s;
     width: 100%;
-    box-sizing: border-box; /* Esto evita que el texto se desborde */
+    box-sizing: border-box;
 }
-
+ 
 #reflectionMsg:focus {
     border-color: #FFD700;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
 }
-
-/* MÓVILES: LA VENTANA SE CENTRA AUTOMÁTICAMENTE */
+ 
 @media (max-width: 768px) {
-    /* La ventana del buzón emerge desde abajo en móviles */
-    #reflectionModal .reflection-content { 
-        width: 90% !important; /* Un poco más angosto para que respire */
-        left: 5% !important; /* Centrado perfecto */
-        right: auto !important; 
+    #reflectionModal .reflection-content {
+        width: 90% !important;
+        left: 5% !important;
+        right: auto !important;
         top: auto !important;
         bottom: 20px !important;
-        transform: translateY(100px) !important; 
-        box-sizing: border-box !important; /* ESTA ES LA MAGIA: El relleno se va hacia adentro */
-        padding: 20px 15px !important; /* Más espacio interior */
+        transform: translateY(100px) !important;
+        box-sizing: border-box !important;
+        padding: 20px 15px !important;
     }
-    
+ 
     #reflectionModal.show .reflection-content {
-        transform: translateY(0) !important; 
+        transform: translateY(0) !important;
     }
-
-    /* Aseguramos que la X sea súper visible y fácil de presionar en celular */
+ 
     #reflectionModal .close-reflection {
         top: 10px !important;
         right: 15px !important;
-        font-size: 32px !important; /* Más grande para el pulgar */
+        font-size: 32px !important;
         z-index: 100;
     }
-
-    /* Transformación dinámica del Universo en móvil */
-    #solarSystem { 
-        transform: scale(0.45); 
+ 
+    #solarSystem {
+        transform: scale(0.45);
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), margin-top 0.5s ease;
     }
-
-    /* Esta clase la inyectará Javascript cuando se abra el buzón */
+ 
     #solarSystem.mobile-focus {
-        transform: scale(0.35) !important; 
-        margin-top: -30vh !important; 
+        transform: scale(0.35) !important;
+        margin-top: -30vh !important;
     }
 }
-    /* FORZAR LA POSICIÓN Y COLOR DE LA "X" EN EL BUZÓN */
+ 
 #reflectionModal .close-reflection {
     position: absolute !important;
     top: 5px !important;
@@ -992,10 +992,11 @@ html, body {
     line-height: 1 !important;
     text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
-    /* === SATÉLITE EN ÓRBITA === */
+ 
+/* SATÉLITE */
 .satelite-wrapper {
     position: absolute;
-    top: 15%; 
+    top: 15%;
     right: 20%;
     width: 35px;
     height: 35px;
@@ -1004,45 +1005,40 @@ html, body {
     transition: transform 0.3s ease, filter 0.3s ease;
     animation: floatSatellite 4s ease-in-out infinite;
 }
-
+ 
 .satelite-wrapper svg {
     width: 100%;
     height: 100%;
-    stroke: #FFD700; /* Dorado brillante permanente */
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)); /* Resplandor sutil */
+    stroke: #FFD700;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     transition: 0.3s ease;
 }
-
+ 
 .satelite-wrapper:hover svg {
-    stroke: #ffffff; /* El metal brilla en blanco al pasar el mouse */
-    filter: drop-shadow(0 0 15px #FFD700) drop-shadow(0 0 25px #FFD700); /* Explosión de luz dorada */
-}
-
-.satelite-wrapper:hover svg {
-    stroke: #FFD700; 
+    stroke: #FFD700;
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
 }
-
+ 
 @keyframes floatSatellite {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-10px) rotate(5deg); }
 }
-
-/* === PANEL HOLOGRÁFICO === */
+ 
+/* PANEL HOLOGRÁFICO */
 .hologram-modal {
     display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); 
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
     z-index: 9999;
     align-items: center;
     justify-content: center;
 }
-
+ 
 .hologram-content {
     background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(0,0,0,0.95) 100%);
-    border: 1px solid rgba(255, 215, 0, 0.3); 
+    border: 1px solid rgba(255, 215, 0, 0.3);
     box-shadow: 0 0 30px rgba(255, 215, 0, 0.15), inset 0 0 20px rgba(255, 215, 0, 0.05);
     border-radius: 15px;
     padding: 40px;
@@ -1051,8 +1047,14 @@ html, body {
     text-align: center;
     position: relative;
     color: #fff;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    /* CORRECCIÓN BUG #6: touch-action auto para scroll en móvil */
+    touch-action: auto;
+    padding-bottom: 30px !important;
 }
-
+ 
 .close-hologram {
     position: absolute;
     top: 15px; right: 20px;
@@ -1062,65 +1064,78 @@ html, body {
     cursor: pointer;
     transition: 0.3s;
 }
-
+ 
 .close-hologram:hover {
     color: #fff;
     text-shadow: 0 0 10px #FFD700;
 }
-
+ 
 .hologram-header h2 {
     color: #FFD700;
     letter-spacing: 4px;
     margin-bottom: 5px;
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
-
+ 
 .hologram-header p {
-    color: #aaa;
+    color: #FFD700 !important;
+    opacity: 0.9;
     font-size: 14px;
     margin-bottom: 30px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
+ 
 .support-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
+    margin-bottom: 30px !important;
 }
-
+ 
 .support-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     padding: 25px 15px;
     transition: 0.3s ease;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-bottom: 25px !important;
 }
-
+ 
 .support-card:hover {
     background: rgba(255, 215, 0, 0.05);
     border-color: rgba(255, 215, 0, 0.5);
     transform: translateY(-5px);
 }
-
+ 
+.support-card p {
+    color: #FFD700 !important;
+    opacity: 0.85;
+}
+ 
+.support-card .holo-btn {
+    margin-top: auto !important;
+}
+ 
 .card-icon {
     font-size: 30px;
     margin-bottom: 15px;
 }
-
+ 
 .support-card h3 {
     font-size: 16px;
     color: #fff;
     margin-bottom: 10px;
 }
-
+ 
 .support-card p {
     font-size: 13px;
-    color: #888;
     margin-bottom: 20px;
     line-height: 1.5;
 }
-
+ 
 .holo-btn {
     background: transparent;
     color: #FFD700;
@@ -1133,17 +1148,14 @@ html, body {
     transition: 0.3s;
     width: 100%;
 }
-
+ 
 .holo-btn:hover {
     background: #FFD700;
     color: #000;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
-    /* =========================================
-   NUEVO MOTOR 3D Y DISEÑO DE TARJETAS 
-========================================= */
-
-/* 1. EL MOTOR DE GIRO 3D (Para las 3 tarjetas) */
+ 
+/* MOTOR 3D DE TARJETAS */
 .support-card.flip-card {
     background: transparent !important;
     border: none !important;
@@ -1151,7 +1163,7 @@ html, body {
     perspective: 1000px;
     min-height: 280px;
 }
-
+ 
 .flip-card-inner {
     position: relative;
     width: 100%;
@@ -1160,11 +1172,11 @@ html, body {
     transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
     transform-style: preserve-3d;
 }
-
+ 
 .flip-card-inner.is-flipped {
     transform: rotateY(180deg);
 }
-
+ 
 .flip-card-front, .flip-card-back {
     position: absolute !important;
     top: 0; left: 0;
@@ -1180,25 +1192,25 @@ html, body {
     align-items: center;
     box-sizing: border-box;
 }
-
+ 
 .flip-card-front {
     background: rgba(20, 20, 20, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
+ 
 .flip-card-front:hover {
     background: rgba(255, 215, 0, 0.05);
     border-color: rgba(255, 215, 0, 0.5);
 }
-
+ 
 .flip-card-back {
     transform: rotateY(180deg);
     background: rgba(10, 10, 10, 0.98);
     border: 1px solid #FFD700;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
 }
-
-/* 2. ESTILOS DEL CARRUSEL QR (Tarjeta 1) */
+ 
+/* CARRUSEL QR */
 .qr-carousel-wrapper { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 15px; }
 .qr-nav-btn { background: transparent; border: none; color: #FFD700; font-size: 22px; cursor: pointer; padding: 5px 10px; transition: 0.3s; outline: none; }
 .qr-nav-btn:hover { color: #fff; transform: scale(1.2); text-shadow: 0 0 10px #FFD700; }
@@ -1206,118 +1218,92 @@ html, body {
 .qr-container::-webkit-scrollbar { display: none; }
 .qr-box { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 100%; scroll-snap-align: center; flex-shrink: 0; }
 .qr-img { width: 120px; height: 120px; border: 1px solid #FFD700; border-radius: 8px; padding: 5px; background: #fff; }
-.qr-box span { font-size: 11px; color: #aaa; letter-spacing: 1px; white-space: nowrap; }
+.qr-box span { font-size: 11px; color: #FFD700 !important; letter-spacing: 1px; white-space: nowrap; }
 .net-badge { color: #FFD700 !important; font-size: 9px !important; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 3px 8px; border-radius: 4px; margin-top: -3px; text-transform: uppercase; }
-
+ 
 .btn-volver-crypto, .btn-volver { width: 80%; border-color: #555; color: #aaa; margin-top: auto; }
-
-/* 3. ESTILOS TARJETA 3 (Estructura de 3 columnas) */
+ 
 .layout-3-cols { display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; padding: 10px 5px; width: 100%; height: 100%; box-sizing: border-box; }
 .icon-col { display: flex; flex-direction: column; justify-content: space-around; align-items: center; width: 35px; gap: 5px; }
 .mini-icon { width: 24px; height: 24px; filter: grayscale(100%) sepia(100%) hue-rotate(5deg) saturate(500%) brightness(1.2); transition: 0.3s; }
-.mini-icon:hover { filter: none; transform: scale(1.2); drop-shadow: 0 0 5px #FFD700; }
+.mini-icon:hover { filter: none; transform: scale(1.2); }
 .center-col { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 0 5px; text-align: center; }
-
-/* 4. ESTILOS MODAL Y FORMULARIO (La Bóveda) MEJORADOS */
-.boveda-info { 
-    background: rgba(0, 0, 0, 0.6); 
-    border: 1px solid rgba(255, 215, 0, 0.2); 
-    border-left: 4px solid #FFD700; 
-    padding: 20px; /* Más espacio interno */
-    border-radius: 5px; 
-    text-align: left; 
-    margin-bottom: 25px; 
+ 
+/* BÓVEDA */
+.boveda-info {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-left: 4px solid #FFD700;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: left;
+    margin-bottom: 25px;
 }
 .hologram-content::-webkit-scrollbar { width: 6px; }
 .hologram-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 10px; }
 .holo-form { display: flex; flex-direction: column; gap: 20px; text-align: left; }
-
-/* Títulos y textos dentro de la bóveda más grandes */
+ 
 .info-seccion h4 { font-size: 15px !important; margin-bottom: 8px !important; }
 .info-seccion ul, .info-seccion ol { font-size: 14px !important; line-height: 1.7 !important; margin-bottom: 20px !important; }
-
-/* Inputs del formulario más grandes y legibles */
-.input-group input { 
-    width: 100%; 
-    background: rgba(0, 0, 0, 0.5); 
-    border: 1px solid rgba(255, 255, 255, 0.2); 
-    color: #fff; 
-    padding: 15px; /* Más alto el campo de texto */
-    border-radius: 5px; 
-    font-family: inherit; 
-    font-size: 15px; /* Letra mucho más legible al escribir */
-    box-sizing: border-box; 
+ 
+.input-group input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFD700 !important;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 15px;
+    box-sizing: border-box;
 }
+ 
+.input-group input::placeholder {
+    color: rgba(255, 215, 0, 0.6) !important;
+}
+ 
 .input-group input:focus { outline: none; border-color: #FFD700; background: rgba(255, 215, 0, 0.05); }
-
-/* Caja de aceptación de reglas más visible */
-.checkbox-group { 
-    display: flex; 
-    align-items: flex-start; 
-    gap: 15px; 
-    background: rgba(255, 215, 0, 0.05); 
-    padding: 15px; 
-    border: 1px dashed rgba(255, 215, 0, 0.5); /* Borde más visible */
-    border-radius: 5px; 
+ 
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: rgba(255, 215, 0, 0.05);
+    padding: 15px;
+    border: 1px dashed rgba(255, 215, 0, 0.5);
+    border-radius: 5px;
 }
-.checkbox-group input { margin-top: 5px; transform: scale(1.3); /* Checkbox más grande */ cursor: pointer; }
-.checkbox-group label { 
-    font-size: 14px; /* Letra legible */
-    color: #FFD700; /* Letra dorada brillante por defecto */
-    line-height: 1.5; 
+.checkbox-group input { margin-top: 5px; transform: scale(1.3); cursor: pointer; }
+.checkbox-group label {
+    font-size: 14px;
+    color: #FFD700;
+    line-height: 1.5;
     cursor: pointer;
     transition: 0.3s;
 }
-
-/* Efecto al pasar el mouse por las letras de "Acepto las reglas" */
 .checkbox-group:hover label {
     color: #fff;
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
 }
-
-/* Botón de enviar */
-.submit-btn { 
-    margin-top: 15px; 
-    padding: 18px; 
-    font-size: 15px;
-    font-weight: bold; 
-    letter-spacing: 1px;
-}
-
-/* =========================================
-   BAÑO DE ORO: FORZAR TEXTOS A DORADO
-========================================= */
-
-/* 1. Subtítulos principales (Súmate a la misión, Protocolo de co-creadores) */
-.hologram-header p {
-    color: #FFD700 !important;
-    opacity: 0.9;
-}
-
-/* 2. Textos descriptivos de las 3 tarjetas iniciales */
-.support-card p {
-    color: #FFD700 !important;
-    opacity: 0.85; /* Ligeramente tenue para que el título resalte más */
-}
-
-/* 3. Párrafos y listas dentro de las ventanas (Instrucciones, Bóveda, Amplificar) */
-.modal-content p, 
-.info-seccion ul, 
-.info-seccion ol, 
+ 
+.submit-btn { margin-top: 15px; padding: 18px; font-size: 15px; font-weight: bold; letter-spacing: 1px; }
+ 
+/* BAÑO DE ORO */
+.modal-content p,
+.info-seccion ul,
+.info-seccion ol,
 .info-seccion li,
 #amplificarModal div {
     color: #FFD700 !important;
 }
-
-/* Destacar las letras en negrita con un brillo espacial */
-.modal-content strong, 
+ 
+.modal-content strong,
 .modal-content b,
 .info-seccion strong {
     color: #FFD700 !important;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
-
-/* 4. Reparación del botón "LEER REGLAS Y APLICAR" */
+ 
 #btnIrABoveda {
     color: #FFD700 !important;
     background: transparent !important;
@@ -1330,30 +1316,13 @@ html, body {
     text-shadow: 0 0 10px #FFD700 !important;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.5) !important;
 }
-
-/* 5. Textos del formulario (Cajas de Nombre, Correo, etc.) */
-.input-group input {
-    color: #FFD700 !important; /* El texto cuando el usuario escribe */
-}
-.input-group input::placeholder {
-    color: rgba(255, 215, 0, 0.6) !important; /* El texto de fondo antes de escribir */
-}
-
-/* 6. Textos debajo de los Códigos QR */
-.qr-box span {
-    color: #FFD700 !important;
-}
-
-/* =========================================
-   ÓRBITA DIRECCIONADA Y SÓLIDA (SATÉLITE)
-========================================= */
-
-/* Animación: La punta mira hacia el frente de la órbita */
+ 
+/* SATÉLITE EN ÓRBITA */
 @keyframes orbitaSateliteProa {
     from { transform: rotate(0deg) translateX(280px) rotate(180deg); }
     to { transform: rotate(360deg) translateX(280px) rotate(180deg); }
 }
-
+ 
 #btnSatelite {
     position: absolute !important;
     top: 50% !important;
@@ -1369,76 +1338,37 @@ html, body {
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     transition: filter 0.3s ease;
 }
-
+ 
 #btnSatelite:hover {
     filter: drop-shadow(0 0 15px #FFD700);
     scale: 1.1;
 }
-
+ 
 #btnSatelite svg {
     width: 100%;
     height: 100%;
     display: block;
 }
-
-/* =========================================
-   RESCATE DEL DISEÑO DEL SATÉLITE
-========================================= */
+ 
 #btnSatelite svg path,
 #btnSatelite svg rect,
 #btnSatelite svg circle,
 #btnSatelite svg line {
-    fill: #000 !important; /* Relleno negro sólido */
-    stroke: #FFD700 !important; /* Contorno dorado */
-    stroke-width: 1.5 !important; /* Grosor de la línea */
-}
-
-/* =========================================
-   ACTIVAR DESLIZAMIENTO EN PANELES (MÓVIL)
-========================================= */
-.hologram-content {
-    max-height: 85vh !important; 
-    overflow-y: auto !important; 
-    -webkit-overflow-scrolling: touch; 
-    padding-bottom: 30px !important; 
-}
-
-/* Ocultar la barra de scroll estética para que se vea limpio */
-.hologram-content::-webkit-scrollbar {
-    width: 6px;
-}
-.hologram-content::-webkit-scrollbar-thumb {
-    background: rgba(255, 215, 0, 0.4);
-    border-radius: 10px;
-}
-    /* =========================================
-   ALINEACIÓN PERFECTA DE TARJETAS (CORREGIDO)
-========================================= */
-.support-card {
-    display: flex !important;
-    flex-direction: column !important;
-    padding-bottom: 25px !important; /* Le da el "colchón" al botón dorado para que no toque el borde */
-}
-
-.support-card .holo-btn {
-    margin-top: auto !important; /* Mantiene los botones perfectamente alineados abajo */
-}
-
-/* Evita que las tarjetas se encimen con el botón de "Volver al Universo" */
-.support-grid {
-    margin-bottom: 30px !important; 
+    fill: #000 !important;
+    stroke: #FFD700 !important;
+    stroke-width: 1.5 !important;
 }
 </style>
 </head>
 <body>
-
+ 
 <div id="loader">
-    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high">
+    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high" id="loaderImg">
     <p>INICIANDO UNIVERSO...</p>
 </div>
-
+ 
 <audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
-
+ 
 <div id="bioModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
         <span class="close-modal close-bio" aria-label="Cerrar biografía" role="button" tabindex="0">×</span>
@@ -1448,20 +1378,20 @@ html, body {
         <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
         <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
         <p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
-        
+ 
         <div class="audio-controls">
             <span id="muteBtn" aria-label="Silenciar o activar audio" role="button" tabindex="0">🔊</span>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
             <span class="vol-label">VOL</span>
         </div>
-        
+ 
         <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
         <p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
             Próximamente: "Algo está mal" (Libro)
         </p>
     </div>
 </div>
-
+ 
 <div id="albumModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content album-modal-content">
         <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
@@ -1483,17 +1413,16 @@ html, body {
                     <input type="range" id="playerVolSlider" min="0" max="100" value="100" title="Volumen">
                 </div>
             </div>
-            <!-- PANTALLA DE LETRA AUTOMÁTICA -->
             <div id="nowPlayingLyrics" style="display: none; max-height: 180px; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 15px; border-top: 1px solid rgba(255,215,0,0.2); font-size: 13px; color: #FFD700; white-space: pre-wrap; text-align: center; line-height: 1.6;"></div>
         </div>
-
+ 
         <div class="tracklist-container" id="modalTracklist"></div>
         <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
         <div class="album-platforms" id="modalPlatforms"></div>
         <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
     </div>
 </div>
-
+ 
 <!-- MODAL DE LETRAS -->
 <div id="lyricsModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
@@ -1502,10 +1431,10 @@ html, body {
         <div id="lyricsText" style="white-space: pre-wrap; text-align: center; color: #FFD700; font-size: 15px; line-height: 1.8; font-family: 'Merriweather', serif;"></div>
     </div>
 </div>
-
+ 
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="starContainer" aria-hidden="true"></div>
-
+ 
 <!-- REDES SOCIALES -->
 <div class="floating-social">
     <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
@@ -1524,9 +1453,7 @@ html, body {
         <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
     </a>
     <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
-        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="Threads--Streamline-Simple-Icons">
-            <path d="M12.186 24h-0.007c-3.581 -0.024 -6.334 -1.205 -8.184 -3.509C2.35 18.44 1.5 15.586 1.472 12.01v-0.017c0.03 -3.579 0.879 -6.43 2.525 -8.482C5.845 1.205 8.6 0.024 12.18 0h0.014c2.746 0.02 5.043 0.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04 0.569c-1.104 -3.96 -3.898 -5.984 -8.304 -6.015 -2.91 0.022 -5.11 0.936 -6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c0.027 3.086 0.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623 -0.02 4.358 -0.631 5.8 -2.045 1.647 -1.613 1.618 -3.593 1.09 -4.798 -0.31 -0.71 -0.873 -1.3 -1.634 -1.75 -0.192 1.352 -0.622 2.446 -1.284 3.272 -0.886 1.102 -2.14 1.704 -3.73 1.79 -1.202 0.065 -2.361 -0.218 -3.259 -0.801 -1.063 -0.689 -1.685 -1.74 -1.752 -2.964 -0.065 -1.19 0.408 -2.285 1.33 -3.082 0.88 -0.76 2.119 -1.207 3.583 -1.291a13.853 13.853 0 0 1 3.02 0.142c-0.126 -0.742 -0.375 -1.332 -0.75 -1.757 -0.513 -0.586 -1.308 -0.883 -2.359 -0.89h-0.029c-0.844 0 -1.992 0.232 -2.721 1.32l-1.757 -1.18c0.98 -1.454 2.568 -2.256 4.478 -2.256h0.044c3.194 0.02 5.097 1.975 5.287 5.388 0.108 0.046 0.216 0.094 0.321 0.142 1.49 0.7 2.58 1.761 3.154 3.07 0.797 1.82 0.871 4.79 -1.548 7.158 -1.85 1.81 -4.094 2.628 -7.277 2.65Zm1.003 -11.69c-0.242 0 -0.487 0.007 -0.739 0.021 -1.836 0.103 -2.98 0.946 -2.916 2.143 0.067 1.256 1.452 1.839 2.784 1.767 1.224 -0.065 2.818 -0.543 3.086 -3.71a10.5 10.5 0 0 0 -2.215 -0.221z"/>
-        </svg>
+        <svg role="img" viewBox="0 0 24 24"><path d="M12.186 24h-0.007c-3.581 -0.024 -6.334 -1.205 -8.184 -3.509C2.35 18.44 1.5 15.586 1.472 12.01v-0.017c0.03 -3.579 0.879 -6.43 2.525 -8.482C5.845 1.205 8.6 0.024 12.18 0h0.014c2.746 0.02 5.043 0.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04 0.569c-1.104 -3.96 -3.898 -5.984 -8.304 -6.015 -2.91 0.022 -5.11 0.936 -6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c0.027 3.086 0.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623 -0.02 4.358 -0.631 5.8 -2.045 1.647 -1.613 1.618 -3.593 1.09 -4.798 -0.31 -0.71 -0.873 -1.3 -1.634 -1.75 -0.192 1.352 -0.622 2.446 -1.284 3.272 -0.886 1.102 -2.14 1.704 -3.73 1.79 -1.202 0.065 -2.361 -0.218 -3.259 -0.801 -1.063 -0.689 -1.685 -1.74 -1.752 -2.964 -0.065 -1.19 0.408 -2.285 1.33 -3.082 0.88 -0.76 2.119 -1.207 3.583 -1.291a13.853 13.853 0 0 1 3.02 0.142c-0.126 -0.742 -0.375 -1.332 -0.75 -1.757 -0.513 -0.586 -1.308 -0.883 -2.359 -0.89h-0.029c-0.844 0 -1.992 0.232 -2.721 1.32l-1.757 -1.18c0.98 -1.454 2.568 -2.256 4.478 -2.256h0.044c3.194 0.02 5.097 1.975 5.287 5.388 0.108 0.046 0.216 0.094 0.321 0.142 1.49 0.7 2.58 1.761 3.154 3.07 0.797 1.82 0.871 4.79 -1.548 7.158 -1.85 1.81 -4.094 2.628 -7.277 2.65Zm1.003 -11.69c-0.242 0 -0.487 0.007 -0.739 0.021 -1.836 0.103 -2.98 0.946 -2.916 2.143 0.067 1.256 1.452 1.839 2.784 1.767 1.224 -0.065 2.818 -0.543 3.086 -3.71a10.5 10.5 0 0 0 -2.215 -0.221z"/></svg>
     </a>
     <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud">
         <svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>
@@ -1555,17 +1482,15 @@ html, body {
         <svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>
     </a>
 </div>
-    
+ 
 <div id="solarSystem">
     <div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
         <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
     </div>
     <div id="orbitSingles" class="orbit"></div>
     <div id="orbitAlbums" class="orbit"></div>
-   <!-- ÓRBITA DE LA NAVE (BUZÓN) -->
     <div id="orbitShip" class="orbit orbit-ship">
         <div class="ship-wrapper">
-            <!-- Nave sin cuadro ni texto, puro icono -->
             <div id="btnTuVoz" class="floating-tu-voz" aria-label="Buzón de Reflexión" role="button" tabindex="0" title="Enviar Reflexión">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
@@ -1576,110 +1501,88 @@ html, body {
             </div>
         </div>
     </div>
-
-    <!-- === SATÉLITE DE COMUNICACIONES (CENTRO DE ENERGÍA) === -->
-<div id="btnSatelite" class="satelite-wrapper" title="Centro de Energía">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Antena (Oro semitransparente para efecto cristal) -->
-        <path d="M8 6a4 4 0 0 1 8 0H8z" fill="rgba(255, 215, 0, 0.4)" />
-        <line x1="12" y1="2" x2="12" y2="6" />
-        <circle cx="12" cy="2" r="1.5" fill="#FFD700" />
-        
-        <!-- Cuerpo central (Oro Sólido) -->
-        <rect x="9" y="6" width="6" height="10" rx="1" fill="#FFD700" />
-        
-        <!-- Paneles Solares (Oro con líneas oscuras de contraste) -->
-        <rect x="2" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
-        <line x1="6" y1="11" x2="9" y2="11" stroke="#000" />
-        
-        <rect x="18" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
-        <line x1="15" y1="11" x2="18" y2="11" stroke="#000" />
-        
-        <!-- Propulsores (Oro Sólido) -->
-        <path d="M10 16v2l-1.5 2.5h7L14 18v-2" fill="#FFD700" />
-    </svg>
+ 
+    <div id="btnSatelite" class="satelite-wrapper" title="Centro de Energía">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 6a4 4 0 0 1 8 0H8z" fill="rgba(255, 215, 0, 0.4)" />
+            <line x1="12" y1="2" x2="12" y2="6" />
+            <circle cx="12" cy="2" r="1.5" fill="#FFD700" />
+            <rect x="9" y="6" width="6" height="10" rx="1" fill="#FFD700" />
+            <rect x="2" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
+            <line x1="6" y1="11" x2="9" y2="11" stroke="#000" />
+            <rect x="18" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
+            <line x1="15" y1="11" x2="18" y2="11" stroke="#000" />
+            <path d="M10 16v2l-1.5 2.5h7L14 18v-2" fill="#FFD700" />
+        </svg>
+    </div>
 </div>
-
-</div> <!-- Aquí se cierra el solarSystem -->
-
-<!-- === PANEL HOLOGRÁFICO: CENTRO DE ENERGÍA === -->
+ 
+<!-- PANEL HOLOGRÁFICO -->
 <div id="hologramPanel" class="hologram-modal">
     <div class="hologram-content">
         <button class="close-hologram">&times;</button>
-        
         <div class="hologram-header">
             <h2>CENTRO DE ENERGÍA</h2>
             <p>Súmate a la misión de Reflexión Musical MX</p>
         </div>
-
         <div class="support-grid">
-            <!-- Opción 1: Dinero / Crypto -->
             <div class="support-card">
                 <div class="card-icon">⚡</div>
                 <h3>FINANCIAR LA SONDA</h3>
                 <p>Aportaciones directas para mantener la producción independiente.</p>
                 <button class="holo-btn" id="btnOpenCrypto">VER COORDENADAS</button>
             </div>
-
-            <!-- Opción 2: Co-creación -->
             <div class="support-card">
                 <div class="card-icon">📡</div>
                 <h3>PROPAGAR LA SEÑAL</h3>
                 <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
                 <button class="holo-btn" id="btnOpenPropagar">VER INSTRUCCIONES</button>
             </div>
-
-            <!-- Opción 3: Playlists -->
             <div class="support-card">
                 <div class="card-icon">🎶</div>
                 <h3>AMPLIFICAR FRECUENCIA</h3>
                 <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
                 <button class="holo-btn" id="btnOpenAmplificar">IR A PLATAFORMAS</button>
             </div>
-            
-        </div> <!-- Cierra la cuadrícula (support-grid) -->
-        
-        <!-- NUEVO BOTÓN PARA MÓVILES -->
+        </div>
         <button id="btnCerrarHologramaMovil" class="btn-volver" style="margin-top: 25px; width: 100%; box-sizing: border-box;">VOLVER AL UNIVERSO</button>
-        
-    </div> <!-- Cierra el contenido del holograma -->
-</div> <!-- Cierra el Centro de Energía completo -->
-
-<!-- MODAL DEL BUZÓN FLOTANTE -->
+    </div>
+</div>
+ 
+<!-- MODAL DEL BUZÓN -->
 <div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content reflection-content">
         <span class="close-modal close-reflection" aria-label="Cerrar buzón" role="button" tabindex="0">×</span>
         <h2 style="text-align: center; font-size: 20px; border-bottom: none; margin-bottom: 5px;">CONEXIÓN SEGURA</h2>
         <p id="buzonSubtitle" style="text-align: center; font-size: 13px; opacity: 0.9;">El universo se ha detenido para escucharte. Escribe tu mensaje y cárgalo en la sonda.</p>
-        
+ 
         <form id="reflectionForm" action="https://script.google.com/macros/s/AKfycbw-iMGBj0r8nZbhZPfwniPA1KzOC_elObAC5kN14EFeUaK0Dx7ZzD2bCOJcYw_o3xWhHQ/exec" method="POST">
             <textarea name="mensaje" id="reflectionMsg" rows="5" placeholder="Escribe tu reflexión aquí..." required></textarea>
+            <!-- CORRECCIÓN BUG #5: El honeypot debe validarse en el servidor (Google Apps Script).
+                 Agrega al inicio de tu doPost(e): if(e.parameter.miel_trampa) return; -->
             <input type="text" name="miel_trampa" style="display:none" tabindex="-1" autocomplete="off">
             <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top: 15px; width: 100%; box-sizing: border-box;">CARGAR MENSAJE EN NAVE</button>
         </form>
-
-        <!-- MENSAJE ANTI-SPAM (NUEVO) -->
+ 
         <div id="cooldownStatus" style="display: none; text-align: center; margin-top: 15px;">
             <p style="color: #ff4d4d; font-weight: bold; font-size: 14px; margin-bottom: 5px;">SISTEMA EN ENFRIAMIENTO</p>
             <p style="font-size: 13px; opacity: 0.9;">La sonda necesita recargar energía tras tu último envío. Por favor, intenta de nuevo mañana.</p>
         </div>
-        
-        <!-- Estado Fase 2 (Oculto al inicio) -->
+ 
         <div id="reflectionStatus" style="display: none; text-align: center; margin-top: 15px;">
             <p style="color: #FFD700; font-weight: bold; font-size: 14px; margin-bottom: 15px;">¡Mensaje cargado en la sonda!</p>
             <button id="btnSendToSun" class="btn-volver" style="background: #FFD700; color: #000;">CERRAR Y ENVIAR AL SOL</button>
         </div>
     </div>
 </div>
-        <!-- === MODAL 1: COORDENADAS WEB3 === -->
+ 
+<!-- MODAL COORDENADAS WEB3 -->
 <div id="cryptoModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" style="text-align: center; max-width: 400px;">
         <span class="close-modal close-crypto">×</span>
         <h2 style="font-size: 22px;">COORDENADAS WEB3</h2>
-        
         <div class="qr-carousel-wrapper" style="margin-top: 20px;">
             <button class="qr-nav-btn" id="prevQr" style="font-size: 30px;">&#10094;</button>
-            
             <div class="qr-container" id="qrContainer" style="width: 200px;">
                 <div class="qr-box"><img src="images/qr-btc.png" alt="QR Bitcoin" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">BITCOIN (BTC)</span><span class="net-badge">Red: Bitcoin</span></div>
                 <div class="qr-box"><img src="images/qr-usdt-trc20.png" alt="QR USDT TRC20" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">USDT</span><span class="net-badge">Red: TRC20</span></div>
@@ -1688,13 +1591,12 @@ html, body {
                 <div class="qr-box"><img src="images/qr-ltc.png" alt="QR Litecoin" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">LITECOIN (LTC)</span><span class="net-badge">Red: Litecoin</span></div>
                 <div class="qr-box"><img src="images/qr-sol.png" alt="QR Solana" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">SOLANA (SOL)</span><span class="net-badge">Red: Solana</span></div>
             </div>
-
             <button class="qr-nav-btn" id="nextQr" style="font-size: 30px;">&#10095;</button>
         </div>
     </div>
 </div>
-
-<!-- === MODAL 2: INSTRUCCIONES DE PROPAGACIÓN === -->
+ 
+<!-- MODAL INSTRUCCIONES -->
 <div id="propagarModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" style="text-align: center; max-width: 500px;">
         <span class="close-modal close-propagar">×</span>
@@ -1705,13 +1607,12 @@ html, body {
         <button class="btn-volver" id="btnIrABoveda" style="background: rgba(255, 215, 0, 0.1); font-size: 15px; padding: 15px;">LEER REGLAS Y APLICAR</button>
     </div>
 </div>
-
-<!-- === MODAL 3: AMPLIFICAR (PLATAFORMAS Y REDES GRANDES) === -->
+ 
+<!-- MODAL AMPLIFICAR -->
 <div id="amplificarModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" style="text-align: center; max-width: 600px;">
         <span class="close-modal close-amplificar">×</span>
         <h2 style="font-size: 22px;">EXPANDE LA SEÑAL</h2>
-        
         <div style="font-size: 14px; color: #ccc; line-height: 1.6; text-align: left; margin-bottom: 25px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
             <p style="margin-bottom: 10px;">Cada acción tuya es el motor orgánico de esta nave. Ayúdanos a llevar el mensaje más lejos:</p>
             <ul style="padding-left: 20px; margin: 0;">
@@ -1720,80 +1621,57 @@ html, body {
                 <li>💬 <b>Interactúa:</b> Suscríbete, deja tu 'Me gusta' y comenta.</li>
             </ul>
         </div>
-        
         <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Escucha el Catálogo Oficial</h3>
         <div class="album-platforms" style="margin-bottom: 30px; gap: 20px;">
-            <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" aria-label="Spotify">
-                <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>
-            </a>
-            <a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" aria-label="Amazon Music">
-                <svg viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/><path d="M13.828 11.943c0.567 -0.07 1.468 -0.027 1.645 0.204 0.135 0.176 -0.004 0.966 -0.233 1.533 -0.23 0.563 -0.572 0.961 -0.762 1.115s-0.333 0.094 -0.23 -0.137c0.105 -0.23 0.684 -1.663 0.455 -1.963 -0.213 -0.278 -1.177 -0.177 -1.625 -0.13l-0.09 0.009q-0.142 0.013 -0.233 0.024c-0.193 0.021 -0.245 0.027 -0.274 -0.032 -0.074 -0.209 0.779 -0.556 1.347 -0.623"/></svg>
-            </a>
-            <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Apple Music">
-                <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-            </a>
-            <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="YouTube Music">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-            </a>
-            <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="SoundCloud Catálogo">
-                <svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>
-            </a>
-            <a href="https://audiomack.com/reflexion-musical-mx" target="_blank" aria-label="Audiomack Catálogo">
-                <svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>
-            </a>
+            <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" aria-label="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg></a>
+            <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Apple Music"><svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></a>
+            <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="YouTube Music"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
+            <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="SoundCloud"><svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /></svg></a>
         </div>
-
         <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Únete a la Comunidad</h3>
         <div class="album-platforms" style="flex-wrap: wrap; gap: 15px;">
             <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="YouTube"><svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg></a>
             <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="TikTok"><svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg></a>
             <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Instagram"><svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
             <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Facebook"><svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
-            <a href="https://x.com/RMusicalMX" target="_blank" aria-label="X (Twitter)"><svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
-            <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Threads">
-                <svg viewBox="0 0 24 24"><path d="M12.186 24h-0.007c-3.581 -0.024 -6.334 -1.205 -8.184 -3.509C2.35 18.44 1.5 15.586 1.472 12.01v-0.017c0.03 -3.579 0.879 -6.43 2.525 -8.482C5.845 1.205 8.6 0.024 12.18 0h0.014c2.746 0.02 5.043 0.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04 0.569c-1.104 -3.96 -3.898 -5.984 -8.304 -6.015 -2.91 0.022 -5.11 0.936 -6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c0.027 3.086 0.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623 -0.02 4.358 -0.631 5.8 -2.045 1.647 -1.613 1.618 -3.593 1.09 -4.798 -0.31 -0.71 -0.873 -1.3 -1.634 -1.75 -0.192 1.352 -0.622 2.446 -1.284 3.272 -0.886 1.102 -2.14 1.704 -3.73 1.79 -1.202 0.065 -2.361 -0.218 -3.259 -0.801 -1.063 -0.689 -1.685 -1.74 -1.752 -2.964 -0.065 -1.19 0.408 -2.285 1.33 -3.082 0.88 -0.76 2.119 -1.207 3.583 -1.291a13.853 13.853 0 0 1 3.02 0.142c-0.126 -0.742 -0.375 -1.332 -0.75 -1.757 -0.513 -0.586 -1.308 -0.883 -2.359 -0.89h-0.029c-0.844 0 -1.992 0.232 -2.721 1.32l-1.757 -1.18c0.98 -1.454 2.568 -2.256 4.478 -2.256h0.044c3.194 0.02 5.097 1.975 5.287 5.388 0.108 0.046 0.216 0.094 0.321 0.142 1.49 0.7 2.58 1.761 3.154 3.07 0.797 1.82 0.871 4.79 -1.548 7.158 -1.85 1.81 -4.094 2.628 -7.277 2.65Zm1.003 -11.69c-0.242 0 -0.487 0.007 -0.739 0.021 -1.836 0.103 -2.98 0.946 -2.916 2.143 0.067 1.256 1.452 1.839 2.784 1.767 1.224 -0.065 2.818 -0.543 3.086 -3.71a10.5 10.5 0 0 0 -2.215 -0.221z"/></svg>
-            </a>
-            <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="SoundCloud Perfil"><svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg></a>
-            <a href="https://audiomack.com/reflexionmusicalmx" target="_blank" aria-label="Audiomack Perfil"><svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg></a>
+            <a href="https://x.com/RMusicalMX" target="_blank" aria-label="X"><svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
         </div>
     </div>
 </div>
-        <!-- === MODAL DE PROTOCOLO DE ACCESO A BÓVEDA (Flotante) === -->
+ 
+<!-- MODAL BÓVEDA -->
 <div id="protocoloModal" class="hologram-modal">
     <div class="hologram-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
         <button class="close-protocolo">&times;</button>
-        
         <div class="hologram-header">
             <h2>BÓVEDA DE DATOS</h2>
             <p>Protocolo de acceso para Co-creadores</p>
         </div>
-
         <div class="boveda-info">
             <div class="info-seccion">
                 <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">MATERIAL DISPONIBLE:</h4>
                 <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
-                    <li><strong>Acceso Restringido:</strong> Se otorgará únicamente la pista oficial (WAV/MP3), instrumental, acapella y letra de la <em>canción específica</em> solicitada. El catálogo completo permanece bloqueado.</li>
+                    <li><strong>Acceso Restringido:</strong> Se otorgará únicamente la pista oficial (WAV/MP3), instrumental, acapella y letra de la <em>canción específica</em> solicitada.</li>
                     <li>Logotipos oficiales (Nuestras 3 variantes visuales).</li>
-                    <li><strong style="color: #fff;">Nivel 2 (Colaboradores verificados):</strong> Acceso a versiones alternativas y maquetas de Reflexión Musical MX.</li>
+                    <li><strong style="color: #fff;">Nivel 2 (Colaboradores verificados):</strong> Acceso a versiones alternativas y maquetas.</li>
                 </ul>
             </div>
             <div class="info-seccion">
                 <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">REGLAS DE TRANSMISIÓN:</h4>
                 <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
                     <li><strong>Mención:</strong> Todo contenido generado debe etiquetar a Reflexión Musical MX.</li>
-                    <li>Nos reservamos el derecho de pedir la eliminación del contenido si se usa para discursos de odio o se monetiza sin autorización.</li>
+                    <li>Nos reservamos el derecho de pedir la eliminación si se usa para discursos de odio o se monetiza sin autorización.</li>
                 </ul>
             </div>
             <div class="info-seccion" style="background: rgba(255, 215, 0, 0.1); padding: 10px; border-radius: 4px; border-left: 3px solid #FFD700;">
                 <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">PASOS (DOBLE CONFIRMACIÓN):</h4>
                 <ol style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 0;">
-                    <li>Indica la canción (ej. track de <em>Raíces y Frutos</em>) y llena tus datos.</li>
+                    <li>Indica la canción y llena tus datos.</li>
                     <li>Ve a nuestro último video en YouTube o TikTok y comenta: <strong>"Solicitando enlace a la sonda 📡"</strong>.</li>
-                    <li>El escaneo manual tardará 48 a 72 horas. Si eres aprobado, recibirás la llave de la bóveda exclusiva en tu correo.</li>
+                    <li>El escaneo manual tardará 48 a 72 horas. Si eres aprobado, recibirás la llave en tu correo.</li>
                 </ol>
             </div>
         </div>
-
         <form id="formProtocolo" class="holo-form">
             <div class="input-group"><input type="text" name="nombre" required placeholder="Nombre / Alias del Creador"></div>
             <div class="input-group"><input type="email" name="email" required placeholder="Correo de Contacto (Cero spam)"></div>
@@ -1807,79 +1685,100 @@ html, body {
         </form>
     </div>
 </div>
-
-<!-- BASE DE DATOS EXTERNA -->
+ 
 <script src="letras.js"></script>
 <script src="datos.js"></script>
-
+ 
 <script>
+// =====================================================
 // ÍCONOS DE REPRODUCCIÓN
-const playIconSVG = `
-<svg viewBox="0 0 24 24" width="34" height="34">
-    <circle cx="12" cy="12" r="12" fill="#FFD700"/>
-    <path d="M10 8l6 4-6 4V8z" fill="#000"/>
-</svg>`;
-
-const pauseIconSVG = `
-<svg viewBox="0 0 24 24" width="34" height="34">
-    <circle cx="12" cy="12" r="12" fill="#FFD700"/>
-    <path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/>
-</svg>`;
-
+// =====================================================
+const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
+const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
+ 
 // VARIABLES GLOBALES DEL REPRODUCTOR
 let ytPlayerGlobal = null;
 let activeTracksGlobal = [];
 let activeTrackIndexGlobal = 0;
 let activePlaylistIdGlobal = "";
-let activeAlbumImgGlobal = ""; 
-
-// FUNCIÓN PARA ACTUALIZAR ÍCONO PLAY/PAUSE
+let activeAlbumImgGlobal = "";
+ 
 function setPlayerState(isPlaying) {
     const btn = document.getElementById('btnPlayPause');
-    if(btn) {
-        btn.innerHTML = isPlaying ? pauseIconSVG : playIconSVG;
-    }
+    if (btn) btn.innerHTML = isPlaying ? pauseIconSVG : playIconSVG;
 }
-
+ 
+// =====================================================
+// CORRECCIÓN BUG #5: localStorage con try/catch
+// para iOS Safari modo privado y otros contextos restringidos
+// =====================================================
+const safeStorage = {
+    get(key) {
+        try { return localStorage.getItem(key); }
+        catch (e) { return null; }
+    },
+    set(key, value) {
+        try { localStorage.setItem(key, value); }
+        catch (e) { /* silencioso en modo privado */ }
+    }
+};
+ 
+// =====================================================
+// CORRECCIÓN BUG #1: Funciones de modal corregidas
+// Usan visibility+opacity en vez de display:none
+// =====================================================
+function openModal(el) {
+    el.classList.add('show');
+}
+function closeModal(el) {
+    el.classList.remove('show');
+}
+ 
 document.addEventListener("DOMContentLoaded", () => {
     const loader = document.getElementById('loader');
+    const loaderImg = document.getElementById('loaderImg');
     const modal = document.getElementById("bioModal");
     const sun = document.getElementById("sun");
-    const closeBioModal = document.querySelector(".close-bio");
-    const closeLyricsModal = document.querySelector(".close-lyrics"); 
-    const lyricsModal = document.getElementById("lyricsModal"); 
-    const bioAudio = document.getElementById("bioAudio"); 
+    const bioAudio = document.getElementById("bioAudio");
     const volumeSlider = document.getElementById("volumeSlider");
     const muteBtn = document.getElementById("muteBtn");
-    const starContainer = document.getElementById("starContainer"); 
+    const starContainer = document.getElementById("starContainer");
     const albumModal = document.getElementById("albumModal");
-    const closeAlbumModal = document.querySelector(".close-album");
-    const btnCerrarAlbum = document.getElementById("btnCerrarAlbum");
     const modalAlbumTitle = document.getElementById("modalAlbumTitle");
     const modalTracklist = document.getElementById("modalTracklist");
     const modalPlatforms = document.getElementById("modalPlatforms");
     const customPlayerBox = document.getElementById("customPlayerBox");
     const playerVolSlider = document.getElementById("playerVolSlider");
-
-    if(loader) {
-        setTimeout(() => {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.remove(), 800);
-        }, 500); 
+    const lyricsModal = document.getElementById("lyricsModal");
+ 
+    // CORRECCIÓN BUG #1 (LOADER): Espera que la imagen cargue antes de ocultar
+    function hideLoader() {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 800);
     }
-
-    if(volumeSlider && bioAudio) {
+ 
+    if (loaderImg.complete) {
+        setTimeout(hideLoader, 300);
+    } else {
+        loaderImg.addEventListener('load', hideLoader);
+        loaderImg.addEventListener('error', hideLoader); // fallback si falla
+        // Timeout de seguridad en caso de que load no dispare
+        setTimeout(hideLoader, 3000);
+    }
+ 
+    // CONTROLES DE VOLUMEN - BIO AUDIO
+    if (volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
         volumeSlider.addEventListener("input", (e) => {
             bioAudio.volume = e.target.value;
             muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
         });
     }
-    
-    if(muteBtn && bioAudio) {
+ 
+    if (muteBtn && bioAudio) {
         muteBtn.addEventListener("click", () => {
             if (bioAudio.volume > 0) {
-                bioAudio.dataset.lastVol = bioAudio.volume; 
+                bioAudio.dataset.lastVol = bioAudio.volume;
                 bioAudio.volume = 0;
                 volumeSlider.value = 0;
                 muteBtn.textContent = "🔇";
@@ -1891,71 +1790,75 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-    if(playerVolSlider) {
+ 
+    if (playerVolSlider) {
         playerVolSlider.addEventListener("input", (e) => {
-            let currentVol = parseInt(e.target.value, 10);
-            if(ytPlayerGlobal && typeof ytPlayerGlobal.setVolume === 'function') {
-                try { ytPlayerGlobal.setVolume(currentVol); } catch(err) {}
+            if (ytPlayerGlobal && typeof ytPlayerGlobal.setVolume === 'function') {
+                try { ytPlayerGlobal.setVolume(parseInt(e.target.value, 10)); } catch (err) {}
             }
         });
     }
-
+ 
+    // FUNCIONES DE CIERRE DE MODALES
     function closeAndStopAudio() {
-        modal.classList.remove("show");
-        if(bioAudio) {
-            bioAudio.pause();
-            bioAudio.currentTime = 0;
-        }
+        closeModal(modal);
+        if (bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
     }
-
+ 
     function closeAlbumPanel() {
-        albumModal.classList.remove("show");
+        closeModal(albumModal);
         if (ytPlayerGlobal && typeof ytPlayerGlobal.pauseVideo === 'function') {
-            try { ytPlayerGlobal.pauseVideo(); } catch(e) {}
+            try { ytPlayerGlobal.pauseVideo(); } catch (e) {}
         }
         setTimeout(() => {
             customPlayerBox.style.display = "none";
             modalTracklist.innerHTML = "";
             setPlayerState(false);
-            // Limpiamos el iframe para apagar el audio al cerrar el disco
-            document.getElementById("playerIframeContainer").innerHTML = ""; 
+            document.getElementById("playerIframeContainer").innerHTML = "";
         }, 400);
     }
-
-    if(sun) {
-        sun.onclick = () => { 
-            modal.classList.add("show"); 
-            if(bioAudio) { bioAudio.play().catch(error => { console.log("Bloqueado:", error); }); }
+ 
+    // APERTURA DEL SOL (BIOGRAFÍA)
+    if (sun) {
+        sun.onclick = () => {
+            openModal(modal);
+            if (bioAudio) bioAudio.play().catch(err => console.log("Audio bloqueado:", err));
         };
     }
-
-    if(closeBioModal) closeBioModal.addEventListener('click', closeAndStopAudio);
-    if(closeAlbumModal) closeAlbumModal.addEventListener('click', closeAlbumPanel);
-    if(btnCerrarAlbum) btnCerrarAlbum.addEventListener('click', closeAlbumPanel);
-    if(closeLyricsModal) closeLyricsModal.onclick = () => lyricsModal.classList.remove("show");
-    
+ 
+    // CORRECCIÓN BUG #2: Selectores específicos al modal padre
+    // Antes: document.querySelector(".close-bio") podía capturar el incorrecto
+    // Ahora: buscamos dentro del modal específico
+    document.querySelector("#bioModal .close-bio").addEventListener('click', closeAndStopAudio);
+    document.querySelector("#albumModal .close-album").addEventListener('click', closeAlbumPanel);
+    document.getElementById("btnCerrarAlbum").addEventListener('click', closeAlbumPanel);
+    document.querySelector("#lyricsModal .close-lyrics").onclick = () => closeModal(lyricsModal);
+ 
+    // Cierre al hacer clic en el fondo del modal
     window.addEventListener('click', (event) => {
         if (event.target === modal) closeAndStopAudio();
         if (event.target === albumModal) closeAlbumPanel();
-        if (event.target === lyricsModal) lyricsModal.classList.remove("show"); 
+        if (event.target === lyricsModal) closeModal(lyricsModal);
+        if (event.target.classList.contains("modal")) closeModal(event.target);
+        if (event.target === protocoloModal) protocoloModal.style.display = "none";
     });
     window.addEventListener('touchstart', (event) => {
         if (event.target === modal) closeAndStopAudio();
         if (event.target === albumModal) closeAlbumPanel();
-    }, {passive: true});
-
+    }, { passive: true });
+ 
+    // CANVAS DE ESTRELLAS
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
-    const numStars = window.innerWidth < 768 ? 80 : 300; 
+    const numStars = window.innerWidth < 768 ? 80 : 300;
     let backgroundStars = [];
-
+ 
     function setCanvasSize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         initStars();
     }
-
+ 
     function initStars() {
         backgroundStars = [];
         for (let i = 0; i < numStars; i++) {
@@ -1968,7 +1871,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
-
+ 
     function drawCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         backgroundStars.forEach(s => {
@@ -1981,32 +1884,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         requestAnimationFrame(drawCanvas);
     }
-
+ 
     setCanvasSize();
-    window.addEventListener('resize', setCanvasSize);
+ 
+    // CORRECCIÓN BUG #3: Debounce en el resize para evitar reinicializaciones constantes
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(setCanvasSize, 200);
+    });
+ 
     drawCanvas();
-
+ 
+    // =====================================================
+    // CORRECCIÓN BUG #7: Flag para evitar spawns concurrentes de supernovas
+    // =====================================================
     let currentSpawnTimeout = null;
-
+    let isBatchRunning = false;
+ 
     function removeAllSupernovas() {
-        const supernovas = document.querySelectorAll('.supernova-hitbox');
-        supernovas.forEach(sn => sn.remove());
+        document.querySelectorAll('.supernova-hitbox').forEach(sn => sn.remove());
     }
-
+ 
     function spawnSupernovaBatch() {
+        if (isBatchRunning) return; // Evita batches concurrentes
+        isBatchRunning = true;
         removeAllSupernovas();
+ 
         for (let i = 0; i < 3; i++) {
             const hitbox = document.createElement("div");
             hitbox.className = "supernova-hitbox";
             hitbox.style.left = (Math.random() * window.innerWidth) + "px";
             hitbox.style.top = (Math.random() * window.innerHeight) + "px";
-            
             const flash = document.createElement("div");
             flash.className = "supernova";
-            
             hitbox.appendChild(flash);
-            
-            hitbox.onclick = function() {
+            hitbox.onclick = function () {
                 flash.style.animation = 'none';
                 flash.style.transform = 'scale(2)';
                 flash.style.opacity = '0';
@@ -2014,97 +1927,115 @@ document.addEventListener("DOMContentLoaded", () => {
                 setTimeout(() => {
                     removeAllSupernovas();
                     if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
-                    spawnSupernovaBatch(); 
+                    isBatchRunning = false;
+                    spawnSupernovaBatch();
                 }, 400);
             };
-            if(starContainer) starContainer.appendChild(hitbox); 
+            if (starContainer) starContainer.appendChild(hitbox);
         }
-        
+ 
         currentSpawnTimeout = setTimeout(() => {
             removeAllSupernovas();
+            isBatchRunning = false;
             spawnSupernovaBatch();
-        }, 5000 + Math.random() * 5000); 
+        }, 5000 + Math.random() * 5000);
     }
-
+ 
     spawnSupernovaBatch();
-
-    // REPRODUCTOR MAESTRO (OPTIMIZADO YOUTUBE + LETRAS EN TIEMPO REAL)
-    window.renderTrack = function(index) {
+ 
+    // =====================================================
+    // REPRODUCTOR MAESTRO
+    // CORRECCIÓN BUG #8 (YT Player): MutationObserver en vez de setTimeout
+    // para garantizar que el iframe esté en el DOM antes de inicializar YT
+    // =====================================================
+    window.renderTrack = function (index) {
         activeTrackIndexGlobal = index;
         const trackObj = activeTracksGlobal[index];
         const playerIframe = document.getElementById("playerIframeContainer");
         const customBox = document.getElementById("customPlayerBox");
-        const lyricsBox = document.getElementById("nowPlayingLyrics"); 
-
+        const lyricsBox = document.getElementById("nowPlayingLyrics");
+ 
         document.querySelectorAll('.track-link').forEach((el, i) => {
-            if (i === index) el.classList.add('active-track');
-            else el.classList.remove('active-track');
+            el.classList.toggle('active-track', i === index);
         });
-
+ 
         customBox.style.display = "flex";
-        setPlayerState(false); 
-        playerIframe.innerHTML = ""; 
-        
-        // PANTALLA DE LETRAS EN EL REPRODUCTOR
+        setPlayerState(false);
+        playerIframe.innerHTML = "";
+ 
         if (typeof letras !== 'undefined' && letras[trackObj.name]) {
             lyricsBox.innerText = letras[trackObj.name];
-            lyricsBox.style.display = "block"; 
+            lyricsBox.style.display = "block";
         } else {
             lyricsBox.innerText = "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
-            lyricsBox.style.display = "block"; 
+            lyricsBox.style.display = "block";
         }
-
+ 
         let videoId = "";
-        let vMatch = trackObj.url.match(/(?:[?&]v=|youtu\.be\/)([^&]+)/);
-        if(vMatch && vMatch[1]) {
+        const vMatch = trackObj.url.match(/(?:[?&]v=|youtu\.be\/)([^&]+)/);
+        if (vMatch && vMatch[1]) {
             videoId = vMatch[1];
         } else {
             window.open(trackObj.url, "_blank");
             return;
         }
-        
+ 
         if (videoId) {
             let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
-            if(activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
-            
-            playerIframe.innerHTML = `
-                <iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position: relative; z-index: 1;"></iframe>
-            `;
-            
-            setTimeout(() => {
-                if (window.YT && window.YT.Player) {
-                    ytPlayerGlobal = new YT.Player('yt-iframe', {
-                        events: {
-                            'onReady': (event) => {
-                                if(playerVolSlider) event.target.setVolume(parseInt(playerVolSlider.value, 10));
-                            },
-                            'onStateChange': (event) => {
-                                if (event.data === YT.PlayerState.PLAYING) {
-                                    setPlayerState(true);
-                                } else if (event.data === YT.PlayerState.PAUSED) {
-                                    setPlayerState(false);
-                                } else if (event.data === YT.PlayerState.ENDED) {
-                                    setPlayerState(false);
-                                    if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
-                                        window.renderTrack(activeTrackIndexGlobal + 1);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }, 500);
+            if (activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
+ 
+            playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position: relative; z-index: 1;"></iframe>`;
+ 
+            // CORRECCIÓN: MutationObserver en vez de setTimeout
+            const iframeEl = document.getElementById('yt-iframe');
+            if (iframeEl && window.YT && window.YT.Player) {
+                initYTPlayer(iframeEl);
+            } else {
+                // Fallback con observer si YT API aún no cargó
+                const observer = new MutationObserver(() => {
+                    const el = document.getElementById('yt-iframe');
+                    if (el && window.YT && window.YT.Player) {
+                        observer.disconnect();
+                        initYTPlayer(el);
+                    }
+                });
+                observer.observe(playerIframe, { childList: true, subtree: true });
+                // Timeout de seguridad de 3 segundos
+                setTimeout(() => {
+                    observer.disconnect();
+                    const el = document.getElementById('yt-iframe');
+                    if (el && window.YT && window.YT.Player) initYTPlayer(el);
+                }, 3000);
+            }
         }
     };
-
+ 
+    function initYTPlayer(iframeEl) {
+        ytPlayerGlobal = new YT.Player(iframeEl, {
+            events: {
+                'onReady': (event) => {
+                    if (playerVolSlider) event.target.setVolume(parseInt(playerVolSlider.value, 10));
+                },
+                'onStateChange': (event) => {
+                    if (event.data === YT.PlayerState.PLAYING) setPlayerState(true);
+                    else if (event.data === YT.PlayerState.PAUSED) setPlayerState(false);
+                    else if (event.data === YT.PlayerState.ENDED) {
+                        setPlayerState(false);
+                        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
+                            window.renderTrack(activeTrackIndexGlobal + 1);
+                        }
+                    }
+                }
+            }
+        });
+    }
+ 
     document.getElementById('btnNext').onclick = () => {
-        if(activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
+        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
     };
-    
     document.getElementById('btnPrev').onclick = () => {
-        if(activeTrackIndexGlobal > 0) window.renderTrack(activeTrackIndexGlobal - 1);
+        if (activeTrackIndexGlobal > 0) window.renderTrack(activeTrackIndexGlobal - 1);
     };
-    
     document.getElementById('btnPlayPause').onclick = () => {
         if (ytPlayerGlobal && typeof ytPlayerGlobal.getPlayerState === 'function') {
             const state = ytPlayerGlobal.getPlayerState();
@@ -2112,98 +2043,93 @@ document.addEventListener("DOMContentLoaded", () => {
             else ytPlayerGlobal.playVideo();
         }
     };
-
+ 
+    // =====================================================
+    // CREACIÓN DE ÓRBITAS (planetas)
+    // =====================================================
     function createOrbit(data, id, radius) {
         const orbit = document.getElementById(id);
-        if(!orbit || !data) return; 
+        if (!orbit || !data) return;
         const fragment = document.createDocumentFragment();
-        
+ 
         data.forEach((item, i) => {
             const angle = (i / data.length) * Math.PI * 2;
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
-            
+ 
             const planet = document.createElement("div");
             planet.className = "planet";
             planet.style.left = `calc(50% + ${x}px - 50px)`;
             planet.style.top = `calc(50% + ${y}px - 50px)`;
-
+ 
             planet.onclick = () => {
-                if(bioAudio && !bioAudio.paused) {
+                if (bioAudio && !bioAudio.paused) {
                     bioAudio.pause();
-                    if(muteBtn) muteBtn.textContent = "🔇";
+                    if (muteBtn) muteBtn.textContent = "🔇";
                 }
-                
+ 
                 modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
                 modalTracklist.innerHTML = "";
                 document.getElementById("customPlayerBox").style.display = "none";
-
+ 
                 let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
                 let playlistId = "";
                 if (ytLink && ytLink !== "#") {
                     const match = ytLink.match(/[?&]list=([^&]+)/);
-                    if (match && match[1]) { playlistId = match[1]; }
+                    if (match && match[1]) playlistId = match[1];
                 }
-
+ 
                 activeTracksGlobal = item.tracks || [];
                 activePlaylistIdGlobal = playlistId;
-                activeAlbumImgGlobal = encodeURI(item.img);
-
-                // CORRECCIÓN DEL ERROR DE LA LLAVE DUPLICADA
-                if(item.tracks && item.tracks.length > 0) {
+                // CORRECCIÓN BUG: encodeURI solo en el nombre del archivo, no en el path completo
+                activeAlbumImgGlobal = item.img;
+ 
+                if (item.tracks && item.tracks.length > 0) {
                     item.tracks.forEach((trackObj, index) => {
-                        let row = document.createElement("div");
+                        const row = document.createElement("div");
                         row.className = "track-item-wrapper";
-
-                        let trackLink = document.createElement("a");
+ 
+                        const trackLink = document.createElement("a");
                         trackLink.className = "track-item track-link";
                         trackLink.href = "javascript:void(0);";
                         trackLink.innerText = `${index + 1}. ${trackObj.name}`;
-
-                        let actionsDiv = document.createElement("div");
-                        actionsDiv.style.display = "flex";
-                        actionsDiv.style.gap = "10px";
-
-                        let shareBtn = document.createElement("span");
+ 
+                        const actionsDiv = document.createElement("div");
+                        actionsDiv.style.cssText = "display:flex;gap:10px;";
+ 
+                        const shareBtn = document.createElement("span");
                         shareBtn.className = "share-btn";
                         shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
                         shareBtn.title = "Compartir canción";
-
-                        let lyricBtn = document.createElement("span");
-                        lyricBtn.className = "share-btn"; 
+ 
+                        const lyricBtn = document.createElement("span");
+                        lyricBtn.className = "share-btn";
                         lyricBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
                         lyricBtn.title = "Ver Letra";
-
-                        trackLink.onclick = (e) => {
-                            e.preventDefault();
-                            window.renderTrack(index);
-                        };
-
+ 
+                        trackLink.onclick = (e) => { e.preventDefault(); window.renderTrack(index); };
+ 
                         shareBtn.onclick = (e) => {
                             e.stopPropagation();
                             const linkToShare = trackObj.shareUrl || trackObj.url;
                             if (navigator.share) {
-                                navigator.share({
-                                    title: trackObj.name,
-                                    text: `Escucha "${trackObj.name}" de Reflexión Musical MX`,
-                                    url: linkToShare
-                                }).catch(console.error);
+                                navigator.share({ title: trackObj.name, text: `Escucha "${trackObj.name}" de Reflexión Musical MX`, url: linkToShare }).catch(console.error);
                             } else {
                                 navigator.clipboard.writeText(linkToShare);
                                 alert("Enlace copiado al portapapeles");
                             }
                         };
-
+ 
                         lyricBtn.onclick = (e) => {
                             e.stopPropagation();
                             document.getElementById('lyricsTitle').innerText = trackObj.name;
-                            const letraContenido = (typeof letras !== 'undefined' && letras[trackObj.name]) 
-                                ? letras[trackObj.name] 
+                            const letraContenido = (typeof letras !== 'undefined' && letras[trackObj.name])
+                                ? letras[trackObj.name]
                                 : "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
                             document.getElementById('lyricsText').innerText = letraContenido;
-                            document.getElementById('lyricsModal').classList.add('show');
+                            openModal(document.getElementById('lyricsModal'));
                         };
-
+ 
                         actionsDiv.appendChild(lyricBtn);
                         actionsDiv.appendChild(shareBtn);
                         row.appendChild(trackLink);
@@ -2211,35 +2137,33 @@ document.addEventListener("DOMContentLoaded", () => {
                         modalTracklist.appendChild(row);
                     });
                 } else {
-                    let trackDiv = document.createElement("div");
+                    const trackDiv = document.createElement("div");
                     trackDiv.className = "track-item";
-                    trackDiv.style.textAlign = "center";
-                    trackDiv.style.color = "gold";
+                    trackDiv.style.cssText = "text-align:center;color:gold;";
                     trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
                     modalTracklist.appendChild(trackDiv);
                 }
-
+ 
+                // PLATAFORMAS DEL MODAL
                 modalPlatforms.innerHTML = "";
                 const globalPlatformsForModal = [
                     { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
-                    { name: "Amazon Music", svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/><path d="M13.828 11.943c0.567 -0.07 1.468 -0.027 1.645 0.204 0.135 0.176 -0.004 0.966 -0.233 1.533 -0.23 0.563 -0.572 0.961 -0.762 1.115s-0.333 0.094 -0.23 -0.137c0.105 -0.23 0.684 -1.663 0.455 -1.963 -0.213 -0.278 -1.177 -0.177 -1.625 -0.13l-0.09 0.009q-0.142 0.013 -0.233 0.024c-0.193 0.021 -0.245 0.027 -0.274 -0.032 -0.074 -0.209 0.779 -0.556 1.347 -0.623"/></svg>`, id: 'amazon' },
+                    { name: "Amazon Music", svg: `<svg viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/></svg>`, id: 'amazon' },
                     { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
                     { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-                    { name: "SoundCloud", svg: `<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>`, id: 'soundcloud' },
-                    { name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>`, id: 'audiomack' }
+                    { name: "SoundCloud", svg: `<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /></svg>`, id: 'soundcloud' },
+                    { name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237"/></svg>`, id: 'audiomack' }
                 ];
-                
+ 
                 globalPlatformsForModal.forEach(p => {
                     let platLink = item.links && item.links[p.id] ? item.links[p.id] : "";
-                    
                     if (!platLink || platLink === "#") {
                         if (p.id === 'youtube') platLink = "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw";
                         if (p.id === 'audiomack') platLink = "https://audiomack.com/reflexion-musical-mx";
                         if (p.id === 'soundcloud') platLink = "https://soundcloud.com/reflexionmusicalmx-music";
                     }
-
                     if (platLink && platLink !== "#") {
-                        let a = document.createElement("a");
+                        const a = document.createElement("a");
                         a.href = platLink;
                         a.target = "_blank";
                         a.innerHTML = p.svg;
@@ -2247,28 +2171,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         modalPlatforms.appendChild(a);
                     }
                 });
-                
-                albumModal.classList.add("show");
+ 
+                openModal(albumModal);
             };
-
-            const safeImgPath = encodeURI(item.img);
-            let albumName = item.img.split('/').pop().replace('.webp', '');
+ 
+            const albumName = item.img.split('/').pop().replace('.webp', '');
             planet.setAttribute('data-album', albumName.toUpperCase());
-
+ 
             let extraHTML = "";
-            if(albumName.toUpperCase() === "TEJIDO VITAL") {
-                extraHTML = `
-                <div class="family-symbol-container">
-                <div class="fam-fig"><div class="fam-head"></div><div class="fam-body-m"></div></div>
-                <div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-m"></div></div>
-                <div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-f"></div></div>
-                <div class="fam-fig"><div class="fam-head"></div><div class="fam-body-f"></div></div>
-                </div>`;
+            if (albumName.toUpperCase() === "TEJIDO VITAL") {
+                extraHTML = `<div class="family-symbol-container"><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-f"></div></div><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-f"></div></div></div>`;
             }
-
-            planet.innerHTML = `<div class="counter"><img src="${safeImgPath}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
-
-            if(albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
+ 
+            // CORRECCIÓN: encodeURI solo en el src de la imagen, no en rutas de datos
+            planet.innerHTML = `<div class="counter"><img src="${encodeURI(item.img)}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
+ 
+            if (albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
                 let hTimer;
                 planet.onmouseenter = () => {
                     hTimer = setInterval(() => {
@@ -2276,32 +2194,33 @@ document.addEventListener("DOMContentLoaded", () => {
                         h.className = "heart-bubble";
                         h.innerHTML = "❤";
                         const rect = planet.getBoundingClientRect();
-                        h.style.left = (rect.left + rect.width/2) + "px";
-                        h.style.top = (rect.top + rect.height/2) + "px";
+                        h.style.left = (rect.left + rect.width / 2) + "px";
+                        h.style.top = (rect.top + rect.height / 2) + "px";
                         document.body.appendChild(h);
-
                         const destX = window.innerWidth / 2;
                         const destY = window.innerHeight / 2;
-
                         h.animate([
                             { transform: 'translate(-50%, -50%) scale(1)', opacity: 1, offset: 0 },
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width/2}px), calc(-50% + ${destY - rect.top - rect.height/2}px)) scale(0.6)`, opacity: 1, offset: 0.95 },
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width/2}px), calc(-50% + ${destY - rect.top - rect.height/2}px)) scale(0)`, opacity: 0, offset: 1 }
-                        ], {duration: 2500, easing: 'linear'}).onfinish = () => h.remove();
+                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width / 2}px), calc(-50% + ${destY - rect.top - rect.height / 2}px)) scale(0.6)`, opacity: 1, offset: 0.95 },
+                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width / 2}px), calc(-50% + ${destY - rect.top - rect.height / 2}px)) scale(0)`, opacity: 0, offset: 1 }
+                        ], { duration: 2500, easing: 'linear' }).onfinish = () => h.remove();
                     }, 400);
                 };
                 planet.onmouseleave = () => clearInterval(hTimer);
             }
-
+ 
             fragment.appendChild(planet);
         });
-
+ 
         orbit.appendChild(fragment);
     }
-
+ 
     if (typeof singles !== 'undefined') createOrbit(singles, "orbitSingles", 210);
     if (typeof albums !== 'undefined') createOrbit(albums, "orbitAlbums", 360);
-
+ 
+    // =====================================================
+    // SISTEMA DEL BUZÓN (NAVE)
+    // =====================================================
     const reflectionModal = document.getElementById("reflectionModal");
     const reflectionContentBox = document.querySelector("#reflectionModal .reflection-content");
     const btnTuVoz = document.getElementById("btnTuVoz");
@@ -2310,66 +2229,57 @@ document.addEventListener("DOMContentLoaded", () => {
     const reflectionStatus = document.getElementById("reflectionStatus");
     const btnSubmitReflection = document.getElementById("btnSubmitReflection");
     const btnSendToSun = document.getElementById("btnSendToSun");
-
-    const solarSystemBox = document.getElementById("solarSystem"); // Declaramos el contenedor del Universo para controlarlo
+    const solarSystemBox = document.getElementById("solarSystem");
+ 
     let isUniversePaused = false;
-    let isMessageLoadedInShip = false; // Memoria para saber si la nave ya tiene el mensaje
-
-    // === REVISIÓN VISUAL DE ENFRIAMIENTO AL CARGAR LA PÁGINA ===
+    let isMessageLoadedInShip = false;
+ 
+    // CORRECCIÓN BUG #5: Usar safeStorage en vez de localStorage directo
     if (btnTuVoz) {
-        const lastSent = localStorage.getItem('lastReflectionTime');
+        const lastSent = safeStorage.get('lastReflectionTime');
         const cooldown = 24 * 60 * 60 * 1000;
         if (lastSent && (Date.now() - lastSent < cooldown)) {
-            // La nave desaparece por completo del universo
             btnTuVoz.style.display = "none";
         }
     }
-
-    // FUNCIONES PARA CONGELAR Y REANUDAR EL UNIVERSO (CON CÁMARA DINÁMICA MÓVIL)
+ 
+    // CORRECCIÓN BUG #4: pauseUniverse filtra solo las animaciones del solarSystem
     function pauseUniverse() {
         if (!isUniversePaused) {
-            document.getAnimations().forEach(anim => anim.pause());
+            document.getElementById('solarSystem').getAnimations({ subtree: true }).forEach(anim => anim.pause());
             isUniversePaused = true;
-            // Si es pantalla de celular, activamos el "Focus Móvil"
-            if (window.innerWidth <= 768) {
-                solarSystemBox.classList.add("mobile-focus");
-            }
+            if (window.innerWidth <= 768) solarSystemBox.classList.add("mobile-focus");
         }
     }
-    if(closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
+ 
     function resumeUniverse() {
         if (isUniversePaused) {
-            document.getAnimations().forEach(anim => anim.play());
+            document.getElementById('solarSystem').getAnimations({ subtree: true }).forEach(anim => anim.play());
             isUniversePaused = false;
-            // Quitamos el "Focus Móvil" si estaba activo
-            if (window.innerWidth <= 768) {
-                solarSystemBox.classList.remove("mobile-focus");
-            }
+            if (window.innerWidth <= 768) solarSystemBox.classList.remove("mobile-focus");
         }
     }
-
-    // CIERRE INTELIGENTE (LA "X" O EL BOTÓN)
+ 
     function closeBuzonAndHandleLaser() {
-        reflectionModal.classList.remove("show");
+        closeModal(reflectionModal);
         btnTuVoz.classList.remove("ship-waiting");
-        
         if (isMessageLoadedInShip) {
-            fireLaserToSun(); // Si hay mensaje cargado, dispara (y el láser reanuda el universo al final)
+            fireLaserToSun();
         } else {
-            resumeUniverse(); // Si no hay nada, solo reanuda el giro
+            resumeUniverse();
         }
     }
-
-    // LÓGICA AL DAR CLIC A LA NAVE
-    if(btnTuVoz) {
+ 
+    if (closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
+ 
+    if (btnTuVoz) {
         btnTuVoz.onclick = () => {
-            pauseUniverse(); 
-            btnTuVoz.classList.add("ship-waiting"); 
-            
+            pauseUniverse();
+            btnTuVoz.classList.add("ship-waiting");
+ 
             if (window.innerWidth > 768) {
                 const shipRect = btnTuVoz.getBoundingClientRect();
                 const screenCenter = window.innerWidth / 2;
-                
                 if (shipRect.left > screenCenter) {
                     reflectionContentBox.style.left = "40px";
                     reflectionContentBox.style.right = "auto";
@@ -2385,87 +2295,77 @@ document.addEventListener("DOMContentLoaded", () => {
                 reflectionContentBox.style.top = "";
                 reflectionContentBox.style.transform = "";
             }
-
-            reflectionModal.classList.add("show");
-            closeReflection.style.display = "block"; 
+ 
+            openModal(reflectionModal);
+            closeReflection.style.display = "block";
             reflectionStatus.style.display = "none";
-
-            // === LÓGICA ANTI-SPAM ===
-            const lastSent = localStorage.getItem('lastReflectionTime');
-            const cooldown = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
-
+ 
+            // CORRECCIÓN BUG #5: safeStorage en vez de localStorage
+            const lastSent = safeStorage.get('lastReflectionTime');
+            const cooldown = 24 * 60 * 60 * 1000;
             if (lastSent && (Date.now() - lastSent < cooldown)) {
-                // Si aún no pasan 24 horas, ocultamos form y mostramos mensaje de recarga
                 reflectionForm.style.display = "none";
                 document.getElementById("cooldownStatus").style.display = "block";
             } else {
-                // Si todo está bien, mostramos el form limpio
                 reflectionForm.style.display = "flex";
                 document.getElementById("cooldownStatus").style.display = "none";
-                document.getElementById("buzonSubtitle").style.display = "block"; // <--- AGREGAR ESTO
+                document.getElementById("buzonSubtitle").style.display = "block";
                 document.getElementById("reflectionMsg").value = "";
             }
-            
-            isMessageLoadedInShip = false; 
+ 
+            isMessageLoadedInShip = false;
         };
     }
-   // FASE 1: DEL BUZÓN A LA NAVE
-    if(reflectionForm) {
-        reflectionForm.addEventListener("submit", async function(event) {
+ 
+    // CORRECCIÓN BUG #6 (no-cors): El envío es "best-effort".
+    // Se informa al usuario que el mensaje fue enviado con buena fe,
+    // ya que no es posible confirmar errores con mode:'no-cors'.
+    if (reflectionForm) {
+        reflectionForm.addEventListener("submit", async function (event) {
             event.preventDefault();
             btnSubmitReflection.innerText = "SINTONIZANDO...";
             btnSubmitReflection.disabled = true;
-            
+ 
             const data = new FormData(event.target);
-            // El modo 'no-cors' le permite mandar los datos a Google de forma invisible
             fetch(event.target.action, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: data
             }).then(() => {
-                
-                // GUARDAR EN MEMORIA QUE ACABA DE ENVIAR UN MENSAJE (ANTI-SPAM)
-                localStorage.setItem('lastReflectionTime', Date.now());
-
+                safeStorage.set('lastReflectionTime', Date.now()); // CORRECCIÓN BUG #5
+ 
                 reflectionForm.style.display = "none";
-                    
-                // DISPARO 1: Láser del formulario hacia la nave
+ 
                 const box = reflectionContentBox.getBoundingClientRect();
                 const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
-
                 const pulse = document.createElement("div");
                 pulse.className = "energy-pulse";
-                
                 pulse.style.left = (box.left + box.width / 2) + "px";
                 pulse.style.top = (box.top + box.height / 2) + "px";
                 document.body.appendChild(pulse);
-
+ 
                 const destX = (ship.left + ship.width / 2) - (box.left + box.width / 2);
                 const destY = (ship.top + ship.height / 2) - (box.top + box.height / 2);
-
                 const angleRad = Math.atan2(destY, destX);
                 const angleDeg = (angleRad * 180) / Math.PI;
-
-                // MATEMÁTICA DE PRECISIÓN para el impacto en el Sol
-        const offsetX = Math.cos(angleRad) * 4;
-        const offsetY = Math.sin(angleRad) * 4;
-        const finalX = destX - offsetX;
-        const finalY = destY - offsetY;
-
+                const offsetX = Math.cos(angleRad) * 4;
+                const offsetY = Math.sin(angleRad) * 4;
+                const finalX = destX - offsetX;
+                const finalY = destY - offsetY;
+ 
                 const anim = pulse.animate([
                     { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
                     { transform: `translate(calc(-50% + ${finalX * 0.6}px), calc(-50% + ${finalY * 0.6}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
-                    { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 } 
+                    { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 }
                 ], { duration: 1000, easing: "ease-in" });
-
+ 
                 anim.onfinish = () => {
                     pulse.remove();
-                    reflectionStatus.style.display = "block"; 
-                    document.getElementById("buzonSubtitle").style.display = "none"; // <--- AGREGAR ESTO
-                    isMessageLoadedInShip = true; // MARCADO COMO LISTO PARA EL SOL
-                    
-                    btnTuVoz.classList.remove("ship-waiting"); 
-
+                    reflectionStatus.style.display = "block";
+                    document.getElementById("buzonSubtitle").style.display = "none";
+                    isMessageLoadedInShip = true;
+                    btnTuVoz.classList.remove("ship-waiting");
+ 
                     const shipSvg = document.querySelector("#btnTuVoz svg");
                     shipSvg.style.filter = "drop-shadow(0 0 25px #fff)";
                     shipSvg.style.stroke = "#fff";
@@ -2474,8 +2374,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         shipSvg.style.stroke = "#FFD700";
                     }, 500);
                 };
-
-            }).catch(error => {
+            }).catch(() => {
                 alert("Error de conexión. Intenta de nuevo.");
             }).finally(() => {
                 btnSubmitReflection.innerText = "CARGAR MENSAJE EN NAVE";
@@ -2483,299 +2382,209 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-    // FASE 2: DE LA NAVE AL SOL (VIAJE DE ENTREGA)
+ 
     function fireLaserToSun() {
         const shipBtn = document.getElementById("btnTuVoz");
         const shipRect = shipBtn.getBoundingClientRect();
         const sunRect = document.getElementById("sun").getBoundingClientRect();
-
-        // 1. Apagar la nave original temporalmente para ocultarla
+ 
         shipBtn.style.opacity = "0";
         shipBtn.style.pointerEvents = "none";
-
-        // 2. Crear un "clon" de la nave para animar su vuelo libre
+ 
         const shipClone = document.createElement("div");
-        shipClone.innerHTML = shipBtn.innerHTML; 
-        shipClone.style.position = "fixed";
-        shipClone.style.left = shipRect.left + "px";
-        shipClone.style.top = shipRect.top + "px";
-        shipClone.style.width = shipRect.width + "px";
-        shipClone.style.height = shipRect.height + "px";
-        shipClone.style.zIndex = "999999";
-        shipClone.style.display = "flex";
-        shipClone.style.alignItems = "center";
-        shipClone.style.justifyContent = "center";
-        
-        // Encender los propulsores del clon a tope
+        shipClone.innerHTML = shipBtn.innerHTML;
+        shipClone.style.cssText = `position:fixed;left:${shipRect.left}px;top:${shipRect.top}px;width:${shipRect.width}px;height:${shipRect.height}px;z-index:999999;display:flex;align-items:center;justify-content:center;`;
         const cloneSvg = shipClone.querySelector("svg");
-        if(cloneSvg) {
-            cloneSvg.style.stroke = "#fff";
-            cloneSvg.style.filter = "drop-shadow(0 0 25px #FFD700)";
-        }
+        if (cloneSvg) { cloneSvg.style.stroke = "#fff"; cloneSvg.style.filter = "drop-shadow(0 0 25px #FFD700)"; }
         document.body.appendChild(shipClone);
-
-        // 3. Calcular la ruta y el ángulo hacia el Sol
+ 
         const destX = (sunRect.left + sunRect.width / 2) - (shipRect.left + shipRect.width / 2);
         const destY = (sunRect.top + sunRect.height / 2) - (shipRect.top + shipRect.height / 2);
-
         const angleRad = Math.atan2(destY, destX);
         const angleDeg = (angleRad * 180) / Math.PI;
-
-        // 4. Animar el vuelo hacia el núcleo del Sol
+ 
         const anim = shipClone.animate([
-            { transform: `translate(0px, 0px) rotate(${angleDeg + 45}deg) scale(1)` }, // +45 para alinear la punta del ícono
+            { transform: `translate(0px, 0px) rotate(${angleDeg + 45}deg) scale(1)` },
             { transform: `translate(${destX * 0.5}px, ${destY * 0.5}px) rotate(${angleDeg + 45}deg) scale(1.5)` },
-            { transform: `translate(${destX}px, ${destY}px) rotate(${angleDeg + 45}deg) scale(0)` } // Desaparece absorbida en el Sol
-        ], { duration: 1800, easing: "cubic-bezier(0.5, 0, 0.5, 1)" }); // Acelera progresivamente
-
+            { transform: `translate(${destX}px, ${destY}px) rotate(${angleDeg + 45}deg) scale(0)` }
+        ], { duration: 1800, easing: "cubic-bezier(0.5, 0, 0.5, 1)" });
+ 
         anim.onfinish = () => {
             shipClone.remove();
-            
-            // IMPACTO ÉPICO EN EL SOL
             const sunEl = document.getElementById("sun");
             sunEl.style.transform = "scale(1.5)";
             sunEl.style.filter = "drop-shadow(0 0 100px #fff) brightness(2.5)";
-            
-            // DESTELLO SOLAR EN TODA LA PANTALLA
+ 
             const flash = document.createElement("div");
-            flash.style.position = "fixed";
-            flash.style.top = "0"; flash.style.left = "0";
-            flash.style.width = "100%"; flash.style.height = "100%";
-            flash.style.background = "rgba(255, 215, 0, 0.35)";
-            flash.style.zIndex = "99998";
-            flash.style.pointerEvents = "none";
-            flash.style.transition = "opacity 0.8s ease-out";
+            flash.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,215,0,0.35);z-index:99998;pointer-events:none;transition:opacity 0.8s ease-out;";
             document.body.appendChild(flash);
-            
             setTimeout(() => flash.style.opacity = "0", 50);
             setTimeout(() => flash.remove(), 850);
-            
-            // El universo vuelve a la normalidad
+ 
             setTimeout(() => {
                 sunEl.style.transform = "scale(1)";
                 sunEl.style.filter = "";
-                resumeUniverse(); 
-                isMessageLoadedInShip = false; 
-                
-                // LA NAVE SE DESINTEGRA Y DESAPARECE POR 24 HORAS
+                resumeUniverse();
+                isMessageLoadedInShip = false;
                 shipBtn.style.display = "none";
             }, 700);
         };
     }
-    if(btnSendToSun) btnSendToSun.onclick = closeBuzonAndHandleLaser;
-    const upcomingReleases = [
-        "📖 LIBRO: ALGO ESTÁ MAL",
-        "💿 NUEVO ÁLBUM",
-        "🎵 PRÓXIMO SENCILLO"
-    ];
+ 
+    if (btnSendToSun) btnSendToSun.onclick = closeBuzonAndHandleLaser;
+ 
+    // COMETAS
+    const upcomingReleases = ["📖 LIBRO: ALGO ESTÁ MAL", "💿 NUEVO ÁLBUM", "🎵 PRÓXIMO SENCILLO"];
     let currentCometIndex = 0;
-
-    function spawnNextComet(){
+ 
+    function spawnNextComet() {
         try {
             const releaseText = upcomingReleases[currentCometIndex];
             currentCometIndex = (currentCometIndex + 1) % upcomingReleases.length;
-
+ 
             const star = document.createElement("div");
             star.className = "comet-container";
-            star.innerHTML = `
-            <div class="comet-tail"></div>
-            <div class="comet-head"></div>
-            <div class="comet-text">${releaseText}</div>
-            `;
-            if(starContainer) starContainer.appendChild(star); 
-
+            star.innerHTML = `<div class="comet-tail"></div><div class="comet-head"></div><div class="comet-text">${releaseText}</div>`;
+            if (starContainer) starContainer.appendChild(star);
+ 
             let startX, startY, endX, endY;
-            const edge = Math.floor(Math.random() * 4); 
+            const edge = Math.floor(Math.random() * 4);
             const offset = 100;
-            
             if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
             else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
             else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
             else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
-
+ 
             star.style.left = startX + "px";
             star.style.top = startY + "px";
-
-            const dx = endX - startX; 
+ 
+            const dx = endX - startX;
             const dy = endY - startY;
             const angleRad = Math.atan2(dy, dx);
-            const angleDeg = (angleRad * (180 / Math.PI)) + 180; 
-
-            const tail = star.querySelector('.comet-tail');
-            tail.style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
-
+            const angleDeg = (angleRad * (180 / Math.PI)) + 180;
+            star.querySelector('.comet-tail').style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
+ 
             const duration = 12000 + Math.random() * 4000;
             const anim = star.animate([
                 { transform: "translate(0px, 0px)" },
                 { transform: `translate(${dx}px, ${dy}px)` }
             ], { duration: duration, easing: "linear" });
-
+ 
             let clicked = false;
             star.onclick = () => {
-                if(clicked) return;
+                if (clicked) return;
                 clicked = true;
                 anim.pause();
                 star.classList.add("revealed");
                 setTimeout(() => {
                     star.style.opacity = '0';
-                    setTimeout(() => {
-                        star.remove();
-                        setTimeout(spawnNextComet, 2000);
-                    }, 500);
+                    setTimeout(() => { star.remove(); setTimeout(spawnNextComet, 2000); }, 500);
                 }, 4000);
             };
-
+ 
             anim.onfinish = () => {
-                if(!clicked) {
-                    star.remove();
-                    setTimeout(spawnNextComet, 1000);
-                }
+                if (!clicked) { star.remove(); setTimeout(spawnNextComet, 1000); }
             };
-
         } catch (e) { console.error(e); }
     }
-
- setTimeout(spawnNextComet, 3000);
-
-  // === CONTROL DEL SATÉLITE Y EL PANEL HOLOGRÁFICO ===
-  const btnSatelite = document.getElementById("btnSatelite");
-  const hologramPanel = document.getElementById("hologramPanel");
-  const closeHologramBtn = document.querySelector(".close-hologram");
-
-  if (btnSatelite && hologramPanel) {
-      // Abrir panel
-      btnSatelite.addEventListener("click", () => {
-          hologramPanel.style.display = "flex";
-          pauseUniverse(); // Congela los planetas de fondo
-      });
-
-      // Cerrar panel en la X
-      closeHologramBtn.addEventListener("click", () => {
-          hologramPanel.style.display = "none";
-          resumeUniverse(); // Descongela los planetas
-      });
-
-      // Cerrar panel si hacen clic fuera del cuadro
-      window.addEventListener("click", (e) => {
-          if (e.target === hologramPanel) {
-              hologramPanel.style.display = "none";
-              resumeUniverse();
-          }
-      });
-      // Cierre del Centro de Energía en versión móvil
-      const btnCerrarMovil = document.getElementById("btnCerrarHologramaMovil");
-      if (btnCerrarMovil) {
-          btnCerrarMovil.addEventListener("click", () => {
-              hologramPanel.style.display = "none";
-              hologramPanel.classList.remove("show");
-              resumeUniverse(); // Descongela los planetas al cerrar en móvil
-          });
-      }
-  }
-    // === LÓGICA PARA ABRIR Y CERRAR LOS MODALS DEL CENTRO DE ENERGÍA ===
-  
-  // Función maestra para abrir y cerrar Modals genéricos
-  const setupModal = (btnOpenId, modalId, closeClass) => {
-      const btnOpen = document.getElementById(btnOpenId);
-      const modal = document.getElementById(modalId);
-      const closeBtn = document.querySelector(closeClass);
-
-      if (btnOpen && modal) {
-          btnOpen.addEventListener("click", (e) => {
-              e.preventDefault();
-              modal.classList.add("show"); // AQUI ESTÁ LA MAGIA: Activa tu opacidad al 100%
-          });
-          if (closeBtn) {
-              closeBtn.addEventListener("click", () => {
-                  modal.classList.remove("show"); // Lo oculta suavemente
-              });
-          }
-      }
-  };
-
-  // 1. Conectamos los botones a los nuevos Modals
-  setupModal("btnOpenCrypto", "cryptoModal", ".close-crypto");
-  setupModal("btnOpenPropagar", "propagarModal", ".close-propagar");
-  setupModal("btnOpenAmplificar", "amplificarModal", ".close-amplificar");
-  
-  // ESTA ES LA LÍNEA NUEVA PARA EL SATÉLITE:
-  setupModal("btnSatelite", "hologramPanel", ".close-hologram");
-
-  // 2. Lógica especial: Botón que lleva de "Propagar" hacia "La Bóveda"
-  const btnIrABoveda = document.getElementById("btnIrABoveda");
-  const propagarModal = document.getElementById("propagarModal");
-  const protocoloModal = document.getElementById("protocoloModal");
-  const closeProtocoloBtn = document.querySelector(".close-protocolo");
-
-  if (btnIrABoveda && protocoloModal && propagarModal) {
-      btnIrABoveda.addEventListener("click", () => {
-          propagarModal.classList.remove("show"); // Cerramos las instrucciones
-          protocoloModal.style.display = "flex"; // Abrimos el formulario
-      });
-      
-      closeProtocoloBtn.addEventListener("click", () => { protocoloModal.style.display = "none"; });
-  }
-
-  // Cierre global si hacen clic fuera de las ventanas
-  window.addEventListener("click", (e) => { 
-      if (e.target.classList.contains("modal")) {
-          e.target.classList.remove("show");
-      }
-      if (e.target === protocoloModal) {
-          protocoloModal.style.display = "none";
-      }
-  });
-
-  // 3. CARRUSEL DE CÓDIGOS QR
-  const qrContainer = document.getElementById('qrContainer');
-  const prevQr = document.getElementById('prevQr');
-  const nextQr = document.getElementById('nextQr');
-
-  if(prevQr && nextQr && qrContainer) {
-      prevQr.addEventListener('click', () => { qrContainer.scrollBy({ left: -200, behavior: 'smooth' }); });
-      nextQr.addEventListener('click', () => { qrContainer.scrollBy({ left: 200, behavior: 'smooth' }); });
-  }
-
-  // 4. FORMULARIO DE LA BÓVEDA (Conexión silenciosa a Google)
-  const formProtocolo = document.getElementById("formProtocolo");
-  const btnEnviarForm = document.getElementById("btnEnviarForm");
-  
-  // OJO: REEMPLAZA ESTA URL CON LA TUYA
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyazt2Sc1QS5zhBtdp65qUktkCSTN5rcDor7I01ndkyfG5u7ncSsVgiF55gZ5gRGPvI/exec"; 
-
-  if (formProtocolo) {
-      formProtocolo.addEventListener("submit", (e) => {
-          e.preventDefault(); 
-          btnEnviarForm.textContent = "TRANSMITIENDO...";
-          btnEnviarForm.style.opacity = "0.7";
-          
-          const formData = new FormData(formProtocolo);
-
-          fetch(GOOGLE_SCRIPT_URL, {
-              method: "POST",
-              body: formData,
-              mode: "no-cors"
-          }).then(() => {
-              btnEnviarForm.textContent = "¡TRANSMISIÓN RECIBIDA!";
-              btnEnviarForm.style.background = "#FFD700";
-              btnEnviarForm.style.color = "#000";
-              
-              setTimeout(() => {
-                  formProtocolo.reset();
-                  protocoloModal.style.display = "none";
-                  btnEnviarForm.textContent = "ENVIAR SOLICITUD DE ACCESO";
-                  btnEnviarForm.style.background = "transparent";
-                  btnEnviarForm.style.color = "#FFD700";
-                  btnEnviarForm.style.opacity = "1";
-              }, 2500);
-          }).catch(error => {
-              console.error("Error:", error);
-              btnEnviarForm.textContent = "ERROR AL CONECTAR";
-          });
-      });
-  }
-
-}); // CIERRA EL DOMContentLoaded PRINCIPAL
+ 
+    setTimeout(spawnNextComet, 3000);
+ 
+    // =====================================================
+    // CORRECCIÓN BUG #2: El satélite solo tiene UN listener
+    // Se eliminó el bloque manual y se usa solo setupModal
+    // que internamente llama pauseUniverse al abrir.
+    // =====================================================
+    const hologramPanel = document.getElementById("hologramPanel");
+    const closeHologramBtn = document.querySelector(".close-hologram");
+ 
+    function openHologram() {
+        hologramPanel.style.display = "flex";
+        pauseUniverse();
+    }
+    function closeHologram() {
+        hologramPanel.style.display = "none";
+        resumeUniverse();
+    }
+ 
+    document.getElementById("btnSatelite").addEventListener("click", openHologram);
+    closeHologramBtn.addEventListener("click", closeHologram);
+ 
+    window.addEventListener("click", (e) => {
+        if (e.target === hologramPanel) closeHologram();
+    });
+ 
+    const btnCerrarMovil = document.getElementById("btnCerrarHologramaMovil");
+    if (btnCerrarMovil) btnCerrarMovil.addEventListener("click", closeHologram);
+ 
+    // MODALES DEL CENTRO DE ENERGÍA
+    // CORRECCIÓN BUG #2: setupModal ya NO registra el satélite (se maneja arriba)
+    const setupModal = (btnOpenId, modalId, closeClass) => {
+        const btnOpen = document.getElementById(btnOpenId);
+        const modalEl = document.getElementById(modalId);
+        const closeBtn = document.querySelector(closeClass);
+        if (btnOpen && modalEl) {
+            btnOpen.addEventListener("click", (e) => { e.preventDefault(); openModal(modalEl); });
+            if (closeBtn) closeBtn.addEventListener("click", () => closeModal(modalEl));
+        }
+    };
+ 
+    setupModal("btnOpenCrypto", "cryptoModal", ".close-crypto");
+    setupModal("btnOpenPropagar", "propagarModal", ".close-propagar");
+    setupModal("btnOpenAmplificar", "amplificarModal", ".close-amplificar");
+ 
+    // BÓVEDA
+    const btnIrABoveda = document.getElementById("btnIrABoveda");
+    const propagarModal = document.getElementById("propagarModal");
+    const protocoloModal = document.getElementById("protocoloModal");
+    const closeProtocoloBtn = document.querySelector(".close-protocolo");
+ 
+    if (btnIrABoveda && protocoloModal && propagarModal) {
+        btnIrABoveda.addEventListener("click", () => {
+            closeModal(propagarModal);
+            protocoloModal.style.display = "flex";
+        });
+        closeProtocoloBtn.addEventListener("click", () => { protocoloModal.style.display = "none"; });
+    }
+ 
+    // CARRUSEL QR
+    const qrContainer = document.getElementById('qrContainer');
+    const prevQr = document.getElementById('prevQr');
+    const nextQr = document.getElementById('nextQr');
+    if (prevQr && nextQr && qrContainer) {
+        prevQr.addEventListener('click', () => qrContainer.scrollBy({ left: -200, behavior: 'smooth' }));
+        nextQr.addEventListener('click', () => qrContainer.scrollBy({ left: 200, behavior: 'smooth' }));
+    }
+ 
+    // FORMULARIO BÓVEDA
+    const formProtocolo = document.getElementById("formProtocolo");
+    const btnEnviarForm = document.getElementById("btnEnviarForm");
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyazt2Sc1QS5zhBtdp65qUktkCSTN5rcDor7I01ndkyfG5u7ncSsVgiF55gZ5gRGPvI/exec";
+ 
+    if (formProtocolo) {
+        formProtocolo.addEventListener("submit", (e) => {
+            e.preventDefault();
+            btnEnviarForm.textContent = "TRANSMITIENDO...";
+            btnEnviarForm.style.opacity = "0.7";
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: new FormData(formProtocolo), mode: "no-cors" })
+                .then(() => {
+                    btnEnviarForm.textContent = "¡TRANSMISIÓN RECIBIDA!";
+                    btnEnviarForm.style.background = "#FFD700";
+                    btnEnviarForm.style.color = "#000";
+                    setTimeout(() => {
+                        formProtocolo.reset();
+                        protocoloModal.style.display = "none";
+                        btnEnviarForm.textContent = "ENVIAR SOLICITUD DE ACCESO";
+                        btnEnviarForm.style.background = "transparent";
+                        btnEnviarForm.style.color = "#FFD700";
+                        btnEnviarForm.style.opacity = "1";
+                    }, 2500);
+                })
+                .catch(() => { btnEnviarForm.textContent = "ERROR AL CONECTAR"; });
+        });
+    }
+ 
+}); // FIN DOMContentLoaded
 </script>
 </body>
 </html>
