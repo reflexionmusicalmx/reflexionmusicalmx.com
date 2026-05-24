@@ -9,7 +9,7 @@
       gtag('js', new Date());
       gtag('config', 'G-GYLX6LJKQS');
     </script>
- 
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
@@ -39,7 +39,7 @@ html, body {
     /* CORRECCIÓN BUG #6: touch-action:none bloqueaba scroll en modales móvil.
        Se quitó de body y se aplica solo donde se necesita vía JS. */
 }
- 
+
 /* CAJA DE CRISTAL PARA COMETAS Y SUPERNOVAS */
 #starContainer {
     position: absolute;
@@ -51,7 +51,7 @@ html, body {
     pointer-events: none;
     z-index: 1000;
 }
- 
+
 /* PANTALLA DE CARGA */
 #loader {
     position: fixed;
@@ -70,13 +70,13 @@ html, body {
     transition: opacity 0.8s ease;
     will-change: opacity;
 }
- 
+
 #loader img {
     width: 180px;
     animation: pulse 2s infinite;
     will-change: transform, filter;
 }
- 
+
 #loader p {
     color: #FFD700;
     margin-top: 25px;
@@ -84,7 +84,7 @@ html, body {
     letter-spacing: 3px;
     font-size: 14px;
 }
- 
+
 /* FONDO ESTÁTICO */
 #bg {
     position: fixed;
@@ -95,7 +95,7 @@ html, body {
     z-index: -1;
     pointer-events: none;
 }
- 
+
 /* SISTEMA SOLAR (GPU ACCELERATED) */
 #solarSystem {
     position: absolute;
@@ -110,7 +110,7 @@ html, body {
     will-change: transform;
     transform: translateZ(0);
 }
- 
+
 /* LOGO CENTRAL (EL SOL) */
 #sun {
     position: absolute;
@@ -122,21 +122,21 @@ html, body {
     will-change: transform, filter;
     transform: translateZ(0);
 }
- 
+
 #sun:hover {
     transform: scale(1.1) translateZ(0);
 }
- 
+
 #sun img {
     width: 100%;
 }
- 
+
 @keyframes pulse {
     0% { filter: drop-shadow(0 0 15px gold); }
     50% { filter: drop-shadow(0 0 50px gold); }
     100% { filter: drop-shadow(0 0 15px gold); }
 }
- 
+
 /* =====================================================
    CORRECCIÓN BUG #1: SISTEMA DE MODALES CORREGIDO
    Antes: display:none → display:flex causaba que la
@@ -164,13 +164,13 @@ html, body {
     touch-action: auto;
     pointer-events: none; /* Bloquea interacción cuando invisible */
 }
- 
+
 .modal.show {
     opacity: 1;
     visibility: visible;
     pointer-events: auto; /* Reactiva interacción al mostrar */
 }
- 
+
 .modal-content {
     background: #0a0a0a;
     border: 1px solid #FFD700;
@@ -190,10 +190,10 @@ html, body {
     color: #ddd;
     line-height: 1.8;
 }
- 
+
 .modal-content::-webkit-scrollbar { width: 6px; }
 .modal-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
- 
+
 .modal-content h2 {
     color: #FFD700;
     margin-top: 0;
@@ -203,12 +203,12 @@ html, body {
     padding-bottom: 15px;
     margin-bottom: 25px;
 }
- 
+
 .modal-content p {
     margin-bottom: 15px;
     font-size: 15px;
 }
- 
+
 .close-modal {
     position: absolute;
     right: 25px;
@@ -221,19 +221,19 @@ html, body {
     z-index: 10;
     font-family: sans-serif;
 }
- 
+
 .close-modal:hover {
     color: #fff;
     transform: scale(1.1);
 }
- 
+
 /* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
 .album-modal-content {
     text-align: center;
     max-width: 500px;
     padding: 25px;
 }
- 
+
 #modalAlbumTitle {
     text-align: center;
     font-size: 20px;
@@ -241,7 +241,7 @@ html, body {
     margin-bottom: 15px;
     text-transform: uppercase;
 }
- 
+
 /* REPRODUCTOR PERSONALIZADO Y BOTONERA */
 #customPlayerBox {
     display: none;
@@ -252,14 +252,14 @@ html, body {
     border-radius: 8px;
     overflow: hidden;
 }
- 
+
 #playerIframeContainer {
     width: 100%;
     height: 140px;
     background: #000;
     position: relative;
 }
- 
+
 #sc-iframe {
     filter: invert(1);
     background-color: transparent;
@@ -272,7 +272,7 @@ html, body {
     height: 140px;
     z-index: 1;
 }
- 
+
 .sc-cover-overlay {
     position: absolute;
     top: 0;
@@ -284,7 +284,7 @@ html, body {
     pointer-events: none;
     z-index: 5;
 }
- 
+
 .custom-player-controls {
     display: flex;
     align-items: center;
@@ -294,13 +294,13 @@ html, body {
     background: rgba(255, 215, 0, 0.05);
     border-top: 1px solid rgba(255,215,0,0.2);
 }
- 
+
 .player-core-btns {
     display: flex;
     gap: 30px;
     align-items: center;
 }
- 
+
 .ctrl-btn {
     cursor: pointer;
     display: flex;
@@ -309,26 +309,26 @@ html, body {
     transition: 0.3s;
     opacity: 0.8;
 }
- 
+
 .ctrl-btn:hover {
     opacity: 1;
     transform: scale(1.2);
     filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
 }
- 
+
 .player-volume-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
     opacity: 0.8;
 }
- 
+
 .player-volume-wrapper svg {
     width: 18px;
     height: 18px;
     fill: #FFD700;
 }
- 
+
 #playerVolSlider {
     width: 70px;
     accent-color: #FFD700;
@@ -338,7 +338,7 @@ html, body {
     outline: none;
     cursor: pointer;
 }
- 
+
 /* LISTA DE CANCIONES */
 .tracklist-container {
     text-align: left;
@@ -353,10 +353,10 @@ html, body {
     /* CORRECCIÓN BUG #6: touch-action auto para scroll en móvil */
     touch-action: auto;
 }
- 
+
 .tracklist-container::-webkit-scrollbar { width: 4px; }
 .tracklist-container::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
- 
+
 .track-item-wrapper {
     display: flex;
     align-items: center;
@@ -364,11 +364,11 @@ html, body {
     border-bottom: 1px solid rgba(255,215,0,0.15);
     padding: 6px 0;
 }
- 
+
 .track-item-wrapper:last-child {
     border-bottom: none;
 }
- 
+
 .track-link {
     display: block;
     text-decoration: none;
@@ -380,12 +380,12 @@ html, body {
     font-size: 14px;
     padding: 5px 0;
 }
- 
+
 .track-link:hover {
     color: #FFD700;
     padding-left: 8px;
 }
- 
+
 .active-track {
     color: #000;
     font-weight: bold;
@@ -393,20 +393,20 @@ html, body {
     border-radius: 4px;
     padding-left: 12px;
 }
- 
+
 .share-btn {
     cursor: pointer;
     transition: 0.3s;
     opacity: 0.6;
     padding: 5px;
 }
- 
+
 .share-btn:hover {
     opacity: 1;
     transform: scale(1.2);
     filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
 }
- 
+
 /* PLATAFORMAS DEL ÁLBUM */
 .album-platforms {
     display: flex;
@@ -416,7 +416,7 @@ html, body {
     margin-top: 10px;
     margin-bottom: 15px;
 }
- 
+
 .album-platforms a {
     width: 40px;
     height: 40px;
@@ -428,23 +428,23 @@ html, body {
     justify-content: center;
     transition: 0.25s;
 }
- 
+
 .album-platforms a:hover {
     background: gold;
     transform: scale(1.15);
 }
- 
+
 .album-platforms svg {
     fill: gold;
     width: 20px;
     height: 20px;
     transition: 0.25s;
 }
- 
+
 .album-platforms a:hover svg {
     fill: #000;
 }
- 
+
 .btn-volver {
     background: transparent;
     border: 1px solid #FFD700;
@@ -460,12 +460,12 @@ html, body {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
- 
+
 .btn-volver:hover {
     background: #FFD700;
     color: #000;
 }
- 
+
 /* CONTROLES DE AUDIO BIO */
 .audio-controls {
     background: #111;
@@ -479,14 +479,14 @@ html, body {
     gap: 15px;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
 }
- 
+
 .audio-controls span {
     font-size: 22px;
     cursor: pointer;
     user-select: none;
     font-family: sans-serif;
 }
- 
+
 .audio-controls .vol-label {
     font-size: 13px;
     font-weight: 700;
@@ -494,7 +494,7 @@ html, body {
     letter-spacing: 1px;
     cursor: default;
 }
- 
+
 #volumeSlider {
     flex-grow: 1;
     accent-color: #FFD700;
@@ -504,7 +504,7 @@ html, body {
     outline: none;
     cursor: pointer;
 }
- 
+
 /* ORBITAS */
 .orbit {
     position: absolute;
@@ -514,20 +514,20 @@ html, body {
     will-change: transform;
     transform: translateZ(0);
 }
- 
+
 #orbitSingles { width: 420px; height: 420px; animation: spin 45s linear infinite; }
 #orbitAlbums { width: 720px; height: 720px; animation: spin 95s linear infinite; }
- 
+
 #orbitSingles:hover, #orbitSingles:hover .counter,
 #orbitAlbums:hover, #orbitAlbums:hover .counter {
     animation-play-state: paused;
 }
- 
+
 @keyframes spin {
     from { transform: rotate(0deg) translateZ(0); }
     to { transform: rotate(360deg) translateZ(0); }
 }
- 
+
 /* DISCOS */
 .planet {
     position: absolute;
@@ -544,13 +544,13 @@ html, body {
     pointer-events: auto;
     will-change: transform;
 }
- 
+
 .planet:hover {
     transform: scale(1.3) translateZ(0);
     box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
     z-index: 100;
 }
- 
+
 .counter {
     width: 100%;
     height: 100%;
@@ -559,7 +559,7 @@ html, body {
     border-radius: 50%;
     will-change: transform;
 }
- 
+
 .counter img {
     width: 100%;
     height: 100%;
@@ -567,14 +567,14 @@ html, body {
     border-radius: 50%;
     pointer-events: none;
 }
- 
+
 #orbitAlbums .counter { animation-duration: 95s; }
- 
+
 @keyframes counterSpin {
     from { transform: rotate(0deg) translateZ(0); }
     to { transform: rotate(-360deg) translateZ(0); }
 }
- 
+
 /* TOOLTIPS */
 .tooltip {
     position: absolute;
@@ -597,9 +597,9 @@ html, body {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
- 
+
 .planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
- 
+
 /* EFECTO FAMILIA */
 .family-symbol-container {
     position: absolute;
@@ -618,19 +618,19 @@ html, body {
     transition: 0.3s;
     pointer-events: none;
 }
- 
+
 .planet:hover .family-symbol-container { opacity: 1; bottom: 125%; }
- 
+
 .fam-fig { display: flex; flex-direction: column; align-items: center; }
 .fam-head { width: 10px; height: 10px; background: gold; border-radius: 50%; margin-bottom: 2px; }
 .fam-body-m { width: 16px; height: 24px; background: gold; border-radius: 4px 4px 0 0; }
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
- 
+
 .heart-bubble {
     position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity;
 }
- 
+
 /* REDES LATERALES GLOBALES */
 .floating-social, .floating-platforms {
     position: absolute;
@@ -641,10 +641,10 @@ html, body {
     gap: 15px;
     z-index: 999;
 }
- 
+
 .floating-social { left: 15px; }
 .floating-platforms { right: 15px; }
- 
+
 .floating-social a, .floating-platforms a {
     background: #111;
     color: #FFD700;
@@ -660,11 +660,11 @@ html, body {
     box-sizing: border-box;
     border: 1px solid gold;
 }
- 
+
 .floating-social svg, .floating-platforms svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
 .floating-social a:hover, .floating-platforms a:hover { background: #FFD700; transform: scale(1.2); }
 .floating-social a:hover svg, .floating-platforms a:hover svg { fill: #000; }
- 
+
 /* COMETAS Y SUPERNOVAS ESTÉTICAS */
 .comet-container {
     position: absolute;
@@ -678,7 +678,7 @@ html, body {
     margin: -20px;
     transition: opacity 0.5s ease;
 }
- 
+
 .comet-head {
     width: 14px;
     height: 14px;
@@ -689,7 +689,7 @@ html, body {
     z-index: 2;
     transition: 0.4s;
 }
- 
+
 .comet-tail {
     position: absolute;
     top: calc(50% - 1.5px);
@@ -702,15 +702,15 @@ html, body {
     pointer-events: none;
     transition: 0.4s;
 }
- 
+
 .comet-text {
     position: absolute; top: 35px; left: 50%; transform: translateX(-50%) scale(0); background: rgba(0, 0, 0, 0.95); border: 1px solid #FFD700; color: #FFD700; padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: bold; white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 0 20px rgba(255,215,0,0.4); text-transform: uppercase; letter-spacing: 1px;
 }
- 
+
 .comet-container.revealed .comet-text { transform: translateX(-50%) scale(1); opacity: 1; }
 .comet-container.revealed .comet-head { transform: scale(1.8); box-shadow: 0 0 25px 10px rgba(255,215,0,1); }
 .comet-container.revealed .comet-tail { opacity: 0; }
- 
+
 .supernova-hitbox {
     position: absolute;
     width: 50px;
@@ -725,7 +725,7 @@ html, body {
     align-items: center;
     justify-content: center;
 }
- 
+
 .supernova {
     position: relative;
     width: 4px;
@@ -736,7 +736,7 @@ html, body {
     animation: burst 2.5s ease-in-out forwards;
     pointer-events: none;
 }
- 
+
 .supernova::before, .supernova::after {
     content: '';
     position: absolute;
@@ -745,10 +745,10 @@ html, body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
- 
+
 .supernova::before { width: 60px; height: 2px; }
 .supernova::after { width: 2px; height: 60px; }
- 
+
 .ray-x {
     position: absolute;
     width: 30px;
@@ -758,7 +758,7 @@ html, body {
     left: 50%;
     transform: translate(-50%, -50%) rotate(45deg);
 }
- 
+
 .ray-x::after {
     content: '';
     position: absolute;
@@ -769,54 +769,54 @@ html, body {
     left: 0;
     transform: rotate(90deg);
 }
- 
+
 @keyframes burst {
     0% { transform: scale(0); opacity: 0; }
     40% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(0); opacity: 0; }
 }
- 
+
 .spin-active {
     animation: fastSpin 2s linear infinite !important;
     box-shadow: 0 0 40px #FFD700 !important;
     border: 2px solid #fff !important;
     z-index: 5000 !important;
 }
- 
+
 @keyframes fastSpin {
     100% { transform: rotate(360deg) translateZ(0); }
 }
- 
+
 .force-tooltip {
     opacity: 1 !important;
     visibility: visible !important;
     bottom: -35px !important;
 }
- 
+
 /* RESPONSIVIDAD: EN MÓVILES BARRAS PASAN A ARRIBA Y ABAJO */
 @media (max-width: 768px) {
     #solarSystem { transform: scale(0.45); }
- 
+
     .floating-platforms {
         top: 15px; bottom: auto; right: auto; left: 50%;
         transform: translateX(-50%); flex-direction: row;
         width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px;
     }
- 
+
     .floating-social {
         top: auto; bottom: 15px; right: auto; left: 50%;
         transform: translateX(-50%); flex-direction: row;
         width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px;
     }
- 
+
     .floating-social a, .floating-platforms a {
         width: 36px; height: 36px; padding: 6px; margin: 0;
     }
- 
+
     .modal-content { padding: 20px; width: 90%; max-height: 85vh; }
     .close-modal { right: 15px; top: 10px; }
 }
- 
+
 /* ÓRBITA Y ESTILO DE LA NAVE ESPACIAL */
 .orbit-ship {
     width: 570px;
@@ -825,7 +825,7 @@ html, body {
     z-index: 1005;
     pointer-events: none;
 }
- 
+
 .ship-wrapper {
     position: absolute;
     left: calc(50% + 285px - 16px);
@@ -834,7 +834,7 @@ html, body {
     pointer-events: auto;
     will-change: transform;
 }
- 
+
 .floating-tu-voz {
     background: transparent;
     border: none;
@@ -845,7 +845,7 @@ html, body {
     cursor: pointer;
     transition: 0.3s;
 }
- 
+
 .floating-tu-voz svg {
     stroke: #FFD700;
     fill: rgba(0, 0, 0, 0.8);
@@ -854,26 +854,26 @@ html, body {
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
     transition: 0.3s;
 }
- 
+
 .floating-tu-voz:hover {
     transform: scale(1.4);
 }
- 
+
 .floating-tu-voz:hover svg {
     stroke: #fff;
     filter: drop-shadow(0 0 15px #FFD700);
 }
- 
+
 @keyframes shipWaiting {
     0% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: #FFD700; }
     50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)); transform: scale(1.3); stroke: #fff; }
     100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: #FFD700; }
 }
- 
+
 .ship-waiting svg {
     animation: shipWaiting 1.5s infinite ease-in-out !important;
 }
- 
+
 .energy-pulse {
     position: fixed;
     width: 100px;
@@ -884,7 +884,7 @@ html, body {
     pointer-events: none;
     z-index: 999999;
 }
- 
+
 .energy-pulse::after {
     content: '';
     position: absolute;
@@ -899,13 +899,13 @@ html, body {
         0 0 15px 5px #ffffff,
         0 0 35px 15px #FFD700;
 }
- 
+
 /* VENTANA DEL BUZÓN */
 #reflectionModal {
     background-color: transparent !important;
     backdrop-filter: none !important;
 }
- 
+
 #reflectionModal .reflection-content {
     position: absolute;
     margin: 0;
@@ -917,17 +917,17 @@ html, body {
     background: rgba(10, 10, 10, 0.95);
     border: 1px solid #FFD700;
 }
- 
+
 #reflectionModal.show .reflection-content {
     opacity: 1;
 }
- 
+
 #reflectionForm {
     display: flex;
     flex-direction: column;
     margin-top: 15px;
 }
- 
+
 #reflectionMsg {
     background: #111;
     border: 1px solid rgba(255, 215, 0, 0.5);
@@ -942,12 +942,12 @@ html, body {
     width: 100%;
     box-sizing: border-box;
 }
- 
+
 #reflectionMsg:focus {
     border-color: #FFD700;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
 }
- 
+
 @media (max-width: 768px) {
     #reflectionModal .reflection-content {
         width: 90% !important;
@@ -959,29 +959,29 @@ html, body {
         box-sizing: border-box !important;
         padding: 20px 15px !important;
     }
- 
+
     #reflectionModal.show .reflection-content {
         transform: translateY(0) !important;
     }
- 
+
     #reflectionModal .close-reflection {
         top: 10px !important;
         right: 15px !important;
         font-size: 32px !important;
         z-index: 100;
     }
- 
+
     #solarSystem {
         transform: scale(0.45);
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), margin-top 0.5s ease;
     }
- 
+
     #solarSystem.mobile-focus {
         transform: scale(0.35) !important;
         margin-top: -30vh !important;
     }
 }
- 
+
 #reflectionModal .close-reflection {
     position: absolute !important;
     top: 5px !important;
@@ -992,7 +992,7 @@ html, body {
     line-height: 1 !important;
     text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
- 
+
 /* SATÉLITE */
 .satelite-wrapper {
     position: absolute;
@@ -1005,7 +1005,7 @@ html, body {
     transition: transform 0.3s ease, filter 0.3s ease;
     animation: floatSatellite 4s ease-in-out infinite;
 }
- 
+
 .satelite-wrapper svg {
     width: 100%;
     height: 100%;
@@ -1013,17 +1013,17 @@ html, body {
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     transition: 0.3s ease;
 }
- 
+
 .satelite-wrapper:hover svg {
     stroke: #FFD700;
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
 }
- 
+
 @keyframes floatSatellite {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-10px) rotate(5deg); }
 }
- 
+
 /* PANEL HOLOGRÁFICO */
 .hologram-modal {
     display: none;
@@ -1035,7 +1035,7 @@ html, body {
     align-items: center;
     justify-content: center;
 }
- 
+
 .hologram-content {
     background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(0,0,0,0.95) 100%);
     border: 1px solid rgba(255, 215, 0, 0.3);
@@ -1054,7 +1054,7 @@ html, body {
     touch-action: auto;
     padding-bottom: 30px !important;
 }
- 
+
 .close-hologram {
     position: absolute;
     top: 15px; right: 20px;
@@ -1064,19 +1064,19 @@ html, body {
     cursor: pointer;
     transition: 0.3s;
 }
- 
+
 .close-hologram:hover {
     color: #fff;
     text-shadow: 0 0 10px #FFD700;
 }
- 
+
 .hologram-header h2 {
     color: #FFD700;
     letter-spacing: 4px;
     margin-bottom: 5px;
     text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
- 
+
 .hologram-header p {
     color: #FFD700 !important;
     opacity: 0.9;
@@ -1085,14 +1085,14 @@ html, body {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
- 
+
 .support-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     margin-bottom: 30px !important;
 }
- 
+
 .support-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1103,39 +1103,39 @@ html, body {
     flex-direction: column !important;
     padding-bottom: 25px !important;
 }
- 
+
 .support-card:hover {
     background: rgba(255, 215, 0, 0.05);
     border-color: rgba(255, 215, 0, 0.5);
     transform: translateY(-5px);
 }
- 
+
 .support-card p {
     color: #FFD700 !important;
     opacity: 0.85;
 }
- 
+
 .support-card .holo-btn {
     margin-top: auto !important;
 }
- 
+
 .card-icon {
     font-size: 30px;
     margin-bottom: 15px;
 }
- 
+
 .support-card h3 {
     font-size: 16px;
     color: #fff;
     margin-bottom: 10px;
 }
- 
+
 .support-card p {
     font-size: 13px;
     margin-bottom: 20px;
     line-height: 1.5;
 }
- 
+
 .holo-btn {
     background: transparent;
     color: #FFD700;
@@ -1148,13 +1148,13 @@ html, body {
     transition: 0.3s;
     width: 100%;
 }
- 
+
 .holo-btn:hover {
     background: #FFD700;
     color: #000;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
- 
+
 /* MOTOR 3D DE TARJETAS */
 .support-card.flip-card {
     background: transparent !important;
@@ -1163,7 +1163,7 @@ html, body {
     perspective: 1000px;
     min-height: 280px;
 }
- 
+
 .flip-card-inner {
     position: relative;
     width: 100%;
@@ -1172,11 +1172,11 @@ html, body {
     transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
     transform-style: preserve-3d;
 }
- 
+
 .flip-card-inner.is-flipped {
     transform: rotateY(180deg);
 }
- 
+
 .flip-card-front, .flip-card-back {
     position: absolute !important;
     top: 0; left: 0;
@@ -1192,24 +1192,24 @@ html, body {
     align-items: center;
     box-sizing: border-box;
 }
- 
+
 .flip-card-front {
     background: rgba(20, 20, 20, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
- 
+
 .flip-card-front:hover {
     background: rgba(255, 215, 0, 0.05);
     border-color: rgba(255, 215, 0, 0.5);
 }
- 
+
 .flip-card-back {
     transform: rotateY(180deg);
     background: rgba(10, 10, 10, 0.98);
     border: 1px solid #FFD700;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
 }
- 
+
 /* CARRUSEL QR */
 .qr-carousel-wrapper { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 15px; }
 .qr-nav-btn { background: transparent; border: none; color: #FFD700; font-size: 22px; cursor: pointer; padding: 5px 10px; transition: 0.3s; outline: none; }
@@ -1220,15 +1220,15 @@ html, body {
 .qr-img { width: 120px; height: 120px; border: 1px solid #FFD700; border-radius: 8px; padding: 5px; background: #fff; }
 .qr-box span { font-size: 11px; color: #FFD700 !important; letter-spacing: 1px; white-space: nowrap; }
 .net-badge { color: #FFD700 !important; font-size: 9px !important; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 3px 8px; border-radius: 4px; margin-top: -3px; text-transform: uppercase; }
- 
+
 .btn-volver-crypto, .btn-volver { width: 80%; border-color: #555; color: #aaa; margin-top: auto; }
- 
+
 .layout-3-cols { display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; padding: 10px 5px; width: 100%; height: 100%; box-sizing: border-box; }
 .icon-col { display: flex; flex-direction: column; justify-content: space-around; align-items: center; width: 35px; gap: 5px; }
 .mini-icon { width: 24px; height: 24px; filter: grayscale(100%) sepia(100%) hue-rotate(5deg) saturate(500%) brightness(1.2); transition: 0.3s; }
 .mini-icon:hover { filter: none; transform: scale(1.2); }
 .center-col { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 0 5px; text-align: center; }
- 
+
 /* BÓVEDA */
 .boveda-info {
     background: rgba(0, 0, 0, 0.6);
@@ -1242,10 +1242,10 @@ html, body {
 .hologram-content::-webkit-scrollbar { width: 6px; }
 .hologram-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 10px; }
 .holo-form { display: flex; flex-direction: column; gap: 20px; text-align: left; }
- 
+
 .info-seccion h4 { font-size: 15px !important; margin-bottom: 8px !important; }
 .info-seccion ul, .info-seccion ol { font-size: 14px !important; line-height: 1.7 !important; margin-bottom: 20px !important; }
- 
+
 .input-group input {
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
@@ -1257,13 +1257,13 @@ html, body {
     font-size: 15px;
     box-sizing: border-box;
 }
- 
+
 .input-group input::placeholder {
     color: rgba(255, 215, 0, 0.6) !important;
 }
- 
+
 .input-group input:focus { outline: none; border-color: #FFD700; background: rgba(255, 215, 0, 0.05); }
- 
+
 .checkbox-group {
     display: flex;
     align-items: flex-start;
@@ -1285,9 +1285,9 @@ html, body {
     color: #fff;
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
 }
- 
+
 .submit-btn { margin-top: 15px; padding: 18px; font-size: 15px; font-weight: bold; letter-spacing: 1px; }
- 
+
 /* BAÑO DE ORO */
 .modal-content p,
 .info-seccion ul,
@@ -1296,14 +1296,14 @@ html, body {
 #amplificarModal div {
     color: #FFD700 !important;
 }
- 
+
 .modal-content strong,
 .modal-content b,
 .info-seccion strong {
     color: #FFD700 !important;
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
- 
+
 #btnIrABoveda {
     color: #FFD700 !important;
     background: transparent !important;
@@ -1316,13 +1316,13 @@ html, body {
     text-shadow: 0 0 10px #FFD700 !important;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.5) !important;
 }
- 
+
 /* SATÉLITE EN ÓRBITA */
 @keyframes orbitaSateliteProa {
     from { transform: rotate(0deg) translateX(280px) rotate(180deg); }
     to { transform: rotate(360deg) translateX(280px) rotate(180deg); }
 }
- 
+
 #btnSatelite {
     position: absolute !important;
     top: 50% !important;
@@ -1338,18 +1338,18 @@ html, body {
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     transition: filter 0.3s ease;
 }
- 
+
 #btnSatelite:hover {
     filter: drop-shadow(0 0 15px #FFD700);
     scale: 1.1;
 }
- 
+
 #btnSatelite svg {
     width: 100%;
     height: 100%;
     display: block;
 }
- 
+
 #btnSatelite svg path,
 #btnSatelite svg rect,
 #btnSatelite svg circle,
@@ -1361,14 +1361,14 @@ html, body {
 </style>
 </head>
 <body>
- 
+
 <div id="loader">
     <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high" id="loaderImg">
     <p>INICIANDO UNIVERSO...</p>
 </div>
- 
+
 <audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
- 
+
 <div id="bioModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
         <span class="close-modal close-bio" aria-label="Cerrar biografía" role="button" tabindex="0">×</span>
@@ -1378,20 +1378,20 @@ html, body {
         <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
         <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
         <p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
- 
+
         <div class="audio-controls">
             <span id="muteBtn" aria-label="Silenciar o activar audio" role="button" tabindex="0">🔊</span>
             <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
             <span class="vol-label">VOL</span>
         </div>
- 
+
         <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
         <p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
             Próximamente: "Algo está mal" (Libro)
         </p>
     </div>
 </div>
- 
+
 <div id="albumModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content album-modal-content">
         <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
@@ -1415,14 +1415,14 @@ html, body {
             </div>
             <div id="nowPlayingLyrics" style="display: none; max-height: 180px; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 15px; border-top: 1px solid rgba(255,215,0,0.2); font-size: 13px; color: #FFD700; white-space: pre-wrap; text-align: center; line-height: 1.6;"></div>
         </div>
- 
+
         <div class="tracklist-container" id="modalTracklist"></div>
         <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
         <div class="album-platforms" id="modalPlatforms"></div>
         <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
     </div>
 </div>
- 
+
 <!-- MODAL DE LETRAS -->
 <div id="lyricsModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
@@ -1431,10 +1431,10 @@ html, body {
         <div id="lyricsText" style="white-space: pre-wrap; text-align: center; color: #FFD700; font-size: 15px; line-height: 1.8; font-family: 'Merriweather', serif;"></div>
     </div>
 </div>
- 
+
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="starContainer" aria-hidden="true"></div>
- 
+
 <!-- REDES SOCIALES -->
 <div class="floating-social">
     <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
@@ -1482,7 +1482,7 @@ html, body {
         <svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>
     </a>
 </div>
- 
+
 <div id="solarSystem">
     <div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
         <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
@@ -1501,7 +1501,7 @@ html, body {
             </div>
         </div>
     </div>
- 
+
     <div id="btnSatelite" class="satelite-wrapper" title="Centro de Energía">
         <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M8 6a4 4 0 0 1 8 0H8z" fill="rgba(255, 215, 0, 0.4)" />
@@ -1516,7 +1516,7 @@ html, body {
         </svg>
     </div>
 </div>
- 
+
 <!-- PANEL HOLOGRÁFICO -->
 <div id="hologramPanel" class="hologram-modal">
     <div class="hologram-content">
@@ -1548,14 +1548,14 @@ html, body {
         <button id="btnCerrarHologramaMovil" class="btn-volver" style="margin-top: 25px; width: 100%; box-sizing: border-box;">VOLVER AL UNIVERSO</button>
     </div>
 </div>
- 
+
 <!-- MODAL DEL BUZÓN -->
 <div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content reflection-content">
         <span class="close-modal close-reflection" aria-label="Cerrar buzón" role="button" tabindex="0">×</span>
         <h2 style="text-align: center; font-size: 20px; border-bottom: none; margin-bottom: 5px;">CONEXIÓN SEGURA</h2>
         <p id="buzonSubtitle" style="text-align: center; font-size: 13px; opacity: 0.9;">El universo se ha detenido para escucharte. Escribe tu mensaje y cárgalo en la sonda.</p>
- 
+
         <form id="reflectionForm" action="https://script.google.com/macros/s/AKfycbw-iMGBj0r8nZbhZPfwniPA1KzOC_elObAC5kN14EFeUaK0Dx7ZzD2bCOJcYw_o3xWhHQ/exec" method="POST">
             <textarea name="mensaje" id="reflectionMsg" rows="5" placeholder="Escribe tu reflexión aquí..." required></textarea>
             <!-- CORRECCIÓN BUG #5: El honeypot debe validarse en el servidor (Google Apps Script).
@@ -1563,19 +1563,19 @@ html, body {
             <input type="text" name="miel_trampa" style="display:none" tabindex="-1" autocomplete="off">
             <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top: 15px; width: 100%; box-sizing: border-box;">CARGAR MENSAJE EN NAVE</button>
         </form>
- 
+
         <div id="cooldownStatus" style="display: none; text-align: center; margin-top: 15px;">
             <p style="color: #ff4d4d; font-weight: bold; font-size: 14px; margin-bottom: 5px;">SISTEMA EN ENFRIAMIENTO</p>
             <p style="font-size: 13px; opacity: 0.9;">La sonda necesita recargar energía tras tu último envío. Por favor, intenta de nuevo mañana.</p>
         </div>
- 
+
         <div id="reflectionStatus" style="display: none; text-align: center; margin-top: 15px;">
             <p style="color: #FFD700; font-weight: bold; font-size: 14px; margin-bottom: 15px;">¡Mensaje cargado en la sonda!</p>
             <button id="btnSendToSun" class="btn-volver" style="background: #FFD700; color: #000;">CERRAR Y ENVIAR AL SOL</button>
         </div>
     </div>
 </div>
- 
+
 <!-- MODAL COORDENADAS WEB3 -->
 <div id="cryptoModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" style="text-align: center; max-width: 400px;">
@@ -1595,7 +1595,7 @@ html, body {
         </div>
     </div>
 </div>
- 
+
 <!-- MODAL INSTRUCCIONES -->
 <div id="propagarModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" style="text-align: center; max-width: 500px;">
@@ -1607,7 +1607,7 @@ html, body {
         <button class="btn-volver" id="btnIrABoveda" style="background: rgba(255, 215, 0, 0.1); font-size: 15px; padding: 15px;">LEER REGLAS Y APLICAR</button>
     </div>
 </div>
- 
+
 <!-- MODAL AMPLIFICAR -->
 <div id="amplificarModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content" style="text-align: center; max-width: 600px;">
@@ -1638,7 +1638,7 @@ html, body {
         </div>
     </div>
 </div>
- 
+
 <!-- MODAL BÓVEDA -->
 <div id="protocoloModal" class="hologram-modal">
     <div class="hologram-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
@@ -1685,29 +1685,29 @@ html, body {
         </form>
     </div>
 </div>
- 
+
 <script src="letras.js"></script>
 <script src="datos.js"></script>
- 
+
 <script>
 // =====================================================
 // ÍCONOS DE REPRODUCCIÓN
 // =====================================================
 const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
 const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
- 
+
 // VARIABLES GLOBALES DEL REPRODUCTOR
 let ytPlayerGlobal = null;
 let activeTracksGlobal = [];
 let activeTrackIndexGlobal = 0;
 let activePlaylistIdGlobal = "";
 let activeAlbumImgGlobal = "";
- 
+
 function setPlayerState(isPlaying) {
     const btn = document.getElementById('btnPlayPause');
     if (btn) btn.innerHTML = isPlaying ? pauseIconSVG : playIconSVG;
 }
- 
+
 // =====================================================
 // CORRECCIÓN BUG #5: localStorage con try/catch
 // para iOS Safari modo privado y otros contextos restringidos
@@ -1722,7 +1722,7 @@ const safeStorage = {
         catch (e) { /* silencioso en modo privado */ }
     }
 };
- 
+
 // =====================================================
 // CORRECCIÓN BUG #1: Funciones de modal corregidas
 // Usan visibility+opacity en vez de display:none
@@ -1733,7 +1733,7 @@ function openModal(el) {
 function closeModal(el) {
     el.classList.remove('show');
 }
- 
+
 document.addEventListener("DOMContentLoaded", () => {
     const loader = document.getElementById('loader');
     const loaderImg = document.getElementById('loaderImg');
@@ -1750,13 +1750,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const customPlayerBox = document.getElementById("customPlayerBox");
     const playerVolSlider = document.getElementById("playerVolSlider");
     const lyricsModal = document.getElementById("lyricsModal");
- 
+
     // CORRECCIÓN BUG #1 (LOADER): Espera que la imagen cargue antes de ocultar
     function hideLoader() {
         loader.style.opacity = '0';
         setTimeout(() => loader.remove(), 800);
     }
- 
+
     if (loaderImg.complete) {
         setTimeout(hideLoader, 300);
     } else {
@@ -1765,7 +1765,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Timeout de seguridad en caso de que load no dispare
         setTimeout(hideLoader, 3000);
     }
- 
+
     // CONTROLES DE VOLUMEN - BIO AUDIO
     if (volumeSlider && bioAudio) {
         bioAudio.volume = volumeSlider.value;
@@ -1774,7 +1774,7 @@ document.addEventListener("DOMContentLoaded", () => {
             muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
         });
     }
- 
+
     if (muteBtn && bioAudio) {
         muteBtn.addEventListener("click", () => {
             if (bioAudio.volume > 0) {
@@ -1790,7 +1790,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
- 
+
     if (playerVolSlider) {
         playerVolSlider.addEventListener("input", (e) => {
             if (ytPlayerGlobal && typeof ytPlayerGlobal.setVolume === 'function') {
@@ -1798,13 +1798,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
- 
+
     // FUNCIONES DE CIERRE DE MODALES
     function closeAndStopAudio() {
         closeModal(modal);
         if (bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
     }
- 
+
     function closeAlbumPanel() {
         closeModal(albumModal);
         if (ytPlayerGlobal && typeof ytPlayerGlobal.pauseVideo === 'function') {
@@ -1817,7 +1817,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("playerIframeContainer").innerHTML = "";
         }, 400);
     }
- 
+
     // APERTURA DEL SOL (BIOGRAFÍA)
     if (sun) {
         sun.onclick = () => {
@@ -1825,7 +1825,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (bioAudio) bioAudio.play().catch(err => console.log("Audio bloqueado:", err));
         };
     }
- 
+
     // CORRECCIÓN BUG #2: Selectores específicos al modal padre
     // Antes: document.querySelector(".close-bio") podía capturar el incorrecto
     // Ahora: buscamos dentro del modal específico
@@ -1833,32 +1833,33 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#albumModal .close-album").addEventListener('click', closeAlbumPanel);
     document.getElementById("btnCerrarAlbum").addEventListener('click', closeAlbumPanel);
     document.querySelector("#lyricsModal .close-lyrics").onclick = () => closeModal(lyricsModal);
- 
+
     // Cierre al hacer clic en el fondo del modal
     window.addEventListener('click', (event) => {
         if (event.target === modal) closeAndStopAudio();
         if (event.target === albumModal) closeAlbumPanel();
         if (event.target === lyricsModal) closeModal(lyricsModal);
         if (event.target.classList.contains("modal")) closeModal(event.target);
-        if (event.target === protocoloModal) protocoloModal.style.display = "none";
+        if (event.target === protocoloModal) {
+            protocoloModal.style.display = "none";
+            resumeUniverse(); // BUG 1 FIX: Descongela los planetas al hacer clic afuera
+        }
     });
-    window.addEventListener('touchstart', (event) => {
-        if (event.target === modal) closeAndStopAudio();
-        if (event.target === albumModal) closeAlbumPanel();
-    }, { passive: true });
- 
+    // BUG 3 FIX: Se eliminó el listener de touchstart que causaba "ghost clicks"
+    // en iPhones y Android. El listener de 'click' de arriba ya maneja móviles correctamente.
+
     // CANVAS DE ESTRELLAS
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
     const numStars = window.innerWidth < 768 ? 80 : 300;
     let backgroundStars = [];
- 
+
     function setCanvasSize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         initStars();
     }
- 
+
     function initStars() {
         backgroundStars = [];
         for (let i = 0; i < numStars; i++) {
@@ -1871,7 +1872,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
- 
+
     function drawCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         backgroundStars.forEach(s => {
@@ -1884,33 +1885,33 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         requestAnimationFrame(drawCanvas);
     }
- 
+
     setCanvasSize();
- 
+
     // CORRECCIÓN BUG #3: Debounce en el resize para evitar reinicializaciones constantes
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(setCanvasSize, 200);
     });
- 
+
     drawCanvas();
- 
+
     // =====================================================
     // CORRECCIÓN BUG #7: Flag para evitar spawns concurrentes de supernovas
     // =====================================================
     let currentSpawnTimeout = null;
     let isBatchRunning = false;
- 
+
     function removeAllSupernovas() {
         document.querySelectorAll('.supernova-hitbox').forEach(sn => sn.remove());
     }
- 
+
     function spawnSupernovaBatch() {
         if (isBatchRunning) return; // Evita batches concurrentes
         isBatchRunning = true;
         removeAllSupernovas();
- 
+
         for (let i = 0; i < 3; i++) {
             const hitbox = document.createElement("div");
             hitbox.className = "supernova-hitbox";
@@ -1933,16 +1934,16 @@ document.addEventListener("DOMContentLoaded", () => {
             };
             if (starContainer) starContainer.appendChild(hitbox);
         }
- 
+
         currentSpawnTimeout = setTimeout(() => {
             removeAllSupernovas();
             isBatchRunning = false;
             spawnSupernovaBatch();
         }, 5000 + Math.random() * 5000);
     }
- 
+
     spawnSupernovaBatch();
- 
+
     // =====================================================
     // REPRODUCTOR MAESTRO
     // CORRECCIÓN BUG #8 (YT Player): MutationObserver en vez de setTimeout
@@ -1954,15 +1955,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const playerIframe = document.getElementById("playerIframeContainer");
         const customBox = document.getElementById("customPlayerBox");
         const lyricsBox = document.getElementById("nowPlayingLyrics");
- 
+
         document.querySelectorAll('.track-link').forEach((el, i) => {
             el.classList.toggle('active-track', i === index);
         });
- 
+
         customBox.style.display = "flex";
         setPlayerState(false);
         playerIframe.innerHTML = "";
- 
+
         if (typeof letras !== 'undefined' && letras[trackObj.name]) {
             lyricsBox.innerText = letras[trackObj.name];
             lyricsBox.style.display = "block";
@@ -1970,7 +1971,7 @@ document.addEventListener("DOMContentLoaded", () => {
             lyricsBox.innerText = "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
             lyricsBox.style.display = "block";
         }
- 
+
         let videoId = "";
         const vMatch = trackObj.url.match(/(?:[?&]v=|youtu\.be\/)([^&]+)/);
         if (vMatch && vMatch[1]) {
@@ -1979,13 +1980,13 @@ document.addEventListener("DOMContentLoaded", () => {
             window.open(trackObj.url, "_blank");
             return;
         }
- 
+
         if (videoId) {
             let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
             if (activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
- 
+
             playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position: relative; z-index: 1;"></iframe>`;
- 
+
             // CORRECCIÓN: MutationObserver en vez de setTimeout
             const iframeEl = document.getElementById('yt-iframe');
             if (iframeEl && window.YT && window.YT.Player) {
@@ -2009,7 +2010,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     };
- 
+
     function initYTPlayer(iframeEl) {
         ytPlayerGlobal = new YT.Player(iframeEl, {
             events: {
@@ -2029,7 +2030,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
- 
+
     document.getElementById('btnNext').onclick = () => {
         if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
     };
@@ -2043,7 +2044,7 @@ document.addEventListener("DOMContentLoaded", () => {
             else ytPlayerGlobal.playVideo();
         }
     };
- 
+
     // =====================================================
     // CREACIÓN DE ÓRBITAS (planetas)
     // =====================================================
@@ -2051,64 +2052,64 @@ document.addEventListener("DOMContentLoaded", () => {
         const orbit = document.getElementById(id);
         if (!orbit || !data) return;
         const fragment = document.createDocumentFragment();
- 
+
         data.forEach((item, i) => {
             const angle = (i / data.length) * Math.PI * 2;
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
- 
+
             const planet = document.createElement("div");
             planet.className = "planet";
             planet.style.left = `calc(50% + ${x}px - 50px)`;
             planet.style.top = `calc(50% + ${y}px - 50px)`;
- 
+
             planet.onclick = () => {
                 if (bioAudio && !bioAudio.paused) {
                     bioAudio.pause();
                     if (muteBtn) muteBtn.textContent = "🔇";
                 }
- 
+
                 modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
                 modalTracklist.innerHTML = "";
                 document.getElementById("customPlayerBox").style.display = "none";
- 
+
                 let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
                 let playlistId = "";
                 if (ytLink && ytLink !== "#") {
                     const match = ytLink.match(/[?&]list=([^&]+)/);
                     if (match && match[1]) playlistId = match[1];
                 }
- 
+
                 activeTracksGlobal = item.tracks || [];
                 activePlaylistIdGlobal = playlistId;
                 // CORRECCIÓN BUG: encodeURI solo en el nombre del archivo, no en el path completo
                 activeAlbumImgGlobal = item.img;
- 
+
                 if (item.tracks && item.tracks.length > 0) {
                     item.tracks.forEach((trackObj, index) => {
                         const row = document.createElement("div");
                         row.className = "track-item-wrapper";
- 
+
                         const trackLink = document.createElement("a");
                         trackLink.className = "track-item track-link";
                         trackLink.href = "javascript:void(0);";
                         trackLink.innerText = `${index + 1}. ${trackObj.name}`;
- 
+
                         const actionsDiv = document.createElement("div");
                         actionsDiv.style.cssText = "display:flex;gap:10px;";
- 
+
                         const shareBtn = document.createElement("span");
                         shareBtn.className = "share-btn";
                         shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
                         shareBtn.title = "Compartir canción";
- 
+
                         const lyricBtn = document.createElement("span");
                         lyricBtn.className = "share-btn";
                         lyricBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
                         lyricBtn.title = "Ver Letra";
- 
+
                         trackLink.onclick = (e) => { e.preventDefault(); window.renderTrack(index); };
- 
+
                         shareBtn.onclick = (e) => {
                             e.stopPropagation();
                             const linkToShare = trackObj.shareUrl || trackObj.url;
@@ -2119,7 +2120,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 alert("Enlace copiado al portapapeles");
                             }
                         };
- 
+
                         lyricBtn.onclick = (e) => {
                             e.stopPropagation();
                             document.getElementById('lyricsTitle').innerText = trackObj.name;
@@ -2129,7 +2130,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             document.getElementById('lyricsText').innerText = letraContenido;
                             openModal(document.getElementById('lyricsModal'));
                         };
- 
+
                         actionsDiv.appendChild(lyricBtn);
                         actionsDiv.appendChild(shareBtn);
                         row.appendChild(trackLink);
@@ -2143,7 +2144,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
                     modalTracklist.appendChild(trackDiv);
                 }
- 
+
                 // PLATAFORMAS DEL MODAL
                 modalPlatforms.innerHTML = "";
                 const globalPlatformsForModal = [
@@ -2154,7 +2155,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     { name: "SoundCloud", svg: `<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /></svg>`, id: 'soundcloud' },
                     { name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237"/></svg>`, id: 'audiomack' }
                 ];
- 
+
                 globalPlatformsForModal.forEach(p => {
                     let platLink = item.links && item.links[p.id] ? item.links[p.id] : "";
                     if (!platLink || platLink === "#") {
@@ -2171,21 +2172,21 @@ document.addEventListener("DOMContentLoaded", () => {
                         modalPlatforms.appendChild(a);
                     }
                 });
- 
+
                 openModal(albumModal);
             };
- 
+
             const albumName = item.img.split('/').pop().replace('.webp', '');
             planet.setAttribute('data-album', albumName.toUpperCase());
- 
+
             let extraHTML = "";
             if (albumName.toUpperCase() === "TEJIDO VITAL") {
                 extraHTML = `<div class="family-symbol-container"><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-f"></div></div><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-f"></div></div></div>`;
             }
- 
+
             // CORRECCIÓN: encodeURI solo en el src de la imagen, no en rutas de datos
             planet.innerHTML = `<div class="counter"><img src="${encodeURI(item.img)}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
- 
+
             if (albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
                 let hTimer;
                 planet.onmouseenter = () => {
@@ -2208,16 +2209,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 planet.onmouseleave = () => clearInterval(hTimer);
             }
- 
+
             fragment.appendChild(planet);
         });
- 
+
         orbit.appendChild(fragment);
     }
- 
+
     if (typeof singles !== 'undefined') createOrbit(singles, "orbitSingles", 210);
     if (typeof albums !== 'undefined') createOrbit(albums, "orbitAlbums", 360);
- 
+
     // =====================================================
     // SISTEMA DEL BUZÓN (NAVE)
     // =====================================================
@@ -2230,10 +2231,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnSubmitReflection = document.getElementById("btnSubmitReflection");
     const btnSendToSun = document.getElementById("btnSendToSun");
     const solarSystemBox = document.getElementById("solarSystem");
- 
+
     let isUniversePaused = false;
     let isMessageLoadedInShip = false;
- 
+
     // CORRECCIÓN BUG #5: Usar safeStorage en vez de localStorage directo
     if (btnTuVoz) {
         const lastSent = safeStorage.get('lastReflectionTime');
@@ -2242,7 +2243,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btnTuVoz.style.display = "none";
         }
     }
- 
+
     // CORRECCIÓN BUG #4: pauseUniverse filtra solo las animaciones del solarSystem
     function pauseUniverse() {
         if (!isUniversePaused) {
@@ -2251,7 +2252,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.innerWidth <= 768) solarSystemBox.classList.add("mobile-focus");
         }
     }
- 
+
     function resumeUniverse() {
         if (isUniversePaused) {
             document.getElementById('solarSystem').getAnimations({ subtree: true }).forEach(anim => anim.play());
@@ -2259,7 +2260,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (window.innerWidth <= 768) solarSystemBox.classList.remove("mobile-focus");
         }
     }
- 
+
     function closeBuzonAndHandleLaser() {
         closeModal(reflectionModal);
         btnTuVoz.classList.remove("ship-waiting");
@@ -2269,14 +2270,14 @@ document.addEventListener("DOMContentLoaded", () => {
             resumeUniverse();
         }
     }
- 
+
     if (closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
- 
+
     if (btnTuVoz) {
         btnTuVoz.onclick = () => {
             pauseUniverse();
             btnTuVoz.classList.add("ship-waiting");
- 
+
             if (window.innerWidth > 768) {
                 const shipRect = btnTuVoz.getBoundingClientRect();
                 const screenCenter = window.innerWidth / 2;
@@ -2295,11 +2296,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 reflectionContentBox.style.top = "";
                 reflectionContentBox.style.transform = "";
             }
- 
+
             openModal(reflectionModal);
             closeReflection.style.display = "block";
             reflectionStatus.style.display = "none";
- 
+
             // CORRECCIÓN BUG #5: safeStorage en vez de localStorage
             const lastSent = safeStorage.get('lastReflectionTime');
             const cooldown = 24 * 60 * 60 * 1000;
@@ -2312,20 +2313,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("buzonSubtitle").style.display = "block";
                 document.getElementById("reflectionMsg").value = "";
             }
- 
+
             isMessageLoadedInShip = false;
         };
     }
- 
+
     // CORRECCIÓN BUG #6 (no-cors): El envío es "best-effort".
     // Se informa al usuario que el mensaje fue enviado con buena fe,
     // ya que no es posible confirmar errores con mode:'no-cors'.
     if (reflectionForm) {
         reflectionForm.addEventListener("submit", async function (event) {
             event.preventDefault();
+
+            // BUG 2 FIX: Validación anti-bots en el frontend
+            // Si el campo trampa tiene valor, es un bot → fingimos éxito y abortamos
+            const trampa = reflectionForm.querySelector('input[name="miel_trampa"]');
+            if (trampa && trampa.value !== "") {
+                btnSubmitReflection.innerText = "SINTONIZANDO...";
+                setTimeout(() => {
+                    closeModal(reflectionModal);
+                    btnSubmitReflection.innerText = "CARGAR MENSAJE EN NAVE";
+                    reflectionForm.reset();
+                }, 1500);
+                return;
+            }
             btnSubmitReflection.innerText = "SINTONIZANDO...";
             btnSubmitReflection.disabled = true;
- 
+
             const data = new FormData(event.target);
             fetch(event.target.action, {
                 method: 'POST',
@@ -2333,9 +2347,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: data
             }).then(() => {
                 safeStorage.set('lastReflectionTime', Date.now()); // CORRECCIÓN BUG #5
- 
+
                 reflectionForm.style.display = "none";
- 
+
                 const box = reflectionContentBox.getBoundingClientRect();
                 const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
                 const pulse = document.createElement("div");
@@ -2343,7 +2357,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 pulse.style.left = (box.left + box.width / 2) + "px";
                 pulse.style.top = (box.top + box.height / 2) + "px";
                 document.body.appendChild(pulse);
- 
+
                 const destX = (ship.left + ship.width / 2) - (box.left + box.width / 2);
                 const destY = (ship.top + ship.height / 2) - (box.top + box.height / 2);
                 const angleRad = Math.atan2(destY, destX);
@@ -2352,20 +2366,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 const offsetY = Math.sin(angleRad) * 4;
                 const finalX = destX - offsetX;
                 const finalY = destY - offsetY;
- 
+
                 const anim = pulse.animate([
                     { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
                     { transform: `translate(calc(-50% + ${finalX * 0.6}px), calc(-50% + ${finalY * 0.6}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
                     { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 }
                 ], { duration: 1000, easing: "ease-in" });
- 
+
                 anim.onfinish = () => {
                     pulse.remove();
                     reflectionStatus.style.display = "block";
                     document.getElementById("buzonSubtitle").style.display = "none";
                     isMessageLoadedInShip = true;
                     btnTuVoz.classList.remove("ship-waiting");
- 
+
                     const shipSvg = document.querySelector("#btnTuVoz svg");
                     shipSvg.style.filter = "drop-shadow(0 0 25px #fff)";
                     shipSvg.style.stroke = "#fff";
@@ -2382,45 +2396,45 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
- 
+
     function fireLaserToSun() {
         const shipBtn = document.getElementById("btnTuVoz");
         const shipRect = shipBtn.getBoundingClientRect();
         const sunRect = document.getElementById("sun").getBoundingClientRect();
- 
+
         shipBtn.style.opacity = "0";
         shipBtn.style.pointerEvents = "none";
- 
+
         const shipClone = document.createElement("div");
         shipClone.innerHTML = shipBtn.innerHTML;
         shipClone.style.cssText = `position:fixed;left:${shipRect.left}px;top:${shipRect.top}px;width:${shipRect.width}px;height:${shipRect.height}px;z-index:999999;display:flex;align-items:center;justify-content:center;`;
         const cloneSvg = shipClone.querySelector("svg");
         if (cloneSvg) { cloneSvg.style.stroke = "#fff"; cloneSvg.style.filter = "drop-shadow(0 0 25px #FFD700)"; }
         document.body.appendChild(shipClone);
- 
+
         const destX = (sunRect.left + sunRect.width / 2) - (shipRect.left + shipRect.width / 2);
         const destY = (sunRect.top + sunRect.height / 2) - (shipRect.top + shipRect.height / 2);
         const angleRad = Math.atan2(destY, destX);
         const angleDeg = (angleRad * 180) / Math.PI;
- 
+
         const anim = shipClone.animate([
             { transform: `translate(0px, 0px) rotate(${angleDeg + 45}deg) scale(1)` },
             { transform: `translate(${destX * 0.5}px, ${destY * 0.5}px) rotate(${angleDeg + 45}deg) scale(1.5)` },
             { transform: `translate(${destX}px, ${destY}px) rotate(${angleDeg + 45}deg) scale(0)` }
         ], { duration: 1800, easing: "cubic-bezier(0.5, 0, 0.5, 1)" });
- 
+
         anim.onfinish = () => {
             shipClone.remove();
             const sunEl = document.getElementById("sun");
             sunEl.style.transform = "scale(1.5)";
             sunEl.style.filter = "drop-shadow(0 0 100px #fff) brightness(2.5)";
- 
+
             const flash = document.createElement("div");
             flash.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,215,0,0.35);z-index:99998;pointer-events:none;transition:opacity 0.8s ease-out;";
             document.body.appendChild(flash);
             setTimeout(() => flash.style.opacity = "0", 50);
             setTimeout(() => flash.remove(), 850);
- 
+
             setTimeout(() => {
                 sunEl.style.transform = "scale(1)";
                 sunEl.style.filter = "";
@@ -2430,23 +2444,23 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 700);
         };
     }
- 
+
     if (btnSendToSun) btnSendToSun.onclick = closeBuzonAndHandleLaser;
- 
+
     // COMETAS
     const upcomingReleases = ["📖 LIBRO: ALGO ESTÁ MAL", "💿 NUEVO ÁLBUM", "🎵 PRÓXIMO SENCILLO"];
     let currentCometIndex = 0;
- 
+
     function spawnNextComet() {
         try {
             const releaseText = upcomingReleases[currentCometIndex];
             currentCometIndex = (currentCometIndex + 1) % upcomingReleases.length;
- 
+
             const star = document.createElement("div");
             star.className = "comet-container";
             star.innerHTML = `<div class="comet-tail"></div><div class="comet-head"></div><div class="comet-text">${releaseText}</div>`;
             if (starContainer) starContainer.appendChild(star);
- 
+
             let startX, startY, endX, endY;
             const edge = Math.floor(Math.random() * 4);
             const offset = 100;
@@ -2454,22 +2468,22 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
             else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
             else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
- 
+
             star.style.left = startX + "px";
             star.style.top = startY + "px";
- 
+
             const dx = endX - startX;
             const dy = endY - startY;
             const angleRad = Math.atan2(dy, dx);
             const angleDeg = (angleRad * (180 / Math.PI)) + 180;
             star.querySelector('.comet-tail').style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
- 
+
             const duration = 12000 + Math.random() * 4000;
             const anim = star.animate([
                 { transform: "translate(0px, 0px)" },
                 { transform: `translate(${dx}px, ${dy}px)` }
             ], { duration: duration, easing: "linear" });
- 
+
             let clicked = false;
             star.onclick = () => {
                 if (clicked) return;
@@ -2481,15 +2495,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     setTimeout(() => { star.remove(); setTimeout(spawnNextComet, 2000); }, 500);
                 }, 4000);
             };
- 
+
             anim.onfinish = () => {
                 if (!clicked) { star.remove(); setTimeout(spawnNextComet, 1000); }
             };
         } catch (e) { console.error(e); }
     }
- 
+
     setTimeout(spawnNextComet, 3000);
- 
+
     // =====================================================
     // CORRECCIÓN BUG #2: El satélite solo tiene UN listener
     // Se eliminó el bloque manual y se usa solo setupModal
@@ -2497,7 +2511,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // =====================================================
     const hologramPanel = document.getElementById("hologramPanel");
     const closeHologramBtn = document.querySelector(".close-hologram");
- 
+
     function openHologram() {
         hologramPanel.style.display = "flex";
         pauseUniverse();
@@ -2506,17 +2520,17 @@ document.addEventListener("DOMContentLoaded", () => {
         hologramPanel.style.display = "none";
         resumeUniverse();
     }
- 
+
     document.getElementById("btnSatelite").addEventListener("click", openHologram);
     closeHologramBtn.addEventListener("click", closeHologram);
- 
+
     window.addEventListener("click", (e) => {
         if (e.target === hologramPanel) closeHologram();
     });
- 
+
     const btnCerrarMovil = document.getElementById("btnCerrarHologramaMovil");
     if (btnCerrarMovil) btnCerrarMovil.addEventListener("click", closeHologram);
- 
+
     // MODALES DEL CENTRO DE ENERGÍA
     // CORRECCIÓN BUG #2: setupModal ya NO registra el satélite (se maneja arriba)
     const setupModal = (btnOpenId, modalId, closeClass) => {
@@ -2528,25 +2542,28 @@ document.addEventListener("DOMContentLoaded", () => {
             if (closeBtn) closeBtn.addEventListener("click", () => closeModal(modalEl));
         }
     };
- 
+
     setupModal("btnOpenCrypto", "cryptoModal", ".close-crypto");
     setupModal("btnOpenPropagar", "propagarModal", ".close-propagar");
     setupModal("btnOpenAmplificar", "amplificarModal", ".close-amplificar");
- 
+
     // BÓVEDA
     const btnIrABoveda = document.getElementById("btnIrABoveda");
     const propagarModal = document.getElementById("propagarModal");
     const protocoloModal = document.getElementById("protocoloModal");
     const closeProtocoloBtn = document.querySelector(".close-protocolo");
- 
+
     if (btnIrABoveda && protocoloModal && propagarModal) {
         btnIrABoveda.addEventListener("click", () => {
             closeModal(propagarModal);
             protocoloModal.style.display = "flex";
         });
-        closeProtocoloBtn.addEventListener("click", () => { protocoloModal.style.display = "none"; });
+        closeProtocoloBtn.addEventListener("click", () => {
+            protocoloModal.style.display = "none";
+            resumeUniverse(); // BUG 1 FIX: Descongela los planetas al cerrar la Bóveda
+        });
     }
- 
+
     // CARRUSEL QR
     const qrContainer = document.getElementById('qrContainer');
     const prevQr = document.getElementById('prevQr');
@@ -2555,12 +2572,12 @@ document.addEventListener("DOMContentLoaded", () => {
         prevQr.addEventListener('click', () => qrContainer.scrollBy({ left: -200, behavior: 'smooth' }));
         nextQr.addEventListener('click', () => qrContainer.scrollBy({ left: 200, behavior: 'smooth' }));
     }
- 
+
     // FORMULARIO BÓVEDA
     const formProtocolo = document.getElementById("formProtocolo");
     const btnEnviarForm = document.getElementById("btnEnviarForm");
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyazt2Sc1QS5zhBtdp65qUktkCSTN5rcDor7I01ndkyfG5u7ncSsVgiF55gZ5gRGPvI/exec";
- 
+
     if (formProtocolo) {
         formProtocolo.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -2583,7 +2600,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .catch(() => { btnEnviarForm.textContent = "ERROR AL CONECTAR"; });
         });
     }
- 
+
 }); // FIN DOMContentLoaded
 </script>
 </body>
