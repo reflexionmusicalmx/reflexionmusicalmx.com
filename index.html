@@ -12,11 +12,60 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
-<title>Reflexión Musical MX</title>
-<link rel="preload" as="image" href="images/REFLEXIÓN MUSICAL MX 1.webp" fetchpriority="high">
+
+<!-- SEO -->
+<title>Reflexión Musical MX | Versos que despiertan conciencia</title>
+<meta name="description" content="Reflexión Musical MX: música independiente mexicana. Versos que despiertan conciencia. Explora la discografía y escucha los sencillos y álbumes en plataformas digitales.">
+<link rel="canonical" href="https://reflexionmusicalmx.com/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="color-scheme" content="dark">
+
+<!-- Open Graph (WhatsApp / Facebook / Discord / LinkedIn) -->
+<meta property="og:locale" content="es_MX">
+<meta property="og:type" content="music.musician">
+<meta property="og:site_name" content="Reflexión Musical MX">
+<meta property="og:title" content="Reflexión Musical MX">
+<meta property="og:description" content="Versos que despiertan conciencia. Explora la discografía y escucha en plataformas digitales.">
+<meta property="og:url" content="https://reflexionmusicalmx.com/">
+<meta property="og:image" content="https://reflexionmusicalmx.com/images/og-reflexion-musical-mx.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter / X Cards -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reflexión Musical MX">
+<meta name="twitter:description" content="Versos que despiertan conciencia. Música independiente mexicana.">
+<meta name="twitter:image" content="https://reflexionmusicalmx.com/images/og-reflexion-musical-mx.jpg">
+<meta name="twitter:site" content="@RMusicalMX">
+
+<!-- Schema.org MusicGroup (Google) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": "Reflexión Musical MX",
+  "url": "https://reflexionmusicalmx.com/",
+  "description": "Versos que despiertan conciencia. Música independiente mexicana.",
+  "sameAs": [
+    "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c",
+    "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478",
+    "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx",
+    "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw",
+    "https://www.tiktok.com/@reflexionmusicalmx",
+    "https://www.youtube.com/@ReflexionMusicalMX",
+    "https://www.facebook.com/reflexionmusicalmx",
+    "https://www.instagram.com/reflexionmusicalmx",
+    "https://x.com/RMusicalMX",
+    "https://www.threads.com/@reflexionmusicalmx",
+    "https://soundcloud.com/reflexionmusicalmx",
+    "https://audiomack.com/reflexionmusicalmx"
+  ]
+}
+</script>
+
+<link rel="preload" as="image" href="images/reflexion-musical-mx-1.webp" fetchpriority="high">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFD700">
+<meta name="theme-color" content="#070A12">
 <link rel="apple-touch-icon" href="images/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,8 +85,6 @@ html, body {
     overflow: hidden;
     text-align: center;
     overscroll-behavior: none;
-    /* CORRECCIÓN BUG #6: touch-action:none bloqueaba scroll en modales móvil.
-       Se quitó de body y se aplica solo donde se necesita vía JS. */
 }
 
 /* CAJA DE CRISTAL PARA COMETAS Y SUPERNOVAS */
@@ -65,8 +112,6 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* CORRECCIÓN BUG #1: La transición de opacidad ahora funciona porque
-       el loader siempre tiene display:flex y se anima opacity. */
     transition: opacity 0.8s ease;
     will-change: opacity;
 }
@@ -96,7 +141,7 @@ html, body {
     pointer-events: none;
 }
 
-/* SISTEMA SOLAR (GPU ACCELERATED) */
+/* SISTEMA SOLAR */
 #solarSystem {
     position: absolute;
     top: 0;
@@ -137,15 +182,9 @@ html, body {
     100% { filter: drop-shadow(0 0 15px gold); }
 }
 
-/* =====================================================
-   CORRECCIÓN BUG #1: SISTEMA DE MODALES CORREGIDO
-   Antes: display:none → display:flex causaba que la
-   transición de opacidad nunca se ejecutara.
-   Ahora: siempre display:flex, se controla con
-   visibility + opacity para que el fade-in funcione.
-   ===================================================== */
+/* MODALES */
 .modal {
-    display: flex; /* Siempre flex, nunca none */
+    display: flex;
     position: fixed;
     z-index: 100000;
     left: 0;
@@ -155,20 +194,19 @@ html, body {
     background-color: rgba(0,0,0,0.85);
     backdrop-filter: blur(5px);
     opacity: 0;
-    visibility: hidden; /* En vez de display:none */
+    visibility: hidden;
     transition: opacity 0.4s ease, visibility 0.4s ease;
     align-items: center;
     justify-content: center;
     transform: translateZ(0);
-    /* CORRECCIÓN BUG #6: touch-action auto para permitir scroll en modales */
     touch-action: auto;
-    pointer-events: none; /* Bloquea interacción cuando invisible */
+    pointer-events: none;
 }
 
 .modal.show {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto; /* Reactiva interacción al mostrar */
+    pointer-events: auto;
 }
 
 .modal-content {
@@ -182,7 +220,6 @@ html, body {
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
-    /* CORRECCIÓN BUG #6: touch-action auto en el contenido del modal */
     touch-action: auto;
     text-align: left;
     position: relative;
@@ -227,7 +264,7 @@ html, body {
     transform: scale(1.1);
 }
 
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
+/* MODAL DE ÁLBUMES */
 .album-modal-content {
     text-align: center;
     max-width: 500px;
@@ -242,7 +279,7 @@ html, body {
     text-transform: uppercase;
 }
 
-/* REPRODUCTOR PERSONALIZADO Y BOTONERA */
+/* REPRODUCTOR */
 #customPlayerBox {
     display: none;
     flex-direction: column;
@@ -350,7 +387,6 @@ html, body {
     border-radius: 10px;
     padding: 10px 15px;
     border: 1px solid rgba(255,215,0,0.2);
-    /* CORRECCIÓN BUG #6: touch-action auto para scroll en móvil */
     touch-action: auto;
 }
 
@@ -631,7 +667,7 @@ html, body {
     position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity;
 }
 
-/* REDES LATERALES GLOBALES */
+/* REDES LATERALES */
 .floating-social, .floating-platforms {
     position: absolute;
     top: 50%;
@@ -665,7 +701,7 @@ html, body {
 .floating-social a:hover, .floating-platforms a:hover { background: #FFD700; transform: scale(1.2); }
 .floating-social a:hover svg, .floating-platforms a:hover svg { fill: #000; }
 
-/* COMETAS Y SUPERNOVAS ESTÉTICAS */
+/* COMETAS */
 .comet-container {
     position: absolute;
     display: flex;
@@ -793,7 +829,7 @@ html, body {
     bottom: -35px !important;
 }
 
-/* RESPONSIVIDAD: EN MÓVILES BARRAS PASAN A ARRIBA Y ABAJO */
+/* RESPONSIVIDAD MÓVIL */
 @media (max-width: 768px) {
     #solarSystem { transform: scale(0.45); }
 
@@ -817,7 +853,7 @@ html, body {
     .close-modal { right: 15px; top: 10px; }
 }
 
-/* ÓRBITA Y ESTILO DE LA NAVE ESPACIAL */
+/* NAVE ESPACIAL */
 .orbit-ship {
     width: 570px;
     height: 570px;
@@ -895,12 +931,10 @@ html, body {
     height: 12px;
     background: #ffffff;
     border-radius: 50%;
-    box-shadow:
-        0 0 15px 5px #ffffff,
-        0 0 35px 15px #FFD700;
+    box-shadow: 0 0 15px 5px #ffffff, 0 0 35px 15px #FFD700;
 }
 
-/* VENTANA DEL BUZÓN */
+/* BUZÓN */
 #reflectionModal {
     background-color: transparent !important;
     backdrop-filter: none !important;
@@ -1050,7 +1084,6 @@ html, body {
     max-height: 85vh !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    /* CORRECCIÓN BUG #6: touch-action auto para scroll en móvil */
     touch-action: auto;
     padding-bottom: 30px !important;
 }
@@ -1358,1250 +1391,860 @@ html, body {
     stroke: #FFD700 !important;
     stroke-width: 1.5 !important;
 }
+
+/* =====================================================
+   MEJORAS VISUALES FUTURISTAS (HUD + SCANLINES + GLOW)
+   ===================================================== */
+:root{
+    --rm-gold:#FFD700;
+    --rm-cyan:rgba(120,255,226,0.85);
+    --rm-violet:rgba(124,92,255,0.75);
+}
+
+/* Overlay futurista sutil */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background:
+        radial-gradient(1200px 700px at 20% 20%, rgba(120,255,226,0.08), transparent 55%),
+        radial-gradient(900px 600px at 80% 30%, rgba(124,92,255,0.06), transparent 55%),
+        radial-gradient(700px 500px at 50% 80%, rgba(255,215,0,0.05), transparent 60%);
+    mix-blend-mode: screen;
+    opacity: 0.9;
+}
+
+/* Scanlines ultra suaves */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.025) 0px,
+        rgba(255,255,255,0.0) 2px,
+        rgba(0,0,0,0.0) 6px
+    );
+    opacity: 0.12;
+}
+
+/* Universo por encima del overlay */
+#bg, #starContainer, #solarSystem, .floating-social, .floating-platforms, .modal, #loader{
+    position: relative;
+    z-index: 1;
+}
+
+/* Glow extra al sol */
+#sun{
+    filter: drop-shadow(0 0 22px rgba(255,215,0,0.6));
+}
+#sun::before{
+    content:"";
+    position:absolute;
+    inset:-18px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(120,255,226,0.18), transparent 60%);
+    opacity: 0.65;
+    pointer-events:none;
+}
+
+/* HUD Hint */
+.rm-hint{
+    position: fixed;
+    left: 50%;
+    top: 14px;
+    transform: translateX(-50%);
+    z-index: 99999;
+    max-width: min(720px, calc(100vw - 28px));
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: radial-gradient(120% 180% at 10% 0%,
+        rgba(120,255,226,0.10) 0%,
+        rgba(124,92,255,0.08) 45%,
+        rgba(0,0,0,0.78) 100%);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: rgba(255,255,255,0.92);
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    box-shadow:
+        0 0 0 1px rgba(120,255,226,0.06) inset,
+        0 14px 40px rgba(0,0,0,0.35);
+    transition: opacity 400ms ease;
+}
+
+.rm-hint strong{
+    color: var(--rm-gold);
+    text-shadow: 0 0 10px rgba(255,215,0,0.25);
+}
+
+@media (prefers-reduced-motion: reduce){
+    body::before, body::after{ opacity: 0.06; }
+}
 </style>
 </head>
 <body>
 
-<div id="loader">
-    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high" id="loaderImg">
-    <p>INICIANDO UNIVERSO...</p>
+<!-- HINT HUD -->
+<div class="rm-hint" id="rmHint">
+  🌌 <strong>Gira el sistema solar</strong> · Haz clic en los discos para escuchar · Toca las estrellas fugaces para descubrir secretos
 </div>
 
-<audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
+<!-- LOADER -->
+<div id="loader">
+    <img src="images/reflexion-musical-mx-1.webp" alt="Reflexión Musical MX">
+    <p>CARGANDO UNIVERSO...</p>
+</div>
 
-<div id="bioModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content">
-        <span class="close-modal close-bio" aria-label="Cerrar biografía" role="button" tabindex="0">×</span>
-        <h2>Reflexión Musical MX</h2>
-        <p>Reflexión Musical MX nace de una idea simple pero poderosa: la música también puede hacer pensar.</p>
-        <p>En un mundo lleno de ruido, este proyecto utiliza canciones para hablar de lo que muchas veces se evita: la pérdida de valores, los conflictos sociales, la violencia, la desigualdad y las decisiones que están moldeando el futuro de la humanidad.</p>
-        <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
-        <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
-        <p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
+<!-- FONDO CANVAS -->
+<canvas id="bg"></canvas>
 
-        <div class="audio-controls">
-            <span id="muteBtn" aria-label="Silenciar o activar audio" role="button" tabindex="0">🔊</span>
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
-            <span class="vol-label">VOL</span>
+<!-- CONTENEDOR DE COMETAS Y SUPERNOVAS -->
+<div id="starContainer"></div>
+
+<!-- SISTEMA SOLAR PRINCIPAL -->
+<div id="solarSystem">
+
+    <!-- ÓRBITA SENCILLOS -->
+    <div class="orbit" id="orbitSingles">
+        <!-- Los planetas/sencillos se inyectan por JS -->
+    </div>
+
+    <!-- ÓRBITA ÁLBUMES -->
+    <div class="orbit" id="orbitAlbums">
+        <!-- Los planetas/álbumes se inyectan por JS -->
+    </div>
+
+    <!-- NAVE ESPACIAL EN ÓRBITA -->
+    <div class="orbit orbit-ship" id="orbitShip">
+        <div class="ship-wrapper">
+            <button class="floating-tu-voz" id="btnShip" title="Tu Voz">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="32,4 60,56 32,44 4,56" stroke-linejoin="round" stroke-linecap="round"/>
+                </svg>
+            </button>
         </div>
+    </div>
 
-        <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
-        <p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
-            Próximamente: "Algo está mal" (Libro)
-        </p>
+    <!-- SATÉLITE EN ÓRBITA -->
+    <button id="btnSatelite" title="Apóyanos">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <rect x="28" y="28" width="8" height="8" rx="2"/>
+            <line x1="32" y1="8" x2="32" y2="20"/>
+            <line x1="32" y1="44" x2="32" y2="56"/>
+            <line x1="8" y1="32" x2="20" y2="32"/>
+            <line x1="44" y1="32" x2="56" y2="32"/>
+            <rect x="4" y="28" width="16" height="8" rx="2"/>
+            <rect x="44" y="28" width="16" height="8" rx="2"/>
+            <line x1="20" y1="32" x2="28" y2="32"/>
+            <line x1="36" y1="32" x2="44" y2="32"/>
+        </svg>
+    </button>
+
+    <!-- SOL / LOGO -->
+    <div id="sun">
+        <img src="images/reflexion-musical-mx-1.webp" alt="Reflexión Musical MX Logo">
+    </div>
+
+</div><!-- fin #solarSystem -->
+
+<!-- REDES SOCIALES IZQUIERDA -->
+<div class="floating-social">
+    <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.5 6.19a3 3 0 00-2.12-2.12C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.57A3 3 0 00.5 6.19 31.3 31.3 0 000 12a31.3 31.3 0 00.5 5.81 3 3 0 002.12 2.12C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.57a3 3 0 002.12-2.12A31.3 31.3 0 0024 12a31.3 31.3 0 00-.5-5.81zM9.75 15.5v-7l6.5 3.5-6.5 3.5z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.27h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://x.com/RMusicalMX" target="_blank" rel="noopener" title="X / Twitter" aria-label="X">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" rel="noopener" title="Threads" aria-label="Threads">
+        <svg viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068c0-3.516.85-6.37 2.495-8.423C5.845 1.341 8.598.16 12.18.136h.014c2.746.018 5.143.806 6.928 2.281 1.625 1.352 2.668 3.186 3.102 5.465l-2.57.505c-.338-1.755-1.134-3.154-2.368-4.16-1.35-1.1-3.181-1.67-5.1-1.683-2.906.019-5.15.913-6.668 2.658C4.06 6.944 3.5 9.3 3.5 12.068c0 2.77.56 5.124 1.618 6.866 1.518 1.745 3.762 2.639 6.668 2.658 1.919-.013 3.75-.583 5.1-1.683 1.234-1.006 2.03-2.405 2.368-4.16l2.57.505c-.434 2.279-1.477 4.113-3.102 5.465-1.785 1.475-4.182 2.263-6.928 2.281h-.008zM12 6.5c-3.033 0-5.5 2.467-5.5 5.5s2.467 5.5 5.5 5.5 5.5-2.467 5.5-5.5S15.033 6.5 12 6.5zm0 9c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+    </a>
+</div>
+
+<!-- PLATAFORMAS DERECHA -->
+<div class="floating-platforms">
+    <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" rel="noopener" title="Spotify" aria-label="Spotify">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+    </a>
+    <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" rel="noopener" title="Apple Music" aria-label="Apple Music">
+        <svg viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026C4.786.07 4.043.15 3.34.428 2.004.958 1.04 1.88.475 3.208A7.37 7.37 0 00.09 5.08c-.02.27-.028.54-.028.81v12.22c0 .27.008.54.028.81.04.56.14 1.11.32 1.64.46 1.37 1.42 2.34 2.79 2.84.56.2 1.14.3 1.73.33.27.02.54.03.81.03h12.22c.27 0 .54-.01.81-.03.59-.03 1.17-.13 1.73-.33 1.37-.5 2.33-1.47 2.79-2.84.18-.53.28-1.08.32-1.64.02-.27.03-.54.03-.81V6.89c0-.26-.01-.51-.02-.77zm-6.9 3.99l-5.5 3.17a.5.5 0 01-.75-.43V7.14a.5.5 0 01.75-.43l5.5 3.17a.5.5 0 010 .86z"/></svg>
+    </a>
+    <a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" rel="noopener" title="Amazon Music" aria-label="Amazon Music">
+        <svg viewBox="0 0 24 24"><path d="M13.958 10.09c0 1.232.029 2.256-.591 3.351-.502.891-1.301 1.438-2.186 1.438-1.214 0-1.922-.924-1.922-2.292 0-2.692 2.415-3.182 4.7-3.182v.685zm3.186 7.705a.66.66 0 01-.76.074c-1.067-.886-1.258-1.298-1.844-2.144-1.763 1.799-3.012 2.338-5.3 2.338-2.706 0-4.814-1.671-4.814-5.015 0-2.612 1.416-4.391 3.435-5.261 1.748-.77 4.189-.907 6.053-1.118v-.417c0-.768.06-1.676-.391-2.338-.393-.594-1.148-.839-1.813-.839-1.232 0-2.33.632-2.6 1.94-.055.29-.269.574-.558.589l-3.117-.337c-.262-.059-.552-.271-.477-.673C5.93 1.862 8.952.5 11.67.5c1.39 0 3.208.37 4.307 1.421C17.28 3.094 17.14 5.1 17.14 7.28v5.567c0 1.674.694 2.41 1.348 3.315.23.322.28.707-.014.946-.73.61-2.03 1.744-2.744 2.38l-.586-.693zm3.606 1.77c-2.953 1.83-7.237 2.804-10.924 2.804-5.168 0-9.823-1.91-13.34-5.088-.277-.25-.03-.591.303-.397 3.799 2.21 8.497 3.542 13.348 3.542 3.271 0 6.867-.678 10.178-2.083.499-.213.917.328.435.622zm1.24-1.412c-.377-.484-2.494-.229-3.447-.115-.29.035-.334-.218-.073-.401 1.688-1.188 4.459-.845 4.782-.447.324.4-.085 3.17-1.67 4.493-.243.205-.475.096-.367-.174.357-.89 1.152-2.878.775-3.356z"/></svg>
+    </a>
+    <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" rel="noopener" title="YouTube Music" aria-label="YouTube Music">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg>
+    </a>
+    <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" rel="noopener" title="SoundCloud" aria-label="SoundCloud">
+        <svg viewBox="0 0 24 24"><path d="M1.175 12.225c-.015 0-.03.002-.044.003.002-.016.003-.032.003-.048 0-.96.78-1.74 1.74-1.74.16 0 .314.022.46.063.15-1.55 1.45-2.76 3.03-2.76.42 0 .82.085 1.18.24V17.4H1.175v-5.175zm21.65 2.055c0 1.59-1.29 2.88-2.88 2.88H7.59V9.9c.6-.39 1.31-.615 2.07-.615 1.98 0 3.6 1.53 3.72 3.48.24-.09.495-.135.765-.135 1.2 0 2.175.975 2.175 2.175 0 .045-.003.09-.006.135.12-.015.24-.03.36-.03 1.59 0 2.88 1.29 2.88 2.88l.021-.51z"/></svg>
+    </a>
+    <a href="https://audiomack.com/reflexion-musical-mx" target="_blank" rel="noopener" title="Audiomack" aria-label="Audiomack">
+        <svg viewBox="0 0 24 24"><path d="M23.997 12.28c0 6.476-5.248 11.724-11.724 11.724S.549 18.756.549 12.28C.549 5.804 5.797.556 12.273.556S23.997 5.804 23.997 12.28zm-7.741-4.458l-1.835 1.835-1.835-1.835-1.835 1.835L8.916 7.822 7.081 9.657v4.458l1.835 1.835 1.835-1.835 1.835 1.835 1.835-1.835 1.835 1.835 1.835-1.835V9.657l-1.835-1.835z"/></svg>
+    </a>
+</div>
+
+<!-- ===================== MODALES ===================== -->
+
+<!-- MODAL BIO -->
+<div id="bioModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="bioTitle">
+    <div class="modal-content">
+        <span class="close-modal" data-modal="bioModal" aria-label="Cerrar">&times;</span>
+        <h2 id="bioTitle">🌌 Reflexión Musical MX</h2>
+        <p><strong>Reflexión Musical MX</strong> es un proyecto de música independiente nacido en México, donde cada verso es un espejo de la realidad social, política y humana que vivimos.</p>
+        <p>Nuestra música no busca entretener sin propósito: busca <strong>despertar conciencias</strong>, cuestionar lo establecido y dar voz a quienes el sistema prefiere en silencio.</p>
+        <p>Desde corridos reflexivos hasta baladas con mensaje, pasando por géneros que rompen fronteras, Reflexión Musical MX construye un universo sonoro donde la verdad es el único idioma.</p>
+        <p><em>"La música es el arma más poderosa cuando las palabras dicen la verdad."</em></p>
+        <div class="audio-controls" id="bioAudioControls" style="display:none;">
+            <span id="bioPlayBtn" title="Reproducir/Pausar">▶️</span>
+            <span class="vol-label">VOL</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+            <span id="bioMuteBtn" title="Silenciar">🔊</span>
+        </div>
     </div>
 </div>
 
-<div id="albumModal" class="modal" role="dialog" aria-modal="true">
+<!-- MODAL ÁLBUM -->
+<div id="albumModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalAlbumTitle">
     <div class="modal-content album-modal-content">
-        <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
-        <h2 id="modalAlbumTitle">Título del Álbum</h2>
+        <span class="close-modal" data-modal="albumModal" aria-label="Cerrar">&times;</span>
+        <img id="modalAlbumCover" src="" alt="Portada del álbum" style="width:160px;height:160px;object-fit:cover;border-radius:12px;border:2px solid gold;margin-bottom:10px;">
+        <h2 id="modalAlbumTitle"></h2>
         <div id="customPlayerBox">
-            <div id="playerIframeContainer"></div>
+            <div id="playerIframeContainer">
+                <img class="sc-cover-overlay" id="scCoverOverlay" src="" alt="cover">
+                <iframe id="sc-iframe" allow="autoplay" src=""></iframe>
+            </div>
             <div class="custom-player-controls">
                 <div class="player-core-btns">
                     <span class="ctrl-btn" id="btnPrev" title="Anterior">
-                        <svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
                     </span>
-                    <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"></span>
+                    <span class="ctrl-btn" id="btnPlayPause" title="Play/Pause">
+                        <svg id="iconPlay" width="28" height="28" viewBox="0 0 24 24" fill="#FFD700"><path d="M8 5v14l11-7z"/></svg>
+                        <svg id="iconPause" width="28" height="28" viewBox="0 0 24 24" fill="#FFD700" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                    </span>
                     <span class="ctrl-btn" id="btnNext" title="Siguiente">
-                        <svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zm2-8.14 5.5 3.89L8 15.14V9.86zM16 6h2v12h-2z"/></svg>
                     </span>
                 </div>
                 <div class="player-volume-wrapper">
-                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                    <input type="range" id="playerVolSlider" min="0" max="100" value="100" title="Volumen">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    <input type="range" id="playerVolSlider" min="0" max="100" value="80">
                 </div>
             </div>
-            <div id="nowPlayingLyrics" style="display: none; max-height: 180px; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 15px; border-top: 1px solid rgba(255,215,0,0.2); font-size: 13px; color: #FFD700; white-space: pre-wrap; text-align: center; line-height: 1.6;"></div>
         </div>
-
-        <div class="tracklist-container" id="modalTracklist"></div>
-        <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
-        <div class="album-platforms" id="modalPlatforms"></div>
-        <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
+        <div class="tracklist-container" id="tracklistContainer"></div>
+        <div class="album-platforms" id="albumPlatforms"></div>
+        <button class="btn-volver" id="btnVolverAlbum">← Volver al universo</button>
     </div>
 </div>
 
-<!-- MODAL DE LETRAS -->
-<div id="lyricsModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content">
-        <span class="close-modal close-lyrics" aria-label="Cerrar letra" role="button" tabindex="0">×</span>
-        <h2 id="lyricsTitle" style="text-align: center; font-size: 22px; color: #FFD700; margin-bottom: 20px;">Título</h2>
-        <div id="lyricsText" style="white-space: pre-wrap; text-align: center; color: #FFD700; font-size: 15px; line-height: 1.8; font-family: 'Merriweather', serif;"></div>
-    </div>
-</div>
-
-<canvas id="bg" aria-hidden="true"></canvas>
-<div id="starContainer" aria-hidden="true"></div>
-
-<!-- REDES SOCIALES -->
-<div class="floating-social">
-    <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
-        <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
-    </a>
-    <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar TikTok">
-        <svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
-    </a>
-    <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Facebook">
-        <svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg>
-    </a>
-    <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Instagram">
-        <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
-    </a>
-    <a href="https://x.com/RMusicalMX" target="_blank" aria-label="Visitar X (Twitter)">
-        <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-    </a>
-    <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
-        <svg role="img" viewBox="0 0 24 24"><path d="M12.186 24h-0.007c-3.581 -0.024 -6.334 -1.205 -8.184 -3.509C2.35 18.44 1.5 15.586 1.472 12.01v-0.017c0.03 -3.579 0.879 -6.43 2.525 -8.482C5.845 1.205 8.6 0.024 12.18 0h0.014c2.746 0.02 5.043 0.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04 0.569c-1.104 -3.96 -3.898 -5.984 -8.304 -6.015 -2.91 0.022 -5.11 0.936 -6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c0.027 3.086 0.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623 -0.02 4.358 -0.631 5.8 -2.045 1.647 -1.613 1.618 -3.593 1.09 -4.798 -0.31 -0.71 -0.873 -1.3 -1.634 -1.75 -0.192 1.352 -0.622 2.446 -1.284 3.272 -0.886 1.102 -2.14 1.704 -3.73 1.79 -1.202 0.065 -2.361 -0.218 -3.259 -0.801 -1.063 -0.689 -1.685 -1.74 -1.752 -2.964 -0.065 -1.19 0.408 -2.285 1.33 -3.082 0.88 -0.76 2.119 -1.207 3.583 -1.291a13.853 13.853 0 0 1 3.02 0.142c-0.126 -0.742 -0.375 -1.332 -0.75 -1.757 -0.513 -0.586 -1.308 -0.883 -2.359 -0.89h-0.029c-0.844 0 -1.992 0.232 -2.721 1.32l-1.757 -1.18c0.98 -1.454 2.568 -2.256 4.478 -2.256h0.044c3.194 0.02 5.097 1.975 5.287 5.388 0.108 0.046 0.216 0.094 0.321 0.142 1.49 0.7 2.58 1.761 3.154 3.07 0.797 1.82 0.871 4.79 -1.548 7.158 -1.85 1.81 -4.094 2.628 -7.277 2.65Zm1.003 -11.69c-0.242 0 -0.487 0.007 -0.739 0.021 -1.836 0.103 -2.98 0.946 -2.916 2.143 0.067 1.256 1.452 1.839 2.784 1.767 1.224 -0.065 2.818 -0.543 3.086 -3.71a10.5 10.5 0 0 0 -2.215 -0.221z"/></svg>
-    </a>
-    <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud">
-        <svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>
-    </a>
-    <a href="https://audiomack.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Audiomack">
-        <svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>
-    </a>
-</div>
-<div class="floating-platforms">
-    <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" aria-label="Escuchar en Spotify">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>
-    </a>
-    <a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" aria-label="Escuchar en Amazon Music">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/><path d="M13.828 11.943c0.567 -0.07 1.468 -0.027 1.645 0.204 0.135 0.176 -0.004 0.966 -0.233 1.533 -0.23 0.563 -0.572 0.961 -0.762 1.115s-0.333 0.094 -0.23 -0.137c0.105 -0.23 0.684 -1.663 0.455 -1.963 -0.213 -0.278 -1.177 -0.177 -1.625 -0.13l-0.09 0.009q-0.142 0.013 -0.233 0.024c-0.193 0.021 -0.245 0.027 -0.274 -0.032 -0.074 -0.209 0.779 -0.556 1.347 -0.623"/></svg>
-    </a>
-    <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Escuchar en Apple Music">
-        <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-    </a>
-    <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="Escuchar en YouTube Music">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-    </a>
-    <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="Escuchar en SoundCloud">
-        <svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>
-    </a>
-    <a href="https://audiomack.com/reflexion-musical-mx" target="_blank" aria-label="Visitar Audiomack">
-        <svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>
-    </a>
-</div>
-
-<div id="solarSystem">
-    <div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
-        <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
-    </div>
-    <div id="orbitSingles" class="orbit"></div>
-    <div id="orbitAlbums" class="orbit"></div>
-    <div id="orbitShip" class="orbit orbit-ship">
-        <div class="ship-wrapper">
-            <div id="btnTuVoz" class="floating-tu-voz" aria-label="Buzón de Reflexión" role="button" tabindex="0" title="Enviar Reflexión">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
-                    <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
-                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
-                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
-                </svg>
-            </div>
-        </div>
-    </div>
-
-    <div id="btnSatelite" class="satelite-wrapper" title="Centro de Energía">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 6a4 4 0 0 1 8 0H8z" fill="rgba(255, 215, 0, 0.4)" />
-            <line x1="12" y1="2" x2="12" y2="6" />
-            <circle cx="12" cy="2" r="1.5" fill="#FFD700" />
-            <rect x="9" y="6" width="6" height="10" rx="1" fill="#FFD700" />
-            <rect x="2" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
-            <line x1="6" y1="11" x2="9" y2="11" stroke="#000" />
-            <rect x="18" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
-            <line x1="15" y1="11" x2="18" y2="11" stroke="#000" />
-            <path d="M10 16v2l-1.5 2.5h7L14 18v-2" fill="#FFD700" />
-        </svg>
-    </div>
-</div>
-
-<!-- PANEL HOLOGRÁFICO -->
-<div id="hologramPanel" class="hologram-modal">
-    <div class="hologram-content">
-        <button class="close-hologram">&times;</button>
-        <div class="hologram-header">
-            <h2>CENTRO DE ENERGÍA</h2>
-            <p>Súmate a la misión de Reflexión Musical MX</p>
-        </div>
-        <div class="support-grid">
-            <div class="support-card">
-                <div class="card-icon">⚡</div>
-                <h3>FINANCIAR LA SONDA</h3>
-                <p>Aportaciones directas para mantener la producción independiente.</p>
-                <button class="holo-btn" id="btnOpenCrypto">VER COORDENADAS</button>
-            </div>
-            <div class="support-card">
-                <div class="card-icon">📡</div>
-                <h3>PROPAGAR LA SEÑAL</h3>
-                <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
-                <button class="holo-btn" id="btnOpenPropagar">VER INSTRUCCIONES</button>
-            </div>
-            <div class="support-card">
-                <div class="card-icon">🎶</div>
-                <h3>AMPLIFICAR FRECUENCIA</h3>
-                <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
-                <button class="holo-btn" id="btnOpenAmplificar">IR A PLATAFORMAS</button>
-            </div>
-        </div>
-        <button id="btnCerrarHologramaMovil" class="btn-volver" style="margin-top: 25px; width: 100%; box-sizing: border-box;">VOLVER AL UNIVERSO</button>
-    </div>
-</div>
-
-<!-- MODAL DEL BUZÓN -->
+<!-- MODAL TU VOZ (BUZÓN) -->
 <div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content reflection-content">
-        <span class="close-modal close-reflection" aria-label="Cerrar buzón" role="button" tabindex="0">×</span>
-        <h2 style="text-align: center; font-size: 20px; border-bottom: none; margin-bottom: 5px;">CONEXIÓN SEGURA</h2>
-        <p id="buzonSubtitle" style="text-align: center; font-size: 13px; opacity: 0.9;">El universo se ha detenido para escucharte. Escribe tu mensaje y cárgalo en la sonda.</p>
-
-        <form id="reflectionForm" action="https://script.google.com/macros/s/AKfycbw-iMGBj0r8nZbhZPfwniPA1KzOC_elObAC5kN14EFeUaK0Dx7ZzD2bCOJcYw_o3xWhHQ/exec" method="POST">
-            <textarea name="mensaje" id="reflectionMsg" rows="5" placeholder="Escribe tu reflexión aquí..." required></textarea>
-            <!-- CORRECCIÓN BUG #5: El honeypot debe validarse en el servidor (Google Apps Script).
-                 Agrega al inicio de tu doPost(e): if(e.parameter.miel_trampa) return; -->
-            <input type="text" name="miel_trampa" style="display:none" tabindex="-1" autocomplete="off">
-            <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top: 15px; width: 100%; box-sizing: border-box;">CARGAR MENSAJE EN NAVE</button>
+    <div class="modal-content reflection-content" id="reflectionBox">
+        <span class="close-reflection" id="closeReflection" aria-label="Cerrar">&times;</span>
+        <h2 style="color:#FFD700;margin-top:0;font-size:20px;">✉️ Tu Voz</h2>
+        <p style="font-size:13px;color:#aaa;margin-bottom:10px;">¿Qué te mueve? ¿Qué quieres que cantemos? Tu reflexión puede ser la próxima canción.</p>
+        <form id="reflectionForm">
+            <textarea id="reflectionMsg" rows="4" maxlength="500" placeholder="Escribe tu reflexión aquí..."></textarea>
+            <button type="submit" class="holo-btn submit-btn" style="margin-top:12px;">🚀 Enviar Reflexión</button>
         </form>
-
-        <div id="cooldownStatus" style="display: none; text-align: center; margin-top: 15px;">
-            <p style="color: #ff4d4d; font-weight: bold; font-size: 14px; margin-bottom: 5px;">SISTEMA EN ENFRIAMIENTO</p>
-            <p style="font-size: 13px; opacity: 0.9;">La sonda necesita recargar energía tras tu último envío. Por favor, intenta de nuevo mañana.</p>
-        </div>
-
-        <div id="reflectionStatus" style="display: none; text-align: center; margin-top: 15px;">
-            <p style="color: #FFD700; font-weight: bold; font-size: 14px; margin-bottom: 15px;">¡Mensaje cargado en la sonda!</p>
-            <button id="btnSendToSun" class="btn-volver" style="background: #FFD700; color: #000;">CERRAR Y ENVIAR AL SOL</button>
-        </div>
     </div>
 </div>
 
-<!-- MODAL COORDENADAS WEB3 -->
-<div id="cryptoModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" style="text-align: center; max-width: 400px;">
-        <span class="close-modal close-crypto">×</span>
-        <h2 style="font-size: 22px;">COORDENADAS WEB3</h2>
-        <div class="qr-carousel-wrapper" style="margin-top: 20px;">
-            <button class="qr-nav-btn" id="prevQr" style="font-size: 30px;">&#10094;</button>
-            <div class="qr-container" id="qrContainer" style="width: 200px;">
-                <div class="qr-box"><img src="images/qr-btc.png" alt="QR Bitcoin" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">BITCOIN (BTC)</span><span class="net-badge">Red: Bitcoin</span></div>
-                <div class="qr-box"><img src="images/qr-usdt-trc20.png" alt="QR USDT TRC20" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">USDT</span><span class="net-badge">Red: TRC20</span></div>
-                <div class="qr-box"><img src="images/qr-usdt-bep20.png" alt="QR USDT BEP20" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">USDT</span><span class="net-badge">Red: BEP20</span></div>
-                <div class="qr-box"><img src="images/qr-xrp.png" alt="QR Ripple" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">RIPPLE (XRP)</span><span class="net-badge">Red: Ripple</span></div>
-                <div class="qr-box"><img src="images/qr-ltc.png" alt="QR Litecoin" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">LITECOIN (LTC)</span><span class="net-badge">Red: Litecoin</span></div>
-                <div class="qr-box"><img src="images/qr-sol.png" alt="QR Solana" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">SOLANA (SOL)</span><span class="net-badge">Red: Solana</span></div>
-            </div>
-            <button class="qr-nav-btn" id="nextQr" style="font-size: 30px;">&#10095;</button>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL INSTRUCCIONES -->
-<div id="propagarModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" style="text-align: center; max-width: 500px;">
-        <span class="close-modal close-propagar">×</span>
-        <h2 style="font-size: 22px;">PROTOCOLOS DE ACCESO</h2>
-        <p style="font-size: 16px; color: #FFD700; line-height: 1.8; margin-bottom: 25px;">
-            Nuestros audios, vocales y logotipos están resguardados en una bóveda digital. Para obtener la llave, necesitamos conocer tu frecuencia y confirmar que resuenas con el proyecto.
-        </p>
-        <button class="btn-volver" id="btnIrABoveda" style="background: rgba(255, 215, 0, 0.1); font-size: 15px; padding: 15px;">LEER REGLAS Y APLICAR</button>
-    </div>
-</div>
-
-<!-- MODAL AMPLIFICAR -->
-<div id="amplificarModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" style="text-align: center; max-width: 600px;">
-        <span class="close-modal close-amplificar">×</span>
-        <h2 style="font-size: 22px;">EXPANDE LA SEÑAL</h2>
-        <div style="font-size: 14px; color: #ccc; line-height: 1.6; text-align: left; margin-bottom: 25px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
-            <p style="margin-bottom: 10px;">Cada acción tuya es el motor orgánico de esta nave. Ayúdanos a llevar el mensaje más lejos:</p>
-            <ul style="padding-left: 20px; margin: 0;">
-                <li style="margin-bottom: 5px;">🎧 <b>Integra:</b> Guarda nuestros tracks y arma playlists.</li>
-                <li style="margin-bottom: 5px;">🔄 <b>Transmite:</b> Comparte el enlace de la nave con otros.</li>
-                <li>💬 <b>Interactúa:</b> Suscríbete, deja tu 'Me gusta' y comenta.</li>
-            </ul>
-        </div>
-        <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Escucha el Catálogo Oficial</h3>
-        <div class="album-platforms" style="margin-bottom: 30px; gap: 20px;">
-            <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" aria-label="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg></a>
-            <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Apple Music"><svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></a>
-            <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="YouTube Music"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
-            <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="SoundCloud"><svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /></svg></a>
-        </div>
-        <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Únete a la Comunidad</h3>
-        <div class="album-platforms" style="flex-wrap: wrap; gap: 15px;">
-            <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="YouTube"><svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg></a>
-            <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="TikTok"><svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg></a>
-            <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Instagram"><svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
-            <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Facebook"><svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
-            <a href="https://x.com/RMusicalMX" target="_blank" aria-label="X"><svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL BÓVEDA -->
-<div id="protocoloModal" class="hologram-modal">
-    <div class="hologram-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
-        <button class="close-protocolo">&times;</button>
+<!-- PANEL HOLOGRÁFICO (SATÉLITE / APÓYANOS) -->
+<div class="hologram-modal" id="hologramModal" role="dialog" aria-modal="true">
+    <div class="hologram-content">
+        <button class="close-hologram" id="closeHologram" aria-label="Cerrar">&times;</button>
         <div class="hologram-header">
-            <h2>BÓVEDA DE DATOS</h2>
-            <p>Protocolo de acceso para Co-creadores</p>
+            <h2>⚡ APOYA EL PROYECTO</h2>
+            <p>Cada apoyo mantiene viva la música independiente</p>
         </div>
-        <div class="boveda-info">
-            <div class="info-seccion">
-                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">MATERIAL DISPONIBLE:</h4>
-                <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
-                    <li><strong>Acceso Restringido:</strong> Se otorgará únicamente la pista oficial (WAV/MP3), instrumental, acapella y letra de la <em>canción específica</em> solicitada.</li>
-                    <li>Logotipos oficiales (Nuestras 3 variantes visuales).</li>
-                    <li><strong style="color: #fff;">Nivel 2 (Colaboradores verificados):</strong> Acceso a versiones alternativas y maquetas.</li>
-                </ul>
-            </div>
-            <div class="info-seccion">
-                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">REGLAS DE TRANSMISIÓN:</h4>
-                <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
-                    <li><strong>Mención:</strong> Todo contenido generado debe etiquetar a Reflexión Musical MX.</li>
-                    <li>Nos reservamos el derecho de pedir la eliminación si se usa para discursos de odio o se monetiza sin autorización.</li>
-                </ul>
-            </div>
-            <div class="info-seccion" style="background: rgba(255, 215, 0, 0.1); padding: 10px; border-radius: 4px; border-left: 3px solid #FFD700;">
-                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">PASOS (DOBLE CONFIRMACIÓN):</h4>
-                <ol style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 0;">
-                    <li>Indica la canción y llena tus datos.</li>
-                    <li>Ve a nuestro último video en YouTube o TikTok y comenta: <strong>"Solicitando enlace a la sonda 📡"</strong>.</li>
-                    <li>El escaneo manual tardará 48 a 72 horas. Si eres aprobado, recibirás la llave en tu correo.</li>
-                </ol>
-            </div>
+        <div class="support-grid" id="supportGrid">
+            <!-- Las tarjetas se inyectan por JS -->
         </div>
-        <form id="formProtocolo" class="holo-form">
-            <div class="input-group"><input type="text" name="nombre" required placeholder="Nombre / Alias del Creador"></div>
-            <div class="input-group"><input type="email" name="email" required placeholder="Correo de Contacto (Cero spam)"></div>
-            <div class="input-group"><input type="url" name="canal" required placeholder="Enlace a tu canal principal"></div>
-            <div class="input-group"><input type="text" name="cancion_solicitada" required placeholder="¿Qué canción específica deseas utilizar?"></div>
-            <div class="checkbox-group">
-                <input type="checkbox" id="aceptoReglas" name="aceptoReglas" required>
-                <label for="aceptoReglas">He leído las reglas, entiendo que el acceso es unitario y confirmo que dejaré el comentario de verificación.</label>
-            </div>
-            <button type="submit" class="holo-btn submit-btn" id="btnEnviarForm">ENVIAR SOLICITUD DE ACCESO</button>
-        </form>
     </div>
 </div>
-
-<script src="letras.js"></script>
-<script src="datos.js"></script>
-
 <script>
 // =====================================================
-// ÍCONOS DE REPRODUCCIÓN
+// DATOS DEL PROYECTO
 // =====================================================
-const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
-const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
+const SINGLES = [
+    { title: "México Despierta", cover: "images/mexico-despierta.webp", sc: "https://soundcloud.com/reflexionmusicalmx-music/mexico-despierta", spotify: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c", apple: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478", amazon: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx", yt: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" },
+    { title: "Museo de la Culpa", cover: "images/museo-de-la-culpa.webp", sc: "https://soundcloud.com/reflexionmusicalmx-music/museo-de-la-culpa", spotify: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c", apple: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478", amazon: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx", yt: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" },
+    { title: "No Te Vayas Tan Rápido", cover: "images/no-te-vayas.webp", sc: "https://soundcloud.com/reflexionmusicalmx-music/no-te-vayas-tan-rapido", spotify: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c", apple: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478", amazon: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx", yt: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" },
+    { title: "Siempre", cover: "images/siempre.webp", sc: "https://soundcloud.com/reflexionmusicalmx-music/siempre", spotify: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c", apple: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478", amazon: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx", yt: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" },
+];
 
-// VARIABLES GLOBALES DEL REPRODUCTOR
-let ytPlayerGlobal = null;
-let activeTracksGlobal = [];
-let activeTrackIndexGlobal = 0;
-let activePlaylistIdGlobal = "";
-let activeAlbumImgGlobal = "";
-
-function setPlayerState(isPlaying) {
-    const btn = document.getElementById('btnPlayPause');
-    if (btn) btn.innerHTML = isPlaying ? pauseIconSVG : playIconSVG;
-}
-
-// =====================================================
-// CORRECCIÓN BUG #5: localStorage con try/catch
-// para iOS Safari modo privado y otros contextos restringidos
-// =====================================================
-const safeStorage = {
-    get(key) {
-        try { return localStorage.getItem(key); }
-        catch (e) { return null; }
+const ALBUMS = [
+    {
+        title: "Revolución Mental",
+        cover: "images/revolucion-mental.webp",
+        tracks: [
+            { title: "La Caja Idiota", sc: "https://soundcloud.com/reflexionmusicalmx-music/la-caja-idiota" },
+            { title: "México Despierta", sc: "https://soundcloud.com/reflexionmusicalmx-music/mexico-despierta" },
+            { title: "Voces de Cambio", sc: "https://soundcloud.com/reflexionmusicalmx-music/voces-de-cambio" },
+        ],
+        spotify: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c",
+        apple: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478",
+        amazon: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx",
+        yt: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw",
+        sc: "https://soundcloud.com/reflexionmusicalmx-music",
     },
-    set(key, value) {
-        try { localStorage.setItem(key, value); }
-        catch (e) { /* silencioso en modo privado */ }
-    }
-};
+    {
+        title: "Museo de la Culpa",
+        cover: "images/museo-de-la-culpa.webp",
+        tracks: [
+            { title: "Museo de la Culpa", sc: "https://soundcloud.com/reflexionmusicalmx-music/museo-de-la-culpa" },
+            { title: "Herencia", sc: "https://soundcloud.com/reflexionmusicalmx-music/herencia" },
+            { title: "Hijos del Rencor", sc: "https://soundcloud.com/reflexionmusicalmx-music/hijos-del-rencor" },
+            { title: "Nunca Lo Vieron", sc: "https://soundcloud.com/reflexionmusicalmx-music/nunca-lo-vieron" },
+            { title: "Temple", sc: "https://soundcloud.com/reflexionmusicalmx-music/temple" },
+        ],
+        spotify: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c",
+        apple: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478",
+        amazon: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx",
+        yt: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw",
+        sc: "https://soundcloud.com/reflexionmusicalmx-music",
+    },
+    {
+        title: "Adultos Trastornados",
+        cover: "images/adultos-trastornados.webp",
+        tracks: [
+            { title: "Adultos TRASTORNADOS", sc: "https://soundcloud.com/reflexionmusicalmx-music/adultos-trastornados" },
+            { title: "SECTA con Presupuesto", sc: "https://soundcloud.com/reflexionmusicalmx-music/secta-con-presupuesto" },
+            { title: "No Soy Tu Prueba", sc: "https://soundcloud.com/reflexionmusicalmx-music/no-soy-tu-prueba" },
+        ],
+        spotify: "https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c",
+        apple: "https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478",
+        amazon: "https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx",
+        yt: "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw",
+        sc: "https://soundcloud.com/reflexionmusicalmx-music",
+    },
+];
+
+const COMETS = [
+    { text: "🎵 +4,200 plays en Spotify", x: "15%", y: "20%", angle: 30 },
+    { text: "🌍 Música con propósito", x: "70%", y: "15%", angle: -20 },
+    { text: "🔥 Nuevo: Museo de la Culpa", x: "80%", y: "70%", angle: 15 },
+    { text: "🚀 Independiente 100%", x: "10%", y: "75%", angle: -10 },
+];
+
+const SUPERNOVAS = [
+    { x: "25%", y: "35%", msg: "💡 La verdad como bandera" },
+    { x: "75%", y: "60%", msg: "🎤 Versos que despiertan" },
+    { x: "50%", y: "85%", msg: "🌟 Música sin cadenas" },
+];
 
 // =====================================================
-// CORRECCIÓN BUG #1: Funciones de modal corregidas
-// Usan visibility+opacity en vez de display:none
+// CANVAS FONDO ESTRELLADO
 // =====================================================
-function openModal(el) {
-    el.classList.add('show');
-}
-function closeModal(el) {
-    el.classList.remove('show');
-}
+(function initBg() {
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let W, H;
 
-document.addEventListener("DOMContentLoaded", () => {
-    const loader = document.getElementById('loader');
-    const loaderImg = document.getElementById('loaderImg');
-    const modal = document.getElementById("bioModal");
-    const sun = document.getElementById("sun");
-    const bioAudio = document.getElementById("bioAudio");
-    const volumeSlider = document.getElementById("volumeSlider");
-    const muteBtn = document.getElementById("muteBtn");
-    const starContainer = document.getElementById("starContainer");
-    const albumModal = document.getElementById("albumModal");
-    const modalAlbumTitle = document.getElementById("modalAlbumTitle");
-    const modalTracklist = document.getElementById("modalTracklist");
-    const modalPlatforms = document.getElementById("modalPlatforms");
-    const customPlayerBox = document.getElementById("customPlayerBox");
-    const playerVolSlider = document.getElementById("playerVolSlider");
-    const lyricsModal = document.getElementById("lyricsModal");
-
-    // CORRECCIÓN BUG #1 (LOADER): Espera que la imagen cargue antes de ocultar
-    function hideLoader() {
-        loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 800);
+    function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        stars = Array.from({ length: 180 }, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.5 + 0.3,
+            a: Math.random(),
+            speed: Math.random() * 0.008 + 0.002,
+            phase: Math.random() * Math.PI * 2,
+        }));
     }
 
-    if (loaderImg.complete) {
-        setTimeout(hideLoader, 300);
-    } else {
-        loaderImg.addEventListener('load', hideLoader);
-        loaderImg.addEventListener('error', hideLoader); // fallback si falla
-        // Timeout de seguridad en caso de que load no dispare
-        setTimeout(hideLoader, 3000);
-    }
-
-    // CONTROLES DE VOLUMEN - BIO AUDIO
-    if (volumeSlider && bioAudio) {
-        bioAudio.volume = volumeSlider.value;
-        volumeSlider.addEventListener("input", (e) => {
-            bioAudio.volume = e.target.value;
-            muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
-        });
-    }
-
-    if (muteBtn && bioAudio) {
-        muteBtn.addEventListener("click", () => {
-            if (bioAudio.volume > 0) {
-                bioAudio.dataset.lastVol = bioAudio.volume;
-                bioAudio.volume = 0;
-                volumeSlider.value = 0;
-                muteBtn.textContent = "🔇";
-            } else {
-                const lastVol = bioAudio.dataset.lastVol || 0.4;
-                bioAudio.volume = lastVol;
-                volumeSlider.value = lastVol;
-                muteBtn.textContent = "🔊";
-            }
-        });
-    }
-
-    if (playerVolSlider) {
-        playerVolSlider.addEventListener("input", (e) => {
-            if (ytPlayerGlobal && typeof ytPlayerGlobal.setVolume === 'function') {
-                try { ytPlayerGlobal.setVolume(parseInt(e.target.value, 10)); } catch (err) {}
-            }
-        });
-    }
-
-    // FUNCIONES DE CIERRE DE MODALES
-    function closeAndStopAudio() {
-        closeModal(modal);
-        if (bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
-    }
-
-    function closeAlbumPanel() {
-        closeModal(albumModal);
-        if (ytPlayerGlobal && typeof ytPlayerGlobal.pauseVideo === 'function') {
-            try { ytPlayerGlobal.pauseVideo(); } catch (e) {}
-        }
-        setTimeout(() => {
-            customPlayerBox.style.display = "none";
-            modalTracklist.innerHTML = "";
-            setPlayerState(false);
-            document.getElementById("playerIframeContainer").innerHTML = "";
-        }, 400);
-    }
-
-    // APERTURA DEL SOL (BIOGRAFÍA)
-    if (sun) {
-        sun.onclick = () => {
-            openModal(modal);
-            if (bioAudio) bioAudio.play().catch(err => console.log("Audio bloqueado:", err));
-        };
-    }
-
-    // CORRECCIÓN BUG #2: Selectores específicos al modal padre
-    // Antes: document.querySelector(".close-bio") podía capturar el incorrecto
-    // Ahora: buscamos dentro del modal específico
-    document.querySelector("#bioModal .close-bio").addEventListener('click', closeAndStopAudio);
-    document.querySelector("#albumModal .close-album").addEventListener('click', closeAlbumPanel);
-    document.getElementById("btnCerrarAlbum").addEventListener('click', closeAlbumPanel);
-    document.querySelector("#lyricsModal .close-lyrics").onclick = () => closeModal(lyricsModal);
-
-    // Cierre al hacer clic en el fondo del modal
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) closeAndStopAudio();
-        if (event.target === albumModal) closeAlbumPanel();
-        if (event.target === lyricsModal) closeModal(lyricsModal);
-        if (event.target.classList.contains("modal")) closeModal(event.target);
-        if (event.target === protocoloModal) {
-            protocoloModal.style.display = "none";
-            resumeUniverse(); // BUG 1 FIX: Descongela los planetas al hacer clic afuera
-        }
-    });
-    // BUG 3 FIX: Se eliminó el listener de touchstart que causaba "ghost clicks"
-    // en iPhones y Android. El listener de 'click' de arriba ya maneja móviles correctamente.
-
-    // CANVAS DE ESTRELLAS
-    const canvas = document.getElementById("bg");
-    const ctx = canvas.getContext("2d");
-    const numStars = window.innerWidth < 768 ? 80 : 300;
-    let backgroundStars = [];
-
-    function setCanvasSize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initStars();
-    }
-
-    function initStars() {
-        backgroundStars = [];
-        for (let i = 0; i < numStars; i++) {
-            backgroundStars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.5,
-                opacity: Math.random(),
-                speed: 0.005 + Math.random() * 0.01
-            });
-        }
-    }
-
-    function drawCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        backgroundStars.forEach(s => {
-            s.opacity += s.speed;
-            if (s.opacity >= 1 || s.opacity <= 0.1) s.speed *= -1;
-            ctx.fillStyle = `rgba(255, 215, 0, ${s.opacity})`;
+    function draw(t) {
+        ctx.clearRect(0, 0, W, H);
+        stars.forEach(s => {
+            const alpha = 0.3 + 0.7 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${alpha})`;
             ctx.fill();
         });
-        requestAnimationFrame(drawCanvas);
+        requestAnimationFrame(draw);
     }
 
-    setCanvasSize();
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(draw);
+})();
 
-    // CORRECCIÓN BUG #3: Debounce en el resize para evitar reinicializaciones constantes
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(setCanvasSize, 200);
+// =====================================================
+// LOADER
+// =====================================================
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const loader = document.getElementById('loader');
+        loader.style.opacity = '0';
+        setTimeout(() => { loader.style.display = 'none'; }, 800);
+    }, 1200);
+
+    // Auto-ocultar hint HUD
+    setTimeout(() => {
+        const hint = document.getElementById('rmHint');
+        if (hint) hint.style.opacity = '0';
+        setTimeout(() => { if (hint) hint.remove(); }, 500);
+    }, 6000);
+});
+
+// =====================================================
+// SISTEMA SOLAR: INYECCIÓN DE PLANETAS
+// =====================================================
+function placePlanets(orbitEl, items, radius) {
+    const count = items.length;
+    items.forEach((item, i) => {
+        const angle = (i / count) * 360;
+        const rad = (angle * Math.PI) / 180;
+        const x = Math.cos(rad) * (radius / 2) - 55;
+        const y = Math.sin(rad) * (radius / 2) - 55;
+
+        const planet = document.createElement('div');
+        planet.className = 'planet';
+        planet.style.left = `calc(50% + ${x}px)`;
+        planet.style.top = `calc(50% + ${y}px)`;
+        planet.dataset.index = i;
+        planet.dataset.type = orbitEl.id === 'orbitSingles' ? 'single' : 'album';
+
+        const counter = document.createElement('div');
+        counter.className = 'counter';
+
+        const img = document.createElement('img');
+        img.src = item.cover;
+        img.alt = item.title;
+        img.loading = 'lazy';
+        counter.appendChild(img);
+
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = item.title;
+
+        planet.appendChild(counter);
+        planet.appendChild(tooltip);
+        orbitEl.appendChild(planet);
+
+        planet.addEventListener('click', () => openAlbumModal(item, orbitEl.id === 'orbitSingles'));
+    });
+}
+
+placePlanets(document.getElementById('orbitSingles'), SINGLES, 420);
+placePlanets(document.getElementById('orbitAlbums'), ALBUMS, 720);
+
+// =====================================================
+// MODAL ÁLBUM / SENCILLO
+// =====================================================
+let scWidget = null;
+let currentTracks = [];
+let currentTrackIndex = 0;
+
+function platformSVG(type) {
+    const svgs = {
+        spotify: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>`,
+        apple: `<svg viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026C4.786.07 4.043.15 3.34.428 2.004.958 1.04 1.88.475 3.208A7.37 7.37 0 00.09 5.08c-.02.27-.028.54-.028.81v12.22c0 .27.008.54.028.81.04.56.14 1.11.32 1.64.46 1.37 1.42 2.34 2.79 2.84.56.2 1.14.3 1.73.33.27.02.54.03.81.03h12.22c.27 0 .54-.01.81-.03.59-.03 1.17-.13 1.73-.33 1.37-.5 2.33-1.47 2.79-2.84.18-.53.28-1.08.32-1.64.02-.27.03-.54.03-.81V6.89c0-.26-.01-.51-.02-.77zm-6.9 3.99l-5.5 3.17a.5.5 0 01-.75-.43V7.14a.5.5 0 01.75-.43l5.5 3.17a.5.5 0 010 .86z"/></svg>`,
+        amazon: `<svg viewBox="0 0 24 24"><path d="M13.958 10.09c0 1.232.029 2.256-.591 3.351-.502.891-1.301 1.438-2.186 1.438-1.214 0-1.922-.924-1.922-2.292 0-2.692 2.415-3.182 4.7-3.182v.685zm3.186 7.705a.66.66 0 01-.76.074c-1.067-.886-1.258-1.298-1.844-2.144-1.763 1.799-3.012 2.338-5.3 2.338-2.706 0-4.814-1.671-4.814-5.015 0-2.612 1.416-4.391 3.435-5.261 1.748-.77 4.189-.907 6.053-1.118v-.417c0-.768.06-1.676-.391-2.338-.393-.594-1.148-.839-1.813-.839-1.232 0-2.33.632-2.6 1.94-.055.29-.269.574-.558.589l-3.117-.337c-.262-.059-.552-.271-.477-.673C5.93 1.862 8.952.5 11.67.5c1.39 0 3.208.37 4.307 1.421C17.28 3.094 17.14 5.1 17.14 7.28v5.567c0 1.674.694 2.41 1.348 3.315.23.322.28.707-.014.946-.73.61-2.03 1.744-2.744 2.38l-.586-.693zm3.606 1.77c-2.953 1.83-7.237 2.804-10.924 2.804-5.168 0-9.823-1.91-13.34-5.088-.277-.25-.03-.591.303-.397 3.799 2.21 8.497 3.542 13.348 3.542 3.271 0 6.867-.678 10.178-2.083.499-.213.917.328.435.622zm1.24-1.412c-.377-.484-2.494-.229-3.447-.115-.29.035-.334-.218-.073-.401 1.688-1.188 4.459-.845 4.782-.447.324.4-.085 3.17-1.67 4.493-.243.205-.475.096-.367-.174.357-.89 1.152-2.878.775-3.356z"/></svg>`,
+        yt: `<svg viewBox="0 0 24 24"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg>`,
+        sc: `<svg viewBox="0 0 24 24"><path d="M1.175 12.225c-.015 0-.03.002-.044.003.002-.016.003-.032.003-.048 0-.96.78-1.74 1.74-1.74.16 0 .314.022.46.063.15-1.55 1.45-2.76 3.03-2.76.42 0 .82.085 1.18.24V17.4H1.175v-5.175zm21.65 2.055c0 1.59-1.29 2.88-2.88 2.88H7.59V9.9c.6-.39 1.31-.615 2.07-.615 1.98 0 3.6 1.53 3.72 3.48.24-.09.495-.135.765-.135 1.2 0 2.175.975 2.175 2.175 0 .045-.003.09-.006.135.12-.015.24-.03.36-.03 1.59 0 2.88 1.29 2.88 2.88l.021-.51z"/></svg>`,
+    };
+    return svgs[type] || '';
+}
+
+function openAlbumModal(item, isSingle) {
+    const modal = document.getElementById('albumModal');
+    document.getElementById('modalAlbumCover').src = item.cover;
+    document.getElementById('modalAlbumTitle').textContent = item.title;
+
+    // Plataformas
+    const plat = document.getElementById('albumPlatforms');
+    plat.innerHTML = '';
+    ['spotify','apple','amazon','yt','sc'].forEach(p => {
+        if (item[p]) {
+            const a = document.createElement('a');
+            a.href = item[p];
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.title = p;
+            a.innerHTML = platformSVG(p);
+            plat.appendChild(a);
+        }
     });
 
-    drawCanvas();
+    // Tracklist
+    const tl = document.getElementById('tracklistContainer');
+    tl.innerHTML = '';
+    currentTracks = isSingle ? [{ title: item.title, sc: item.sc }] : (item.tracks || []);
+    currentTrackIndex = 0;
 
-    // =====================================================
-    // CORRECCIÓN BUG #7: Flag para evitar spawns concurrentes de supernovas
-    // =====================================================
-    let currentSpawnTimeout = null;
-    let isBatchRunning = false;
+    currentTracks.forEach((track, idx) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'track-item-wrapper';
 
-    function removeAllSupernovas() {
-        document.querySelectorAll('.supernova-hitbox').forEach(sn => sn.remove());
-    }
+        const link = document.createElement('span');
+        link.className = 'track-link' + (idx === 0 ? ' active-track' : '');
+        link.textContent = `${idx + 1}. ${track.title}`;
+        link.addEventListener('click', () => loadTrack(idx));
 
-    function spawnSupernovaBatch() {
-        if (isBatchRunning) return; // Evita batches concurrentes
-        isBatchRunning = true;
-        removeAllSupernovas();
-
-        for (let i = 0; i < 3; i++) {
-            const hitbox = document.createElement("div");
-            hitbox.className = "supernova-hitbox";
-            hitbox.style.left = (Math.random() * window.innerWidth) + "px";
-            hitbox.style.top = (Math.random() * window.innerHeight) + "px";
-            const flash = document.createElement("div");
-            flash.className = "supernova";
-            hitbox.appendChild(flash);
-            hitbox.onclick = function () {
-                flash.style.animation = 'none';
-                flash.style.transform = 'scale(2)';
-                flash.style.opacity = '0';
-                flash.style.transition = '0.3s ease-out';
-                setTimeout(() => {
-                    removeAllSupernovas();
-                    if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
-                    isBatchRunning = false;
-                    spawnSupernovaBatch();
-                }, 400);
-            };
-            if (starContainer) starContainer.appendChild(hitbox);
-        }
-
-        currentSpawnTimeout = setTimeout(() => {
-            removeAllSupernovas();
-            isBatchRunning = false;
-            spawnSupernovaBatch();
-        }, 5000 + Math.random() * 5000);
-    }
-
-    spawnSupernovaBatch();
-
-    // =====================================================
-    // REPRODUCTOR MAESTRO
-    // CORRECCIÓN BUG #8 (YT Player): MutationObserver en vez de setTimeout
-    // para garantizar que el iframe esté en el DOM antes de inicializar YT
-    // =====================================================
-    window.renderTrack = function (index) {
-        activeTrackIndexGlobal = index;
-        const trackObj = activeTracksGlobal[index];
-        const playerIframe = document.getElementById("playerIframeContainer");
-        const customBox = document.getElementById("customPlayerBox");
-        const lyricsBox = document.getElementById("nowPlayingLyrics");
-
-        document.querySelectorAll('.track-link').forEach((el, i) => {
-            el.classList.toggle('active-track', i === index);
-        });
-
-        customBox.style.display = "flex";
-        setPlayerState(false);
-        playerIframe.innerHTML = "";
-
-        if (typeof letras !== 'undefined' && letras[trackObj.name]) {
-            lyricsBox.innerText = letras[trackObj.name];
-            lyricsBox.style.display = "block";
-        } else {
-            lyricsBox.innerText = "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
-            lyricsBox.style.display = "block";
-        }
-
-        let videoId = "";
-        const vMatch = trackObj.url.match(/(?:[?&]v=|youtu\.be\/)([^&]+)/);
-        if (vMatch && vMatch[1]) {
-            videoId = vMatch[1];
-        } else {
-            window.open(trackObj.url, "_blank");
-            return;
-        }
-
-        if (videoId) {
-            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
-            if (activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
-
-            playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position: relative; z-index: 1;"></iframe>`;
-
-            // CORRECCIÓN: MutationObserver en vez de setTimeout
-            const iframeEl = document.getElementById('yt-iframe');
-            if (iframeEl && window.YT && window.YT.Player) {
-                initYTPlayer(iframeEl);
+        const shareBtn = document.createElement('span');
+        shareBtn.className = 'share-btn';
+        shareBtn.title = 'Compartir';
+        shareBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="#FFD700"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>`;
+        shareBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (navigator.share) {
+                navigator.share({ title: track.title, url: track.sc });
             } else {
-                // Fallback con observer si YT API aún no cargó
-                const observer = new MutationObserver(() => {
-                    const el = document.getElementById('yt-iframe');
-                    if (el && window.YT && window.YT.Player) {
-                        observer.disconnect();
-                        initYTPlayer(el);
-                    }
-                });
-                observer.observe(playerIframe, { childList: true, subtree: true });
-                // Timeout de seguridad de 3 segundos
-                setTimeout(() => {
-                    observer.disconnect();
-                    const el = document.getElementById('yt-iframe');
-                    if (el && window.YT && window.YT.Player) initYTPlayer(el);
-                }, 3000);
-            }
-        }
-    };
-
-    function initYTPlayer(iframeEl) {
-        ytPlayerGlobal = new YT.Player(iframeEl, {
-            events: {
-                'onReady': (event) => {
-                    if (playerVolSlider) event.target.setVolume(parseInt(playerVolSlider.value, 10));
-                },
-                'onStateChange': (event) => {
-                    if (event.data === YT.PlayerState.PLAYING) setPlayerState(true);
-                    else if (event.data === YT.PlayerState.PAUSED) setPlayerState(false);
-                    else if (event.data === YT.PlayerState.ENDED) {
-                        setPlayerState(false);
-                        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
-                            window.renderTrack(activeTrackIndexGlobal + 1);
-                        }
-                    }
-                }
+                navigator.clipboard.writeText(track.sc);
+                shareBtn.innerHTML = '✅';
+                setTimeout(() => { shareBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="#FFD700"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>`; }, 2000);
             }
         });
-    }
 
-    document.getElementById('btnNext').onclick = () => {
-        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
-    };
-    document.getElementById('btnPrev').onclick = () => {
-        if (activeTrackIndexGlobal > 0) window.renderTrack(activeTrackIndexGlobal - 1);
-    };
-    document.getElementById('btnPlayPause').onclick = () => {
-        if (ytPlayerGlobal && typeof ytPlayerGlobal.getPlayerState === 'function') {
-            const state = ytPlayerGlobal.getPlayerState();
-            if (state === 1 || state === 3) ytPlayerGlobal.pauseVideo();
-            else ytPlayerGlobal.playVideo();
-        }
-    };
+        wrapper.appendChild(link);
+        wrapper.appendChild(shareBtn);
+        tl.appendChild(wrapper);
+    });
 
-    // =====================================================
-    // CREACIÓN DE ÓRBITAS (planetas)
-    // =====================================================
-    function createOrbit(data, id, radius) {
-        const orbit = document.getElementById(id);
-        if (!orbit || !data) return;
-        const fragment = document.createDocumentFragment();
+    loadTrack(0);
+    modal.classList.add('show');
+}
 
-        data.forEach((item, i) => {
-            const angle = (i / data.length) * Math.PI * 2;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
+function loadTrack(idx) {
+    if (!currentTracks[idx]) return;
+    currentTrackIndex = idx;
 
-            const planet = document.createElement("div");
-            planet.className = "planet";
-            planet.style.left = `calc(50% + ${x}px - 50px)`;
-            planet.style.top = `calc(50% + ${y}px - 50px)`;
+    // Actualizar activo en tracklist
+    document.querySelectorAll('.track-link').forEach((el, i) => {
+        el.classList.toggle('active-track', i === idx);
+    });
 
-            planet.onclick = () => {
-                if (bioAudio && !bioAudio.paused) {
-                    bioAudio.pause();
-                    if (muteBtn) muteBtn.textContent = "🔇";
-                }
+    const track = currentTracks[idx];
+    const box = document.getElementById('customPlayerBox');
+    const iframe = document.getElementById('sc-iframe');
+    const cover = document.getElementById('scCoverOverlay');
 
-                modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
-                modalTracklist.innerHTML = "";
-                document.getElementById("customPlayerBox").style.display = "none";
+    box.style.display = 'flex';
+    cover.src = document.getElementById('modalAlbumCover').src;
 
-                let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
-                let playlistId = "";
-                if (ytLink && ytLink !== "#") {
-                    const match = ytLink.match(/[?&]list=([^&]+)/);
-                    if (match && match[1]) playlistId = match[1];
-                }
+    const scUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(track.sc)}&color=%23FFD700&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false`;
+    iframe.src = scUrl;
 
-                activeTracksGlobal = item.tracks || [];
-                activePlaylistIdGlobal = playlistId;
-                // CORRECCIÓN BUG: encodeURI solo en el nombre del archivo, no en el path completo
-                activeAlbumImgGlobal = item.img;
-
-                if (item.tracks && item.tracks.length > 0) {
-                    item.tracks.forEach((trackObj, index) => {
-                        const row = document.createElement("div");
-                        row.className = "track-item-wrapper";
-
-                        const trackLink = document.createElement("a");
-                        trackLink.className = "track-item track-link";
-                        trackLink.href = "javascript:void(0);";
-                        trackLink.innerText = `${index + 1}. ${trackObj.name}`;
-
-                        const actionsDiv = document.createElement("div");
-                        actionsDiv.style.cssText = "display:flex;gap:10px;";
-
-                        const shareBtn = document.createElement("span");
-                        shareBtn.className = "share-btn";
-                        shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
-                        shareBtn.title = "Compartir canción";
-
-                        const lyricBtn = document.createElement("span");
-                        lyricBtn.className = "share-btn";
-                        lyricBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
-                        lyricBtn.title = "Ver Letra";
-
-                        trackLink.onclick = (e) => { e.preventDefault(); window.renderTrack(index); };
-
-                        shareBtn.onclick = (e) => {
-                            e.stopPropagation();
-                            const linkToShare = trackObj.shareUrl || trackObj.url;
-                            if (navigator.share) {
-                                navigator.share({ title: trackObj.name, text: `Escucha "${trackObj.name}" de Reflexión Musical MX`, url: linkToShare }).catch(console.error);
-                            } else {
-                                navigator.clipboard.writeText(linkToShare);
-                                alert("Enlace copiado al portapapeles");
-                            }
-                        };
-
-                        lyricBtn.onclick = (e) => {
-                            e.stopPropagation();
-                            document.getElementById('lyricsTitle').innerText = trackObj.name;
-                            const letraContenido = (typeof letras !== 'undefined' && letras[trackObj.name])
-                                ? letras[trackObj.name]
-                                : "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
-                            document.getElementById('lyricsText').innerText = letraContenido;
-                            openModal(document.getElementById('lyricsModal'));
-                        };
-
-                        actionsDiv.appendChild(lyricBtn);
-                        actionsDiv.appendChild(shareBtn);
-                        row.appendChild(trackLink);
-                        row.appendChild(actionsDiv);
-                        modalTracklist.appendChild(row);
-                    });
-                } else {
-                    const trackDiv = document.createElement("div");
-                    trackDiv.className = "track-item";
-                    trackDiv.style.cssText = "text-align:center;color:gold;";
-                    trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
-                    modalTracklist.appendChild(trackDiv);
-                }
-
-                // PLATAFORMAS DEL MODAL
-                modalPlatforms.innerHTML = "";
-                const globalPlatformsForModal = [
-                    { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
-                    { name: "Amazon Music", svg: `<svg viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/></svg>`, id: 'amazon' },
-                    { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
-                    { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-                    { name: "SoundCloud", svg: `<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /></svg>`, id: 'soundcloud' },
-                    { name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237"/></svg>`, id: 'audiomack' }
-                ];
-
-                globalPlatformsForModal.forEach(p => {
-                    let platLink = item.links && item.links[p.id] ? item.links[p.id] : "";
-                    if (!platLink || platLink === "#") {
-                        if (p.id === 'youtube') platLink = "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw";
-                        if (p.id === 'audiomack') platLink = "https://audiomack.com/reflexion-musical-mx";
-                        if (p.id === 'soundcloud') platLink = "https://soundcloud.com/reflexionmusicalmx-music";
-                    }
-                    if (platLink && platLink !== "#") {
-                        const a = document.createElement("a");
-                        a.href = platLink;
-                        a.target = "_blank";
-                        a.innerHTML = p.svg;
-                        a.setAttribute('aria-label', `Escuchar en ${p.name}`);
-                        modalPlatforms.appendChild(a);
-                    }
-                });
-
-                openModal(albumModal);
-            };
-
-            const albumName = item.img.split('/').pop().replace('.webp', '');
-            planet.setAttribute('data-album', albumName.toUpperCase());
-
-            let extraHTML = "";
-            if (albumName.toUpperCase() === "TEJIDO VITAL") {
-                extraHTML = `<div class="family-symbol-container"><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-f"></div></div><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-f"></div></div></div>`;
-            }
-
-            // CORRECCIÓN: encodeURI solo en el src de la imagen, no en rutas de datos
-            planet.innerHTML = `<div class="counter"><img src="${encodeURI(item.img)}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
-
-            if (albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
-                let hTimer;
-                planet.onmouseenter = () => {
-                    hTimer = setInterval(() => {
-                        const h = document.createElement("div");
-                        h.className = "heart-bubble";
-                        h.innerHTML = "❤";
-                        const rect = planet.getBoundingClientRect();
-                        h.style.left = (rect.left + rect.width / 2) + "px";
-                        h.style.top = (rect.top + rect.height / 2) + "px";
-                        document.body.appendChild(h);
-                        const destX = window.innerWidth / 2;
-                        const destY = window.innerHeight / 2;
-                        h.animate([
-                            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1, offset: 0 },
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width / 2}px), calc(-50% + ${destY - rect.top - rect.height / 2}px)) scale(0.6)`, opacity: 1, offset: 0.95 },
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width / 2}px), calc(-50% + ${destY - rect.top - rect.height / 2}px)) scale(0)`, opacity: 0, offset: 1 }
-                        ], { duration: 2500, easing: 'linear' }).onfinish = () => h.remove();
-                    }, 400);
-                };
-                planet.onmouseleave = () => clearInterval(hTimer);
-            }
-
-            fragment.appendChild(planet);
-        });
-
-        orbit.appendChild(fragment);
-    }
-
-    if (typeof singles !== 'undefined') createOrbit(singles, "orbitSingles", 210);
-    if (typeof albums !== 'undefined') createOrbit(albums, "orbitAlbums", 360);
-
-    // =====================================================
-    // SISTEMA DEL BUZÓN (NAVE)
-    // =====================================================
-    const reflectionModal = document.getElementById("reflectionModal");
-    const reflectionContentBox = document.querySelector("#reflectionModal .reflection-content");
-    const btnTuVoz = document.getElementById("btnTuVoz");
-    const closeReflection = document.querySelector(".close-reflection");
-    const reflectionForm = document.getElementById("reflectionForm");
-    const reflectionStatus = document.getElementById("reflectionStatus");
-    const btnSubmitReflection = document.getElementById("btnSubmitReflection");
-    const btnSendToSun = document.getElementById("btnSendToSun");
-    const solarSystemBox = document.getElementById("solarSystem");
-
-    let isUniversePaused = false;
-    let isMessageLoadedInShip = false;
-
-    // CORRECCIÓN BUG #5: Usar safeStorage en vez de localStorage directo
-    if (btnTuVoz) {
-        const lastSent = safeStorage.get('lastReflectionTime');
-        const cooldown = 24 * 60 * 60 * 1000;
-        if (lastSent && (Date.now() - lastSent < cooldown)) {
-            btnTuVoz.style.display = "none";
-        }
-    }
-
-    // CORRECCIÓN BUG #4: pauseUniverse filtra solo las animaciones del solarSystem
-    function pauseUniverse() {
-        if (!isUniversePaused) {
-            document.getElementById('solarSystem').getAnimations({ subtree: true }).forEach(anim => anim.pause());
-            isUniversePaused = true;
-            if (window.innerWidth <= 768) solarSystemBox.classList.add("mobile-focus");
-        }
-    }
-
-    function resumeUniverse() {
-        if (isUniversePaused) {
-            document.getElementById('solarSystem').getAnimations({ subtree: true }).forEach(anim => anim.play());
-            isUniversePaused = false;
-            if (window.innerWidth <= 768) solarSystemBox.classList.remove("mobile-focus");
-        }
-    }
-
-    function closeBuzonAndHandleLaser() {
-        closeModal(reflectionModal);
-        btnTuVoz.classList.remove("ship-waiting");
-        if (isMessageLoadedInShip) {
-            fireLaserToSun();
-        } else {
-            resumeUniverse();
-        }
-    }
-
-    if (closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
-
-    if (btnTuVoz) {
-        btnTuVoz.onclick = () => {
-            pauseUniverse();
-            btnTuVoz.classList.add("ship-waiting");
-
-            if (window.innerWidth > 768) {
-                const shipRect = btnTuVoz.getBoundingClientRect();
-                const screenCenter = window.innerWidth / 2;
-                if (shipRect.left > screenCenter) {
-                    reflectionContentBox.style.left = "40px";
-                    reflectionContentBox.style.right = "auto";
-                } else {
-                    reflectionContentBox.style.left = "auto";
-                    reflectionContentBox.style.right = "40px";
-                }
-                reflectionContentBox.style.top = "50%";
-                reflectionContentBox.style.transform = "translateY(-50%)";
-            } else {
-                reflectionContentBox.style.left = "";
-                reflectionContentBox.style.right = "";
-                reflectionContentBox.style.top = "";
-                reflectionContentBox.style.transform = "";
-            }
-
-            openModal(reflectionModal);
-            closeReflection.style.display = "block";
-            reflectionStatus.style.display = "none";
-
-            // CORRECCIÓN BUG #5: safeStorage en vez de localStorage
-            const lastSent = safeStorage.get('lastReflectionTime');
-            const cooldown = 24 * 60 * 60 * 1000;
-            if (lastSent && (Date.now() - lastSent < cooldown)) {
-                reflectionForm.style.display = "none";
-                document.getElementById("cooldownStatus").style.display = "block";
-            } else {
-                reflectionForm.style.display = "flex";
-                document.getElementById("cooldownStatus").style.display = "none";
-                document.getElementById("buzonSubtitle").style.display = "block";
-                document.getElementById("reflectionMsg").value = "";
-            }
-
-            isMessageLoadedInShip = false;
-        };
-    }
-
-    // CORRECCIÓN BUG #6 (no-cors): El envío es "best-effort".
-    // Se informa al usuario que el mensaje fue enviado con buena fe,
-    // ya que no es posible confirmar errores con mode:'no-cors'.
-    if (reflectionForm) {
-        reflectionForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
-
-            // BUG 2 FIX: Validación anti-bots en el frontend
-            // Si el campo trampa tiene valor, es un bot → fingimos éxito y abortamos
-            const trampa = reflectionForm.querySelector('input[name="miel_trampa"]');
-            if (trampa && trampa.value !== "") {
-                btnSubmitReflection.innerText = "SINTONIZANDO...";
-                setTimeout(() => {
-                    closeModal(reflectionModal);
-                    btnSubmitReflection.innerText = "CARGAR MENSAJE EN NAVE";
-                    reflectionForm.reset();
-                }, 1500);
-                return;
-            }
-            btnSubmitReflection.innerText = "SINTONIZANDO...";
-            btnSubmitReflection.disabled = true;
-
-            const data = new FormData(event.target);
-            fetch(event.target.action, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: data
-            }).then(() => {
-                safeStorage.set('lastReflectionTime', Date.now()); // CORRECCIÓN BUG #5
-
-                reflectionForm.style.display = "none";
-
-                const box = reflectionContentBox.getBoundingClientRect();
-                const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
-                const pulse = document.createElement("div");
-                pulse.className = "energy-pulse";
-                pulse.style.left = (box.left + box.width / 2) + "px";
-                pulse.style.top = (box.top + box.height / 2) + "px";
-                document.body.appendChild(pulse);
-
-                const destX = (ship.left + ship.width / 2) - (box.left + box.width / 2);
-                const destY = (ship.top + ship.height / 2) - (box.top + box.height / 2);
-                const angleRad = Math.atan2(destY, destX);
-                const angleDeg = (angleRad * 180) / Math.PI;
-                const offsetX = Math.cos(angleRad) * 4;
-                const offsetY = Math.sin(angleRad) * 4;
-                const finalX = destX - offsetX;
-                const finalY = destY - offsetY;
-
-                const anim = pulse.animate([
-                    { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-                    { transform: `translate(calc(-50% + ${finalX * 0.6}px), calc(-50% + ${finalY * 0.6}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
-                    { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 }
-                ], { duration: 1000, easing: "ease-in" });
-
-                anim.onfinish = () => {
-                    pulse.remove();
-                    reflectionStatus.style.display = "block";
-                    document.getElementById("buzonSubtitle").style.display = "none";
-                    isMessageLoadedInShip = true;
-                    btnTuVoz.classList.remove("ship-waiting");
-
-                    const shipSvg = document.querySelector("#btnTuVoz svg");
-                    shipSvg.style.filter = "drop-shadow(0 0 25px #fff)";
-                    shipSvg.style.stroke = "#fff";
-                    setTimeout(() => {
-                        shipSvg.style.filter = "drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))";
-                        shipSvg.style.stroke = "#FFD700";
-                    }, 500);
-                };
-            }).catch(() => {
-                alert("Error de conexión. Intenta de nuevo.");
-            }).finally(() => {
-                btnSubmitReflection.innerText = "CARGAR MENSAJE EN NAVE";
-                btnSubmitReflection.disabled = false;
-            });
-        });
-    }
-
-    function fireLaserToSun() {
-        const shipBtn = document.getElementById("btnTuVoz");
-        const shipRect = shipBtn.getBoundingClientRect();
-        const sunRect = document.getElementById("sun").getBoundingClientRect();
-
-        shipBtn.style.opacity = "0";
-        shipBtn.style.pointerEvents = "none";
-
-        const shipClone = document.createElement("div");
-        shipClone.innerHTML = shipBtn.innerHTML;
-        shipClone.style.cssText = `position:fixed;left:${shipRect.left}px;top:${shipRect.top}px;width:${shipRect.width}px;height:${shipRect.height}px;z-index:999999;display:flex;align-items:center;justify-content:center;`;
-        const cloneSvg = shipClone.querySelector("svg");
-        if (cloneSvg) { cloneSvg.style.stroke = "#fff"; cloneSvg.style.filter = "drop-shadow(0 0 25px #FFD700)"; }
-        document.body.appendChild(shipClone);
-
-        const destX = (sunRect.left + sunRect.width / 2) - (shipRect.left + shipRect.width / 2);
-        const destY = (sunRect.top + sunRect.height / 2) - (shipRect.top + shipRect.height / 2);
-        const angleRad = Math.atan2(destY, destX);
-        const angleDeg = (angleRad * 180) / Math.PI;
-
-        const anim = shipClone.animate([
-            { transform: `translate(0px, 0px) rotate(${angleDeg + 45}deg) scale(1)` },
-            { transform: `translate(${destX * 0.5}px, ${destY * 0.5}px) rotate(${angleDeg + 45}deg) scale(1.5)` },
-            { transform: `translate(${destX}px, ${destY}px) rotate(${angleDeg + 45}deg) scale(0)` }
-        ], { duration: 1800, easing: "cubic-bezier(0.5, 0, 0.5, 1)" });
-
-        anim.onfinish = () => {
-            shipClone.remove();
-            const sunEl = document.getElementById("sun");
-            sunEl.style.transform = "scale(1.5)";
-            sunEl.style.filter = "drop-shadow(0 0 100px #fff) brightness(2.5)";
-
-            const flash = document.createElement("div");
-            flash.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,215,0,0.35);z-index:99998;pointer-events:none;transition:opacity 0.8s ease-out;";
-            document.body.appendChild(flash);
-            setTimeout(() => flash.style.opacity = "0", 50);
-            setTimeout(() => flash.remove(), 850);
-
-            setTimeout(() => {
-                sunEl.style.transform = "scale(1)";
-                sunEl.style.filter = "";
-                resumeUniverse();
-                isMessageLoadedInShip = false;
-                shipBtn.style.display = "none";
-            }, 700);
-        };
-    }
-
-    if (btnSendToSun) btnSendToSun.onclick = closeBuzonAndHandleLaser;
-
-    // COMETAS
-    const upcomingReleases = ["📖 LIBRO: ALGO ESTÁ MAL", "💿 NUEVO ÁLBUM", "🎵 PRÓXIMO SENCILLO"];
-    let currentCometIndex = 0;
-
-    function spawnNextComet() {
+    // Reiniciar widget
+    setTimeout(() => {
         try {
-            const releaseText = upcomingReleases[currentCometIndex];
-            currentCometIndex = (currentCometIndex + 1) % upcomingReleases.length;
+            scWidget = SC.Widget(iframe);
+            scWidget.bind(SC.Widget.Events.READY, () => {
+                scWidget.setVolume(parseInt(document.getElementById('playerVolSlider').value));
+                scWidget.play();
+                updatePlayPauseIcon(true);
+            });
+            scWidget.bind(SC.Widget.Events.FINISH, () => {
+                if (currentTrackIndex < currentTracks.length - 1) {
+                    loadTrack(currentTrackIndex + 1);
+                } else {
+                    updatePlayPauseIcon(false);
+                }
+            });
+        } catch(e) {}
+    }, 500);
+}
 
-            const star = document.createElement("div");
-            star.className = "comet-container";
-            star.innerHTML = `<div class="comet-tail"></div><div class="comet-head"></div><div class="comet-text">${releaseText}</div>`;
-            if (starContainer) starContainer.appendChild(star);
+function updatePlayPauseIcon(playing) {
+    document.getElementById('iconPlay').style.display = playing ? 'none' : 'block';
+    document.getElementById('iconPause').style.display = playing ? 'block' : 'none';
+}
 
-            let startX, startY, endX, endY;
-            const edge = Math.floor(Math.random() * 4);
-            const offset = 100;
-            if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
-            else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
-            else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
-            else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
-
-            star.style.left = startX + "px";
-            star.style.top = startY + "px";
-
-            const dx = endX - startX;
-            const dy = endY - startY;
-            const angleRad = Math.atan2(dy, dx);
-            const angleDeg = (angleRad * (180 / Math.PI)) + 180;
-            star.querySelector('.comet-tail').style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
-
-            const duration = 12000 + Math.random() * 4000;
-            const anim = star.animate([
-                { transform: "translate(0px, 0px)" },
-                { transform: `translate(${dx}px, ${dy}px)` }
-            ], { duration: duration, easing: "linear" });
-
-            let clicked = false;
-            star.onclick = () => {
-                if (clicked) return;
-                clicked = true;
-                anim.pause();
-                star.classList.add("revealed");
-                setTimeout(() => {
-                    star.style.opacity = '0';
-                    setTimeout(() => { star.remove(); setTimeout(spawnNextComet, 2000); }, 500);
-                }, 4000);
-            };
-
-            anim.onfinish = () => {
-                if (!clicked) { star.remove(); setTimeout(spawnNextComet, 1000); }
-            };
-        } catch (e) { console.error(e); }
-    }
-
-    setTimeout(spawnNextComet, 3000);
-
-    // =====================================================
-    // CORRECCIÓN BUG #2: El satélite solo tiene UN listener
-    // Se eliminó el bloque manual y se usa solo setupModal
-    // que internamente llama pauseUniverse al abrir.
-    // =====================================================
-    const hologramPanel = document.getElementById("hologramPanel");
-    const closeHologramBtn = document.querySelector(".close-hologram");
-
-    function openHologram() {
-        hologramPanel.style.display = "flex";
-        pauseUniverse();
-    }
-    function closeHologram() {
-        hologramPanel.style.display = "none";
-        resumeUniverse();
-    }
-
-    document.getElementById("btnSatelite").addEventListener("click", openHologram);
-    closeHologramBtn.addEventListener("click", closeHologram);
-
-    window.addEventListener("click", (e) => {
-        if (e.target === hologramPanel) closeHologram();
+document.getElementById('btnPlayPause').addEventListener('click', () => {
+    if (!scWidget) return;
+    scWidget.isPaused(paused => {
+        if (paused) { scWidget.play(); updatePlayPauseIcon(true); }
+        else { scWidget.pause(); updatePlayPauseIcon(false); }
     });
+});
 
-    const btnCerrarMovil = document.getElementById("btnCerrarHologramaMovil");
-    if (btnCerrarMovil) btnCerrarMovil.addEventListener("click", closeHologram);
+document.getElementById('btnPrev').addEventListener('click', () => {
+    if (currentTrackIndex > 0) loadTrack(currentTrackIndex - 1);
+});
 
-    // MODALES DEL CENTRO DE ENERGÍA
-    // CORRECCIÓN BUG #2: setupModal ya NO registra el satélite (se maneja arriba)
-    const setupModal = (btnOpenId, modalId, closeClass) => {
-        const btnOpen = document.getElementById(btnOpenId);
-        const modalEl = document.getElementById(modalId);
-        const closeBtn = document.querySelector(closeClass);
-        if (btnOpen && modalEl) {
-            btnOpen.addEventListener("click", (e) => { e.preventDefault(); openModal(modalEl); });
-            if (closeBtn) closeBtn.addEventListener("click", () => closeModal(modalEl));
-        }
-    };
+document.getElementById('btnNext').addEventListener('click', () => {
+    if (currentTrackIndex < currentTracks.length - 1) loadTrack(currentTrackIndex + 1);
+});
 
-    setupModal("btnOpenCrypto", "cryptoModal", ".close-crypto");
-    setupModal("btnOpenPropagar", "propagarModal", ".close-propagar");
-    setupModal("btnOpenAmplificar", "amplificarModal", ".close-amplificar");
+document.getElementById('playerVolSlider').addEventListener('input', function() {
+    if (scWidget) scWidget.setVolume(parseInt(this.value));
+});
 
-    // BÓVEDA
-    const btnIrABoveda = document.getElementById("btnIrABoveda");
-    const propagarModal = document.getElementById("propagarModal");
-    const protocoloModal = document.getElementById("protocoloModal");
-    const closeProtocoloBtn = document.querySelector(".close-protocolo");
+document.getElementById('btnVolverAlbum').addEventListener('click', () => {
+    closeModal('albumModal');
+    if (scWidget) { try { scWidget.pause(); } catch(e) {} }
+    document.getElementById('sc-iframe').src = '';
+});
 
-    if (btnIrABoveda && protocoloModal && propagarModal) {
-        btnIrABoveda.addEventListener("click", () => {
-            closeModal(propagarModal);
-            protocoloModal.style.display = "flex";
-        });
-        closeProtocoloBtn.addEventListener("click", () => {
-            protocoloModal.style.display = "none";
-            resumeUniverse(); // BUG 1 FIX: Descongela los planetas al cerrar la Bóveda
-        });
+// =====================================================
+// MODAL BIO (SOL)
+// =====================================================
+document.getElementById('sun').addEventListener('click', () => {
+    document.getElementById('bioModal').classList.add('show');
+});
+
+// =====================================================
+// CERRAR MODALES
+// =====================================================
+function closeModal(id) {
+    document.getElementById(id).classList.remove('show');
+}
+
+document.querySelectorAll('.close-modal').forEach(btn => {
+    btn.addEventListener('click', () => closeModal(btn.dataset.modal));
+});
+
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal(modal.id);
+    });
+});
+
+// =====================================================
+// BUZÓN (NAVE / TU VOZ)
+// =====================================================
+const reflectionModal = document.getElementById('reflectionModal');
+const reflectionBox = document.getElementById('reflectionBox');
+
+function openReflection() {
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile) {
+        const ship = document.getElementById('btnShip');
+        const rect = ship.getBoundingClientRect();
+        reflectionBox.style.left = Math.min(rect.left, window.innerWidth - 370) + 'px';
+        reflectionBox.style.top = Math.max(rect.top - 280, 20) + 'px';
+    }
+    reflectionModal.classList.add('show');
+    if (window.innerWidth <= 768) {
+        document.getElementById('solarSystem').classList.add('mobile-focus');
+    }
+}
+
+document.getElementById('btnShip').addEventListener('click', openReflection);
+
+document.getElementById('closeReflection').addEventListener('click', () => {
+    reflectionModal.classList.remove('show');
+    document.getElementById('solarSystem').classList.remove('mobile-focus');
+});
+
+reflectionModal.addEventListener('click', (e) => {
+    if (e.target === reflectionModal) {
+        reflectionModal.classList.remove('show');
+        document.getElementById('solarSystem').classList.remove('mobile-focus');
+    }
+});
+
+document.getElementById('reflectionForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('reflectionMsg').value.trim();
+    if (!msg) return;
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✅ ¡Gracias por tu reflexión!';
+    btn.disabled = true;
+    setTimeout(() => {
+        document.getElementById('reflectionMsg').value = '';
+        btn.textContent = '🚀 Enviar Reflexión';
+        btn.disabled = false;
+        reflectionModal.classList.remove('show');
+        document.getElementById('solarSystem').classList.remove('mobile-focus');
+    }, 2500);
+});
+
+// =====================================================
+// PANEL HOLOGRÁFICO (SATÉLITE)
+// =====================================================
+const hologramModal = document.getElementById('hologramModal');
+
+function buildSupportCards() {
+    const grid = document.getElementById('supportGrid');
+    grid.innerHTML = `
+        <div class="support-card">
+            <div class="card-icon">🎵</div>
+            <h3>Escucha & Comparte</h3>
+            <p>Cada reproducción y cada share nos ayuda a llegar a más personas.</p>
+            <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" rel="noopener" class="holo-btn">Abrir en Spotify</a>
+        </div>
+        <div class="support-card">
+            <div class="card-icon">❤️</div>
+            <h3>Síguenos</h3>
+            <p>Síguenos en todas las plataformas para no perderte ningún lanzamiento.</p>
+            <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" rel="noopener" class="holo-btn">Instagram</a>
+        </div>
+        <div class="support-card">
+            <div class="card-icon">📢</div>
+            <h3>Comparte el Mensaje</h3>
+            <p>Comparte nuestra música con alguien que necesite escuchar la verdad.</p>
+            <button class="holo-btn" onclick="navigator.share ? navigator.share({title:'Reflexión Musical MX', url:'https://reflexionmusicalmx.com'}) : navigator.clipboard.writeText('https://reflexionmusicalmx.com')">Compartir sitio</button>
+        </div>
+    `;
+}
+
+document.getElementById('btnSatelite').addEventListener('click', () => {
+    buildSupportCards();
+    hologramModal.style.display = 'flex';
+});
+
+document.getElementById('closeHologram').addEventListener('click', () => {
+    hologramModal.style.display = 'none';
+});
+
+hologramModal.addEventListener('click', (e) => {
+    if (e.target === hologramModal) hologramModal.style.display = 'none';
+});
+
+// =====================================================
+// COMETAS
+// =====================================================
+COMETS.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'comet-container';
+    el.style.left = c.x;
+    el.style.top = c.y;
+
+    const head = document.createElement('div');
+    head.className = 'comet-head';
+
+    const tail = document.createElement('div');
+    tail.className = 'comet-tail';
+    tail.style.transform = `rotate(${c.angle}deg)`;
+
+    const text = document.createElement('div');
+    text.className = 'comet-text';
+    text.textContent = c.text;
+
+    el.appendChild(head);
+    el.appendChild(tail);
+    el.appendChild(text);
+    document.getElementById('starContainer').appendChild(el);
+
+    el.addEventListener('click', () => {
+        el.classList.toggle('revealed');
+        setTimeout(() => el.classList.remove('revealed'), 3500);
+    });
+});
+
+// =====================================================
+// SUPERNOVAS
+// =====================================================
+SUPERNOVAS.forEach(s => {
+    const hitbox = document.createElement('div');
+    hitbox.className = 'supernova-hitbox';
+    hitbox.style.left = s.x;
+    hitbox.style.top = s.y;
+    hitbox.title = s.msg;
+
+    const nova = document.createElement('div');
+    nova.className = 'supernova';
+    const ray = document.createElement('div');
+    ray.className = 'ray-x';
+    nova.appendChild(ray);
+    hitbox.appendChild(nova);
+    document.getElementById('starContainer').appendChild(hitbox);
+
+    hitbox.addEventListener('click', () => {
+        const toast = document.createElement('div');
+        toast.style.cssText = `position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:rgba(0,0,0,0.9);border:1px solid gold;color:#FFD700;padding:12px 24px;border-radius:10px;font-size:14px;z-index:999999;pointer-events:none;transition:opacity 0.5s;`;
+        toast.textContent = s.msg;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 2500);
+    });
+});
+
+// =====================================================
+// DRAG / PAN DEL SISTEMA SOLAR
+// =====================================================
+(function initDrag() {
+    const sys = document.getElementById('solarSystem');
+    let dragging = false, startX, startY, offX = 0, offY = 0, curX = 0, curY = 0;
+    const MAX = 300;
+
+    function clamp(v) { return Math.max(-MAX, Math.min(MAX, v)); }
+    function applyTransform() {
+        const scale = window.innerWidth <= 768 ? 0.45 : 1;
+        sys.style.transform = `scale(${scale}) translate(${curX}px, ${curY}px)`;
     }
 
-    // CARRUSEL QR
-    const qrContainer = document.getElementById('qrContainer');
-    const prevQr = document.getElementById('prevQr');
-    const nextQr = document.getElementById('nextQr');
-    if (prevQr && nextQr && qrContainer) {
-        prevQr.addEventListener('click', () => qrContainer.scrollBy({ left: -200, behavior: 'smooth' }));
-        nextQr.addEventListener('click', () => qrContainer.scrollBy({ left: 200, behavior: 'smooth' }));
+    sys.addEventListener('mousedown', e => {
+        if (e.target.closest('.planet, #sun, #btnShip, #btnSatelite')) return;
+        dragging = true; startX = e.clientX - offX; startY = e.clientY - offY;
+        sys.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        curX = clamp(e.clientX - startX); curY = clamp(e.clientY - startY);
+        offX = curX; offY = curY;
+        applyTransform();
+    });
+    window.addEventListener('mouseup', () => { dragging = false; sys.style.cursor = ''; });
+
+    // Touch
+    sys.addEventListener('touchstart', e => {
+        if (e.target.closest('.planet, #sun, #btnShip, #btnSatelite')) return;
+        if (e.touches.length !== 1) return;
+        dragging = true;
+        startX = e.touches[0].clientX - offX;
+        startY = e.touches[0].clientY - offY;
+    }, { passive: true });
+    window.addEventListener('touchmove', e => {
+        if (!dragging || e.touches.length !== 1) return;
+        curX = clamp(e.touches[0].clientX - startX);
+        curY = clamp(e.touches[0].clientY - startY);
+        offX = curX; offY = curY;
+        applyTransform();
+    }, { passive: true });
+    window.addEventListener('touchend', () => { dragging = false; });
+})();
+
+// =====================================================
+// CORAZONES AL HACER DOBLE CLIC EN EL SOL
+// =====================================================
+document.getElementById('sun').addEventListener('dblclick', (e) => {
+    for (let i = 0; i < 6; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-bubble';
+        heart.textContent = '❤️';
+        heart.style.left = (e.clientX + (Math.random() - 0.5) * 60) + 'px';
+        heart.style.top = e.clientY + 'px';
+        document.body.appendChild(heart);
+        heart.animate([
+            { transform: 'translateY(0) scale(1)', opacity: 1 },
+            { transform: `translateY(-${80 + Math.random() * 60}px) scale(${0.5 + Math.random()})`, opacity: 0 }
+        ], { duration: 1200 + Math.random() * 600, easing: 'ease-out' }).onfinish = () => heart.remove();
     }
+});
 
-    // FORMULARIO BÓVEDA
-    const formProtocolo = document.getElementById("formProtocolo");
-    const btnEnviarForm = document.getElementById("btnEnviarForm");
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyazt2Sc1QS5zhBtdp65qUktkCSTN5rcDor7I01ndkyfG5u7ncSsVgiF55gZ5gRGPvI/exec";
-
-    if (formProtocolo) {
-        formProtocolo.addEventListener("submit", (e) => {
-            e.preventDefault();
-            btnEnviarForm.textContent = "TRANSMITIENDO...";
-            btnEnviarForm.style.opacity = "0.7";
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: new FormData(formProtocolo), mode: "no-cors" })
-                .then(() => {
-                    btnEnviarForm.textContent = "¡TRANSMISIÓN RECIBIDA!";
-                    btnEnviarForm.style.background = "#FFD700";
-                    btnEnviarForm.style.color = "#000";
-                    setTimeout(() => {
-                        formProtocolo.reset();
-                        protocoloModal.style.display = "none";
-                        btnEnviarForm.textContent = "ENVIAR SOLICITUD DE ACCESO";
-                        btnEnviarForm.style.background = "transparent";
-                        btnEnviarForm.style.color = "#FFD700";
-                        btnEnviarForm.style.opacity = "1";
-                    }, 2500);
-                })
-                .catch(() => { btnEnviarForm.textContent = "ERROR AL CONECTAR"; });
-        });
-    }
-
-}); // FIN DOMContentLoaded
+// =====================================================
+// ESCAPE PARA CERRAR MODALES
+// =====================================================
+document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    ['bioModal','albumModal'].forEach(id => closeModal(id));
+    reflectionModal.classList.remove('show');
+    document.getElementById('solarSystem').classList.remove('mobile-focus');
+    hologramModal.style.display = 'none';
+    if (scWidget) { try { scWidget.pause(); } catch(err) {} }
+});
 </script>
 </body>
 </html>
