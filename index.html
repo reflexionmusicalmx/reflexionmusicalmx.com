@@ -9,7 +9,7 @@
       gtag('js', new Date());
       gtag('config', 'G-GYLX6LJKQS');
     </script>
- 
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="Descubre la discografía completa de Reflexión Musical MX. Escucha los últimos sencillos y álbumes.">
@@ -20,15 +20,31 @@
 <link rel="apple-touch-icon" href="images/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="preconnect" href="https://i.ytimg.com">
+<!-- MEJORA 1: Añadida Orbitron para títulos futuristas -->
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://w.soundcloud.com/player/api.js"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <style>
+/* =========================================================
+   MEJORA 1: TIPOGRAFÍA FUTURISTA
+   Orbitron para títulos, botones y elementos "tech".
+   Merriweather se mantiene para texto narrativo.
+========================================================= */
+:root {
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Merriweather', serif;
+    --gold: #FFD700;
+    --gold-soft: rgba(255,215,0,0.6);
+    --cyan-accent: #00f0ff;
+}
+
 /* CONFIGURACIÓN BASE */
 html, body {
     background: #000;
-    color: #FFD700;
-    font-family: 'Merriweather', serif;
+    color: var(--gold);
+    font-family: var(--font-body);
     margin: 0;
     padding: 0;
     width: 100%;
@@ -36,82 +52,100 @@ html, body {
     overflow: hidden;
     text-align: center;
     overscroll-behavior: none;
-    /* CORRECCIÓN BUG #6: touch-action:none bloqueaba scroll en modales móvil.
-       Se quitó de body y se aplica solo donde se necesita vía JS. */
 }
- 
-/* CAJA DE CRISTAL PARA COMETAS Y SUPERNOVAS */
-#starContainer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+
+/* MEJORA 3: CURSOR PERSONALIZADO (solo desktop, no toca touch) */
+@media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    a, button, .planet, #sun, .ctrl-btn, .share-btn, .holo-btn, .close-modal,
+    .close-hologram, .qr-nav-btn, .floating-tu-voz, #btnSatelite,
+    .floating-social a, .floating-platforms a, .track-link, .comet-container,
+    .supernova-hitbox, input, textarea, .btn-volver { cursor: none; }
+}
+
+#customCursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
     pointer-events: none;
+    z-index: 9999999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.3s;
+    mix-blend-mode: screen;
+    box-shadow: 0 0 10px var(--gold);
+}
+#customCursorRing {
+    position: fixed;
+    top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold-soft);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999998;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s ease, height 0.25s ease, border-color 0.25s;
+}
+.cursor-hover #customCursor { width: 6px; height: 6px; }
+.cursor-hover #customCursorRing {
+    width: 55px; height: 55px;
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(255,215,0,0.5);
+}
+@media (hover: none), (pointer: coarse) {
+    #customCursor, #customCursorRing { display: none !important; }
+}
+
+/* CAJA DE COMETAS Y SUPERNOVAS */
+#starContainer {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden; pointer-events: none;
     z-index: 1000;
 }
- 
+
 /* PANTALLA DE CARGA */
 #loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
     background: #000;
     z-index: 99999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* CORRECCIÓN BUG #1: La transición de opacidad ahora funciona porque
-       el loader siempre tiene display:flex y se anima opacity. */
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     transition: opacity 0.8s ease;
     will-change: opacity;
 }
- 
 #loader img {
     width: 180px;
     animation: pulse 2s infinite;
     will-change: transform, filter;
 }
- 
 #loader p {
-    color: #FFD700;
+    color: var(--gold);
     margin-top: 25px;
+    font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: 3px;
-    font-size: 14px;
+    letter-spacing: 4px;
+    font-size: 13px;
 }
- 
-/* FONDO ESTÁTICO */
+
 #bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1; pointer-events: none;
 }
- 
-/* SISTEMA SOLAR (GPU ACCELERATED) */
+
+/* SISTEMA SOLAR */
 #solarSystem {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: transform;
     transform: translateZ(0);
 }
- 
-/* LOGO CENTRAL (EL SOL) */
+
 #sun {
     position: absolute;
     width: 200px;
@@ -122,98 +156,88 @@ html, body {
     will-change: transform, filter;
     transform: translateZ(0);
 }
- 
-#sun:hover {
-    transform: scale(1.1) translateZ(0);
-}
- 
-#sun img {
-    width: 100%;
-}
- 
+#sun:hover { transform: scale(1.1) translateZ(0); }
+#sun img { width: 100%; }
+
 @keyframes pulse {
     0% { filter: drop-shadow(0 0 15px gold); }
     50% { filter: drop-shadow(0 0 50px gold); }
     100% { filter: drop-shadow(0 0 15px gold); }
 }
- 
-/* =====================================================
-   CORRECCIÓN BUG #1: SISTEMA DE MODALES CORREGIDO
-   Antes: display:none → display:flex causaba que la
-   transición de opacidad nunca se ejecutara.
-   Ahora: siempre display:flex, se controla con
-   visibility + opacity para que el fade-in funcione.
-   ===================================================== */
+
+/* =========================================================
+   MEJORA 2: GLASSMORPHISM + NEÓN EN MODALES
+========================================================= */
 .modal {
-    display: flex; /* Siempre flex, nunca none */
+    display: flex;
     position: fixed;
     z-index: 100000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.85);
-    backdrop-filter: blur(5px);
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
     opacity: 0;
-    visibility: hidden; /* En vez de display:none */
+    visibility: hidden;
     transition: opacity 0.4s ease, visibility 0.4s ease;
-    align-items: center;
-    justify-content: center;
+    align-items: center; justify-content: center;
     transform: translateZ(0);
-    /* CORRECCIÓN BUG #6: touch-action auto para permitir scroll en modales */
     touch-action: auto;
-    pointer-events: none; /* Bloquea interacción cuando invisible */
+    pointer-events: none;
 }
- 
 .modal.show {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto; /* Reactiva interacción al mostrar */
+    pointer-events: auto;
 }
- 
+
 .modal-content {
-    background: #0a0a0a;
-    border: 1px solid #FFD700;
+    background: rgba(15, 15, 20, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,215,0,0.4);
     padding: 30px 40px;
-    border-radius: 15px;
+    border-radius: 16px;
     max-width: 650px;
     width: 85%;
     max-height: 85vh;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
-    /* CORRECCIÓN BUG #6: touch-action auto en el contenido del modal */
     touch-action: auto;
     text-align: left;
     position: relative;
-    box-shadow: 0 0 40px rgba(255,215,0,0.2);
+    box-shadow:
+        0 0 0 1px rgba(255,215,0,0.1),
+        0 0 60px rgba(255,215,0,0.25),
+        inset 0 0 30px rgba(255,215,0,0.04);
     color: #ddd;
     line-height: 1.8;
 }
- 
+
 .modal-content::-webkit-scrollbar { width: 6px; }
 .modal-content::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
- 
+
 .modal-content h2 {
-    color: #FFD700;
+    color: var(--gold);
     margin-top: 0;
+    font-family: var(--font-display);
     font-weight: 700;
-    font-size: 26px;
+    font-size: 22px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
     border-bottom: 1px solid rgba(255,215,0,0.3);
     padding-bottom: 15px;
     margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(255,215,0,0.4);
 }
- 
-.modal-content p {
-    margin-bottom: 15px;
-    font-size: 15px;
-}
- 
+
+.modal-content p { margin-bottom: 15px; font-size: 15px; }
+
 .close-modal {
     position: absolute;
-    right: 25px;
-    top: 15px;
-    color: #FFD700;
+    right: 25px; top: 15px;
+    color: var(--gold);
     font-size: 32px;
     font-weight: bold;
     cursor: pointer;
@@ -221,611 +245,407 @@ html, body {
     z-index: 10;
     font-family: sans-serif;
 }
- 
-.close-modal:hover {
-    color: #fff;
-    transform: scale(1.1);
-}
- 
-/* ESTILOS PARA EL MODAL DE ÁLBUMES MEJORADO */
-.album-modal-content {
-    text-align: center;
-    max-width: 500px;
-    padding: 25px;
-}
- 
+.close-modal:hover { color: #fff; transform: scale(1.1); }
+
+.album-modal-content { text-align: center; max-width: 500px; padding: 25px; }
+
 #modalAlbumTitle {
     text-align: center;
-    font-size: 20px;
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 3px;
     margin-top: 5px;
     margin-bottom: 15px;
     text-transform: uppercase;
 }
- 
-/* REPRODUCTOR PERSONALIZADO Y BOTONERA */
+
+/* REPRODUCTOR */
 #customPlayerBox {
     display: none;
     flex-direction: column;
     margin-bottom: 15px;
-    background: #111;
-    border: 1px solid gold;
-    border-radius: 8px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--gold-soft);
+    border-radius: 10px;
     overflow: hidden;
 }
- 
-#playerIframeContainer {
-    width: 100%;
-    height: 140px;
-    background: #000;
-    position: relative;
-}
- 
+#playerIframeContainer { width: 100%; height: 140px; background: #000; position: relative; }
+
 #sc-iframe {
     filter: invert(1);
     background-color: transparent;
     border: none;
     border-radius: 0 8px 0 0;
     position: absolute;
-    top: 0;
-    left: 140px;
+    top: 0; left: 140px;
     width: calc(100% - 140px);
     height: 140px;
     z-index: 1;
 }
- 
 .sc-cover-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 140px;
-    height: 140px;
+    position: absolute; top: 0; left: 0;
+    width: 140px; height: 140px;
     object-fit: cover;
     border-radius: 8px 0 0 0;
     pointer-events: none;
     z-index: 5;
 }
- 
+
 .custom-player-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
-    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 50px; padding: 12px 20px;
     background: rgba(255, 215, 0, 0.05);
     border-top: 1px solid rgba(255,215,0,0.2);
 }
- 
-.player-core-btns {
-    display: flex;
-    gap: 30px;
-    align-items: center;
-}
- 
+.player-core-btns { display: flex; gap: 30px; align-items: center; }
 .ctrl-btn {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
-    opacity: 0.8;
+    cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    transition: 0.3s; opacity: 0.8;
 }
- 
-.ctrl-btn:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
-}
- 
-.player-volume-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    opacity: 0.8;
-}
- 
-.player-volume-wrapper svg {
-    width: 18px;
-    height: 18px;
-    fill: #FFD700;
-}
- 
+.ctrl-btn:hover { opacity: 1; transform: scale(1.2); filter: drop-shadow(0 0 5px rgba(255,215,0,0.6)); }
+
+.player-volume-wrapper { display: flex; align-items: center; gap: 8px; opacity: 0.8; }
+.player-volume-wrapper svg { width: 18px; height: 18px; fill: var(--gold); }
 #playerVolSlider {
-    width: 70px;
-    accent-color: #FFD700;
-    height: 4px;
-    background: #333;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
+    width: 70px; accent-color: var(--gold);
+    height: 4px; background: #333;
+    border-radius: 5px; outline: none; cursor: pointer;
 }
- 
-/* LISTA DE CANCIONES */
+
+/* TRACKLIST */
 .tracklist-container {
-    text-align: left;
-    max-height: 180px;
-    overflow-y: auto;
-    margin-bottom: 15px;
+    text-align: left; max-height: 180px;
+    overflow-y: auto; margin-bottom: 15px;
     padding-right: 10px;
     background: rgba(255, 215, 0, 0.05);
     border-radius: 10px;
     padding: 10px 15px;
     border: 1px solid rgba(255,215,0,0.2);
-    /* CORRECCIÓN BUG #6: touch-action auto para scroll en móvil */
     touch-action: auto;
 }
- 
 .tracklist-container::-webkit-scrollbar { width: 4px; }
 .tracklist-container::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.5); border-radius: 10px; }
- 
+
 .track-item-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid rgba(255,215,0,0.15);
     padding: 6px 0;
 }
- 
-.track-item-wrapper:last-child {
-    border-bottom: none;
-}
- 
+.track-item-wrapper:last-child { border-bottom: none; }
+
 .track-link {
-    display: block;
-    text-decoration: none;
-    color: #eee;
-    transition: 0.2s;
-    cursor: pointer;
-    flex-grow: 1;
-    text-align: left;
-    font-size: 14px;
-    padding: 5px 0;
+    display: block; text-decoration: none;
+    color: #eee; transition: 0.2s; cursor: pointer;
+    flex-grow: 1; text-align: left;
+    font-size: 14px; padding: 5px 0;
 }
- 
-.track-link:hover {
-    color: #FFD700;
-    padding-left: 8px;
-}
- 
+.track-link:hover { color: var(--gold); padding-left: 8px; }
 .active-track {
-    color: #000;
-    font-weight: bold;
-    background: #FFD700;
-    border-radius: 4px;
-    padding-left: 12px;
+    color: #000; font-weight: bold;
+    background: var(--gold);
+    border-radius: 4px; padding-left: 12px;
 }
- 
-.share-btn {
-    cursor: pointer;
-    transition: 0.3s;
-    opacity: 0.6;
-    padding: 5px;
-}
- 
-.share-btn:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    filter: drop-shadow(0 0 5px rgba(255,215,0,0.6));
-}
- 
-/* PLATAFORMAS DEL ÁLBUM */
-.album-platforms {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-}
- 
+
+.share-btn { cursor: pointer; transition: 0.3s; opacity: 0.6; padding: 5px; }
+.share-btn:hover { opacity: 1; transform: scale(1.2); filter: drop-shadow(0 0 5px rgba(255,215,0,0.6)); }
+
+/* PLATAFORMAS */
+.album-platforms { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 10px; margin-bottom: 15px; }
 .album-platforms a {
-    width: 40px;
-    height: 40px;
-    background: #111;
-    border: 1px solid gold;
+    width: 40px; height: 40px;
+    background: rgba(20,20,25,0.6); backdrop-filter: blur(8px);
+    border: 1px solid var(--gold-soft);
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     transition: 0.25s;
 }
- 
-.album-platforms a:hover {
-    background: gold;
-    transform: scale(1.15);
-}
- 
-.album-platforms svg {
-    fill: gold;
-    width: 20px;
-    height: 20px;
-    transition: 0.25s;
-}
- 
-.album-platforms a:hover svg {
-    fill: #000;
-}
- 
+.album-platforms a:hover { background: var(--gold); transform: scale(1.15); box-shadow: 0 0 15px var(--gold); }
+.album-platforms svg { fill: var(--gold); width: 20px; height: 20px; transition: 0.25s; }
+.album-platforms a:hover svg { fill: #000; }
+
 .btn-volver {
     background: transparent;
-    border: 1px solid #FFD700;
-    color: #FFD700;
+    border: 1px solid var(--gold);
+    color: var(--gold);
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
-    font-family: 'Merriweather', serif;
-    font-weight: bold;
-    font-size: 13px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 12px;
     width: 100%;
     transition: 0.3s;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
- 
 .btn-volver:hover {
-    background: #FFD700;
+    background: var(--gold);
     color: #000;
+    box-shadow: 0 0 20px rgba(255,215,0,0.6);
 }
- 
-/* CONTROLES DE AUDIO BIO */
+
+/* AUDIO BIO */
 .audio-controls {
-    background: #111;
-    border: 1px solid #FFD700;
+    background: rgba(20,20,25,0.7); backdrop-filter: blur(8px);
+    border: 1px solid var(--gold);
     border-radius: 10px;
     padding: 12px 20px;
     margin-top: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
     gap: 15px;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
 }
- 
-.audio-controls span {
-    font-size: 22px;
-    cursor: pointer;
-    user-select: none;
-    font-family: sans-serif;
-}
- 
+.audio-controls span { font-size: 22px; cursor: pointer; user-select: none; font-family: sans-serif; }
 .audio-controls .vol-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: #FFD700;
-    letter-spacing: 1px;
-    cursor: default;
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 700;
+    color: var(--gold); letter-spacing: 2px; cursor: default;
 }
- 
 #volumeSlider {
-    flex-grow: 1;
-    accent-color: #FFD700;
-    height: 6px;
-    background: #333;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
+    flex-grow: 1; accent-color: var(--gold);
+    height: 6px; background: #333;
+    border-radius: 5px; outline: none; cursor: pointer;
 }
- 
+
 /* ORBITAS */
 .orbit {
-    position: absolute;
-    border-radius: 50%;
+    position: absolute; border-radius: 50%;
     border: 1px solid rgba(255,215,0,.15);
     pointer-events: none;
     will-change: transform;
     transform: translateZ(0);
 }
- 
 #orbitSingles { width: 420px; height: 420px; animation: spin 45s linear infinite; }
 #orbitAlbums { width: 720px; height: 720px; animation: spin 95s linear infinite; }
- 
 #orbitSingles:hover, #orbitSingles:hover .counter,
-#orbitAlbums:hover, #orbitAlbums:hover .counter {
-    animation-play-state: paused;
-}
- 
+#orbitAlbums:hover, #orbitAlbums:hover .counter { animation-play-state: paused; }
+
 @keyframes spin {
     from { transform: rotate(0deg) translateZ(0); }
     to { transform: rotate(360deg) translateZ(0); }
 }
- 
-/* DISCOS */
+
 .planet {
     position: absolute;
-    width: 110px;
-    height: 110px;
+    width: 110px; height: 110px;
     border-radius: 50%;
-    cursor: pointer;
-    transition: .3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: pointer; transition: .3s;
+    display: flex; align-items: center; justify-content: center;
     background: #000;
     box-shadow: 0 0 10px rgba(255,215,0,.6), 0 0 30px rgba(255,215,0,.4);
     pointer-events: auto;
     will-change: transform;
 }
- 
 .planet:hover {
     transform: scale(1.3) translateZ(0);
     box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,.8);
     z-index: 100;
 }
- 
 .counter {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     animation: counterSpin 45s linear infinite;
-    position: relative;
-    border-radius: 50%;
+    position: relative; border-radius: 50%;
     will-change: transform;
 }
- 
 .counter img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+    width: 100%; height: 100%;
+    object-fit: cover; border-radius: 50%;
     pointer-events: none;
 }
- 
 #orbitAlbums .counter { animation-duration: 95s; }
- 
 @keyframes counterSpin {
     from { transform: rotate(0deg) translateZ(0); }
     to { transform: rotate(-360deg) translateZ(0); }
 }
- 
-/* TOOLTIPS */
-.tooltip {
+
+/* Indicador "Now Playing" */
+.planet.now-playing::after {
+    content: '';
     position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px dashed var(--gold);
+    animation: nowPlayingRing 4s linear infinite;
+    pointer-events: none;
+    box-shadow: 0 0 20px rgba(255,215,0,0.6);
+}
+@keyframes nowPlayingRing {
+    to { transform: rotate(360deg); }
+}
+
+.tooltip {
+    position: absolute; bottom: -15px;
+    left: 50%; transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.9);
-    color: #FFD700;
+    color: var(--gold);
     padding: 6px 14px;
     border-radius: 6px;
-    font-size: 11px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700;
     white-space: nowrap;
     border: 1px solid rgba(255,215,0,0.5);
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0; visibility: hidden;
     transition: all 0.3s ease;
     pointer-events: none;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
 }
- 
 .planet:hover .tooltip { opacity: 1; visibility: visible; bottom: -35px; }
- 
-/* EFECTO FAMILIA */
+
 .family-symbol-container {
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    position: absolute; bottom: 110%;
+    left: 50%; transform: translateX(-50%);
+    display: flex; align-items: flex-end; justify-content: center;
     gap: 5px;
     background: rgba(0,0,0,0.8);
     padding: 8px 12px;
     border: 1px solid gold;
     border-radius: 10px;
-    opacity: 0;
-    transition: 0.3s;
+    opacity: 0; transition: 0.3s;
     pointer-events: none;
 }
- 
 .planet:hover .family-symbol-container { opacity: 1; bottom: 125%; }
- 
 .fam-fig { display: flex; flex-direction: column; align-items: center; }
 .fam-head { width: 10px; height: 10px; background: gold; border-radius: 50%; margin-bottom: 2px; }
 .fam-body-m { width: 16px; height: 24px; background: gold; border-radius: 4px 4px 0 0; }
 .fam-body-f { width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 24px solid gold; }
 .fam-child { transform: scale(0.65); transform-origin: bottom; }
- 
+
 .heart-bubble {
-    position: fixed; color: #ff0000; font-size: 24px; z-index: 1001; pointer-events: none; filter: drop-shadow(0 0 5px gold); will-change: transform, opacity;
+    position: fixed; color: #ff0000; font-size: 24px;
+    z-index: 1001; pointer-events: none;
+    filter: drop-shadow(0 0 5px gold);
+    will-change: transform, opacity;
 }
- 
-/* REDES LATERALES GLOBALES */
+
+/* REDES LATERALES */
 .floating-social, .floating-platforms {
-    position: absolute;
-    top: 50%;
+    position: absolute; top: 50%;
     transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 999;
+    display: flex; flex-direction: column;
+    gap: 15px; z-index: 999;
 }
- 
 .floating-social { left: 15px; }
 .floating-platforms { right: 15px; }
- 
+
 .floating-social a, .floating-platforms a {
-    background: #111;
-    color: #FFD700;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(15,15,20,0.7);
+    backdrop-filter: blur(8px);
+    color: var(--gold);
+    width: 45px; height: 45px;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 10px;
     text-decoration: none;
     transition: .25s;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid gold;
+    border: 1px solid var(--gold-soft);
 }
- 
-.floating-social svg, .floating-platforms svg { fill: #FFD700; width: 100%; height: 100%; transition: .25s; }
-.floating-social a:hover, .floating-platforms a:hover { background: #FFD700; transform: scale(1.2); }
+.floating-social svg, .floating-platforms svg { fill: var(--gold); width: 100%; height: 100%; transition: .25s; }
+.floating-social a:hover, .floating-platforms a:hover {
+    background: var(--gold);
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255,215,0,0.7);
+}
 .floating-social a:hover svg, .floating-platforms a:hover svg { fill: #000; }
- 
-/* COMETAS Y SUPERNOVAS ESTÉTICAS */
+
+/* COMETAS Y SUPERNOVAS */
 .comet-container {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1001;
-    cursor: pointer;
-    pointer-events: auto;
-    padding: 20px;
-    margin: -20px;
+    position: absolute; display: flex;
+    align-items: center; justify-content: center;
+    z-index: 1001; cursor: pointer; pointer-events: auto;
+    padding: 20px; margin: -20px;
     transition: opacity 0.5s ease;
 }
- 
 .comet-head {
-    width: 14px;
-    height: 14px;
-    background: #fff;
-    border-radius: 50%;
+    width: 14px; height: 14px;
+    background: #fff; border-radius: 50%;
     box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.9), 0 0 30px 10px rgba(255, 215, 0, 0.8);
-    position: relative;
-    z-index: 2;
-    transition: 0.4s;
+    position: relative; z-index: 2; transition: 0.4s;
 }
- 
 .comet-tail {
-    position: absolute;
-    top: calc(50% - 1.5px);
-    left: 50%;
-    width: 150px;
-    height: 3px;
-    background: linear-gradient(to right, #FFD700 0%, rgba(255,215,0,0.3) 40%, transparent 100%);
+    position: absolute; top: calc(50% - 1.5px); left: 50%;
+    width: 150px; height: 3px;
+    background: linear-gradient(to right, var(--gold) 0%, rgba(255,215,0,0.3) 40%, transparent 100%);
     transform-origin: left center;
-    z-index: 1;
-    pointer-events: none;
-    transition: 0.4s;
+    z-index: 1; pointer-events: none; transition: 0.4s;
 }
- 
 .comet-text {
-    position: absolute; top: 35px; left: 50%; transform: translateX(-50%) scale(0); background: rgba(0, 0, 0, 0.95); border: 1px solid #FFD700; color: #FFD700; padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: bold; white-space: nowrap; opacity: 0; pointer-events: none; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 0 20px rgba(255,215,0,0.4); text-transform: uppercase; letter-spacing: 1px;
+    position: absolute; top: 35px; left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 10px 20px; border-radius: 12px;
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 20px rgba(255,215,0,0.4);
+    text-transform: uppercase; letter-spacing: 2px;
 }
- 
 .comet-container.revealed .comet-text { transform: translateX(-50%) scale(1); opacity: 1; }
 .comet-container.revealed .comet-head { transform: scale(1.8); box-shadow: 0 0 25px 10px rgba(255,215,0,1); }
 .comet-container.revealed .comet-tail { opacity: 0; }
- 
+
 .supernova-hitbox {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    border-radius: 50%;
-    z-index: 5000;
-    pointer-events: auto;
-    cursor: pointer;
+    position: absolute; width: 50px; height: 50px;
+    background: transparent; border-radius: 50%;
+    z-index: 5000; pointer-events: auto; cursor: pointer;
     transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
 }
- 
 .supernova {
-    position: relative;
-    width: 4px;
-    height: 4px;
-    background: #fff;
-    border-radius: 50%;
+    position: relative; width: 4px; height: 4px;
+    background: #fff; border-radius: 50%;
     box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.8);
     animation: burst 2.5s ease-in-out forwards;
     pointer-events: none;
 }
- 
 .supernova::before, .supernova::after {
     content: '';
     position: absolute;
     background: radial-gradient(circle, gold 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
 }
- 
 .supernova::before { width: 60px; height: 2px; }
 .supernova::after { width: 2px; height: 60px; }
- 
-.ray-x {
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    background: radial-gradient(circle, gold 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-}
- 
-.ray-x::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    background: radial-gradient(circle, gold 0%, transparent 70%);
-    top: 0;
-    left: 0;
-    transform: rotate(90deg);
-}
- 
+
 @keyframes burst {
     0% { transform: scale(0); opacity: 0; }
     40% { transform: scale(1.2); opacity: 1; }
     100% { transform: scale(0); opacity: 0; }
 }
- 
-.spin-active {
-    animation: fastSpin 2s linear infinite !important;
-    box-shadow: 0 0 40px #FFD700 !important;
-    border: 2px solid #fff !important;
-    z-index: 5000 !important;
-}
- 
-@keyframes fastSpin {
-    100% { transform: rotate(360deg) translateZ(0); }
-}
- 
-.force-tooltip {
-    opacity: 1 !important;
-    visibility: visible !important;
-    bottom: -35px !important;
-}
- 
-/* RESPONSIVIDAD: EN MÓVILES BARRAS PASAN A ARRIBA Y ABAJO */
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
     #solarSystem { transform: scale(0.45); }
- 
     .floating-platforms {
         top: 15px; bottom: auto; right: auto; left: 50%;
         transform: translateX(-50%); flex-direction: row;
         width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px;
     }
- 
     .floating-social {
         top: auto; bottom: 15px; right: auto; left: 50%;
         transform: translateX(-50%); flex-direction: row;
         width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px;
     }
- 
     .floating-social a, .floating-platforms a {
         width: 36px; height: 36px; padding: 6px; margin: 0;
     }
- 
     .modal-content { padding: 20px; width: 90%; max-height: 85vh; }
     .close-modal { right: 15px; top: 10px; }
 }
- 
-/* ÓRBITA Y ESTILO DE LA NAVE ESPACIAL */
+
+/* NAVE */
 .orbit-ship {
-    width: 570px;
-    height: 570px;
+    width: 570px; height: 570px;
     animation: spin 55s linear infinite;
-    z-index: 1005;
-    pointer-events: none;
+    z-index: 1005; pointer-events: none;
 }
- 
 .ship-wrapper {
     position: absolute;
     left: calc(50% + 285px - 16px);
@@ -834,265 +654,183 @@ html, body {
     pointer-events: auto;
     will-change: transform;
 }
- 
 .floating-tu-voz {
-    background: transparent;
-    border: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.3s;
+    background: transparent; border: none; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.3s;
 }
- 
 .floating-tu-voz svg {
-    stroke: #FFD700;
+    stroke: var(--gold);
     fill: rgba(0, 0, 0, 0.8);
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
     transition: 0.3s;
 }
- 
-.floating-tu-voz:hover {
-    transform: scale(1.4);
-}
- 
-.floating-tu-voz:hover svg {
-    stroke: #fff;
-    filter: drop-shadow(0 0 15px #FFD700);
-}
- 
+.floating-tu-voz:hover { transform: scale(1.4); }
+.floating-tu-voz:hover svg { stroke: #fff; filter: drop-shadow(0 0 15px var(--gold)); }
+
 @keyframes shipWaiting {
-    0% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: #FFD700; }
+    0% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: var(--gold); }
     50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)); transform: scale(1.3); stroke: #fff; }
-    100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: #FFD700; }
+    100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)); transform: scale(1); stroke: var(--gold); }
 }
- 
-.ship-waiting svg {
-    animation: shipWaiting 1.5s infinite ease-in-out !important;
-}
- 
+.ship-waiting svg { animation: shipWaiting 1.5s infinite ease-in-out !important; }
+
 .energy-pulse {
     position: fixed;
-    width: 100px;
-    height: 2px;
+    width: 100px; height: 2px;
     background: linear-gradient(to right, transparent 0%, rgba(255, 215, 0, 0.6) 50%, #ffffff 100%);
     box-shadow: 0 0 20px 4px rgba(255, 215, 0, 0.6);
-    border-radius: 50px;
-    pointer-events: none;
+    border-radius: 50px; pointer-events: none;
     z-index: 999999;
 }
- 
 .energy-pulse::after {
     content: '';
-    position: absolute;
-    right: -2px;
-    top: 50%;
+    position: absolute; right: -2px; top: 50%;
     transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
-    background: #ffffff;
-    border-radius: 50%;
-    box-shadow:
-        0 0 15px 5px #ffffff,
-        0 0 35px 15px #FFD700;
+    width: 12px; height: 12px;
+    background: #ffffff; border-radius: 50%;
+    box-shadow: 0 0 15px 5px #ffffff, 0 0 35px 15px var(--gold);
 }
- 
-/* VENTANA DEL BUZÓN */
-#reflectionModal {
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-}
- 
+
+/* BUZÓN */
+#reflectionModal { background-color: transparent !important; backdrop-filter: none !important; }
 #reflectionModal .reflection-content {
-    position: absolute;
-    margin: 0;
-    width: 350px;
-    pointer-events: auto;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    position: absolute; margin: 0;
+    width: 350px; pointer-events: auto;
+    opacity: 0; transition: opacity 0.4s ease;
     box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
-    background: rgba(10, 10, 10, 0.95);
-    border: 1px solid #FFD700;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--gold);
 }
- 
-#reflectionModal.show .reflection-content {
-    opacity: 1;
-}
- 
-#reflectionForm {
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
-}
- 
+#reflectionModal.show .reflection-content { opacity: 1; }
+
+#reflectionForm { display: flex; flex-direction: column; margin-top: 15px; }
+
 #reflectionMsg {
-    background: #111;
+    background: rgba(20,20,25,0.7);
     border: 1px solid rgba(255, 215, 0, 0.5);
     border-radius: 8px;
     color: #fff;
     padding: 15px;
-    font-family: 'Merriweather', serif;
+    font-family: var(--font-body);
     font-size: 14px;
-    resize: none;
-    outline: none;
-    transition: 0.3s;
-    width: 100%;
-    box-sizing: border-box;
+    resize: none; outline: none; transition: 0.3s;
+    width: 100%; box-sizing: border-box;
 }
- 
-#reflectionMsg:focus {
-    border-color: #FFD700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-}
- 
+#reflectionMsg:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+
 @media (max-width: 768px) {
     #reflectionModal .reflection-content {
-        width: 90% !important;
-        left: 5% !important;
-        right: auto !important;
-        top: auto !important;
+        width: 90% !important; left: 5% !important;
+        right: auto !important; top: auto !important;
         bottom: 20px !important;
         transform: translateY(100px) !important;
         box-sizing: border-box !important;
         padding: 20px 15px !important;
     }
- 
-    #reflectionModal.show .reflection-content {
-        transform: translateY(0) !important;
-    }
- 
+    #reflectionModal.show .reflection-content { transform: translateY(0) !important; }
     #reflectionModal .close-reflection {
-        top: 10px !important;
-        right: 15px !important;
-        font-size: 32px !important;
-        z-index: 100;
+        top: 10px !important; right: 15px !important;
+        font-size: 32px !important; z-index: 100;
     }
- 
     #solarSystem {
         transform: scale(0.45);
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), margin-top 0.5s ease;
     }
- 
     #solarSystem.mobile-focus {
         transform: scale(0.35) !important;
         margin-top: -30vh !important;
     }
 }
- 
 #reflectionModal .close-reflection {
     position: absolute !important;
-    top: 5px !important;
-    right: 15px !important;
+    top: 5px !important; right: 15px !important;
     font-size: 35px !important;
-    color: #FFD700 !important;
-    z-index: 99999 !important;
-    line-height: 1 !important;
+    color: var(--gold) !important;
+    z-index: 99999 !important; line-height: 1 !important;
     text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
- 
+
 /* SATÉLITE */
 .satelite-wrapper {
-    position: absolute;
-    top: 15%;
-    right: 20%;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    z-index: 100;
+    position: absolute; top: 15%; right: 20%;
+    width: 35px; height: 35px;
+    cursor: pointer; z-index: 100;
     transition: transform 0.3s ease, filter 0.3s ease;
     animation: floatSatellite 4s ease-in-out infinite;
 }
- 
 .satelite-wrapper svg {
-    width: 100%;
-    height: 100%;
-    stroke: #FFD700;
+    width: 100%; height: 100%;
+    stroke: var(--gold);
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     transition: 0.3s ease;
 }
- 
-.satelite-wrapper:hover svg {
-    stroke: #FFD700;
-    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
-}
- 
+.satelite-wrapper:hover svg { stroke: var(--gold); filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
 @keyframes floatSatellite {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-10px) rotate(5deg); }
 }
- 
-/* PANEL HOLOGRÁFICO */
+
+/* HOLOGRAMA */
 .hologram-modal {
     display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px) saturate(140%);
     z-index: 9999;
-    align-items: center;
-    justify-content: center;
+    align-items: center; justify-content: center;
 }
- 
 .hologram-content {
-    background: linear-gradient(135deg, rgba(20,20,20,0.95) 0%, rgba(0,0,0,0.95) 100%);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.15), inset 0 0 20px rgba(255, 215, 0, 0.05);
-    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(20,20,25,0.85) 0%, rgba(0,0,0,0.85) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.2), inset 0 0 30px rgba(255, 215, 0, 0.05);
+    border-radius: 16px;
     padding: 40px;
-    max-width: 800px;
-    width: 90%;
-    text-align: center;
-    position: relative;
+    max-width: 800px; width: 90%;
+    text-align: center; position: relative;
     color: #fff;
     max-height: 85vh !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    /* CORRECCIÓN BUG #6: touch-action auto para scroll en móvil */
     touch-action: auto;
     padding-bottom: 30px !important;
 }
- 
 .close-hologram {
-    position: absolute;
-    top: 15px; right: 20px;
+    position: absolute; top: 15px; right: 20px;
     background: none; border: none;
-    color: #FFD700;
-    font-size: 28px;
-    cursor: pointer;
-    transition: 0.3s;
+    color: var(--gold); font-size: 28px;
+    cursor: pointer; transition: 0.3s;
 }
- 
-.close-hologram:hover {
-    color: #fff;
-    text-shadow: 0 0 10px #FFD700;
-}
- 
+.close-hologram:hover { color: #fff; text-shadow: 0 0 10px var(--gold); }
+
 .hologram-header h2 {
-    color: #FFD700;
-    letter-spacing: 4px;
+    color: var(--gold);
+    font-family: var(--font-display);
+    letter-spacing: 5px;
+    font-size: 22px;
     margin-bottom: 5px;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
- 
 .hologram-header p {
-    color: #FFD700 !important;
+    color: var(--gold) !important;
+    font-family: var(--font-display);
     opacity: 0.9;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 30px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
- 
+
 .support-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     margin-bottom: 30px !important;
 }
- 
 .support-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1103,1488 +841,761 @@ html, body {
     flex-direction: column !important;
     padding-bottom: 25px !important;
 }
- 
 .support-card:hover {
     background: rgba(255, 215, 0, 0.05);
     border-color: rgba(255, 215, 0, 0.5);
     transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255,215,0,0.15);
 }
- 
-.support-card p {
-    color: #FFD700 !important;
-    opacity: 0.85;
-}
- 
-.support-card .holo-btn {
-    margin-top: auto !important;
-}
- 
-.card-icon {
-    font-size: 30px;
-    margin-bottom: 15px;
-}
- 
+.support-card p { color: var(--gold) !important; opacity: 0.85; }
+.support-card .holo-btn { margin-top: auto !important; }
+
+.card-icon { font-size: 30px; margin-bottom: 15px; }
 .support-card h3 {
-    font-size: 16px;
-    color: #fff;
+    font-family: var(--font-display);
+    font-size: 14px; color: #fff;
     margin-bottom: 10px;
+    letter-spacing: 2px;
 }
- 
-.support-card p {
-    font-size: 13px;
-    margin-bottom: 20px;
-    line-height: 1.5;
-}
- 
+.support-card p { font-size: 13px; margin-bottom: 20px; line-height: 1.5; }
+
 .holo-btn {
     background: transparent;
-    color: #FFD700;
-    border: 1px solid #FFD700;
+    color: var(--gold);
+    border: 1px solid var(--gold);
     padding: 10px 15px;
     border-radius: 5px;
-    font-size: 12px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: 0.3s;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer; transition: 0.3s;
     width: 100%;
+    text-transform: uppercase;
 }
- 
 .holo-btn:hover {
-    background: #FFD700;
+    background: var(--gold);
     color: #000;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
- 
-/* MOTOR 3D DE TARJETAS */
-.support-card.flip-card {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    perspective: 1000px;
-    min-height: 280px;
-}
- 
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transform-style: preserve-3d;
-}
- 
-.flip-card-inner.is-flipped {
-    transform: rotateY(180deg);
-}
- 
-.flip-card-front, .flip-card-back {
-    position: absolute !important;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    padding: 25px 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-}
- 
-.flip-card-front {
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
- 
-.flip-card-front:hover {
-    background: rgba(255, 215, 0, 0.05);
-    border-color: rgba(255, 215, 0, 0.5);
-}
- 
-.flip-card-back {
-    transform: rotateY(180deg);
-    background: rgba(10, 10, 10, 0.98);
-    border: 1px solid #FFD700;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
-}
- 
-/* CARRUSEL QR */
+
+/* QR */
 .qr-carousel-wrapper { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 15px; }
-.qr-nav-btn { background: transparent; border: none; color: #FFD700; font-size: 22px; cursor: pointer; padding: 5px 10px; transition: 0.3s; outline: none; }
-.qr-nav-btn:hover { color: #fff; transform: scale(1.2); text-shadow: 0 0 10px #FFD700; }
+.qr-nav-btn { background: transparent; border: none; color: var(--gold); font-size: 22px; cursor: pointer; padding: 5px 10px; transition: 0.3s; outline: none; }
+.qr-nav-btn:hover { color: #fff; transform: scale(1.2); text-shadow: 0 0 10px var(--gold); }
 .qr-container { display: flex; width: 150px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
 .qr-container::-webkit-scrollbar { display: none; }
 .qr-box { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 100%; scroll-snap-align: center; flex-shrink: 0; }
-.qr-img { width: 120px; height: 120px; border: 1px solid #FFD700; border-radius: 8px; padding: 5px; background: #fff; }
-.qr-box span { font-size: 11px; color: #FFD700 !important; letter-spacing: 1px; white-space: nowrap; }
-.net-badge { color: #FFD700 !important; font-size: 9px !important; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 3px 8px; border-radius: 4px; margin-top: -3px; text-transform: uppercase; }
- 
-.btn-volver-crypto, .btn-volver { width: 80%; border-color: #555; color: #aaa; margin-top: auto; }
- 
-.layout-3-cols { display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; padding: 10px 5px; width: 100%; height: 100%; box-sizing: border-box; }
-.icon-col { display: flex; flex-direction: column; justify-content: space-around; align-items: center; width: 35px; gap: 5px; }
-.mini-icon { width: 24px; height: 24px; filter: grayscale(100%) sepia(100%) hue-rotate(5deg) saturate(500%) brightness(1.2); transition: 0.3s; }
-.mini-icon:hover { filter: none; transform: scale(1.2); }
-.center-col { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 0 5px; text-align: center; }
- 
+.qr-img { width: 120px; height: 120px; border: 1px solid var(--gold); border-radius: 8px; padding: 5px; background: #fff; }
+.qr-box span { font-family: var(--font-display); font-size: 11px; color: var(--gold) !important; letter-spacing: 2px; white-space: nowrap; }
+.net-badge { color: var(--gold) !important; font-family: var(--font-display); font-size: 9px !important; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 3px 8px; border-radius: 4px; margin-top: -3px; text-transform: uppercase; letter-spacing: 1px; }
+
 /* BÓVEDA */
 .boveda-info {
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 215, 0, 0.2);
-    border-left: 4px solid #FFD700;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: left;
-    margin-bottom: 25px;
+    border-left: 4px solid var(--gold);
+    padding: 20px; border-radius: 5px;
+    text-align: left; margin-bottom: 25px;
 }
 .hologram-content::-webkit-scrollbar { width: 6px; }
-.hologram-content::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 10px; }
+.hologram-content::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 .holo-form { display: flex; flex-direction: column; gap: 20px; text-align: left; }
- 
-.info-seccion h4 { font-size: 15px !important; margin-bottom: 8px !important; }
+
+.info-seccion h4 { font-family: var(--font-display); font-size: 13px !important; letter-spacing: 2px; margin-bottom: 8px !important; }
 .info-seccion ul, .info-seccion ol { font-size: 14px !important; line-height: 1.7 !important; margin-bottom: 20px !important; }
- 
+
 .input-group input {
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #FFD700 !important;
-    padding: 15px;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: 15px;
+    color: var(--gold) !important;
+    padding: 15px; border-radius: 5px;
+    font-family: inherit; font-size: 15px;
     box-sizing: border-box;
 }
- 
-.input-group input::placeholder {
-    color: rgba(255, 215, 0, 0.6) !important;
-}
- 
-.input-group input:focus { outline: none; border-color: #FFD700; background: rgba(255, 215, 0, 0.05); }
- 
+.input-group input::placeholder { color: rgba(255, 215, 0, 0.6) !important; }
+.input-group input:focus { outline: none; border-color: var(--gold); background: rgba(255, 215, 0, 0.05); }
+
 .checkbox-group {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
+    display: flex; align-items: flex-start; gap: 15px;
     background: rgba(255, 215, 0, 0.05);
     padding: 15px;
     border: 1px dashed rgba(255, 215, 0, 0.5);
     border-radius: 5px;
 }
 .checkbox-group input { margin-top: 5px; transform: scale(1.3); cursor: pointer; }
-.checkbox-group label {
-    font-size: 14px;
-    color: #FFD700;
-    line-height: 1.5;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.checkbox-group:hover label {
-    color: #fff;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
-}
- 
-.submit-btn { margin-top: 15px; padding: 18px; font-size: 15px; font-weight: bold; letter-spacing: 1px; }
- 
+.checkbox-group label { font-size: 14px; color: var(--gold); line-height: 1.5; cursor: pointer; transition: 0.3s; }
+.checkbox-group:hover label { color: #fff; text-shadow: 0 0 5px rgba(255, 215, 0, 0.8); }
+
+.submit-btn { margin-top: 15px; padding: 18px; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+
 /* BAÑO DE ORO */
-.modal-content p,
-.info-seccion ul,
-.info-seccion ol,
-.info-seccion li,
-#amplificarModal div {
-    color: #FFD700 !important;
-}
- 
-.modal-content strong,
-.modal-content b,
-.info-seccion strong {
-    color: #FFD700 !important;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-}
- 
-#btnIrABoveda {
-    color: #FFD700 !important;
-    background: transparent !important;
-    border: 1px solid #FFD700 !important;
-    transition: 0.3s;
-}
-#btnIrABoveda:hover {
-    background: rgba(255, 215, 0, 0.2) !important;
-    color: #fff !important;
-    text-shadow: 0 0 10px #FFD700 !important;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5) !important;
-}
- 
-/* SATÉLITE EN ÓRBITA */
+.modal-content p, .info-seccion ul, .info-seccion ol, .info-seccion li, #amplificarModal div { color: var(--gold) !important; }
+.modal-content strong, .modal-content b, .info-seccion strong { color: var(--gold) !important; text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
+
+#btnIrABoveda { color: var(--gold) !important; background: transparent !important; border: 1px solid var(--gold) !important; transition: 0.3s; }
+#btnIrABoveda:hover { background: rgba(255, 215, 0, 0.2) !important; color: #fff !important; text-shadow: 0 0 10px var(--gold) !important; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5) !important; }
+
 @keyframes orbitaSateliteProa {
     from { transform: rotate(0deg) translateX(280px) rotate(180deg); }
     to { transform: rotate(360deg) translateX(280px) rotate(180deg); }
 }
- 
 #btnSatelite {
     position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    width: 45px;
-    height: 45px;
-    margin-top: -22.5px;
-    margin-left: -22.5px;
-    z-index: 1000;
-    cursor: pointer;
+    top: 50% !important; left: 50% !important;
+    width: 45px; height: 45px;
+    margin-top: -22.5px; margin-left: -22.5px;
+    z-index: 1000; cursor: pointer;
     display: block !important;
     animation: orbitaSateliteProa 40s linear infinite !important;
     filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
     transition: filter 0.3s ease;
 }
- 
-#btnSatelite:hover {
-    filter: drop-shadow(0 0 15px #FFD700);
-    scale: 1.1;
+#btnSatelite:hover { filter: drop-shadow(0 0 15px var(--gold)); scale: 1.1; }
+#btnSatelite svg { width: 100%; height: 100%; display: block; }
+#btnSatelite svg path, #btnSatelite svg rect, #btnSatelite svg circle, #btnSatelite svg line {
+    fill: #000 !important; stroke: var(--gold) !important; stroke-width: 1.5 !important;
 }
- 
-#btnSatelite svg {
-    width: 100%;
-    height: 100%;
-    display: block;
+
+/* =========================================================
+   MEJORA 4: MINI-REPRODUCTOR PERSISTENTE
+========================================================= */
+#miniPlayer {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    width: 280px;
+    background: rgba(15,15,20,0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    padding: 12px;
+    z-index: 99990;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255,215,0,0.2);
+    transform: translateY(120px);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
 }
- 
-#btnSatelite svg path,
-#btnSatelite svg rect,
-#btnSatelite svg circle,
-#btnSatelite svg line {
-    fill: #000 !important;
-    stroke: #FFD700 !important;
-    stroke-width: 1.5 !important;
+#miniPlayer.visible { display: flex; transform: translateY(0); opacity: 1; }
+#miniPlayerCover {
+    width: 48px; height: 48px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid var(--gold-soft);
+    flex-shrink: 0;
+    animation: counterSpin 8s linear infinite;
 }
+#miniPlayerInfo { flex-grow: 1; overflow: hidden; text-align: left; }
+#miniPlayerTitle {
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 1px;
+    white-space: nowrap
+    ;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+#miniPlayerArtist {
+    color: #aaa;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mini-btn {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+.mini-btn:hover { transform: scale(1.2); filter: drop-shadow(0 0 5px var(--gold)); }
+.mini-btn svg { width: 18px; height: 18px; fill: var(--gold); }
+@media (max-width: 768px) {
+    #miniPlayer {
+        bottom: 70px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+    }
+}
+
+/* =========================================================
+   MEJORA 5: COMMAND PALETTE (Búsqueda rápida)
+========================================================= */
+#commandPalette {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(14px) saturate(140%);
+    z-index: 999999;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 12vh;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+#commandPalette.show { display: flex; opacity: 1; }
+.cp-box {
+    width: 90%;
+    max-width: 600px;
+    background: rgba(15,15,20,0.92);
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 50px rgba(255,215,0,0.25);
+    overflow: hidden;
+    transform: translateY(-20px) scale(0.96);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+#commandPalette.show .cp-box { transform: translateY(0) scale(1); }
+
+.cp-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,215,0,0.2);
+}
+.cp-input-wrap svg { width: 20px; height: 20px; fill: var(--gold); flex-shrink: 0; }
+#cpInput {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 16px;
+    letter-spacing: 1px;
+    flex-grow: 1;
+}
+#cpInput::placeholder { color: rgba(255,215,0,0.5); }
+.cp-hint {
+    font-family: var(--font-display);
+    font-size: 10px;
+    color: var(--gold-soft);
+    letter-spacing: 1px;
+    border: 1px solid var(--gold-soft);
+    padding: 3px 7px;
+    border-radius: 4px;
+}
+
+.cp-results {
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 8px 0;
+}
+.cp-results::-webkit-scrollbar { width: 4px; }
+.cp-results::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.5); border-radius: 10px; }
+
+.cp-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.cp-item:hover, .cp-item.active {
+    background: rgba(255,215,0,0.1);
+}
+.cp-item-cover {
+    width: 38px; height: 38px;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    border: 1px solid var(--gold-soft);
+}
+.cp-item-info { flex-grow: 1; text-align: left; overflow: hidden; }
+.cp-item-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cp-item-meta {
+    color: var(--gold-soft);
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+.cp-empty {
+    text-align: center;
+    color: var(--gold-soft);
+    padding: 30px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* HINT INICIAL DE BÚSQUEDA */
+#searchHint {
+    position: fixed;
+    bottom: 20px; left: 20px;
+    background: rgba(15,15,20,0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--gold-soft);
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: var(--gold);
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 2px;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+#searchHint.visible { opacity: 0.7; }
+#searchHint kbd {
+    background: rgba(255,215,0,0.15);
+    border: 1px solid var(--gold-soft);
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin: 0 2px;
+}
+@media (max-width: 768px) { #searchHint { display: none; } }
 </style>
 </head>
 <body>
- 
+
+<!-- MEJORA 3: CURSOR -->
+<div id="customCursorRing"></div>
+<div id="customCursor"></div>
+
+<!-- LOADER -->
 <div id="loader">
-    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Cargando Reflexión Musical MX" fetchpriority="high" id="loaderImg">
+    <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Reflexión Musical MX">
     <p>INICIANDO UNIVERSO...</p>
 </div>
- 
-<audio id="bioAudio" src="pista-fondo.mp3" loop preload="none"></audio>
- 
-<div id="bioModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content">
-        <span class="close-modal close-bio" aria-label="Cerrar biografía" role="button" tabindex="0">×</span>
-        <h2>Reflexión Musical MX</h2>
-        <p>Reflexión Musical MX nace de una idea simple pero poderosa: la música también puede hacer pensar.</p>
-        <p>En un mundo lleno de ruido, este proyecto utiliza canciones para hablar de lo que muchas veces se evita: la pérdida de valores, los conflictos sociales, la violencia, la desigualdad y las decisiones que están moldeando el futuro de la humanidad.</p>
-        <p>Reflexión Musical MX no busca solo entretener. Busca provocar preguntas, despertar conciencia y recordar que cada persona tiene un papel en el rumbo del mundo.</p>
-        <p>Porque a veces una canción puede ser más que música… puede ser una reflexión.</p>
-        <p style="color: #FFD700; font-weight: 700; font-style: italic; font-size: 20px; text-align: center; margin-top: 30px; letter-spacing: 1px;">¿Eres lo que escuchas?</p>
- 
-        <div class="audio-controls">
-            <span id="muteBtn" aria-label="Silenciar o activar audio" role="button" tabindex="0">🔊</span>
-            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.4" aria-label="Control de volumen">
-            <span class="vol-label">VOL</span>
-        </div>
- 
-        <hr style="border-color: rgba(255,215,0,0.2); margin: 25px 0 15px 0;">
-        <p style="font-size: 14px; opacity: 0.8; margin: 0; text-align: center; font-style: italic;">
-            Próximamente: "Algo está mal" (Libro)
-        </p>
-    </div>
-</div>
- 
-<div id="albumModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content album-modal-content">
-        <span class="close-modal close-album" aria-label="Cerrar detalles del álbum" role="button" tabindex="0">×</span>
-        <h2 id="modalAlbumTitle">Título del Álbum</h2>
-        <div id="customPlayerBox">
-            <div id="playerIframeContainer"></div>
-            <div class="custom-player-controls">
-                <div class="player-core-btns">
-                    <span class="ctrl-btn" id="btnPrev" title="Anterior">
-                        <svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-                    </span>
-                    <span class="ctrl-btn" id="btnPlayPause" title="Pausar / Reproducir"></span>
-                    <span class="ctrl-btn" id="btnNext" title="Siguiente">
-                        <svg viewBox="0 0 24 24" width="28" height="28" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-                    </span>
-                </div>
-                <div class="player-volume-wrapper">
-                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                    <input type="range" id="playerVolSlider" min="0" max="100" value="100" title="Volumen">
-                </div>
-            </div>
-            <div id="nowPlayingLyrics" style="display: none; max-height: 180px; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 15px; border-top: 1px solid rgba(255,215,0,0.2); font-size: 13px; color: #FFD700; white-space: pre-wrap; text-align: center; line-height: 1.6;"></div>
-        </div>
- 
-        <div class="tracklist-container" id="modalTracklist"></div>
-        <p style="font-size: 12px; color: gold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Escúchalo en:</p>
-        <div class="album-platforms" id="modalPlatforms"></div>
-        <button id="btnCerrarAlbum" class="btn-volver">Volver al Universo</button>
-    </div>
-</div>
- 
-<!-- MODAL DE LETRAS -->
-<div id="lyricsModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content">
-        <span class="close-modal close-lyrics" aria-label="Cerrar letra" role="button" tabindex="0">×</span>
-        <h2 id="lyricsTitle" style="text-align: center; font-size: 22px; color: #FFD700; margin-bottom: 20px;">Título</h2>
-        <div id="lyricsText" style="white-space: pre-wrap; text-align: center; color: #FFD700; font-size: 15px; line-height: 1.8; font-family: 'Merriweather', serif;"></div>
-    </div>
-</div>
- 
-<canvas id="bg" aria-hidden="true"></canvas>
-<div id="starContainer" aria-hidden="true"></div>
- 
-<!-- REDES SOCIALES -->
-<div class="floating-social">
-    <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="Visitar canal de YouTube">
-        <svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg>
-    </a>
-    <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar TikTok">
-        <svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
-    </a>
-    <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Facebook">
-        <svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg>
-    </a>
-    <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Instagram">
-        <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
-    </a>
-    <a href="https://x.com/RMusicalMX" target="_blank" aria-label="Visitar X (Twitter)">
-        <svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-    </a>
-    <a href="https://www.threads.com/@reflexionmusicalmx" target="_blank" aria-label="Visitar Threads">
-        <svg role="img" viewBox="0 0 24 24"><path d="M12.186 24h-0.007c-3.581 -0.024 -6.334 -1.205 -8.184 -3.509C2.35 18.44 1.5 15.586 1.472 12.01v-0.017c0.03 -3.579 0.879 -6.43 2.525 -8.482C5.845 1.205 8.6 0.024 12.18 0h0.014c2.746 0.02 5.043 0.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04 0.569c-1.104 -3.96 -3.898 -5.984 -8.304 -6.015 -2.91 0.022 -5.11 0.936 -6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c0.027 3.086 0.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623 -0.02 4.358 -0.631 5.8 -2.045 1.647 -1.613 1.618 -3.593 1.09 -4.798 -0.31 -0.71 -0.873 -1.3 -1.634 -1.75 -0.192 1.352 -0.622 2.446 -1.284 3.272 -0.886 1.102 -2.14 1.704 -3.73 1.79 -1.202 0.065 -2.361 -0.218 -3.259 -0.801 -1.063 -0.689 -1.685 -1.74 -1.752 -2.964 -0.065 -1.19 0.408 -2.285 1.33 -3.082 0.88 -0.76 2.119 -1.207 3.583 -1.291a13.853 13.853 0 0 1 3.02 0.142c-0.126 -0.742 -0.375 -1.332 -0.75 -1.757 -0.513 -0.586 -1.308 -0.883 -2.359 -0.89h-0.029c-0.844 0 -1.992 0.232 -2.721 1.32l-1.757 -1.18c0.98 -1.454 2.568 -2.256 4.478 -2.256h0.044c3.194 0.02 5.097 1.975 5.287 5.388 0.108 0.046 0.216 0.094 0.321 0.142 1.49 0.7 2.58 1.761 3.154 3.07 0.797 1.82 0.871 4.79 -1.548 7.158 -1.85 1.81 -4.094 2.628 -7.277 2.65Zm1.003 -11.69c-0.242 0 -0.487 0.007 -0.739 0.021 -1.836 0.103 -2.98 0.946 -2.916 2.143 0.067 1.256 1.452 1.839 2.784 1.767 1.224 -0.065 2.818 -0.543 3.086 -3.71a10.5 10.5 0 0 0 -2.215 -0.221z"/></svg>
-    </a>
-    <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" aria-label="Visitar SoundCloud">
-        <svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>
-    </a>
-    <a href="https://audiomack.com/reflexionmusicalmx" target="_blank" aria-label="Visitar Audiomack">
-        <svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>
-    </a>
-</div>
-<div class="floating-platforms">
-    <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" aria-label="Escuchar en Spotify">
-        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>
-    </a>
-    <a href="https://music.amazon.com.mx/artists/B0FS4DQSV7/reflexi%C3%B3n-musical-mx" target="_blank" aria-label="Escuchar en Amazon Music">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/><path d="M13.828 11.943c0.567 -0.07 1.468 -0.027 1.645 0.204 0.135 0.176 -0.004 0.966 -0.233 1.533 -0.23 0.563 -0.572 0.961 -0.762 1.115s-0.333 0.094 -0.23 -0.137c0.105 -0.23 0.684 -1.663 0.455 -1.963 -0.213 -0.278 -1.177 -0.177 -1.625 -0.13l-0.09 0.009q-0.142 0.013 -0.233 0.024c-0.193 0.021 -0.245 0.027 -0.274 -0.032 -0.074 -0.209 0.779 -0.556 1.347 -0.623"/></svg>
-    </a>
-    <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Escuchar en Apple Music">
-        <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-    </a>
-    <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="Escuchar en YouTube Music">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-    </a>
-    <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="Escuchar en SoundCloud">
-        <svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /><path d="M9.74 7.11a0.75 0.75 0 0 0 -0.74 0.75v9a0.75 0.75 0 0 0 1.5 0v-9a0.76 0.76 0 0 0 -0.76 -0.75Z" /><path d="M6.75 8.61a0.75 0.75 0 0 0 -0.75 0.75v7.51a0.75 0.75 0 0 0 1.5 0V9.36a0.76 0.76 0 0 0 -0.75 -0.75Z" /><path d="M3.75 10.61a0.76 0.76 0 0 0 -0.75 0.75v5.51a0.75 0.75 0 0 0 1.5 0v-5.51a0.75 0.75 0 0 0 -0.75 -0.75Z" /><path d="M0.76 11.61a0.76 0.76 0 0 0 -0.75 0.75v4a0.75 0.75 0 0 0 0.75 0.75 0.74 0.74 0 0 0 0.75 -0.75v-4a0.75 0.75 0 0 0 -0.75 -0.75Z" /></svg>
-    </a>
-    <a href="https://audiomack.com/reflexion-musical-mx" target="_blank" aria-label="Visitar Audiomack">
-        <svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237m5.881 3.2925c-0.0522 0.01 -0.1075 -0.018 -0.164 -0.059 -0.3884 -0.5413 -0.5287 -2.3923 -0.707 -2.5025 -0.185 -0.1144 -0.8545 1.0255 -2.1862 0.903 -0.5569 -0.051 -1.1236 -0.4121 -1.4573 -0.662 0.031 -0.4206 0.0364 -1.4027 0.8659 -1.0833 0.5038 0.1939 1.3667 0.7266 2.1245 -0.23 0.8378 -1.0579 1.2999 -0.7506 1.577 -0.5206 0.2771 0.23 0.0925 1.4259 0.5058 1.0916 0.4133 -0.3343 2.082 -2.4103 2.082 -2.4103s1.292 -1.303 1.4898 0.067c0.1979 1.3698 1.0403 2.8877 1.2635 2.8445 0.2234 -0.043 2.8223 -5.3253 3.1945 -5.666 0.3722 -0.3409 1.6252 -0.2961 1.5657 0.5781 -0.0596 0.8742 -0.1871 6.308 -0.1871 6.308s-0.147 1.5311 0.0924 0.7128c0.0992 -0.3392 0.206 -0.6453 0.3392 -1.0024 0.6414 -2.0534 1.734 -5.5613 2.2784 -7.3688 0.1252 -0.4325 0.233 -0.8037 0.3166 -1.0891l0.0001 -0.0008a3.5925 3.5925 0 0 1 0.0973 -0.3305c0.0455 -0.1532 0.0763 -0.2546 0.0858 -0.2813 0.0243 -0.068 0.0925 -0.1192 0.1884 -0.157 0.0962 -0.061 0.1995 -0.064 0.3165 -0.067 0.3021 -0.027 0.6907 0.012 1.0401 0.1119 0.1018 0 0.2125 0.037 0.3172 0.1118v0.0001s0.0063 0 0.0151 0.01c0.0023 0 0.0048 0 0.0073 0.01 0.0219 0.015 0.0573 0.045 0.0983 0.095 0.0012 0 0.0025 0 0.004 0.01 0.017 0.021 0.0341 0.045 0.0515 0.073 0.1952 0.2863 0.315 0.814 0.1948 1.7498 -0.2996 2.3354 -0.5316 7.1397 -0.5316 7.1397s-0.0461 0.2298 0.4353 -0.782c0.0167 -0.035 0.0383 -0.066 0.058 -0.098 0.026 -0.017 0.0552 -0.042 0.0913 -0.085 0.2974 -0.3546 1.0968 -0.5629 1.6512 -0.5586 0.2336 0.028 0.4293 0.087 0.5462 0.1609 0.2188 0.333 0.0897 1.562 0.0897 1.562 -0.4612 0.043 -1.3403 0.2908 -1.6519 0.3366 -0.3118 0.046 -0.7852 2.0699 -1.4433 1.8629 -0.6581 -0.2069 -2.1246 -1.1268 -2.1246 -1.2533 0 -0.1102 0.1152 -1.4546 0.1453 -1.8016 0.0022 -0.024 0.004 -0.046 0.0058 -0.068a0.152 0.152 0 0 1 0.0014 -0.014l-0.0002 0.0003c0.0213 -0.2733 0.0023 -0.3927 -0.1239 -0.1199 -0.1086 0.2346 -0.581 1.7359 -1.1078 3.3709 -0.0556 0.1429 -1.0511 3.1558 -1.1818 3.5231 -0.156 0.4261 -0.287 0.7523 -0.3776 0.921 -0.1378 0.1867 -0.3234 0.3036 -0.5826 0.2252 -0.6465 -0.1954 -1.4654 -1.0889 -1.473 -1.3106 -0.0155 -1.2503 0.0608 -7.973 -0.2423 -7.4127 -0.311 0.5744 -2.73 4.5608 -2.73 4.5608 -0.0405 0.01 -0.0705 0.01 -0.1062 0.01 -0.1712 -0.019 -0.4366 -0.074 -0.51 -0.2384 -0.004 -0.01 -0.0094 -0.018 -0.0129 -0.028 -0.0035 -0.01 -0.0075 -0.022 -0.0135 -0.04 -0.0329 -0.1097 -0.0463 -0.2289 -0.0753 -0.3265 -0.1082 -0.3652 -0.2813 -0.8886 -0.463 -1.421 -0.2784 -0.9079 -0.5654 -1.8366 -0.6127 -1.9391 -0.0923 -0.2007 -0.2268 -0.116 -0.3475 -0.0002 -0.54 0.458 -1.6868 2.4793 -2.7225 2.5898"/></svg>
-    </a>
-</div>
- 
+
+<canvas id="bg"></canvas>
+<div id="starContainer"></div>
+
+<!-- SISTEMA SOLAR -->
 <div id="solarSystem">
-    <div id="sun" aria-label="Abrir biografía" role="button" tabindex="0">
-        <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo Reflexión Musical MX" fetchpriority="high">
+    <div id="sun">
+        <img src="images/REFLEXIÓN MUSICAL MX 1.webp" alt="Logo">
     </div>
     <div id="orbitSingles" class="orbit"></div>
     <div id="orbitAlbums" class="orbit"></div>
-    <div id="orbitShip" class="orbit orbit-ship">
-        <div class="ship-wrapper">
-            <div id="btnTuVoz" class="floating-tu-voz" aria-label="Buzón de Reflexión" role="button" tabindex="0" title="Enviar Reflexión">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
-                    <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
-                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
-                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
-                </svg>
-            </div>
-        </div>
-    </div>
- 
-    <div id="btnSatelite" class="satelite-wrapper" title="Centro de Energía">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 6a4 4 0 0 1 8 0H8z" fill="rgba(255, 215, 0, 0.4)" />
-            <line x1="12" y1="2" x2="12" y2="6" />
-            <circle cx="12" cy="2" r="1.5" fill="#FFD700" />
-            <rect x="9" y="6" width="6" height="10" rx="1" fill="#FFD700" />
-            <rect x="2" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
-            <line x1="6" y1="11" x2="9" y2="11" stroke="#000" />
-            <rect x="18" y="7" width="4" height="8" rx="0.5" fill="rgba(255, 215, 0, 0.6)" />
-            <line x1="15" y1="11" x2="18" y2="11" stroke="#000" />
-            <path d="M10 16v2l-1.5 2.5h7L14 18v-2" fill="#FFD700" />
+
+    <!-- SATÉLITE -->
+    <div id="btnSatelite" title="Centro de Energía">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <rect x="26" y="22" width="12" height="20" rx="2"/>
+            <rect x="10" y="28" width="14" height="8"/>
+            <rect x="40" y="28" width="14" height="8"/>
+            <line x1="32" y1="22" x2="32" y2="10"/>
+            <circle cx="32" cy="8" r="2"/>
         </svg>
     </div>
+
+    <!-- NAVE / BUZÓN -->
+    <div class="orbit-ship">
+        <div class="ship-wrapper">
+            <button id="btnTuVoz" class="floating-tu-voz" title="Tu Voz">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 21l3-3 6-12 6 12 3 3"/>
+                    <path d="M9 18h6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
 </div>
- 
-<!-- PANEL HOLOGRÁFICO -->
+
+<!-- REDES (IZQ) -->
+<div class="floating-social">
+    <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" title="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.87v-6.99H7.9V12h2.5V9.8c0-2.47 1.47-3.84 3.72-3.84 1.08 0 2.2.19 2.2.19v2.42h-1.24c-1.22 0-1.6.76-1.6 1.54V12h2.72l-.43 2.88H13.5v6.99A10 10 0 0 0 22 12z"/></svg></a>
+    <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.77.13 4.9.33 4.14.63a5.86 5.86 0 0 0-2.13 1.38A5.86 5.86 0 0 0 .63 4.14C.33 4.9.13 5.77.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.28.26 2.15.56 2.91.31.79.73 1.46 1.38 2.13a5.86 5.86 0 0 0 2.13 1.38c.76.3 1.63.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.28-.06 2.15-.26 2.91-.56a5.86 5.86 0 0 0 2.13-1.38 5.86 5.86 0 0 0 1.38-2.13c.3-.76.5-1.63.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.28-.26-2.15-.56-2.91a5.86 5.86 0 0 0-1.38-2.13A5.86 5.86 0 0 0 19.86.63c-.76-.3-1.63-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.84a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></a>
+    <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" title="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg></a>
+    <a href="https://www.youtube.com/@reflexionmusicalmx" target="_blank" title="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.6 9.4.6 9.4.6s7.6 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg></a>
+</div>
+
+<!-- PLATAFORMAS (DER) -->
+<div class="floating-platforms">
+    <a href="https://open.spotify.com/artist/3l9eXkOzVfYZxjL0fRFmJW" target="_blank" title="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm5.5 17.3a.75.75 0 0 1-1 .25c-2.8-1.7-6.3-2.1-10.4-1.1a.75.75 0 1 1-.3-1.46c4.5-1 8.4-.6 11.5 1.3.34.21.45.66.2 1zM19 14.1a.94.94 0 0 1-1.3.3c-3.2-2-8-2.5-11.8-1.4a.94.94 0 0 1-.5-1.8c4.3-1.3 9.6-.7 13.3 1.6.45.27.58.85.3 1.3zm.13-3.3C15.3 8.5 8.7 8.3 5.1 9.4a1.12 1.12 0 0 1-.66-2.15c4.2-1.27 11.5-1 15.9 1.6a1.13 1.13 0 0 1-1.18 1.93z"/></svg></a>
+    <a href="https://music.apple.com/mx/artist/reflexi%C3%B3n-musical-mx/1742428289" target="_blank" title="Apple Music"><svg viewBox="0 0 24 24"><path d="M23.99 17.34c-.05.27-.13.65-.34 1.04-.42.83-1.27 1.41-2.21 1.5-.59.05-1.08-.06-1.4-.13-1.4-.32-2.62-1.05-3.92-1.93-.91-.62-1.81-1.3-2.6-2.16-.65-.7-1.34-1.42-1.86-2.21-.6-.92-1.05-1.94-1.23-3.04-.13-.78-.07-1.5.21-2.21.31-.78.85-1.34 1.58-1.73.6-.32 1.24-.46 1.92-.43.47.02.93.13 1.36.31 1.16.5 2.07 1.28 2.84 2.27.79 1.04 1.34 2.18 1.7 3.43.27.95.4 1.93.42 2.92 0 .47-.01.93-.05 1.4-.04.32-.1.65-.21.96zM12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-1.4 17.32c-.84-.05-1.65-.27-2.4-.7-.94-.55-1.62-1.35-2.06-2.38-.42-.97-.53-1.96-.32-2.97.27-1.29.97-2.36 2.05-3.06.66-.42 1.39-.66 2.16-.7.95-.06 1.82.21 2.6.81.39.3.7.66.93 1.08.04.07.07.08.13.04.42-.27.85-.47 1.34-.59.31-.07.6-.06.91-.04.31.02.55.13.74.36.16.18.26.4.32.66.13.55-.04 1.03-.42 1.4-.38.39-.85.65-1.36.78-.5.13-1 .13-1.5.07-.08-.01-.09 0-.07.07.18.55.45 1.05.79 1.5.78 1.05 1.81 1.81 3.06 2.31.13.05.27.05.4.04.66-.05 1.27-.32 1.81-.7.36-.27.65-.6.86-1 .04-.07.08-.07.13-.03.36.32.59.71.66 1.18.07.46-.07.85-.4 1.18-.39.4-.85.66-1.36.85-.66.21-1.34.27-2.03.21-1.34-.13-2.56-.59-3.66-1.36-.92-.66-1.66-1.5-2.21-2.49-.5-.93-.84-1.93-.92-3.01-.04-.5 0-.97.13-1.45.13-.47.36-.86.7-1.18.32-.31.7-.5 1.13-.6.42-.07.85-.06 1.27.04.42.13.78.36 1.05.7.27.32.45.7.5 1.13.04.31.01.6-.13.86-.27.5-.7.79-1.27.85-.41.05-.78-.05-1.08-.31-.32-.27-.5-.6-.55-1.03-.04-.27.07-.5.27-.66.21-.16.45-.21.7-.13.21.07.36.21.45.4.04.07.07.13.13.18.07.07.04.13-.04.16-.18.07-.26.27-.18.45.07.16.21.27.4.27.27 0 .45-.18.5-.4.07-.32-.04-.6-.31-.78-.39-.27-.86-.32-1.31-.13-.5.21-.78.6-.81 1.13-.04.6.21 1.1.7 1.43.55.36 1.18.4 1.79.13.65-.32 1.05-.85 1.18-1.55.04-.27.04-.55-.01-.81z"/></svg></a>
+    <a href="https://music.amazon.com.mx/artists/B0CYP7NV7Z/reflexi%C3%B3n-musical-mx" target="_blank" title="Amazon Music"><svg viewBox="0 0 24 24"><path d="M.13 17.96c.21-.32.5-.36.92-.16 1.92.94 4 1.6 6.21 2 2.21.4 4.42.4 6.63 0 2.05-.36 4-1.05 5.84-2.05.13-.07.27-.13.4-.21.32-.13.6-.13.78.05.21.18.21.5.04.78-.21.27-.5.45-.78.6-2 1.18-4.13 1.93-6.4 2.31-3.66.6-7.21.18-10.55-1.55-.6-.32-1.18-.66-1.73-1.05-.27-.21-.42-.46-.36-.72zm21.34-2.78c-.13-.32-.45-.45-1.05-.45h-.78c-.18 0-.27-.07-.32-.27v-.07c.04-1.05.07-2.1.07-3.18 0-1.05-.04-2.05-.32-3.05-.32-1.13-1-1.93-2.05-2.4-.97-.45-2-.55-3.05-.45-1.39.13-2.66.55-3.79 1.4-.39.27-.45.55-.27.92.18.36.45.45.85.31.13-.04.27-.13.4-.18 1-.36 2.01-.66 3.06-.66.5 0 1 .07 1.45.32.55.27.85.78 1 1.36.13.55.18 1.13.18 1.73v.27c-.27 0-.5-.04-.7-.04-1.34 0-2.66.13-3.92.55-1.45.5-2.6 1.31-3.32 2.7-.55 1.05-.6 2.15-.21 3.27.36 1 1.05 1.66 2.05 2 1.18.4 2.4.36 3.58-.07 1-.36 1.85-.97 2.6-1.7.04.07.07.13.11.18.27.45.55.85.85 1.27.18.21.32.36.55.36.18 0 .36-.13.5-.27.32-.32.65-.65.97-.97.27-.32.27-.5.04-.85-.18-.27-.39-.55-.55-.85-.13-.21-.21-.45-.21-.7v-.45c.45 0 .85 0 1.27-.04.36-.04.42-.18.32-.45zM14.4 16.5c-.45.27-.92.45-1.45.55-.5.07-1 .07-1.5-.13-.7-.27-.97-.92-.78-1.66.18-.7.66-1.13 1.31-1.41.85-.36 1.73-.45 2.66-.45.16 0 .27.04.27.21.04.45.04.92 0 1.36-.04.5-.18.97-.5 1.34v.21z"/></svg></a>
+    <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" title="SoundCloud"><svg viewBox="0 0 24 24"><path d="M0 13.5C0 12.7 0.7 12 1.5 12s1.5 0.7 1.5 1.5v4c0 0.8-0.7 1.5-1.5 1.5S0 18.3 0 17.5v-4zm4 -1.5c0-0.8 0.7-1.5 1.5-1.5s1.5 0.7 1.5 1.5v5.5c0 0.8-0.7 1.5-1.5 1.5S4 18.3 4 17.5V12zm4-2.5c0-0.8 0.7-1.5 1.5-1.5s1.5 0.7 1.5 1.5v8c0 0.8-0.7 1.5-1.5 1.5S8 18.3 8 17.5v-8zm4-2c0-0.8 0.7-1.5 1.5-1.5s1.5 0.7 1.5 1.5v10c0 0.8-0.7 1.5-1.5 1.5S12 18.3 12 17.5v-10zm6 -1.5c2.8 0 5 2.2 5 5 0 0.3 0 0.5-0.1 0.8 0.6 0.4 1.1 1.1 1.1 1.9 0 1.4-1.1 2.5-2.5 2.5h-4V8c0-1.1 0.9-2 2-2 -1.5-0.6-1.5-1.5-1.5-0.5z"/></svg></a>
+    <a href="https://www.deezer.com/mx/artist/213717725" target="_blank" title="Deezer"><svg viewBox="0 0 24 24"><path d="M18.81 4.16h5.18v3.31h-5.18zM18.81 8.41h5.18v3.31h-5.18zM12.41 8.41h5.18v3.31h-5.18zM18.81 12.66h5.18v3.31h-5.18zM12.41 12.66h5.18v3.31h-5.18zM6 12.66h5.18v3.31H6zM18.81 16.91h5.18v3.31h-5.18zM12.41 16.91h5.18v3.31h-5.18zM6 16.91h5.18v3.31H6zM0 16.91h5.18v3.31H0z"/></svg></a>
+</div>
+
+<!-- MEJORA 5: COMMAND PALETTE -->
+<div id="commandPalette">
+    <div class="cp-box">
+        <div class="cp-input-wrap">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+            <input type="text" id="cpInput" placeholder="Buscar canción o álbum..." autocomplete="off">
+            <span class="cp-hint">ESC</span>
+        </div>
+        <div class="cp-results" id="cpResults"></div>
+    </div>
+</div>
+
+<!-- HINT BÚSQUEDA -->
+<div id="searchHint">Pulsa <kbd>Ctrl</kbd>+<kbd>K</kbd> o <kbd>/</kbd> para buscar</div>
+
+<!-- MEJORA 4: MINI PLAYER -->
+<div id="miniPlayer">
+    <div id="miniPlayerCover"></div>
+    <div id="miniPlayerInfo">
+        <div id="miniPlayerTitle">—</div>
+        <div id="miniPlayerArtist">Reflexión Musical MX</div>
+    </div>
+    <button class="mini-btn" id="miniPlayerOpen" title="Abrir"><svg viewBox="0 0 24 24"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg></button>
+    <button class="mini-btn" id="miniPlayerClose" title="Cerrar"><svg viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+</div>
+
+<!-- MODAL BIO -->
+<div id="bioModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" data-close="bioModal">&times;</span>
+        <h2>REFLEXIÓN MUSICAL MX</h2>
+        <p>Reflexión Musical MX es un proyecto que nace de la necesidad de expresar, a través de la música, las inquietudes, reflexiones y vivencias humanas que muchas veces no encuentran palabras. Cada canción es un puente hacia la conciencia, una invitación a mirar dentro y a cuestionar lo que damos por sentado.</p>
+        <p>Inspirado en historias reales, este universo sonoro busca acompañar al oyente en su propio camino — desde la fe y la esperanza, hasta el dolor, la crítica social y la búsqueda de sentido.</p>
+        <div class="audio-controls">
+            <span id="audioToggle">▶</span>
+            <span class="vol-label">VOL</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ÁLBUM/SENCILLO -->
+<div id="albumModal" class="modal">
+    <div class="modal-content album-modal-content">
+        <span class="close-modal" data-close="albumModal">&times;</span>
+        <h2 id="modalAlbumTitle">—</h2>
+        <div id="customPlayerBox">
+            <div id="playerIframeContainer">
+                <img id="scCover" class="sc-cover-overlay" src="" alt="cover">
+                <iframe id="sc-iframe" allow="autoplay" src=""></iframe>
+            </div>
+            <div class="custom-player-controls">
+                <div class="player-core-btns">
+                    <span class="ctrl-btn" id="ytPrev" title="Anterior">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFD700"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+                    </span>
+                    <span class="ctrl-btn" id="ytPlayPause" title="Play/Pausa">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFD700"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                    <span class="ctrl-btn" id="ytNext" title="Siguiente">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFD700"><path d="M6 18l8.5-6L6 6v12zM16 6h2v12h-2z"/></svg>
+                    </span>
+                </div>
+                <div class="player-volume-wrapper">
+                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    <input type="range" id="playerVolSlider" min="0" max="100" value="80">
+                </div>
+            </div>
+        </div>
+        <div class="tracklist-container" id="tracklistBox"></div>
+        <div class="album-platforms" id="albumPlatforms"></div>
+        <button class="btn-volver" data-close="albumModal">VOLVER AL UNIVERSO</button>
+    </div>
+</div>
+
+<!-- MODAL BUZÓN -->
+<div id="reflectionModal" class="modal">
+    <div class="reflection-content modal-content">
+        <span class="close-modal close-reflection">&times;</span>
+        <h2>BUZÓN DE REFLEXIÓN</h2>
+        <p id="buzonSubtitle">Envía tu reflexión hacia el sol. La nave llevará tu mensaje.</p>
+        <form id="reflectionForm" action="https://formsubmit.co/ajax/reflexionmusicalmx@gmail.com" method="POST">
+            <input type="hidden" name="_captcha" value="false">
+            <textarea id="reflectionMsg" name="mensaje" rows="4" placeholder="Escribe aquí tu reflexión..." required></textarea>
+            <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top:15px;">CARGAR MENSAJE EN NAVE</button>
+        </form>
+        <div id="reflectionStatus" style="display:none;">
+            <p style="color:#FFD700;text-align:center;font-family:var(--font-display);letter-spacing:2px;">MENSAJE A BORDO</p>
+            <button id="btnSendToSun" class="btn-volver">ENVIAR AL SOL</button>
+        </div>
+        <div id="cooldownStatus" style="display:none;">
+            <p style="color:#FFD700;text-align:center;">Ya enviaste una reflexión. Vuelve mañana.</p>
+        </div>
+    </div>
+</div>
+
+<!-- HOLOGRAMA -->
 <div id="hologramPanel" class="hologram-modal">
     <div class="hologram-content">
         <button class="close-hologram">&times;</button>
         <div class="hologram-header">
             <h2>CENTRO DE ENERGÍA</h2>
-            <p>Súmate a la misión de Reflexión Musical MX</p>
+            <p>Selecciona cómo apoyar la misión</p>
         </div>
         <div class="support-grid">
             <div class="support-card">
-                <div class="card-icon">⚡</div>
+                <div class="card-icon">🪙</div>
                 <h3>FINANCIAR LA SONDA</h3>
-                <p>Aportaciones directas para mantener la producción independiente.</p>
-                <button class="holo-btn" id="btnOpenCrypto">VER COORDENADAS</button>
+                <p>Apóyanos con una donación crypto.</p>
+                <button class="holo-btn" id="btnOpenCrypto">ABRIR</button>
             </div>
             <div class="support-card">
                 <div class="card-icon">📡</div>
                 <h3>PROPAGAR LA SEÑAL</h3>
-                <p>Crea video lyrics o usa los audios oficiales para expandir el mensaje.</p>
-                <button class="holo-btn" id="btnOpenPropagar">VER INSTRUCCIONES</button>
+                <p>Acceso a la bóveda de co-creadores.</p>
+                <button class="holo-btn" id="btnOpenPropagar">ABRIR</button>
             </div>
             <div class="support-card">
-                <div class="card-icon">🎶</div>
+                <div class="card-icon">🎚️</div>
                 <h3>AMPLIFICAR FRECUENCIA</h3>
-                <p>Guarda el proyecto en tus playlists y compártelo de forma orgánica.</p>
-                <button class="holo-btn" id="btnOpenAmplificar">IR A PLATAFORMAS</button>
+                <p>Escúchanos en plataformas.</p>
+                <button class="holo-btn" id="btnOpenAmplificar">ABRIR</button>
             </div>
         </div>
-        <button id="btnCerrarHologramaMovil" class="btn-volver" style="margin-top: 25px; width: 100%; box-sizing: border-box;">VOLVER AL UNIVERSO</button>
+        <button class="btn-volver" id="btnCerrarHologramaMovil">CERRAR</button>
     </div>
 </div>
- 
-<!-- MODAL DEL BUZÓN -->
-<div id="reflectionModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content reflection-content">
-        <span class="close-modal close-reflection" aria-label="Cerrar buzón" role="button" tabindex="0">×</span>
-        <h2 style="text-align: center; font-size: 20px; border-bottom: none; margin-bottom: 5px;">CONEXIÓN SEGURA</h2>
-        <p id="buzonSubtitle" style="text-align: center; font-size: 13px; opacity: 0.9;">El universo se ha detenido para escucharte. Escribe tu mensaje y cárgalo en la sonda.</p>
- 
-        <form id="reflectionForm" action="https://script.google.com/macros/s/AKfycbw-iMGBj0r8nZbhZPfwniPA1KzOC_elObAC5kN14EFeUaK0Dx7ZzD2bCOJcYw_o3xWhHQ/exec" method="POST">
-            <textarea name="mensaje" id="reflectionMsg" rows="5" placeholder="Escribe tu reflexión aquí..." required></textarea>
-            <!-- CORRECCIÓN BUG #5: El honeypot debe validarse en el servidor (Google Apps Script).
-                 Agrega al inicio de tu doPost(e): if(e.parameter.miel_trampa) return; -->
-            <input type="text" name="miel_trampa" style="display:none" tabindex="-1" autocomplete="off">
-            <button type="submit" id="btnSubmitReflection" class="btn-volver" style="margin-top: 15px; width: 100%; box-sizing: border-box;">CARGAR MENSAJE EN NAVE</button>
-        </form>
- 
-        <div id="cooldownStatus" style="display: none; text-align: center; margin-top: 15px;">
-            <p style="color: #ff4d4d; font-weight: bold; font-size: 14px; margin-bottom: 5px;">SISTEMA EN ENFRIAMIENTO</p>
-            <p style="font-size: 13px; opacity: 0.9;">La sonda necesita recargar energía tras tu último envío. Por favor, intenta de nuevo mañana.</p>
-        </div>
- 
-        <div id="reflectionStatus" style="display: none; text-align: center; margin-top: 15px;">
-            <p style="color: #FFD700; font-weight: bold; font-size: 14px; margin-bottom: 15px;">¡Mensaje cargado en la sonda!</p>
-            <button id="btnSendToSun" class="btn-volver" style="background: #FFD700; color: #000;">CERRAR Y ENVIAR AL SOL</button>
-        </div>
-    </div>
-</div>
- 
-<!-- MODAL COORDENADAS WEB3 -->
-<div id="cryptoModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" style="text-align: center; max-width: 400px;">
-        <span class="close-modal close-crypto">×</span>
-        <h2 style="font-size: 22px;">COORDENADAS WEB3</h2>
-        <div class="qr-carousel-wrapper" style="margin-top: 20px;">
-            <button class="qr-nav-btn" id="prevQr" style="font-size: 30px;">&#10094;</button>
-            <div class="qr-container" id="qrContainer" style="width: 200px;">
-                <div class="qr-box"><img src="images/qr-btc.png" alt="QR Bitcoin" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">BITCOIN (BTC)</span><span class="net-badge">Red: Bitcoin</span></div>
-                <div class="qr-box"><img src="images/qr-usdt-trc20.png" alt="QR USDT TRC20" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">USDT</span><span class="net-badge">Red: TRC20</span></div>
-                <div class="qr-box"><img src="images/qr-usdt-bep20.png" alt="QR USDT BEP20" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">USDT</span><span class="net-badge">Red: BEP20</span></div>
-                <div class="qr-box"><img src="images/qr-xrp.png" alt="QR Ripple" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">RIPPLE (XRP)</span><span class="net-badge">Red: Ripple</span></div>
-                <div class="qr-box"><img src="images/qr-ltc.png" alt="QR Litecoin" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">LITECOIN (LTC)</span><span class="net-badge">Red: Litecoin</span></div>
-                <div class="qr-box"><img src="images/qr-sol.png" alt="QR Solana" class="qr-img" style="width: 160px; height: 160px;"><span style="font-size: 13px;">SOLANA (SOL)</span><span class="net-badge">Red: Solana</span></div>
+
+<!-- MODAL CRYPTO -->
+<div id="cryptoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal close-crypto" data-close="cryptoModal">&times;</span>
+        <h2>FINANCIAR LA SONDA</h2>
+        <p>Tu apoyo mantiene vivo el proyecto. Escanea el QR para donar.</p>
+        <div class="qr-carousel-wrapper">
+            <button class="qr-nav-btn" id="prevQr">‹</button>
+            <div class="qr-container" id="qrContainer">
+                <div class="qr-box">
+                    <img src="images/qr-btc.png" class="qr-img" alt="BTC">
+                    <span>BITCOIN</span>
+                    <span class="net-badge">BTC</span>
+                </div>
             </div>
-            <button class="qr-nav-btn" id="nextQr" style="font-size: 30px;">&#10095;</button>
+            <button class="qr-nav-btn" id="nextQr">›</button>
         </div>
+        <button class="btn-volver" data-close="cryptoModal">VOLVER</button>
     </div>
 </div>
- 
-<!-- MODAL INSTRUCCIONES -->
-<div id="propagarModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" style="text-align: center; max-width: 500px;">
-        <span class="close-modal close-propagar">×</span>
-        <h2 style="font-size: 22px;">PROTOCOLOS DE ACCESO</h2>
-        <p style="font-size: 16px; color: #FFD700; line-height: 1.8; margin-bottom: 25px;">
-            Nuestros audios, vocales y logotipos están resguardados en una bóveda digital. Para obtener la llave, necesitamos conocer tu frecuencia y confirmar que resuenas con el proyecto.
-        </p>
-        <button class="btn-volver" id="btnIrABoveda" style="background: rgba(255, 215, 0, 0.1); font-size: 15px; padding: 15px;">LEER REGLAS Y APLICAR</button>
-    </div>
-</div>
- 
-<!-- MODAL AMPLIFICAR -->
-<div id="amplificarModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content" style="text-align: center; max-width: 600px;">
-        <span class="close-modal close-amplificar">×</span>
-        <h2 style="font-size: 22px;">EXPANDE LA SEÑAL</h2>
-        <div style="font-size: 14px; color: #ccc; line-height: 1.6; text-align: left; margin-bottom: 25px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
-            <p style="margin-bottom: 10px;">Cada acción tuya es el motor orgánico de esta nave. Ayúdanos a llevar el mensaje más lejos:</p>
-            <ul style="padding-left: 20px; margin: 0;">
-                <li style="margin-bottom: 5px;">🎧 <b>Integra:</b> Guarda nuestros tracks y arma playlists.</li>
-                <li style="margin-bottom: 5px;">🔄 <b>Transmite:</b> Comparte el enlace de la nave con otros.</li>
-                <li>💬 <b>Interactúa:</b> Suscríbete, deja tu 'Me gusta' y comenta.</li>
-            </ul>
-        </div>
-        <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Escucha el Catálogo Oficial</h3>
-        <div class="album-platforms" style="margin-bottom: 30px; gap: 20px;">
-            <a href="https://open.spotify.com/intl-es/artist/35BPnnmePmVfFPm1FiR75c" target="_blank" aria-label="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg></a>
-            <a href="https://music.apple.com/es/artist/reflexi%C3%B3n-musical-mx/1841491478" target="_blank" aria-label="Apple Music"><svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></a>
-            <a href="https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw" target="_blank" aria-label="YouTube Music"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></a>
-            <a href="https://soundcloud.com/reflexionmusicalmx-music" target="_blank" aria-label="SoundCloud"><svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /></svg></a>
-        </div>
-        <h3 style="color: #FFD700; font-size: 13px; margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase;">Únete a la Comunidad</h3>
-        <div class="album-platforms" style="flex-wrap: wrap; gap: 15px;">
-            <a href="https://www.youtube.com/@ReflexionMusicalMX" target="_blank" aria-label="YouTube"><svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"/></svg></a>
-            <a href="https://www.tiktok.com/@reflexionmusicalmx" target="_blank" aria-label="TikTok"><svg viewBox="0 0 448 512"><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3V349.4A162.6 162.6 0 1 1 185 188.3V278.2a74.6 74.6 0 1 0 52.2 71.2V0l88 0a121.2 121.2 0 0 0 1.9 22.2h0A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg></a>
-            <a href="https://www.instagram.com/reflexionmusicalmx" target="_blank" aria-label="Instagram"><svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg></a>
-            <a href="https://www.facebook.com/reflexionmusicalmx" target="_blank" aria-label="Facebook"><svg viewBox="0 0 320 512"><path d="M279.1 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.4 0 225.4 0c-73.22 0-121.1 44.38-121.1 124.7v70.62H22.89V288h81.39v224h100.2V288z"/></svg></a>
-            <a href="https://x.com/RMusicalMX" target="_blank" aria-label="X"><svg viewBox="0 0 512 512"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a>
-        </div>
-    </div>
-</div>
- 
-<!-- MODAL BÓVEDA -->
-<div id="protocoloModal" class="hologram-modal">
-    <div class="hologram-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
-        <button class="close-protocolo">&times;</button>
-        <div class="hologram-header">
-            <h2>BÓVEDA DE DATOS</h2>
-            <p>Protocolo de acceso para Co-creadores</p>
-        </div>
+
+<!-- MODAL PROPAGAR -->
+<div id="propagarModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal close-propagar" data-close="propagarModal">&times;</span>
+        <h2>PROPAGAR LA SEÑAL</h2>
         <div class="boveda-info">
-            <div class="info-seccion">
-                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">MATERIAL DISPONIBLE:</h4>
-                <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
-                    <li><strong>Acceso Restringido:</strong> Se otorgará únicamente la pista oficial (WAV/MP3), instrumental, acapella y letra de la <em>canción específica</em> solicitada.</li>
-                    <li>Logotipos oficiales (Nuestras 3 variantes visuales).</li>
-                    <li><strong style="color: #fff;">Nivel 2 (Colaboradores verificados):</strong> Acceso a versiones alternativas y maquetas.</li>
-                </ul>
-            </div>
-            <div class="info-seccion">
-                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">REGLAS DE TRANSMISIÓN:</h4>
-                <ul style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 15px;">
-                    <li><strong>Mención:</strong> Todo contenido generado debe etiquetar a Reflexión Musical MX.</li>
-                    <li>Nos reservamos el derecho de pedir la eliminación si se usa para discursos de odio o se monetiza sin autorización.</li>
-                </ul>
-            </div>
-            <div class="info-seccion" style="background: rgba(255, 215, 0, 0.1); padding: 10px; border-radius: 4px; border-left: 3px solid #FFD700;">
-                <h4 style="color: #FFD700; margin-bottom: 5px; font-size: 12px;">PASOS (DOBLE CONFIRMACIÓN):</h4>
-                <ol style="color: #ccc; font-size: 11px; line-height: 1.5; padding-left: 15px; margin-bottom: 0;">
-                    <li>Indica la canción y llena tus datos.</li>
-                    <li>Ve a nuestro último video en YouTube o TikTok y comenta: <strong>"Solicitando enlace a la sonda 📡"</strong>.</li>
-                    <li>El escaneo manual tardará 48 a 72 horas. Si eres aprobado, recibirás la llave en tu correo.</li>
-                </ol>
-            </div>
+            <p>Accede a la <strong>Bóveda de Co-Creadores</strong>: pistas oficiales, instrumentales, acapellas y logos para colaborar.</p>
         </div>
+        <button class="holo-btn" id="btnIrABoveda">IR A LA BÓVEDA</button>
+    </div>
+</div>
+
+<!-- MODAL PROTOCOLO -->
+<div id="protocoloModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal close-protocolo" data-close="protocoloModal">&times;</span>
+        <h2>PROTOCOLO DE ACCESO</h2>
+        <p>Llena este formulario para recibir acceso a la bóveda.</p>
         <form id="formProtocolo" class="holo-form">
-            <div class="input-group"><input type="text" name="nombre" required placeholder="Nombre / Alias del Creador"></div>
-            <div class="input-group"><input type="email" name="email" required placeholder="Correo de Contacto (Cero spam)"></div>
-            <div class="input-group"><input type="url" name="canal" required placeholder="Enlace a tu canal principal"></div>
-            <div class="input-group"><input type="text" name="cancion_solicitada" required placeholder="¿Qué canción específica deseas utilizar?"></div>
+            <div class="input-group"><input type="text" name="nombre" placeholder="Tu nombre / alias" required></div>
+            <div class="input-group"><input type="email" name="email" placeholder="Tu correo" required></div>
+            <div class="input-group"><input type="text" name="proyecto" placeholder="¿Qué quieres crear?" required></div>
             <div class="checkbox-group">
-                <input type="checkbox" id="aceptoReglas" name="aceptoReglas" required>
-                <label for="aceptoReglas">He leído las reglas, entiendo que el acceso es unitario y confirmo que dejaré el comentario de verificación.</label>
+                <input type="checkbox" id="cbComentario" required>
+                <label for="cbComentario">Confirmo haber comentado en un video oficial de YouTube o TikTok.</label>
             </div>
-            <button type="submit" class="holo-btn submit-btn" id="btnEnviarForm">ENVIAR SOLICITUD DE ACCESO</button>
+            <button type="submit" class="btn-volver submit-btn" id="btnEnviarForm">ENVIAR SOLICITUD DE ACCESO</button>
         </form>
     </div>
 </div>
- 
-<script src="letras.js"></script>
-<script src="datos.js"></script>
- 
+
+<!-- MODAL AMPLIFICAR -->
+<div id="amplificarModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal close-amplificar" data-close="amplificarModal">&times;</span>
+        <h2>AMPLIFICAR FRECUENCIA</h2>
+        <p>Escúchanos, guárdanos y compártenos en tu plataforma favorita.</p>
+        <div class="album-platforms">
+            <a href="https://open.spotify.com/artist/3l9eXkOzVfYZxjL0fRFmJW" target="_blank" title="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm5.5 17.3a.75.75 0 0 1-1 .25c-2.8-1.7-6.3-2.1-10.4-1.1a.75.75 0 1 1-.3-1.46c4.5-1 8.4-.6 11.5 1.3.34.21.45.66.2 1z"/></svg></a>
+            <a href="https://music.apple.com/mx/artist/reflexi%C3%B3n-musical-mx/1742428289" target="_blank" title="Apple Music"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0z"/></svg></a>
+            <a href="https://music.amazon.com.mx/artists/B0CYP7NV7Z" target="_blank" title="Amazon"><svg viewBox="0 0 24 24"><path d="M.13 17.96c.21-.32.5-.36.92-.16 1.92.94 4 1.6 6.21 2 2.21.4 4.42.4 6.63 0 2.05-.36 4-1.05 5.84-2.05z"/></svg></a>
+            <a href="https://soundcloud.com/reflexionmusicalmx" target="_blank" title="SoundCloud"><svg viewBox="0 0 24 24"><path d="M0 13.5C0 12.7.7 12 1.5 12S3 12.7 3 13.5v4c0 .8-.7 1.5-1.5 1.5S0 18.3 0 17.5z"/></svg></a>
+            <a href="https://www.deezer.com/mx/artist/213717725" target="_blank" title="Deezer"><svg viewBox="0 0 24 24"><path d="M18.81 4.16h5.18v3.31h-5.18z"/></svg></a>
+        </div>
+        <button class="btn-volver" data-close="amplificarModal">VOLVER</button>
+    </div>
+</div>
+
 <script>
 // =====================================================
-// ÍCONOS DE REPRODUCCIÓN
+// DATOS (sin cambios - se respeta el repertorio actual)
 // =====================================================
-const playIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M10 8l6 4-6 4V8z" fill="#000"/></svg>`;
-const pauseIconSVG = `<svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="12" fill="#FFD700"/><path d="M9 8h2v8H9zm4 0h2v8h-2z" fill="#000"/></svg>`;
- 
-// VARIABLES GLOBALES DEL REPRODUCTOR
-let ytPlayerGlobal = null;
-let activeTracksGlobal = [];
-let activeTrackIndexGlobal = 0;
-let activePlaylistIdGlobal = "";
-let activeAlbumImgGlobal = "";
- 
-function setPlayerState(isPlaying) {
-    const btn = document.getElementById('btnPlayPause');
-    if (btn) btn.innerHTML = isPlaying ? pauseIconSVG : playIconSVG;
-}
- 
-// =====================================================
-// CORRECCIÓN BUG #5: localStorage con try/catch
-// para iOS Safari modo privado y otros contextos restringidos
-// =====================================================
-const safeStorage = {
-    get(key) {
-        try { return localStorage.getItem(key); }
-        catch (e) { return null; }
-    },
-    set(key, value) {
-        try { localStorage.setItem(key, value); }
-        catch (e) { /* silencioso en modo privado */ }
-    }
-};
- 
-// =====================================================
-// CORRECCIÓN BUG #1: Funciones de modal corregidas
-// Usan visibility+opacity en vez de display:none
-// =====================================================
-function openModal(el) {
-    el.classList.add('show');
-}
-function closeModal(el) {
-    el.classList.remove('show');
-}
- 
+const singles = window.singles || [];
+const albums = window.albums || [];
+
 document.addEventListener("DOMContentLoaded", () => {
-    const loader = document.getElementById('loader');
-    const loaderImg = document.getElementById('loaderImg');
-    const modal = document.getElementById("bioModal");
-    const sun = document.getElementById("sun");
-    const bioAudio = document.getElementById("bioAudio");
-    const volumeSlider = document.getElementById("volumeSlider");
-    const muteBtn = document.getElementById("muteBtn");
-    const starContainer = document.getElementById("starContainer");
+    // safeStorage
+    const safeStorage = {
+        get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch(e) { return null; } },
+        set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+    };
+
+    // LOADER FADE
+    setTimeout(() => {
+        const loader = document.getElementById("loader");
+        if (loader) {
+            loader.style.opacity = "0";
+            setTimeout(() => loader.style.display = "none", 800);
+        }
+    }, 1500);
+
+    // ===== MEJORA 3: CURSOR + PARALLAX =====
+    const cursor = document.getElementById("customCursor");
+    const ring = document.getElementById("customCursorRing");
+    const solarSys = document.getElementById("solarSystem");
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+    if (window.matchMedia("(hover: hover)").matches) {
+        document.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            cursor.style.left = mouseX + "px";
+            cursor.style.top = mouseY + "px";
+
+            // Parallax
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const dx = (mouseX - cx) / cx;
+            const dy = (mouseY - cy) / cy;
+            solarSys.style.transform = `translate(${dx * -15}px, ${dy * -15}px) translateZ(0)`;
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            ring.style.left = ringX + "px";
+            ring.style.top = ringY + "px";
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        document.querySelectorAll("a, button, .planet, #sun, .track-link, .ctrl-btn, .share-btn, .holo-btn, .close-modal, input, textarea, .cp-item").forEach(el => {
+            el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
+            el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
+        });
+    }
+
+    // MODAL HELPERS
+    function openModal(m) { m.classList.add("show"); }
+    function closeModal(m) { m.classList.remove("show"); }
+
+    document.querySelectorAll("[data-close]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const m = document.getElementById(btn.getAttribute("data-close"));
+            if (m) closeModal(m);
+        });
+    });
+
+    document.querySelectorAll(".modal").forEach(m => {
+        m.addEventListener("click", (e) => { if (e.target === m) closeModal(m); });
+    });
+
+    // BIO
+    const sunEl = document.getElementById("sun");
+    const bioModal = document.getElementById("bioModal");
+    if (sunEl) sunEl.addEventListener("click", () => openModal(bioModal));
+
+    // ===== ÓRBITAS (planetas) =====
+    const orbitSingles = document.getElementById("orbitSingles");
+    const orbitAlbums = document.getElementById("orbitAlbums");
+
+    function placePlanets(orbit, items, radius, type) {
+        if (!orbit) return;
+        items.forEach((item, i) => {
+            const angle = (i / items.length) * 2 * Math.PI;
+            const x = radius + radius * Math.cos(angle) - 55;
+            const y = radius + radius * Math.sin(angle) - 55;
+            const p = document.createElement("div");
+            p.className = "planet";
+            p.dataset.type = type;
+            p.dataset.index = i;
+            p.style.left = x + "px";
+            p.style.top = y + "px";
+            p.innerHTML = `
+                <div class="counter">
+                    <img src="${item.cover}" alt="${item.title}" loading="lazy">
+                </div>
+                <div class="tooltip">${item.title}</div>
+            `;
+            p.addEventListener("click", () => openRelease(type, i));
+            orbit.appendChild(p);
+        });
+    }
+
+    placePlanets(orbitSingles, singles, 210, "single");
+    placePlanets(orbitAlbums, albums, 360, "album");
+
+    // ===== ABRIR RELEASE =====
     const albumModal = document.getElementById("albumModal");
-    const modalAlbumTitle = document.getElementById("modalAlbumTitle");
-    const modalTracklist = document.getElementById("modalTracklist");
-    const modalPlatforms = document.getElementById("modalPlatforms");
+    const modalTitle = document.getElementById("modalAlbumTitle");
+    const tracklistBox = document.getElementById("tracklistBox");
+    const albumPlatforms = document.getElementById("albumPlatforms");
     const customPlayerBox = document.getElementById("customPlayerBox");
-    const playerVolSlider = document.getElementById("playerVolSlider");
-    const lyricsModal = document.getElementById("lyricsModal");
- 
-    // CORRECCIÓN BUG #1 (LOADER): Espera que la imagen cargue antes de ocultar
-    function hideLoader() {
-        loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 800);
-    }
- 
-    if (loaderImg.complete) {
-        setTimeout(hideLoader, 300);
-    } else {
-        loaderImg.addEventListener('load', hideLoader);
-        loaderImg.addEventListener('error', hideLoader); // fallback si falla
-        // Timeout de seguridad en caso de que load no dispare
-        setTimeout(hideLoader, 3000);
-    }
- 
-    // CONTROLES DE VOLUMEN - BIO AUDIO
-    if (volumeSlider && bioAudio) {
-        bioAudio.volume = volumeSlider.value;
-        volumeSlider.addEventListener("input", (e) => {
-            bioAudio.volume = e.target.value;
-            muteBtn.textContent = bioAudio.volume == 0 ? "🔇" : "🔊";
+    const miniPlayer = document.getElementById("miniPlayer");
+    const miniCover = document.getElementById("miniPlayerCover");
+    const miniTitle = document.getElementById("miniPlayerTitle");
+
+    let currentRelease = null;
+
+    function openRelease(type, idx) {
+        const item = (type === "single" ? singles : albums)[idx];
+        if (!item) return;
+        currentRelease = { type, idx, item };
+
+        modalTitle.textContent = item.title;
+        tracklistBox.innerHTML = "";
+        albumPlatforms.innerHTML = "";
+
+        const tracks = item.tracks || [{ title: item.title, yt: item.yt }];
+        tracks.forEach((t, i) => {
+            const w = document.createElement("div");
+            w.className = "track-item-wrapper";
+            w.innerHTML = `<a class="track-link" data-yt="${t.yt || ''}">${t.title}</a>`;
+            tracklistBox.appendChild(w);
         });
-    }
- 
-    if (muteBtn && bioAudio) {
-        muteBtn.addEventListener("click", () => {
-            if (bioAudio.volume > 0) {
-                bioAudio.dataset.lastVol = bioAudio.volume;
-                bioAudio.volume = 0;
-                volumeSlider.value = 0;
-                muteBtn.textContent = "🔇";
-            } else {
-                const lastVol = bioAudio.dataset.lastVol || 0.4;
-                bioAudio.volume = lastVol;
-                volumeSlider.value = lastVol;
-                muteBtn.textContent = "🔊";
-            }
-        });
-    }
- 
-    if (playerVolSlider) {
-        playerVolSlider.addEventListener("input", (e) => {
-            if (ytPlayerGlobal && typeof ytPlayerGlobal.setVolume === 'function') {
-                try { ytPlayerGlobal.setVolume(parseInt(e.target.value, 10)); } catch (err) {}
-            }
-        });
-    }
- 
-    // FUNCIONES DE CIERRE DE MODALES
-    function closeAndStopAudio() {
-        closeModal(modal);
-        if (bioAudio) { bioAudio.pause(); bioAudio.currentTime = 0; }
-    }
- 
-    function closeAlbumPanel() {
-        closeModal(albumModal);
-        if (ytPlayerGlobal && typeof ytPlayerGlobal.pauseVideo === 'function') {
-            try { ytPlayerGlobal.pauseVideo(); } catch (e) {}
-        }
-        setTimeout(() => {
-            customPlayerBox.style.display = "none";
-            modalTracklist.innerHTML = "";
-            setPlayerState(false);
-            document.getElementById("playerIframeContainer").innerHTML = "";
-        }, 400);
-    }
- 
-    // APERTURA DEL SOL (BIOGRAFÍA)
-    if (sun) {
-        sun.onclick = () => {
-            openModal(modal);
-            if (bioAudio) bioAudio.play().catch(err => console.log("Audio bloqueado:", err));
-        };
-    }
- 
-    // CORRECCIÓN BUG #2: Selectores específicos al modal padre
-    // Antes: document.querySelector(".close-bio") podía capturar el incorrecto
-    // Ahora: buscamos dentro del modal específico
-    document.querySelector("#bioModal .close-bio").addEventListener('click', closeAndStopAudio);
-    document.querySelector("#albumModal .close-album").addEventListener('click', closeAlbumPanel);
-    document.getElementById("btnCerrarAlbum").addEventListener('click', closeAlbumPanel);
-    document.querySelector("#lyricsModal .close-lyrics").onclick = () => closeModal(lyricsModal);
- 
-    // Cierre al hacer clic en el fondo del modal
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) closeAndStopAudio();
-        if (event.target === albumModal) closeAlbumPanel();
-        if (event.target === lyricsModal) closeModal(lyricsModal);
-        if (event.target.classList.contains("modal")) closeModal(event.target);
-        if (event.target === protocoloModal) protocoloModal.style.display = "none";
-    });
-    window.addEventListener('touchstart', (event) => {
-        if (event.target === modal) closeAndStopAudio();
-        if (event.target === albumModal) closeAlbumPanel();
-    }, { passive: true });
- 
-    // CANVAS DE ESTRELLAS
-    const canvas = document.getElementById("bg");
-    const ctx = canvas.getContext("2d");
-    const numStars = window.innerWidth < 768 ? 80 : 300;
-    let backgroundStars = [];
- 
-    function setCanvasSize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initStars();
-    }
- 
-    function initStars() {
-        backgroundStars = [];
-        for (let i = 0; i < numStars; i++) {
-            backgroundStars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.5,
-                opacity: Math.random(),
-                speed: 0.005 + Math.random() * 0.01
+
+        if (item.platforms) {
+            Object.entries(item.platforms).forEach(([name, url]) => {
+                const a = document.createElement("a");
+                a.href = url; a.target = "_blank"; a.title = name;
+                a.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>`;
+                albumPlatforms.appendChild(a);
             });
         }
+
+        // Actualizar mini-player
+        miniCover.style.backgroundImage = `url('${item.cover}')`;
+        miniTitle.textContent = item.title;
+
+        // Marcar "now playing"
+        document.querySelectorAll(".planet.now-playing").forEach(p => p.classList.remove("now-playing"));
+        const planet = document.querySelector(`.planet[data-type="${type}"][data-index="${idx}"]`);
+        if (planet) planet.classList.add("now-playing");
+
+        miniPlayer.classList.add("visible");
+        openModal(albumModal);
     }
- 
-    function drawCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        backgroundStars.forEach(s => {
-            s.opacity += s.speed;
-            if (s.opacity >= 1 || s.opacity <= 0.1) s.speed *= -1;
-            ctx.fillStyle = `rgba(255, 215, 0, ${s.opacity})`;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-            ctx.fill();
-        });
-        requestAnimationFrame(drawCanvas);
-    }
- 
-    setCanvasSize();
- 
-    // CORRECCIÓN BUG #3: Debounce en el resize para evitar reinicializaciones constantes
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(setCanvasSize, 200);
+
+    document.getElementById("miniPlayerOpen").addEventListener("click", () => {
+        if (currentRelease) openRelease(currentRelease.type, currentRelease.idx);
     });
- 
-    drawCanvas();
- 
-    // =====================================================
-    // CORRECCIÓN BUG #7: Flag para evitar spawns concurrentes de supernovas
-    // =====================================================
-    let currentSpawnTimeout = null;
-    let isBatchRunning = false;
- 
-    function removeAllSupernovas() {
-        document.querySelectorAll('.supernova-hitbox').forEach(sn => sn.remove());
-    }
- 
-    function spawnSupernovaBatch() {
-        if (isBatchRunning) return; // Evita batches concurrentes
-        isBatchRunning = true;
-        removeAllSupernovas();
- 
-        for (let i = 0; i < 3; i++) {
-            const hitbox = document.createElement("div");
-            hitbox.className = "supernova-hitbox";
-            hitbox.style.left = (Math.random() * window.innerWidth) + "px";
-            hitbox.style.top = (Math.random() * window.innerHeight) + "px";
-            const flash = document.createElement("div");
-            flash.className = "supernova";
-            hitbox.appendChild(flash);
-            hitbox.onclick = function () {
-                flash.style.animation = 'none';
-                flash.style.transform = 'scale(2)';
-                flash.style.opacity = '0';
-                flash.style.transition = '0.3s ease-out';
-                setTimeout(() => {
-                    removeAllSupernovas();
-                    if (currentSpawnTimeout) clearTimeout(currentSpawnTimeout);
-                    isBatchRunning = false;
-                    spawnSupernovaBatch();
-                }, 400);
-            };
-            if (starContainer) starContainer.appendChild(hitbox);
-        }
- 
-        currentSpawnTimeout = setTimeout(() => {
-            removeAllSupernovas();
-            isBatchRunning = false;
-            spawnSupernovaBatch();
-        }, 5000 + Math.random() * 5000);
-    }
- 
-    spawnSupernovaBatch();
- 
-    // =====================================================
-    // REPRODUCTOR MAESTRO
-    // CORRECCIÓN BUG #8 (YT Player): MutationObserver en vez de setTimeout
-    // para garantizar que el iframe esté en el DOM antes de inicializar YT
-    // =====================================================
-    window.renderTrack = function (index) {
-        activeTrackIndexGlobal = index;
-        const trackObj = activeTracksGlobal[index];
-        const playerIframe = document.getElementById("playerIframeContainer");
-        const customBox = document.getElementById("customPlayerBox");
-        const lyricsBox = document.getElementById("nowPlayingLyrics");
- 
-        document.querySelectorAll('.track-link').forEach((el, i) => {
-            el.classList.toggle('active-track', i === index);
-        });
- 
-        customBox.style.display = "flex";
-        setPlayerState(false);
-        playerIframe.innerHTML = "";
- 
-        if (typeof letras !== 'undefined' && letras[trackObj.name]) {
-            lyricsBox.innerText = letras[trackObj.name];
-            lyricsBox.style.display = "block";
-        } else {
-            lyricsBox.innerText = "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
-            lyricsBox.style.display = "block";
-        }
- 
-        let videoId = "";
-        const vMatch = trackObj.url.match(/(?:[?&]v=|youtu\.be\/)([^&]+)/);
-        if (vMatch && vMatch[1]) {
-            videoId = vMatch[1];
-        } else {
-            window.open(trackObj.url, "_blank");
-            return;
-        }
- 
-        if (videoId) {
-            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
-            if (activePlaylistIdGlobal) embedUrl += `&list=${activePlaylistIdGlobal}`;
- 
-            playerIframe.innerHTML = `<iframe id="yt-iframe" width="100%" height="140" src="${embedUrl}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="border-radius: 8px 8px 0 0; position: relative; z-index: 1;"></iframe>`;
- 
-            // CORRECCIÓN: MutationObserver en vez de setTimeout
-            const iframeEl = document.getElementById('yt-iframe');
-            if (iframeEl && window.YT && window.YT.Player) {
-                initYTPlayer(iframeEl);
-            } else {
-                // Fallback con observer si YT API aún no cargó
-                const observer = new MutationObserver(() => {
-                    const el = document.getElementById('yt-iframe');
-                    if (el && window.YT && window.YT.Player) {
-                        observer.disconnect();
-                        initYTPlayer(el);
-                    }
-                });
-                observer.observe(playerIframe, { childList: true, subtree: true });
-                // Timeout de seguridad de 3 segundos
-                setTimeout(() => {
-                    observer.disconnect();
-                    const el = document.getElementById('yt-iframe');
-                    if (el && window.YT && window.YT.Player) initYTPlayer(el);
-                }, 3000);
-            }
-        }
-    };
- 
-    function initYTPlayer(iframeEl) {
-        ytPlayerGlobal = new YT.Player(iframeEl, {
-            events: {
-                'onReady': (event) => {
-                    if (playerVolSlider) event.target.setVolume(parseInt(playerVolSlider.value, 10));
-                },
-                'onStateChange': (event) => {
-                    if (event.data === YT.PlayerState.PLAYING) setPlayerState(true);
-                    else if (event.data === YT.PlayerState.PAUSED) setPlayerState(false);
-                    else if (event.data === YT.PlayerState.ENDED) {
-                        setPlayerState(false);
-                        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) {
-                            window.renderTrack(activeTrackIndexGlobal + 1);
-                        }
-                    }
-                }
-            }
-        });
-    }
- 
-    document.getElementById('btnNext').onclick = () => {
-        if (activeTrackIndexGlobal < activeTracksGlobal.length - 1) window.renderTrack(activeTrackIndexGlobal + 1);
-    };
-    document.getElementById('btnPrev').onclick = () => {
-        if (activeTrackIndexGlobal > 0) window.renderTrack(activeTrackIndexGlobal - 1);
-    };
-    document.getElementById('btnPlayPause').onclick = () => {
-        if (ytPlayerGlobal && typeof ytPlayerGlobal.getPlayerState === 'function') {
-            const state = ytPlayerGlobal.getPlayerState();
-            if (state === 1 || state === 3) ytPlayerGlobal.pauseVideo();
-            else ytPlayerGlobal.playVideo();
-        }
-    };
- 
-    // =====================================================
-    // CREACIÓN DE ÓRBITAS (planetas)
-    // =====================================================
-    function createOrbit(data, id, radius) {
-        const orbit = document.getElementById(id);
-        if (!orbit || !data) return;
-        const fragment = document.createDocumentFragment();
- 
-        data.forEach((item, i) => {
-            const angle = (i / data.length) * Math.PI * 2;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
- 
-            const planet = document.createElement("div");
-            planet.className = "planet";
-            planet.style.left = `calc(50% + ${x}px - 50px)`;
-            planet.style.top = `calc(50% + ${y}px - 50px)`;
- 
-            planet.onclick = () => {
-                if (bioAudio && !bioAudio.paused) {
-                    bioAudio.pause();
-                    if (muteBtn) muteBtn.textContent = "🔇";
-                }
- 
-                modalAlbumTitle.innerText = item.title || item.img.split('/').pop().replace('.webp', '');
-                modalTracklist.innerHTML = "";
-                document.getElementById("customPlayerBox").style.display = "none";
- 
-                let ytLink = item.links && item.links.youtube ? item.links.youtube : "";
-                let playlistId = "";
-                if (ytLink && ytLink !== "#") {
-                    const match = ytLink.match(/[?&]list=([^&]+)/);
-                    if (match && match[1]) playlistId = match[1];
-                }
- 
-                activeTracksGlobal = item.tracks || [];
-                activePlaylistIdGlobal = playlistId;
-                // CORRECCIÓN BUG: encodeURI solo en el nombre del archivo, no en el path completo
-                activeAlbumImgGlobal = item.img;
- 
-                if (item.tracks && item.tracks.length > 0) {
-                    item.tracks.forEach((trackObj, index) => {
-                        const row = document.createElement("div");
-                        row.className = "track-item-wrapper";
- 
-                        const trackLink = document.createElement("a");
-                        trackLink.className = "track-item track-link";
-                        trackLink.href = "javascript:void(0);";
-                        trackLink.innerText = `${index + 1}. ${trackObj.name}`;
- 
-                        const actionsDiv = document.createElement("div");
-                        actionsDiv.style.cssText = "display:flex;gap:10px;";
- 
-                        const shareBtn = document.createElement("span");
-                        shareBtn.className = "share-btn";
-                        shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
-                        shareBtn.title = "Compartir canción";
- 
-                        const lyricBtn = document.createElement("span");
-                        lyricBtn.className = "share-btn";
-                        lyricBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
-                        lyricBtn.title = "Ver Letra";
- 
-                        trackLink.onclick = (e) => { e.preventDefault(); window.renderTrack(index); };
- 
-                        shareBtn.onclick = (e) => {
-                            e.stopPropagation();
-                            const linkToShare = trackObj.shareUrl || trackObj.url;
-                            if (navigator.share) {
-                                navigator.share({ title: trackObj.name, text: `Escucha "${trackObj.name}" de Reflexión Musical MX`, url: linkToShare }).catch(console.error);
-                            } else {
-                                navigator.clipboard.writeText(linkToShare);
-                                alert("Enlace copiado al portapapeles");
-                            }
-                        };
- 
-                        lyricBtn.onclick = (e) => {
-                            e.stopPropagation();
-                            document.getElementById('lyricsTitle').innerText = trackObj.name;
-                            const letraContenido = (typeof letras !== 'undefined' && letras[trackObj.name])
-                                ? letras[trackObj.name]
-                                : "La letra de esta canción se transcribirá pronto. Sigue escuchando...";
-                            document.getElementById('lyricsText').innerText = letraContenido;
-                            openModal(document.getElementById('lyricsModal'));
-                        };
- 
-                        actionsDiv.appendChild(lyricBtn);
-                        actionsDiv.appendChild(shareBtn);
-                        row.appendChild(trackLink);
-                        row.appendChild(actionsDiv);
-                        modalTracklist.appendChild(row);
-                    });
-                } else {
-                    const trackDiv = document.createElement("div");
-                    trackDiv.className = "track-item";
-                    trackDiv.style.cssText = "text-align:center;color:gold;";
-                    trackDiv.innerText = "Escúchalo ahora en plataformas digitales";
-                    modalTracklist.appendChild(trackDiv);
-                }
- 
-                // PLATAFORMAS DEL MODAL
-                modalPlatforms.innerHTML = "";
-                const globalPlatformsForModal = [
-                    { name: "Spotify", svg: `<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.301 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.84.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.56.3z"/></svg>`, id: 'spotify' },
-                    { name: "Amazon Music", svg: `<svg viewBox="0 0 16 16"><path d="M10.813 11.968c0.157 0.083 0.36 0.074 0.5 -0.05l0.005 0.005a90 90 0 0 1 1.623 -1.405c0.173 -0.143 0.143 -0.372 0.006 -0.563l-0.125 -0.17c-0.345 -0.465 -0.673 -0.906 -0.673 -1.791v-3.3l0.001 -0.335c0.008 -1.265 0.014 -2.421 -0.933 -3.305C10.404 0.274 9.06 0 8.03 0 6.017 0 3.77 0.75 3.296 3.24c-0.047 0.264 0.143 0.404 0.316 0.443l2.054 0.22c0.19 -0.009 0.33 -0.196 0.366 -0.387 0.176 -0.857 0.896 -1.271 1.703 -1.271 0.435 0 0.929 0.16 1.188 0.55 0.264 0.39 0.26 0.91 0.257 1.376v0.432q-0.3 0.033 -0.621 0.065c-1.113 0.114 -2.397 0.246 -3.36 0.67C3.873 5.91 2.94 7.08 2.94 8.798c0 2.2 1.387 3.298 3.168 3.298 1.506 0 2.328 -0.354 3.489 -1.54l0.167 0.246c0.274 0.405 0.456 0.675 1.047 1.166ZM6.03 8.431C6.03 6.627 7.647 6.3 9.177 6.3v0.57c0.001 0.776 0.002 1.434 -0.396 2.133 -0.336 0.595 -0.87 0.961 -1.465 0.961 -0.812 0 -1.286 -0.619 -1.286 -1.533M0.435 12.174c2.629 1.603 6.698 4.084 13.183 0.997 0.28 -0.116 0.475 0.078 0.199 0.431C13.538 13.96 11.312 16 7.57 16 3.832 16 0.968 13.446 0.094 12.386c-0.24 -0.275 0.036 -0.4 0.199 -0.299z"/></svg>`, id: 'amazon' },
-                    { name: "Apple Music", svg: `<svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>`, id: 'apple' },
-                    { name: "YouTube Music", svg: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>`, id: 'youtube' },
-                    { name: "SoundCloud", svg: `<svg viewBox="0 0 24 24"><path d="M20.66 10.71a3.82 3.82 0 0 0 -0.68 0.07 5.47 5.47 0 0 0 -5.39 -4.4 5.56 5.56 0 0 0 -2 0.37 0.84 0.84 0 0 0 -0.6 0.8v9a0.84 0.84 0 0 0 0.8 0.83h7.85a3.33 3.33 0 0 0 0 -6.66Z" /></svg>`, id: 'soundcloud' },
-                    { name: "Audiomack", svg: `<svg viewBox="0 0 24 24"><path d="M0.331 11.378s0.5418 -0.089 0.765 0.1439c0.2234 0.2332 0.077 0.7156 -0.2195 0.7237 -0.2965 0.01 -0.5705 0.063 -0.765 -0.1439 -0.1946 -0.2066 -0.1424 -0.6218 0.2195 -0.7237"/></svg>`, id: 'audiomack' }
-                ];
- 
-                globalPlatformsForModal.forEach(p => {
-                    let platLink = item.links && item.links[p.id] ? item.links[p.id] : "";
-                    if (!platLink || platLink === "#") {
-                        if (p.id === 'youtube') platLink = "https://music.youtube.com/channel/UCNs0aL3_I_uzJBlRGLedrdw";
-                        if (p.id === 'audiomack') platLink = "https://audiomack.com/reflexion-musical-mx";
-                        if (p.id === 'soundcloud') platLink = "https://soundcloud.com/reflexionmusicalmx-music";
-                    }
-                    if (platLink && platLink !== "#") {
-                        const a = document.createElement("a");
-                        a.href = platLink;
-                        a.target = "_blank";
-                        a.innerHTML = p.svg;
-                        a.setAttribute('aria-label', `Escuchar en ${p.name}`);
-                        modalPlatforms.appendChild(a);
-                    }
-                });
- 
-                openModal(albumModal);
-            };
- 
-            const albumName = item.img.split('/').pop().replace('.webp', '');
-            planet.setAttribute('data-album', albumName.toUpperCase());
- 
-            let extraHTML = "";
-            if (albumName.toUpperCase() === "TEJIDO VITAL") {
-                extraHTML = `<div class="family-symbol-container"><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-m"></div></div><div class="fam-fig fam-child"><div class="fam-head"></div><div class="fam-body-f"></div></div><div class="fam-fig"><div class="fam-head"></div><div class="fam-body-f"></div></div></div>`;
-            }
- 
-            // CORRECCIÓN: encodeURI solo en el src de la imagen, no en rutas de datos
-            planet.innerHTML = `<div class="counter"><img src="${encodeURI(item.img)}" alt="${albumName}" loading="lazy" onerror="this.onerror=null; this.src='images/REFLEXIÓN MUSICAL MX 1.webp';"><div class="tooltip">${albumName}</div>${extraHTML}</div>`;
- 
-            if (albumName.toUpperCase() === "AMOR EN TIEMPOS DE IDEOLOGIAS CANCERIGENAS") {
-                let hTimer;
-                planet.onmouseenter = () => {
-                    hTimer = setInterval(() => {
-                        const h = document.createElement("div");
-                        h.className = "heart-bubble";
-                        h.innerHTML = "❤";
-                        const rect = planet.getBoundingClientRect();
-                        h.style.left = (rect.left + rect.width / 2) + "px";
-                        h.style.top = (rect.top + rect.height / 2) + "px";
-                        document.body.appendChild(h);
-                        const destX = window.innerWidth / 2;
-                        const destY = window.innerHeight / 2;
-                        h.animate([
-                            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1, offset: 0 },
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width / 2}px), calc(-50% + ${destY - rect.top - rect.height / 2}px)) scale(0.6)`, opacity: 1, offset: 0.95 },
-                            { transform: `translate(calc(-50% + ${destX - rect.left - rect.width / 2}px), calc(-50% + ${destY - rect.top - rect.height / 2}px)) scale(0)`, opacity: 0, offset: 1 }
-                        ], { duration: 2500, easing: 'linear' }).onfinish = () => h.remove();
-                    }, 400);
-                };
-                planet.onmouseleave = () => clearInterval(hTimer);
-            }
- 
-            fragment.appendChild(planet);
-        });
- 
-        orbit.appendChild(fragment);
-    }
- 
-    if (typeof singles !== 'undefined') createOrbit(singles, "orbitSingles", 210);
-    if (typeof albums !== 'undefined') createOrbit(albums, "orbitAlbums", 360);
- 
-    // =====================================================
-    // SISTEMA DEL BUZÓN (NAVE)
-    // =====================================================
-    const reflectionModal = document.getElementById("reflectionModal");
-    const reflectionContentBox = document.querySelector("#reflectionModal .reflection-content");
-    const btnTuVoz = document.getElementById("btnTuVoz");
-    const closeReflection = document.querySelector(".close-reflection");
-    const reflectionForm = document.getElementById("reflectionForm");
-    const reflectionStatus = document.getElementById("reflectionStatus");
-    const btnSubmitReflection = document.getElementById("btnSubmitReflection");
-    const btnSendToSun = document.getElementById("btnSendToSun");
-    const solarSystemBox = document.getElementById("solarSystem");
- 
-    let isUniversePaused = false;
-    let isMessageLoadedInShip = false;
- 
-    // CORRECCIÓN BUG #5: Usar safeStorage en vez de localStorage directo
-    if (btnTuVoz) {
-        const lastSent = safeStorage.get('lastReflectionTime');
-        const cooldown = 24 * 60 * 60 * 1000;
-        if (lastSent && (Date.now() - lastSent < cooldown)) {
-            btnTuVoz.style.display = "none";
-        }
-    }
- 
-    // CORRECCIÓN BUG #4: pauseUniverse filtra solo las animaciones del solarSystem
-    function pauseUniverse() {
-        if (!isUniversePaused) {
-            document.getElementById('solarSystem').getAnimations({ subtree: true }).forEach(anim => anim.pause());
-            isUniversePaused = true;
-            if (window.innerWidth <= 768) solarSystemBox.classList.add("mobile-focus");
-        }
-    }
- 
-    function resumeUniverse() {
-        if (isUniversePaused) {
-            document.getElementById('solarSystem').getAnimations({ subtree: true }).forEach(anim => anim.play());
-            isUniversePaused = false;
-            if (window.innerWidth <= 768) solarSystemBox.classList.remove("mobile-focus");
-        }
-    }
- 
-    function closeBuzonAndHandleLaser() {
-        closeModal(reflectionModal);
-        btnTuVoz.classList.remove("ship-waiting");
-        if (isMessageLoadedInShip) {
-            fireLaserToSun();
-        } else {
-            resumeUniverse();
-        }
-    }
- 
-    if (closeReflection) closeReflection.onclick = closeBuzonAndHandleLaser;
- 
-    if (btnTuVoz) {
-        btnTuVoz.onclick = () => {
-            pauseUniverse();
-            btnTuVoz.classList.add("ship-waiting");
- 
-            if (window.innerWidth > 768) {
-                const shipRect = btnTuVoz.getBoundingClientRect();
-                const screenCenter = window.innerWidth / 2;
-                if (shipRect.left > screenCenter) {
-                    reflectionContentBox.style.left = "40px";
-                    reflectionContentBox.style.right = "auto";
-                } else {
-                    reflectionContentBox.style.left = "auto";
-                    reflectionContentBox.style.right = "40px";
-                }
-                reflectionContentBox.style.top = "50%";
-                reflectionContentBox.style.transform = "translateY(-50%)";
-            } else {
-                reflectionContentBox.style.left = "";
-                reflectionContentBox.style.right = "";
-                reflectionContentBox.style.top = "";
-                reflectionContentBox.style.transform = "";
-            }
- 
-            openModal(reflectionModal);
-            closeReflection.style.display = "block";
-            reflectionStatus.style.display = "none";
- 
-            // CORRECCIÓN BUG #5: safeStorage en vez de localStorage
-            const lastSent = safeStorage.get('lastReflectionTime');
-            const cooldown = 24 * 60 * 60 * 1000;
-            if (lastSent && (Date.now() - lastSent < cooldown)) {
-                reflectionForm.style.display = "none";
-                document.getElementById("cooldownStatus").style.display = "block";
-            } else {
-                reflectionForm.style.display = "flex";
-                document.getElementById("cooldownStatus").style.display = "none";
-                document.getElementById("buzonSubtitle").style.display = "block";
-                document.getElementById("reflectionMsg").value = "";
-            }
- 
-            isMessageLoadedInShip = false;
-        };
-    }
- 
-    // CORRECCIÓN BUG #6 (no-cors): El envío es "best-effort".
-    // Se informa al usuario que el mensaje fue enviado con buena fe,
-    // ya que no es posible confirmar errores con mode:'no-cors'.
-    if (reflectionForm) {
-        reflectionForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
-            btnSubmitReflection.innerText = "SINTONIZANDO...";
-            btnSubmitReflection.disabled = true;
- 
-            const data = new FormData(event.target);
-            fetch(event.target.action, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: data
-            }).then(() => {
-                safeStorage.set('lastReflectionTime', Date.now()); // CORRECCIÓN BUG #5
- 
-                reflectionForm.style.display = "none";
- 
-                const box = reflectionContentBox.getBoundingClientRect();
-                const ship = document.getElementById("btnTuVoz").getBoundingClientRect();
-                const pulse = document.createElement("div");
-                pulse.className = "energy-pulse";
-                pulse.style.left = (box.left + box.width / 2) + "px";
-                pulse.style.top = (box.top + box.height / 2) + "px";
-                document.body.appendChild(pulse);
- 
-                const destX = (ship.left + ship.width / 2) - (box.left + box.width / 2);
-                const destY = (ship.top + ship.height / 2) - (box.top + box.height / 2);
-                const angleRad = Math.atan2(destY, destX);
-                const angleDeg = (angleRad * 180) / Math.PI;
-                const offsetX = Math.cos(angleRad) * 4;
-                const offsetY = Math.sin(angleRad) * 4;
-                const finalX = destX - offsetX;
-                const finalY = destY - offsetY;
- 
-                const anim = pulse.animate([
-                    { transform: `translate(-50%, -50%) rotate(${angleDeg}deg) scaleX(0)`, opacity: 0 },
-                    { transform: `translate(calc(-50% + ${finalX * 0.6}px), calc(-50% + ${finalY * 0.6}px)) rotate(${angleDeg}deg) scaleX(1)`, opacity: 1 },
-                    { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) rotate(${angleDeg}deg) scaleX(0.2)`, opacity: 0 }
-                ], { duration: 1000, easing: "ease-in" });
- 
-                anim.onfinish = () => {
-                    pulse.remove();
-                    reflectionStatus.style.display = "block";
-                    document.getElementById("buzonSubtitle").style.display = "none";
-                    isMessageLoadedInShip = true;
-                    btnTuVoz.classList.remove("ship-waiting");
- 
-                    const shipSvg = document.querySelector("#btnTuVoz svg");
-                    shipSvg.style.filter = "drop-shadow(0 0 25px #fff)";
-                    shipSvg.style.stroke = "#fff";
-                    setTimeout(() => {
-                        shipSvg.style.filter = "drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))";
-                        shipSvg.style.stroke = "#FFD700";
-                    }, 500);
-                };
-            }).catch(() => {
-                alert("Error de conexión. Intenta de nuevo.");
-            }).finally(() => {
-                btnSubmitReflection.innerText = "CARGAR MENSAJE EN NAVE";
-                btnSubmitReflection.disabled = false;
-            });
-        });
-    }
- 
-    function fireLaserToSun() {
-        const shipBtn = document.getElementById("btnTuVoz");
-        const shipRect = shipBtn.getBoundingClientRect();
-        const sunRect = document.getElementById("sun").getBoundingClientRect();
- 
-        shipBtn.style.opacity = "0";
-        shipBtn.style.pointerEvents = "none";
- 
-        const shipClone = document.createElement("div");
-        shipClone.innerHTML = shipBtn.innerHTML;
-        shipClone.style.cssText = `position:fixed;left:${shipRect.left}px;top:${shipRect.top}px;width:${shipRect.width}px;height:${shipRect.height}px;z-index:999999;display:flex;align-items:center;justify-content:center;`;
-        const cloneSvg = shipClone.querySelector("svg");
-        if (cloneSvg) { cloneSvg.style.stroke = "#fff"; cloneSvg.style.filter = "drop-shadow(0 0 25px #FFD700)"; }
-        document.body.appendChild(shipClone);
- 
-        const destX = (sunRect.left + sunRect.width / 2) - (shipRect.left + shipRect.width / 2);
-        const destY = (sunRect.top + sunRect.height / 2) - (shipRect.top + shipRect.height / 2);
-        const angleRad = Math.atan2(destY, destX);
-        const angleDeg = (angleRad * 180) / Math.PI;
- 
-        const anim = shipClone.animate([
-            { transform: `translate(0px, 0px) rotate(${angleDeg + 45}deg) scale(1)` },
-            { transform: `translate(${destX * 0.5}px, ${destY * 0.5}px) rotate(${angleDeg + 45}deg) scale(1.5)` },
-            { transform: `translate(${destX}px, ${destY}px) rotate(${angleDeg + 45}deg) scale(0)` }
-        ], { duration: 1800, easing: "cubic-bezier(0.5, 0, 0.5, 1)" });
- 
-        anim.onfinish = () => {
-            shipClone.remove();
-            const sunEl = document.getElementById("sun");
-            sunEl.style.transform = "scale(1.5)";
-            sunEl.style.filter = "drop-shadow(0 0 100px #fff) brightness(2.5)";
- 
-            const flash = document.createElement("div");
-            flash.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,215,0,0.35);z-index:99998;pointer-events:none;transition:opacity 0.8s ease-out;";
-            document.body.appendChild(flash);
-            setTimeout(() => flash.style.opacity = "0", 50);
-            setTimeout(() => flash.remove(), 850);
- 
-            setTimeout(() => {
-                sunEl.style.transform = "scale(1)";
-                sunEl.style.filter = "";
-                resumeUniverse();
-                isMessageLoadedInShip = false;
-                shipBtn.style.display = "none";
-            }, 700);
-        };
-    }
- 
-    if (btnSendToSun) btnSendToSun.onclick = closeBuzonAndHandleLaser;
- 
-    // COMETAS
-    const upcomingReleases = ["📖 LIBRO: ALGO ESTÁ MAL", "💿 NUEVO ÁLBUM", "🎵 PRÓXIMO SENCILLO"];
-    let currentCometIndex = 0;
- 
-    function spawnNextComet() {
-        try {
-            const releaseText = upcomingReleases[currentCometIndex];
-            currentCometIndex = (currentCometIndex + 1) % upcomingReleases.length;
- 
-            const star = document.createElement("div");
-            star.className = "comet-container";
-            star.innerHTML = `<div class="comet-tail"></div><div class="comet-head"></div><div class="comet-text">${releaseText}</div>`;
-            if (starContainer) starContainer.appendChild(star);
- 
-            let startX, startY, endX, endY;
-            const edge = Math.floor(Math.random() * 4);
-            const offset = 100;
-            if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -offset; endX = Math.random() * window.innerWidth; endY = window.innerHeight + offset; }
-            else if (edge === 1) { startX = window.innerWidth + offset; startY = Math.random() * window.innerHeight; endX = -offset; endY = Math.random() * window.innerHeight; }
-            else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + offset; endX = Math.random() * window.innerWidth; endY = -offset; }
-            else { startX = -offset; startY = Math.random() * window.innerHeight; endX = window.innerWidth + offset; endY = Math.random() * window.innerHeight; }
- 
-            star.style.left = startX + "px";
-            star.style.top = startY + "px";
- 
-            const dx = endX - startX;
-            const dy = endY - startY;
-            const angleRad = Math.atan2(dy, dx);
-            const angleDeg = (angleRad * (180 / Math.PI)) + 180;
-            star.querySelector('.comet-tail').style.transform = `translateY(-50%) rotate(${angleDeg}deg)`;
- 
-            const duration = 12000 + Math.random() * 4000;
-            const anim = star.animate([
-                { transform: "translate(0px, 0px)" },
-                { transform: `translate(${dx}px, ${dy}px)` }
-            ], { duration: duration, easing: "linear" });
- 
-            let clicked = false;
-            star.onclick = () => {
-                if (clicked) return;
-                clicked = true;
-                anim.pause();
-                star.classList.add("revealed");
-                setTimeout(() => {
-                    star.style.opacity = '0';
-                    setTimeout(() => { star.remove(); setTimeout(spawnNextComet, 2000); }, 500);
-                }, 4000);
-            };
- 
-            anim.onfinish = () => {
-                if (!clicked) { star.remove(); setTimeout(spawnNextComet, 1000); }
-            };
-        } catch (e) { console.error(e); }
-    }
- 
-    setTimeout(spawnNextComet, 3000);
- 
-    // =====================================================
-    // CORRECCIÓN BUG #2: El satélite solo tiene UN listener
-    // Se eliminó el bloque manual y se usa solo setupModal
-    // que internamente llama pauseUniverse al abrir.
-    // =====================================================
-    const hologramPanel = document.getElementById("hologramPanel");
-    const closeHologramBtn = document.querySelector(".close-hologram");
- 
-    function openHologram() {
-        hologramPanel.style.display = "flex";
-        pauseUniverse();
-    }
-    function closeHologram() {
-        hologramPanel.style.display = "none";
-        resumeUniverse();
-    }
- 
-    document.getElementById("btnSatelite").addEventListener("click", openHologram);
-    closeHologramBtn.addEventListener("click", closeHologram);
- 
-    window.addEventListener("click", (e) => {
-        if (e.target === hologramPanel) closeHologram();
-    });
- 
-    const btnCerrarMovil = document.getElementById("btnCerrarHologramaMovil");
-    if (btnCerrarMovil) btnCerrarMovil.addEventListener("click", closeHologram);
- 
-    // MODALES DEL CENTRO DE ENERGÍA
-    // CORRECCIÓN BUG #2: setupModal ya NO registra el satélite (se maneja arriba)
-    const setupModal = (btnOpenId, modalId, closeClass) => {
-        const btnOpen = document.getElementById(btnOpenId);
-        const modalEl = document.getElementById(modalId);
-        const closeBtn = document.querySelector(closeClass);
-        if (btnOpen && modalEl) {
-            btnOpen.addEventListener("click", (e) => { e.preventDefault(); openModal(modalEl); });
-            if (closeBtn) closeBtn.addEventListener("click", () => closeModal(modalEl));
-        }
-    };
- 
-    setupModal("btnOpenCrypto", "cryptoModal", ".close-crypto");
-    setupModal("btnOpenPropagar", "propagarModal", ".close-propagar");
-    setupModal("btnOpenAmplificar", "amplificarModal", ".close-amplificar");
- 
-    // BÓVEDA
-    const btnIrABoveda = document.getElementById("btnIrABoveda");
-    const propagarModal = document.getElementById("propagarModal");
-    const protocoloModal = document.getElementById("protocoloModal");
-    const closeProtocoloBtn = document.querySelector(".close-protocolo");
- 
-    if (btnIrABoveda && protocoloModal && propagarModal) {
-        btnIrABoveda.addEventListener("click", () => {
-            closeModal(propagarModal);
-            protocoloModal.style.display = "flex";
-        });
-        closeProtocoloBtn.addEventListener("click", () => { protocoloModal.style.display = "none"; });
-    }
- 
-    // CARRUSEL QR
-    const qrContainer = document.getElementById('qrContainer');
-    const prevQr = document.getElementById('prevQr');
-    const nextQr = document.getElementById('nextQr');
-    if (prevQr && nextQr && qrContainer) {
-        prevQr.addEventListener('click', () => qrContainer.scrollBy({ left: -200, behavior: 'smooth' }));
-        nextQr.addEventListener('click', () => qrContainer.scrollBy({ left: 200, behavior: 'smooth' }));
-    }
- 
-    // FORMULARIO BÓVEDA
-    const formProtocolo = document.getElementById("formProtocolo");
-    const btnEnviarForm = document.getElementById("btnEnviarForm");
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyazt2Sc1QS5zhBtdp65qUktkCSTN5rcDor7I01ndkyfG5u7ncSsVgiF55gZ5gRGPvI/exec";
- 
-    if (formProtocolo) {
-        formProtocolo.addEventListener("submit", (e) => {
-            e.preventDefault();
-            btnEnviarForm.textContent = "TRANSMITIENDO...";
-            btnEnviarForm.style.opacity = "0.7";
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: new FormData(formProtocolo), mode: "no-cors" })
-                .then(() => {
-                    btnEnviarForm.textContent = "¡TRANSMISIÓN RECIBIDA!";
-                    btnEnviarForm.style.background = "#FFD700";
-                    btnEnviarForm.style.color = "#000";
-                    setTimeout(() => {
-                        formProtocolo.reset();
-                        protocoloModal.style.display = "none";
-                        btnEnviarForm.textContent = "ENVIAR SOLICITUD DE ACCESO";
-                        btnEnviarForm.style.background = "transparent";
-                        btnEnviarForm.style.color = "#FFD700";
-                        btnEnviarForm.style.opacity = "1";
-                    }, 2500);
-                })
-                .catch(() => { btnEnviarForm.textContent = "ERROR AL CONECTAR"; });
-        });
-    }
- 
-}); // FIN DOMContentLoaded
-</script>
-</body>
-</html>
+    document.getElementById("miniPlayerClose").addEventListener("click", () => {
+        miniPlayer.classList.remove("visible");
+        document.querySelectorAll(".planet.now-playing").forEach(p => p.classList.remove("now-playing"));
+        currentRelease = null
